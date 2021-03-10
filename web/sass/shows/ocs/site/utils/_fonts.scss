@@ -1,0 +1,42 @@
+$main-color: #347587;
+$strong-color: #2f2621;
+$body: #646464;
+h1,
+h2 {
+	font-family: rift;
+}
+h3,
+h4,
+h5,
+p,
+a {
+	font-family: motiva-sans;
+}
+h1 {
+	font-size: 60px;
+	font-weight: bold;
+	color: #333333;
+}
+h2 {
+	font-size: 33px;
+	font-weight: bold;
+	color: $main-color;
+}
+h3 {
+	font-size: 20px;
+	font-weight: bold;
+	color: $strong-color;
+}
+p {
+	font-size: 18px;
+	color: $body;
+}
+a,
+strong {
+	font-size: 18px;
+	font-weight: bold;
+	color: $strong-color;
+	&:focus {
+		color: $strong-color;
+	}
+}
