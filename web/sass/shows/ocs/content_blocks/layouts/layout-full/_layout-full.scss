@@ -1,0 +1,9 @@
+@import "./layout--image";
+.layout-full {
+	width: auto;
+}
+.layout-full--ignore-custom-height {
+	@media (max-width: $mobile-width) {
+		height: unset !important;
+	}
+}
