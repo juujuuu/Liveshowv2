@@ -1,0 +1,12 @@
+.layout--colour- {
+	&none {
+		background-color: unset;
+	}
+	$colors: ("cex-light-blue", #d7d7e6), ("ocs-light-blue", #d9dfe5), ("spc-light-blue", #e2e8f1), ("bre-light-blue", #e2e8f1),
+		("fmx-black", #1a1411), ("black", black);
+	@each $color in $color {
+		&#{nth($color, 1)} {
+			background-color: nth($color, 2);
+		}
+	}
+}
