@@ -11,17 +11,7 @@
 		text-align: center;
 		overflow: hidden;
 	}
-	&.layout--image--hero {
-		h1,
-		p {
-			color: #fff;
-		}
-		h1 {
-			font-size: 74px;
-			font-weight: bold;
-		}
-		p {
-			font-size: 18px;
-		}
+	.layout--image-inner-hero__text-container {
+		width: fit-content;
 	}
 }

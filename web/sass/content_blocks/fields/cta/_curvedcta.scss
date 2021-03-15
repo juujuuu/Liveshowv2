@@ -1,0 +1,47 @@
+.curved-cta {
+	$colors: ("fmc", #e30427), ("cex-gold", #b88e14), ("cex-purple", #2c3364), ("cex-red", #b62f25);
+	border-radius: 10px;
+	text-align: center;
+	padding: 5px 10px 3px 10px;
+	margin: 0;
+	margin-left: auto;
+	margin-right: auto;
+	border: none;
+	color: #fff;
+	&:focus {
+		border: none;
+		outline: none;
+		box-shadow: none;
+		color: #fff;
+	}
+	a {
+		color: #fff;
+		text-decoration: none;
+		&:focus {
+			color: #fff;
+		}
+	}
+	@each $color in $colors {
+		&--#{nth($color, 1)} {
+			background-color: nth($color, 2);
+			&:hover {
+				background: #fff;
+				box-shadow: inset 0 0 0px 1.5px nth($color, 2);
+				a {
+					color: nth($color, 2);
+				}
+			}
+		}
+	}
+	&--max {
+		width: 95%;
+		a {
+			font-size: 2rem;
+		}
+		margin: 0 0 10px;
+	}
+	&--micro {
+		font-size: 1rem;
+		font-weight: 400;
+	}
+}
