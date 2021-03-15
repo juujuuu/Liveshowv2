@@ -1,0 +1,17 @@
+.layout--hide-mob {
+	@media (max-width: $mobile-width) {
+		display: none;
+	}
+}
+.layout--hide-desk {
+	@media (min-width: $mobile-width) {
+		display: none;
+	}
+}
+.layout-col--borders {
+	@media (min-width: $mobile-width) {
+		.row > div + div {
+			border-left: 1px solid black;
+		}
+	}
+}
