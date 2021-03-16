@@ -1,5 +1,5 @@
 .curved-cta {
-	$colors: ("fmc", #e30427), ("cex-gold", #b88e14), ("cex-purple", #2c3364), ("cex-red", #b62f25);
+	$colors: ("ocs-blue", #347587), ("fmc", #e30427), ("cex-gold", #b88e14), ("cex-purple", #2c3364), ("cex-red", #b62f25);
 	border-radius: 10px;
 	text-align: center;
 	padding: 5px 10px 3px 10px;
@@ -8,6 +8,8 @@
 	margin-right: auto;
 	border: none;
 	color: #fff;
+	transition: background 0.2s linear;
+	-webkit-transition: background 0.2s linear;
 	&:focus {
 		border: none;
 		outline: none;
@@ -17,6 +19,8 @@
 	a {
 		color: #fff;
 		text-decoration: none;
+		transition: background 0.2s linear;
+		-webkit-transition: background 0.2s linear;
 		&:focus {
 			color: #fff;
 		}
@@ -38,10 +42,12 @@
 		a {
 			font-size: 2rem;
 		}
-		margin: 0 0 10px;
+		margin: auto;
 	}
 	&--micro {
-		font-size: 1rem;
-		font-weight: 400;
+		a {
+			font-size: 1rem;
+			font-weight: 400;
+		}
 	}
 }

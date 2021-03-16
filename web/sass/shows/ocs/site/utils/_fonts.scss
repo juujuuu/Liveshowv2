@@ -30,13 +30,13 @@ h3 {
 p {
 	font-size: 18px;
 	color: $body;
+	margin-bottom: 10px;
 }
-a,
-strong {
-	font-size: 18px;
-	font-weight: bold;
+a {
 	color: $strong-color;
-	&:focus {
-		color: $strong-color;
+	&:focus,
+	&:hover {
+		color: inherit;
+		text-decoration: underline;
 	}
 }

@@ -13,5 +13,18 @@
 	}
 	.layout--image-inner-hero__text-container {
 		width: fit-content;
+		& > * {
+			padding-right: 10px;
+			padding-left: 10px;
+		}
+	}
+}
+[data-context^="OCS"] {
+	.layout--image-inner-hero {
+		.layout--image-inner-hero__text-container {
+			& > * {
+				background-color: rgba(52, 117, 135, 0.85);
+			}
+		}
 	}
 }

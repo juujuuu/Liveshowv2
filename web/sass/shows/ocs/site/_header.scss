@@ -1,7 +1,12 @@
+@use "sass:color";
 $main-color: #347587;
 $reg-color: #b62f25;
+
+body {
+	margin-left: 0;
+	margin-right: 0;
+}
 header {
-	margin-bottom: 20px;
 	@media screen and (min-width: 990px) {
 		&.fixed-top {
 			height: 50px;
@@ -106,8 +111,12 @@ header {
 				font-weight: normal;
 				font-size: 12px;
 				color: #6a6768;
+				-webkit-transition: color 0.2s linear;
 				&:focus {
 					color: #6a6768;
+				}
+				&:hover {
+					color: darken($color: #333333, $amount: 40%);
 				}
 			}
 		}
@@ -128,6 +137,10 @@ header {
 							color: #333333;
 							font-size: 16px;
 							padding: 0px;
+							-webkit-transition: color 0.2s linear;
+							&:hover {
+								color: lighten($color: #333333, $amount: 30%);
+							}
 							&::after {
 								content: "|";
 								padding: 0px 10px 0px 10px;

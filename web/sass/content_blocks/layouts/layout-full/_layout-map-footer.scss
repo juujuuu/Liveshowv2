@@ -1,0 +1,15 @@
+.layout-map-footer {
+	height: 600px;
+	.layout-map-footer__right {
+		padding-right: 0;
+		iframe {
+			width: 100%;
+		}
+	}
+	@media (max-width: $mobile-width) {
+		.container-fluid {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+}
