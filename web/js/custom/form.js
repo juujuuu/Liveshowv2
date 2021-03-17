@@ -29,6 +29,36 @@ var loadForm = function (formPopUp) {
 
 $(document).ready(function () {
 	/**
+	 * Pop up forms
+	 */
+	$(".image--form-modal a").click(function (event) {
+		event.preventDefault();
+		let formUri = $(this).attr("href");
+		getForm(formUri).then(function(){
+			console.log(formHtml);
+			let modal = $.parseHTML('<div class="modal fade" id="form-modal" role="dialog" tabindex="-1" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"></div></div></div></div>');
+			$(modal).find(".modal-body").append(formHtml);
+			console.log(modal);
+			$(this).parent().after(modal);
+		});
+		//$("#form-modal").modal();
+	});
+
+	/**
+	 * Get form html from modx resource
+	 */
+	const getForm = async (uri) => {
+		$.ajax({ 
+			url: uri, 
+			success: function (data) {
+				$.parseHTML(data);
+				let formHtml = $(data).find(".lead-capture");
+				return formHtml;
+			} 
+		});
+	};
+
+	/**
 	 * Salesforce form v2
 	 */
 	$(".lead-capture form").submit(function (event) {
@@ -67,7 +97,7 @@ $(document).ready(function () {
 						let thankyou =
 							'<div class="lead-capture__thankyou d-flex justify-content-center"><p>Successfully submitted.  Thank you</p></div>';
 						parent.append(thankyou);
-					} else{
+					} else {
 						window.open(gatedUrl);
 					}
 				}, 3000);
