@@ -1,0 +1,36 @@
+.lead-capture {
+	text-align: left;
+	padding: 8px;
+	position: relative;
+	.form-control {
+		&:focus {
+			box-shadow: inset 0 0 0 0.1rem;
+		}
+	}
+	&--white-font {
+		p,
+		.lead-capture__spinner,
+		.lead-capture__thankyou,
+		.lead-capture__thankyou {
+			color: #fff;
+		}
+	}
+	.lead-capture__spinner,
+	.lead-capture__thankyou {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		align-items: center;
+		color: black;
+		.spinner-border {
+			width: 5rem;
+			height: 5rem;
+		}
+	}
+	.lead-capture__thankyou {
+		//color: unset;
+	}
+}

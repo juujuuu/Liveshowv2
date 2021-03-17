@@ -34,9 +34,10 @@ p {
 }
 a {
 	color: $strong-color;
+	text-decoration: none;
 	&:focus,
 	&:hover {
-		color: inherit;
+		color: lighten($color: $strong-color, $amount: 10%);
 		text-decoration: underline;
 	}
 }

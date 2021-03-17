@@ -21,6 +21,9 @@
 		text-decoration: none;
 		transition: background 0.2s linear;
 		-webkit-transition: background 0.2s linear;
+		&:hover {
+			text-decoration: none;
+		}
 		&:focus {
 			color: #fff;
 		}
