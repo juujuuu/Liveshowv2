@@ -98,8 +98,6 @@ header {
 	}
 	.header__sub-menu {
 		height: 40px;
-		.header__search {
-		}
 		.header__sub-menu__list {
 			list-style-type: none;
 			float: right;
@@ -117,6 +115,50 @@ header {
 				}
 				&:hover {
 					color: darken($color: #333333, $amount: 40%);
+				}
+			}
+			//For search
+			&.active {
+				width: 70%;
+				.header__search {
+					div {
+						input {
+							outline: none !important;
+							border: 1px solid #6a6768;
+							border-left: none;
+							border-right: none;
+							width: 370px;
+							opacity: 1 !important;
+							font-size: 12px;
+						}
+						img {
+							&:last-child {
+								display: block !important;
+							}
+						}
+					}
+				}
+			}
+			.header__search {
+				form > div {
+					display: inline-flex;
+					height: 100%;
+					input {
+						//transition: width 0.25s linear, opacity 0.25s linear;
+						//-webkit-transition: width 0.25s linear, opacity 0.25s linear;
+						opacity: 0;
+						width: 0px;
+						height: 30px;
+					}
+					img {
+						cursor: pointer;
+						width: 30px;
+						height: 30px;
+						&:last-child {
+							display: none;
+							border: 1px solid #6a6768;
+						}
+					}
 				}
 			}
 		}
@@ -143,6 +185,7 @@ header {
 							}
 							&::after {
 								content: "|";
+								text-decoration: none;
 								padding: 0px 10px 0px 10px;
 							}
 						}

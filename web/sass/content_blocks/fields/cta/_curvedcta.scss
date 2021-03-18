@@ -1,5 +1,6 @@
 .curved-cta {
 	$colors: ("ocs-blue", #347587), ("fmc", #e30427), ("cex-gold", #b88e14), ("cex-purple", #2c3364), ("cex-red", #b62f25);
+	display: block;
 	border-radius: 10px;
 	text-align: center;
 	padding: 5px 10px 3px 10px;
@@ -10,6 +11,14 @@
 	color: #fff;
 	transition: background 0.2s linear;
 	-webkit-transition: background 0.2s linear;
+	&.center {
+	}
+	&.left {
+		margin-left: 0;
+	}
+	&.right {
+		margin-right: 0;
+	}
 	&:focus {
 		border: none;
 		outline: none;

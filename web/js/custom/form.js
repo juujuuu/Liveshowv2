@@ -6,7 +6,6 @@ $(document).ready(function () {
 	$("body").on("hidden.bs.modal", "#modal", function(event){
 		console.log("Leaving modal");
 		let modal = bootstrap.Modal.getInstance(document.getElementById('modal'));
-		console.log("trying to destroy");
 		modal.dispose();
 		$("#modal").remove();
 	});
@@ -18,11 +17,8 @@ $(document).ready(function () {
 		event.preventDefault();
 		let formUri = $(this).attr("href");
 		getForm(formUri).then(function(formHtml){
-			console.log("promised form html");
-			console.log(formHtml);
 			let modal = $.parseHTML('<div class="modal fade" id="modal" role="dialog" tabindex="-1" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"></div></div></div></div>');
 			$(modal).find(".modal-body").append(formHtml);
-			console.log(modal);
 			$("body").append(modal);
 			let myModal = new bootstrap.Modal(document.getElementById('modal'));
 			myModal.show();
@@ -39,8 +35,6 @@ $(document).ready(function () {
 				success: function (data) {
 					$.parseHTML(data);
 					let formHtml = $(data).find(".lead-capture");
-					console.log("form html");
-					console.log(formHtml);
 					resolve(formHtml);
 				} 
 			});
@@ -65,8 +59,6 @@ $(document).ready(function () {
 		console.log(sfForm.serializeArray());
 		let dataString = sfForm.serializeArray();
 		let parent = $(this).parent();
-		console.log("Parent:  ");
-		console.log(parent);
 		//Load spinner
 		$(this).css("visibility", "hidden");
 		$(this).siblings().css("visibility", "hidden"); //the disclaimer
