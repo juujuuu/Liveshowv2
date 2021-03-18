@@ -26,6 +26,7 @@
 		}
 		&:focus {
 			color: #fff;
+			text-decoration: none;
 		}
 	}
 	@each $color in $colors {

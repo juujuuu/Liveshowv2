@@ -1,67 +1,57 @@
-var loadForm = function (formPopUp) {
-	//sets submit event to new form
-
-	$("#formModal form").submit(function (event) {
-		event.preventDefault();
-		$(this).find(".primaryAction").val("submitting").fadeTo("fast", 0.5).prop("disabled", true);
-		if ($(this).attr("action") == "https://smartershows.tfaforms.net/rest/responses/processor") {
-			var url = "site/formassembly";
-		} else {
-			var url = "site/salesforceform";
-		}
-		var datastring = $(this).serializeArray();
-
-		console.log(url, datastring, formPopUp.data("file"));
-
-		$.ajax({
-			url: url,
-			type: "POST",
-			data: datastring,
-			success: function (result) {
-				if (typeof formPopUp.data("file") === "string" && formPopUp.data("file") !== "") {
-					window.location.href = window.location.origin + formPopUp.data("file");
-				}
-				$("#formModal").modal("hide");
-			},
-		});
-	});
-};
-
 $(document).ready(function () {
+
+	/**
+	 * Destroy modals on exit
+	 */
+	$("body").on("hidden.bs.modal", "#modal", function(event){
+		console.log("Leaving modal");
+		let modal = bootstrap.Modal.getInstance(document.getElementById('modal'));
+		console.log("trying to destroy");
+		modal.dispose();
+		$("#modal").remove();
+	});
+
 	/**
 	 * Pop up forms
 	 */
-	$(".image--form-modal a").click(function (event) {
+	$(".image--form-modal a, .curved-cta--form-modal").click(function (event) {
 		event.preventDefault();
 		let formUri = $(this).attr("href");
-		getForm(formUri).then(function(){
+		getForm(formUri).then(function(formHtml){
+			console.log("promised form html");
 			console.log(formHtml);
-			let modal = $.parseHTML('<div class="modal fade" id="form-modal" role="dialog" tabindex="-1" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"></div></div></div></div>');
+			let modal = $.parseHTML('<div class="modal fade" id="modal" role="dialog" tabindex="-1" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"></div></div></div></div>');
 			$(modal).find(".modal-body").append(formHtml);
 			console.log(modal);
-			$(this).parent().after(modal);
+			$("body").append(modal);
+			let myModal = new bootstrap.Modal(document.getElementById('modal'));
+			myModal.show();
 		});
-		//$("#form-modal").modal();
 	});
 
 	/**
 	 * Get form html from modx resource
 	 */
 	const getForm = async (uri) => {
-		$.ajax({ 
-			url: uri, 
-			success: function (data) {
-				$.parseHTML(data);
-				let formHtml = $(data).find(".lead-capture");
-				return formHtml;
-			} 
+		let promise = new Promise(function(resolve, reject){
+			$.ajax({ 
+				url: uri, 
+				success: function (data) {
+					$.parseHTML(data);
+					let formHtml = $(data).find(".lead-capture");
+					console.log("form html");
+					console.log(formHtml);
+					resolve(formHtml);
+				} 
+			});
 		});
+		return await promise;
 	};
 
 	/**
 	 * Salesforce form v2
 	 */
-	$(".lead-capture form").submit(function (event) {
+	$("body").on("submit", ".lead-capture form", function(event){
 		event.preventDefault();
 		const sfForm = $(this);
 		let gatedUrl = sfForm.data("url");
@@ -97,6 +87,10 @@ $(document).ready(function () {
 						let thankyou =
 							'<div class="lead-capture__thankyou d-flex justify-content-center"><p>Successfully submitted.  Thank you</p></div>';
 						parent.append(thankyou);
+						setTimeout(() => {
+							let modal = bootstrap.Modal.getInstance(document.getElementById('modal'));
+							modal.hide();
+						}, 2000);
 					} else {
 						window.open(gatedUrl);
 					}
