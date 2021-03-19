@@ -9,7 +9,8 @@ h3,
 h4,
 h5,
 p,
-a {
+a,
+li {
 	font-family: motiva-sans;
 }
 h1 {
@@ -27,7 +28,8 @@ h3 {
 	font-weight: bold;
 	color: $strong-color;
 }
-p {
+p,
+li {
 	font-size: 18px;
 	color: $body;
 	margin-bottom: 10px;
@@ -39,5 +41,11 @@ a {
 	&:hover {
 		color: lighten($color: $strong-color, $amount: 10%);
 		text-decoration: underline;
+	}
+}
+.row {
+	@media (max-width: $mobile-width) {
+		margin-left: 0;
+		margin-right: 0;
 	}
 }
