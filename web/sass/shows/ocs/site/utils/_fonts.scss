@@ -28,11 +28,14 @@ h3 {
 	font-weight: bold;
 	color: $strong-color;
 }
-p,
-li {
+p {
 	font-size: 18px;
 	color: $body;
 	margin-bottom: 10px;
+}
+li {
+	font-size: 18px;
+	color: $body;
 }
 a {
 	color: $strong-color;
