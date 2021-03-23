@@ -15,7 +15,7 @@ header {
 			.header__sub-menu,
 			.header__info,
 			.header__main-logo {
-				display: none;
+				display: none !important;
 			}
 			.header__main-menu {
 				min-height: unset;
@@ -228,6 +228,14 @@ header {
 						}
 					}
 				}
+			}
+		}
+		.header__main-logo {
+			display: flex;
+			justify-content: center;
+			height: 100%;
+			img {
+				width: 100%;
 			}
 		}
 	}
