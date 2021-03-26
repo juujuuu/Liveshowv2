@@ -1,0 +1,26 @@
+@import "elem/slide";
+@import "elem/spinner";
+@import "elem/cta";
+@import "elem/mainMenu";
+@import "elem/Alphabet";
+@import "./override/override";
+.enhanced-exhibitors {
+	margin-top: 20px;
+	.featured-list,
+	.az-list {
+		min-height: 500px;
+		.exhibitor-slide:first-child {
+			.exhibitor-slide__hr {
+				margin-top: 0px;
+				hr {
+					border-top: 1px solid black;
+				}
+			}
+		}
+		.exhibitor-slide__hr {
+			hr {
+				border-top: 1px solid black;
+			}
+		}
+	}
+}

@@ -13,7 +13,7 @@ $(document).ready(function () {
 	/**
 	 * Pop up forms
 	 */
-	$(".image--form-modal a, .curved-cta--form-modal").click(function (event) {
+	$(".image--form-modal a, .curved-cta--form-modal a, .nav-item--reg-link a").click(function (event) {
 		event.preventDefault();
 		let formUri = $(this).attr("href");
 		getForm(formUri).then(function(formHtml){

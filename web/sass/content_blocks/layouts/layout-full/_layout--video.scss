@@ -1,10 +1,26 @@
 .layout--video {
 	overflow: hidden;
-	video {
-		min-width: 100%;
-		min-height: 100%;
+	position: relative;
+	.layout--video__video-container {
+		position: absolute;
+		width: 100vw;
+		height: 100vh;
+		left: 0;
+		video {
+			min-width: 100%;
+			min-height: 100%;
+			display: block;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
 	}
 	& > .container {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;

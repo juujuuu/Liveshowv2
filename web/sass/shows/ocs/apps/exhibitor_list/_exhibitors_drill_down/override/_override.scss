@@ -1,0 +1,17 @@
+$main-colour: #b88e14;
+.exhibitor-drilldown--CEX {
+	.enhanced-exhibitors__cta--premium-listing {
+		background-color: $main-colour;
+	}
+	.exhibitor-drilldown__cta {
+		border-radius: 10px;
+	}
+	.exhibitor-drilldown__horizontal,
+	.exhibitor-drilldown__vertical {
+		h4,
+		h5,
+		.news__copy span {
+			color: $main-colour;
+		}
+	}
+}
