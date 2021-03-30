@@ -97,13 +97,14 @@ header {
 		}
 	}
 	.header__sub-menu {
-		height: 40px;
+		height: 70px;
 		.header__sub-menu__list {
 			list-style-type: none;
 			float: right;
 			display: flex;
 			justify-content: space-between;
-			width: 15%;
+			width: 30%;
+			margin-bottom: 0;
 			a {
 				text-decoration: none;
 				font-weight: normal;
@@ -119,7 +120,7 @@ header {
 			}
 			//For search
 			&.active {
-				width: 50%;
+				width: 100%;
 				.header__search {
 					div {
 						input {
@@ -130,6 +131,7 @@ header {
 							width: 370px;
 							opacity: 1 !important;
 							font-size: 12px;
+							display: block;
 						}
 						img {
 							&:last-child {
@@ -149,6 +151,7 @@ header {
 						opacity: 0;
 						width: 0px;
 						height: 30px;
+						display: none;
 					}
 					img {
 						cursor: pointer;
@@ -161,6 +164,11 @@ header {
 					}
 				}
 			}
+		}
+		.header__sub-menu__co-locate {
+			clear: both;
+			float: right;
+			margin-top: 5px;
 		}
 	}
 	.header__main-menu {
@@ -177,6 +185,9 @@ header {
 						.nav-link {
 							font-weight: normal;
 							color: #333333;
+							@media (min-width: 990px) and (max-width: 1200px) {
+								font-size: 14px;
+							}
 							font-size: 16px;
 							padding: 0px;
 							-webkit-transition: color 0.2s linear;
