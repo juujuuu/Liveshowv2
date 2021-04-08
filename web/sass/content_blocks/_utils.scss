@@ -1,9 +1,9 @@
-$size-list: (0, 0px), (10, 10px), (20, 20px), (30, 30px), (40, 40px), (50, 50px);
-.vertical-margin{
-    @each $size in $size-list{
-        &--#{nth($size, 1)}{
-            margin-top: #{nth($size, 2)};
-            margin-bottom: #{nth($size, 2)};
-        }
-    }
+$size-list: (0, 0px), (5, 5px), (10, 10px), (20, 20px), (30, 30px), (40, 40px), (50, 50px);
+.vertical-margin {
+	@each $size in $size-list {
+		&--#{nth($size, 1)} {
+			margin-top: #{nth($size, 2)};
+			margin-bottom: #{nth($size, 2)};
+		}
+	}
 }
