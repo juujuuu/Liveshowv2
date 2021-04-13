@@ -1,6 +1,6 @@
 $(function () {
 	$(document).ready(function () {
-		if ($(window).width() > 768) {
+		if ($(window).width() > 990) {
 			$(window).scroll(function () {
 				if ($(this).scrollTop() > 200) {
 					$("header").addClass("fixed-top");

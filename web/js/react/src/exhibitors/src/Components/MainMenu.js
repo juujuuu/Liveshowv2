@@ -5,7 +5,8 @@ import ExpoSelector from "./ExpoSelector";
 class MainMenu extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { query: "" };
+		this.state = { query: "", offsetTop: 0, offsetBottom: 0 };
+		this.ref = React.createRef();
 	}
 
 	resetQuery = () => {
@@ -30,6 +31,14 @@ class MainMenu extends React.Component {
 	handleSubmit = (event) => {
 		event.preventDefault();
 	};
+	handleScroll = (event) =>{
+		console.log(this.ref.current.getBoundingClientRect());
+		this.setState(prevState=>{
+			prevState.offsetTop = this.ref.current.getBoundingClientRect().top;
+			prevState.offsetBottom = this.ref.current.getBoundingClientRect().bottom;
+			return prevState;
+		});
+	}
 
 	getMultiExpoCtas = (exposArray) => {
 		if (exposArray.length >= 2) {
@@ -52,7 +61,7 @@ class MainMenu extends React.Component {
 						break;
 				}
 				return (
-					<div className="col-xs-6 col-sm-12">
+					<div className="col-6 col-md-12">
 						<ExpoSelector
 							key={"ExpoSelector-" + infoObject.expo + "-" + this.props.resetIndex}
 							show={infoObject.show}
@@ -78,10 +87,30 @@ class MainMenu extends React.Component {
 		);
 	};
 
+	//should affix based off of window position
+	shouldAffix = () =>{
+		if(window.innerWidth < 990){
+			if(this.state.offsetTop < -350){
+				return "main-menu--fixed-top";
+			} else{
+				return "main-menu--default";
+			}
+		} else{
+			if(this.state.offsetTop < -220 && this.state.offsetBottom > 300){
+				return "main-menu--fixed-left";
+			} else{
+				return "main-menu--default";
+			}
+		}
+	}
+	componentDidMount = () => {
+		window.addEventListener('scroll', this.handleScroll);
+	}
+
 	render() {
 		return (
-			<div className="col-sm-5 col-md-4 main-menu">
-				<div className="affix-top" data-spy="affix" data-offset-top="400" data-offset-bottom="1500">
+			<div ref={this.ref} className="col-md-4 main-menu">
+				<div className={this.shouldAffix()}>
 					<div className="main-menu__title">
 						<div>
 							<h4>Refine Results</h4>
@@ -91,7 +120,7 @@ class MainMenu extends React.Component {
 					</div>
 					<div className="main-menu__ctas">
 						<form onSubmit={this.handleSubmit}>
-							<div className="form-group">
+							<div className="form-group mb-2">
 								<input
 									type="text"
 									value={this.state.query}
@@ -105,7 +134,15 @@ class MainMenu extends React.Component {
 						{this.getMultiExpoCtas(this.props.expo.replace(/'/g, "").split(","))}
 						<Cta size="max" clickHandler={this.props.pdfHandler} text="Download Full List PDF" />
 						{this.props.options.pdf !== "" ? <Cta size="max" text="Convince Your Boss PDF" /> : ""}
-						{this.props.options.reglink !== "" ? <Cta size="max" type="reg" ><a href={this.props.options.reglink} target="_blank" title="Register To Attend">Register To Attend</a></Cta> : ""}
+						{this.props.options.reglink !== "" ? (
+							<Cta size="max" type="reg">
+								<a href={this.props.options.reglink} target="_blank" title="Register To Attend">
+									Register To Attend
+								</a>
+							</Cta>
+						) : (
+							""
+						)}
 						{this.props.options.show == "CEX" || this.props.show == "CEX-Test" ? this.getCexSponsor() : ""}
 					</div>
 					{this.props.children}

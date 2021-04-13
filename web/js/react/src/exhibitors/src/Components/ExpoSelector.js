@@ -51,7 +51,7 @@ class ExpoSelector extends React.Component {
 				<div>
 					<span className="exhibitors__cta--checkbox-text">{this.getText(this.props.show)}</span>
 					{this.state.active ? (
-						<span className="exhibitors__cta--checkbox-cta__checkbox hidden-xs">
+						<span className="exhibitors__cta--checkbox-cta__checkbox hidden-xs hidden-sm">
 							<img src="../assets/web/js/react/src/exhibitors/src/assets/tick.png" alt="tick" />
 						</span>
 					) : (

@@ -16,16 +16,16 @@ class EnhancedCta extends React.Component {
 			if (assettypes[property]) {
 				switch (property) {
 					case "contact":
-						returnArray.push(<span key={"glyph-" + index} className="glyphicon glyphicon-envelope"></span>);
+						returnArray.push(<span key={"glyph-" + index}><i className="bi bi-envelope-fill"></i></span>);
 						break;
 					case "downloads":
-                        returnArray.push(<span key={"glyph-" + index} className="glyphicon glyphicon-file"></span>);
+                        returnArray.push(<span key={"glyph-" + index}><i className="bi bi-file-earmark-fill"></i></span>);
 						break;
 					case "videos":
-                        returnArray.push(<span key={"glyph-" + index} className="glyphicon glyphicon-play-circle"></span>);
+                        returnArray.push(<span key={"glyph-" + index}><i className="bi bi-play-circle-fill"></i></span>);
 						break;
 					case "products":
-                        returnArray.push(<span key={"glyph-" + index} className="glyphicon glyphicon-shopping-cart"></span>);
+                        returnArray.push(<span key={"glyph-" + index}><i className="bi bi-cart-fill"></i></span>);
 						break;
 					case "news":
                         returnArray.push(<span key={"glyph-" + index} className="glyphicon glyphicon-education"></span>);

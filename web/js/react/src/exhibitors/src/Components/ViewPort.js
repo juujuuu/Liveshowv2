@@ -32,8 +32,6 @@ class ViewPort extends React.Component {
 		return <FeaturedList>{this.slideBuilder(this.props.featured)}</FeaturedList>;
 	};
 	slideWillShow = (exhibitor) => {
-		console.log(exhibitor["Show_On_Colocate__c"]);
-		console.log(typeof exhibitor["Show_On_Colocate__c"]);
 		if (exhibitor["Show_On_Colocate__c"]) {
 			if (
 				exhibitor.pagetitle.toLowerCase().includes(this.props.query.toLowerCase()) ||
@@ -95,7 +93,7 @@ class ViewPort extends React.Component {
 	render() {
 		if (this.props.loading) {
 			return (
-				<div style={{ textAlign: "center", marginTop: "40px" }} className="col-sm-8">
+				<div style={{ textAlign: "center", marginTop: "40px" }} className="col-md-8">
 					<div className="spinner-border" role="status">
 						<span className="sr-only">Loading...</span>
 					</div>
@@ -103,7 +101,7 @@ class ViewPort extends React.Component {
 			);
 		}
 		return (
-			<div className="col-sm-7 col-md-8">
+			<div className="col-md-8">
 				<Alphabet handler={this.props.alphHandler} active={this.props.alph} />
 				{this.props.featured.length > 0 ? <SectionHeader content="Featured Exhibitors" /> : ""}
 				{this.getFeaturedList()}

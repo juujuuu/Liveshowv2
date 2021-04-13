@@ -46,53 +46,57 @@ class ExhibitorSlide extends React.Component {
 						/>
 					)}
 				</div>
-				<div className="exhibitor-slide__desk visible-sm visible-md visible-lg hidden-xs">
-					<div className="exhibitor-slide__side-flag"></div>
-					<div className="col-sm-3 exhibitor-slide__logo">
-						<div>
-							<LazyLoad height={100} offset={100} once>
-								<a href={this.state.drilldownlink} target="_self" title={this.props.name}>
-									<img src={this.props.weblogo} alt="logo" />
-								</a>
-							</LazyLoad>
+				<div className="exhibitor-slide__desk  visible-lg visible-xl visible-xxl hidden-xs hidden-sm hidden-md">
+					<div className="row">
+						<div className="exhibitor-slide__side-flag"></div>
+						<div className="col-md-3 exhibitor-slide__logo">
+							<div>
+								<LazyLoad height={100} offset={100} once>
+									<a href={this.state.drilldownlink} target="_self" title={this.props.name}>
+										<img src={this.props.weblogo} alt="logo" />
+									</a>
+								</LazyLoad>
+							</div>
 						</div>
-					</div>
-					<div className="col-sm-5 exhibitor-slide__body">
-						<div>
-							<h4>
-								<a href={this.state.drilldownlink} target="_self" title={this.props.name}>
-									{this.props.name}
-								</a>
-							</h4>
-							<p>
-								{this.getBooth(this.props.options.continent)} Number: {this.props.booth}
-							</p>
+						<div className="col-md-5 exhibitor-slide__body">
+							<div>
+								<h4>
+									<a href={this.state.drilldownlink} target="_self" title={this.props.name}>
+										{this.props.name}
+									</a>
+								</h4>
+								<p>
+									{this.getBooth(this.props.options.continent)} Number: {this.props.booth}
+								</p>
+							</div>
 						</div>
+						<ExhibitorSlideCats colName="col-md-4" cats={this.props.cats} />
 					</div>
-					<ExhibitorSlideCats colName="col-sm-4" cats={this.props.cats} />
 				</div>
-				<div className="exhibitor-slide__mob visible-xs hidden-sm hidden-md hidden-lg">
-					<div className="exhibitor-slide__side-flag"></div>
-					<div className="col-xs-5 exhibitor-slide__logo">
-						<div>
-							<LazyLoad height={100} offset={100} once>
-								<a href={this.state.drilldownlink} target="_self" title={this.props.name}>
-									<img src={this.props.weblogo} alt="logo" />
-								</a>
-							</LazyLoad>
+				<div className="exhibitor-slide__mob visible-xs visible-sm visible-md hidden-lg hidden-xl hidden-xxl">
+					<div className="row">
+						<div className="exhibitor-slide__side-flag"></div>
+						<div className="col-5 exhibitor-slide__logo">
+							<div>
+								<LazyLoad height={100} offset={100} once>
+									<a href={this.state.drilldownlink} target="_self" title={this.props.name}>
+										<img src={this.props.weblogo} alt="logo" />
+									</a>
+								</LazyLoad>
+							</div>
 						</div>
-					</div>
-					<div className="col-xs-7 exhibitor-slide__body">
-						<div>
-							<h4>
-								<a href={this.state.drilldownlink} target="_self" title={this.props.name}>
-									{this.props.name}
-								</a>
-							</h4>
-							<p>
-								{this.getBooth(this.props.options.continent)} Number: {this.props.booth}
-							</p>
-							<ExhibitorSlideCats cats={this.props.cats} />
+						<div className="col-7 exhibitor-slide__body">
+							<div>
+								<h4>
+									<a href={this.state.drilldownlink} target="_self" title={this.props.name}>
+										{this.props.name}
+									</a>
+								</h4>
+								<p>
+									{this.getBooth(this.props.options.continent)} Number: {this.props.booth}
+								</p>
+								<ExhibitorSlideCats cats={this.props.cats} />
+							</div>
 						</div>
 					</div>
 				</div>

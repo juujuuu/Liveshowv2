@@ -5,6 +5,9 @@ class PDFMake {
 	constructor(options, data) {
 		this.data = data;
 		this.options = options;
+		//this.options.show = "CEX"; //debug
+		console.log(this.data);
+		console.log(this.options);
 		this.printPDF();
 	}
 	printPDF = () => {
@@ -50,6 +53,9 @@ class PDFMake {
 				case "BRE":
 					var showName = "Space Tech Expo Europe";
 					break;
+				case "SAT":
+					var showName = "Satellite Connectivity Expo";
+					break;
 			}
 			let title = element.pagetitle;
 			let booth = element["exhibitor-booth"];
@@ -92,6 +98,9 @@ class PDFMake {
 					var pdfColour = "#0C3353";
 					break;
 				case "BRE":
+					var pdfColour = "#0c3353";
+					break;
+				case "SAT":
 					var pdfColour = "#0c3353";
 					break;
 			}

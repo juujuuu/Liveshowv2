@@ -6,13 +6,18 @@ class ExhibitorSlideCats extends React.Component {
 		this.state = { cats: props.cats.split("||") };
 	}
 	getCats = () => {
-		if(!this.state.cats){
+		if (!this.state.cats) {
 			return;
 		}
-		return this.state.cats.map((cat, index) => <li key={`cat-${index}`}>{cat}</li>);
+		return this.state.cats.map((cat, index) => {
+			if (index < 3) { //limiting to 3 at the moment
+				return <li key={`cat-${index}`}>{cat}</li>;
+			}
+		});
+		//return this.state.cats.map((cat, index) => <li key={`cat-${index}`}>{cat}</li>);
 	};
 	render() {
-		let cName = this.props.colName +  " exhibitor-slide__cats";
+		let cName = this.props.colName + " exhibitor-slide__cats";
 		return (
 			<div className={cName}>
 				<div>

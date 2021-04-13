@@ -17,7 +17,7 @@ class App extends React.Component {
 			resetIndex : 0,
 			controlLogic: { processQuery: this.processQuery, processAlph: this.processAlph, setExpo: this.setExpo, genPDF: this.genPDF },
 		};
-		this.mainClass = "enhanced-exhibitors " + "enhanced-exhibitors--" + this.props.options.show;
+		this.mainClass = "enhanced-exhibitors " + "enhanced-exhibitors--" + this.props.options.show + " row";
 	}
 
 	processQuery = (query) => {
@@ -67,7 +67,7 @@ class App extends React.Component {
 	};
 
 	getData = async (expo) => {
-		let url = "/rest/exhibSS?expoIds=" + expo;
+		let url = "/rest/exhibman.php?expos=" + expo;
 		console.log("getting: " + url);
 		try {
 			const response = await fetch(url, {
@@ -89,17 +89,17 @@ class App extends React.Component {
 	componentDidMount = () => {
 		console.log("Fetching data: " + this.props.options.expo);
 		this.getData(this.props.options.expo).then((data) => {
-			console.log(data.results);
+			console.log(data);
 			console.log("sorted");
-			data.results.sort(function (a, b) {
+			data.sort(function (a, b) {
 				var textA = a.pagetitle.toUpperCase();
 				var textB = b.pagetitle.toUpperCase();
 				return textA < textB ? -1 : textA > textB ? 1 : 0;
 			});
-			console.log(this.extractPremium(data.results, true));
+			console.log(this.extractPremium(data, true));
 			this.setState((prevState) => {
-				prevState.featured = this.extractPremium(data.results, true);
-				prevState.data = this.extractPremium(data.results, false);
+				prevState.featured = this.extractPremium(data, true);
+				prevState.data = this.extractPremium(data, false);
 				prevState.loading = false;
 				return prevState;
 			});
