@@ -54,4 +54,84 @@
 		.body {
 		}
 	}
+
+	/**
+		RETROFITS FOR THIS VERSION TO WORK IN BOOTSTRAP 5
+	*/
+
+	.exhibitor-article__listing-cta {
+		display: none;
+	}
+	.padded-cta {
+		padding: 10px 0px 20px 10px;
+	}
+	//starting points for bs5 grid
+	$xs: 0px;
+	$sm: 576px;
+	$md: 768px;
+	$lg: 992px;
+	$xl: 1200px;
+	$xxl: 1400px;
+
+	.hidden-xs {
+		@media (max-width: $sm) {
+			display: none !important;
+		}
+	}
+	.visible-xs {
+		@media (max-width: $sm) {
+			display: block !important;
+		}
+	}
+	.hidden-xxl {
+		@media (min-width: $xxl) {
+			display: none !important;
+		}
+	}
+	.visible-xxl {
+		@media (min-width: $xxl) {
+			display: block !important;
+		}
+	}
+
+	.hidden-sm {
+		@media (min-width: $sm) and (max-width: $md) {
+			display: none !important;
+		}
+	}
+	.visible-sm {
+		@media (min-width: $sm) and (max-width: $md) {
+			display: block !important;
+		}
+	}
+	.hidden-md {
+		@media (min-width: $md) and (max-width: $lg) {
+			display: none !important;
+		}
+	}
+	.visible-md {
+		@media (min-width: $md) and (max-width: $lg) {
+			display: block !important;
+		}
+	}
+	.hidden-lg {
+		@media (min-width: $lg) and (max-width: $xl) {
+			display: none !important;
+		}
+	}
+	.visible-lg {
+		@media (min-width: $lg) and (max-width: $xl) {
+			display: block !important;
+		}
+	}
+	.hidden-xl {
+		@media (min-width: $xl) and (max-width: $xxl) {
+			display: none !important;
+		}
+	}
+	.visible-xl {
+		@media (min-width: $xl) and (max-width: $xxl) {
+			display: block !important;
+		}
+	}
 }

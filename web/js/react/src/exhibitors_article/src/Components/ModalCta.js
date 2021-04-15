@@ -28,10 +28,9 @@ class ModalCta extends React.Component {
 
 	render() {
 		let type = this.props.type !== null ? `exhibitor-article__cta--${this.props.type}` : ``;
-		let classes = `exhibitor-article__cta exhibitor-article__cta--${this.props.size} ${type}`;
+		let classes = `exhibitor-article__cta exhibitor-article__cta--${this.props.size} ${type} exhib-contact-cta`;
 		return (
-			<button className={classes} onClick={this.handleClick}>
-				<ContactModal booth_data={this.props.booth_data} options={this.props.options} show={this.state.show} setShow={this.setShow} />
+			<button className={classes} onClick={this.handleClick} name={this.props.booth_data.pagetitle} campaignid={this.props.options.contactcampaign} sfevent={this.props.options.event} boothid={this.props.booth_data.id}>
 				{this.props.text}
 			</button>
 		);

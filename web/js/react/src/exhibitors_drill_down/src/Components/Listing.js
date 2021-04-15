@@ -18,12 +18,12 @@ class Listing extends React.Component {
 		return (
 			<div className="exhibitor-drilldown__content">
 				<Bio
-					name={this.props.booth_data.Exhibiting_Name__c}
-					logo={this.props.booth_data.Logo_Url_Web__c}
-					webbio={this.props.booth_data.Company_Bio_For_Web__c}
-					enhancedbio={this.props.booth_data.Company_Bio_Enhanced__c}
-					link={this.props.booth_data.Company_URL__c}
-					cats={this.props.booth_data.Products_Services__c}
+					name={this.props.data.pagetitle}
+					logo={this.props.data.web_logo}
+					webbio={this.props.data.content}
+					enhancedbio={this.props.data.Company_Bio_Enhanced__c}
+					link={this.props.data.url}
+					cats={this.props.data["exhibitor-cat"]}
 				/>
 
 				{types.map((type, index) => {
@@ -74,8 +74,8 @@ class Listing extends React.Component {
 							key={"video " + index}
 							link={item.Link__c}
 							title={item.Title__c}
-							exName={this.props.booth_data.Exhibiting_Name__c}
-							id={this.props.booth_data.Id}
+							exName={this.props.data.pagetitle}
+							id={this.props.data.id}
 							data-type={"Video"}
 						/>
 					);
@@ -88,8 +88,8 @@ class Listing extends React.Component {
 							link={item.Link__c}
 							thumb={item.Thumbnail_Link__c}
 							type={item.File_Type__c}
-							exName={this.props.booth_data.Exhibiting_Name__c}
-							id={this.props.booth_data.Id}
+							exName={this.props.data.pagetitle}
+							id={this.props.data.id}
 							data-type={"Downloadable"}
 						/>
 					);
@@ -104,7 +104,7 @@ class Listing extends React.Component {
 							image={item.Link__c}
 							body={item.Body__c}
 							title={item.Title__c}
-							booth={this.props.booth_data}
+							booth={this.props.data}
 							options={this.props.options}
 							data-type={"Product"}
 						/>
@@ -119,7 +119,7 @@ class Listing extends React.Component {
 							body={item.Body__c}
 							image={item.Link__c}
 							title={item.Title__c}
-							booth={this.props.booth_data}
+							booth={this.props.data}
 							options={this.props.options}
 							data-type={"News"}
 						/>
@@ -139,14 +139,13 @@ class Listing extends React.Component {
 		return types;
 	};
 	showCta = (hide) => {
-		console.log(hide);
 		if (!hide) {
 			return (
-				<div className="exhibitor-drilldown__listing-cta hidden-xs">
+				<div className="exhibitor-drilldown__listing-cta hidden-xs hidden-sm">
 					<Cta
 						text="ENHANCED LISTING"
 						size="small"
-						type={this.props.booth_data.Exhibitor_listing_type__c == "Enhanced" ? "enhanced-listing" : "premium-listing"}
+						type={this.props.data.Exhibitor_listing_type__c == "Enhanced" ? "enhanced-listing" : "premium-listing"}
 					/>
 				</div>
 			);
@@ -154,13 +153,13 @@ class Listing extends React.Component {
 	};
 	render() {
 		return (
-			<div className="col-sm-9">
+			<div className="col-md-9">
 				<div className="row">
 					{this.showCta(this.props.options)}
-					<h1 className="hidden-xs">{this.props.booth_data.Exhibiting_Name__c}</h1>
-					<QuickMenu types={this.getTypes(this.props.data)} />
+					<h1 className="hidden-xs hidden-sm h1-mob">{this.props.data.pagetitle}</h1>
+					<QuickMenu types={this.getTypes(this.props.data.Exhibitor_Assets__r)} />
 				</div>
-				{this.getAssets(this.props.data)}
+				{this.getAssets(this.props.data.Exhibitor_Assets__r)}
 			</div>
 		);
 	}

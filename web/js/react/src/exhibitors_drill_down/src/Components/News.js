@@ -25,7 +25,7 @@ class News extends React.Component {
 	render() {
 		return (
 			<div className="exhibitor-drilldown__news" data-type={this.props["data-type"]}>
-				<div className="mob hidden-sm hidden-md hidden-lg">
+				<div className="mob hidden-md hidden-lg hidden-xl hidden-xxl">
 					<div>
 						<div className="news__image">
 							<LazyLoad height={100} offset={100} once>
@@ -43,33 +43,35 @@ class News extends React.Component {
 						</div>
 					</div>
 				</div>
-				<div className="desk hidden-xs">
-					<div className="col-sm-3 news__image">
-						<div>
-							<span>
-								<LazyLoad height={100} offset={100} once>
-									<a href={this.link} target="_blank" title={this.props.title} data-type={this.props["data-type"]}>
-										<img className="img-responsive" src={this.getThumb(this.props.image)} alt={this.props.title} />
-									</a>
-								</LazyLoad>
-							</span>
+				<div className="desk hidden-xs hidden-sm">
+					<div className="row">
+						<div className="col-md-3 news__image">
+							<div>
+								<span>
+									<LazyLoad height={100} offset={100} once>
+										<a href={this.link} target="_blank" title={this.props.title} data-type={this.props["data-type"]}>
+											<img className="img-fluid" src={this.getThumb(this.props.image)} alt={this.props.title} />
+										</a>
+									</LazyLoad>
+								</span>
+							</div>
 						</div>
-					</div>
-					<div className="col-sm-9 news__body">
-						<div>
-							<h5>
-								<a href={this.link} target="_blank" title={this.props.title} data-type={this.props["data-type"]}>
-									{this.props.title}
-								</a>
-							</h5>
-							<div className="news__copy">
-								<p>
-									{this.props.intro}
-									{"  "}
+						<div className="col-md-9 news__body">
+							<div>
+								<h5>
 									<a href={this.link} target="_blank" title={this.props.title} data-type={this.props["data-type"]}>
-										Read more...
+										{this.props.title}
 									</a>
-								</p>
+								</h5>
+								<div className="news__copy">
+									<p>
+										{this.props.intro}
+										{"  "}
+										<a href={this.link} target="_blank" title={this.props.title} data-type={this.props["data-type"]}>
+											Read more...
+										</a>
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>

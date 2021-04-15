@@ -46,7 +46,7 @@ class Downloadable extends React.Component {
 
 	render() {
 		return (
-			<div className="col-sm-4 exhibitor-drilldown__downloadable" >
+			<div className="col-md-4 exhibitor-drilldown__downloadable" >
 				<div>
 					<div> 
 						<a href={this.props.link} target="_blank" title={this.props.title} data-id={this.props.id} data-name={this.props.exName} data-type={this.props["data-type"]}>

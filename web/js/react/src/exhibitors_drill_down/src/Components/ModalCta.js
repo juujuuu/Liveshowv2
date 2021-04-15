@@ -1,5 +1,4 @@
 import React from "react";
-import ContactModal from "./ContactModal";
 
 class ModalCta extends React.Component {
 	constructor(props) {
@@ -19,19 +18,12 @@ class ModalCta extends React.Component {
 			this.props.clickHandler();
 		}
 	};
-	setShow = (show) => {
-		this.setState((prevState) => {
-			prevState.show = show;
-			return prevState;
-		});
-	};
 
 	render() {
 		let type = this.props.type !== null ? `exhibitor-drilldown__cta--${this.props.type}` : ``;
-		let classes = `exhibitor-drilldown__cta exhibitor-drilldown__cta--${this.props.size} ${type}`;
+		let classes = `exhibitor-drilldown__cta exhibitor-drilldown__cta--${this.props.size} ${type} exhib-contact-cta`;
 		return (
-			<button className={classes} onClick={this.handleClick}>
-				<ContactModal booth_data={this.props.booth_data} options={this.props.options} show={this.state.show} setShow={this.setShow} />
+			<button className={classes}  name={this.props.data.pagetitle} campaignid={this.props.options.contactcampaign} sfevent={this.props.options.event} boothid={this.props.boothid}>
 				{this.props.text}
 			</button>
 		);

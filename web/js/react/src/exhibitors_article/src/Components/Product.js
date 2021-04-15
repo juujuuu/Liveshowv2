@@ -11,7 +11,7 @@ class Product extends React.Component {
 					""
 				) : (
 					<div className="image">
-						<img className="img-responsive" src={this.props.image} alt={this.props.name} />
+						<img className="img-fluid" src={this.props.image} alt={this.props.name} />
 					</div>
 				)}
 				<div className="body">

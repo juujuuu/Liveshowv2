@@ -5,7 +5,7 @@ import ModalCta from "./ModalCta";
 class MetaInfo extends React.Component {
 	constructor(props) {
 		super(props);
-		this.class = "col-sm-3 exhibitor-drilldown__meta " + props.hide;
+		this.class = "col-md-3 exhibitor-drilldown__meta " + props.hide;
 	}
 
 	getBooth = (continent) => {
@@ -21,11 +21,11 @@ class MetaInfo extends React.Component {
 		console.log(hide);
 		if (!hide) {
 			return (
-				<div className="exhibitor-drilldown__listing-cta hidden-sm hidden-md hidden-lg">
+				<div className="exhibitor-drilldown__listing-cta hidden-md hidden-lg hidden-xl hidden-xxl">
 					<Cta
 						text="ENHANCED LISTING"
 						size="small"
-						type={this.props.booth_data.Exhibitor_listing_type__c == "Enhanced" ? "enhanced-listing" : "premium-listing"}
+						type={this.props.data.Exhibitor_listing_type__c == "Enhanced" ? "enhanced-listing" : "premium-listing"}
 					/>
 				</div>
 			);
@@ -37,12 +37,12 @@ class MetaInfo extends React.Component {
 				<h4>Contact</h4>
 				<p>
 					<a
-						href={data.Company_URL__c.includes("http") ? data.Company_URL__c : "http://" + data.Company_URL__c}
+						href={data.url.includes("http") ? data.url : "http://" + data.url}
 						target="_blank"
 						title={data.Exhibiting_Name__c}>
-						<span style={{ color: "black" }} className="glyphicon glyphicon-link">
+						<i className="bi bi-link-45deg">
 							{"  "}
-						</span>{" "}
+							</i>{" "}
 						Website
 					</a>
 				</p>
@@ -52,7 +52,7 @@ class MetaInfo extends React.Component {
 							<span>
 								<img
 									style={{ width: "20px", height: "auto" }}
-									src="../assets/web/js/react/src/exhibitors_drill_down/src/assets/nearby.png"
+									src="../assets/web/js/react/src/exhibitors_drill_down/assets/nearby.png"
 								/>
 							</span>{" "}
 							View on floorplan
@@ -67,7 +67,7 @@ class MetaInfo extends React.Component {
 							<span>
 								<img
 									style={{ width: "20px", height: "auto" }}
-									src="../assets/web/js/react/src/exhibitors_drill_down/src/assets/linkedin.svg"
+									src="../assets/web/js/react/src/exhibitors_drill_down/assets/linkedin.svg"
 								/>
 							</span>{" "}
 							Linkedin
@@ -82,7 +82,7 @@ class MetaInfo extends React.Component {
 							<span>
 								<img
 									style={{ width: "20px", height: "auto" }}
-									src="../assets/web/js/react/src/exhibitors_drill_down/src/assets/facebook.svg"
+									src="../assets/web/js/react/src/exhibitors_drill_down/assets/facebook.svg"
 								/>
 							</span>{" "}
 							Facebook
@@ -97,7 +97,7 @@ class MetaInfo extends React.Component {
 							<span>
 								<img
 									style={{ width: "20px", height: "auto" }}
-									src="../assets/web/js/react/src/exhibitors_drill_down/src/assets/twitter.svg"
+									src="../assets/web/js/react/src/exhibitors_drill_down/assets/twitter.svg"
 								/>
 							</span>{" "}
 							Twitter
@@ -112,7 +112,7 @@ class MetaInfo extends React.Component {
 							<span>
 								<img
 									style={{ width: "20px", height: "auto" }}
-									src="../assets/web/js/react/src/exhibitors_drill_down/src/assets/youtube.svg"
+									src="../assets/web/js/react/src/exhibitors_drill_down/assets/youtube.svg"
 								/>
 							</span>{" "}
 							Youtube
@@ -123,7 +123,7 @@ class MetaInfo extends React.Component {
 				)}
 				{data.Company_Address__c != null ? (
 					<p className="address">
-						<span className="glyphicon glyphicon-home">{"  "}</span> Address: <br />
+						<i style={{color: "black"}} className="bi bi-house-door-fill"></i> Address: <br />
 						{data.Company_Address__c != null ? (
 							<>
 								<span>{data.Company_Address__c}, </span>
@@ -148,9 +148,9 @@ class MetaInfo extends React.Component {
 						) : (
 							""
 						)}
-						{data.Company_Country__c != null ? (
+						{data.country != null ? (
 							<>
-								<span>{data.Company_Country__c} </span>
+								<span>{data.country} </span>
 								<br />
 							</>
 						) : (
@@ -169,7 +169,7 @@ class MetaInfo extends React.Component {
 			return (
 				<div className="message">
 					<p>
-						Don't forget to register today to meet {this.props.booth_data.Exhibiting_Name__c} at {this.props.options.event}
+						Don't forget to register today to meet {this.props.data.pagetitle} at {this.props.options.event}
 					</p>
 					<Cta size="micro" type="reg" text="REGISTER FOR FREE" />
 				</div>
@@ -206,14 +206,14 @@ class MetaInfo extends React.Component {
 									size="small"
 									type="reg"
 									text="Contact Exhibitor"
-									booth_data={this.props.booth_data}
+									data={this.props.data}
 									options={this.props.options}
 								/>
 							</div>
 							<div className="booth">
-								<h4>{this.getBooth(this.props.options.continent)} Number: {this.props.booth_data.Name}</h4>
+								<h4>{this.getBooth(this.props.options.continent)} Number: {this.props.data["exhibitor-booth"]}</h4>
 							</div>
-							{this.getMeta(this.props.booth_data)}
+							{this.getMeta(this.props.data)}
 							{this.getRegLink()}
 						</div>
 					</div>
@@ -226,11 +226,11 @@ class MetaInfo extends React.Component {
 					<div className="row">
 						<div>
 							<div className="mob-upper">
-								<h1>{this.props.booth_data.Exhibiting_Name__c}</h1>
+								<h1>{this.props.data.pagetitle}</h1>
 								<img
-									className="img-responsive"
-									src={this.props.booth_data.Logo_Url_Web__c}
-									alt={this.props.booth_data.Exhibiting_Name__c}
+									className="img-fluid"
+									src={this.props.data.web_logo}
+									alt={this.props.data.pagetitle}
 								/>
 							</div>
 							<div className="main-cta">
@@ -238,26 +238,26 @@ class MetaInfo extends React.Component {
 									size="small"
 									type="reg"
 									text="Contact Exhibitor"
-									booth_data={this.props.booth_data}
+									data={this.props.data}
 									options={this.props.options}
 								/>
 							</div>
 							<div className="booth">
-								<h4>{this.getBooth(this.props.options.continent)} Number: {this.props.booth_data.Name}</h4>
+								<h4>{this.getBooth(this.props.options.continent)} Number: {this.props.data["exhibitor-booth"]}</h4>
 							</div>
-							{this.getMeta(this.props.booth_data)}
+							{this.getMeta(this.props.data)}
 							{this.getRegLink()}
 							<div className="mob-lower">
 								<div className="bio">
-									<p className="short-bio">{this.props.booth_data.Company_Bio_For_Web__c}</p>
+									<p className="short-bio">{this.props.data.content}</p>
 									<div
 										className="long-bio"
-										dangerouslySetInnerHTML={{ __html: this.props.booth_data.Company_Bio_Enhanced__c }}></div>
+										dangerouslySetInnerHTML={{ __html: this.props.data.Company_Bio_Enhanced__c }}></div>
 									<div className="cats">
 										<p>
 											<i>
 												<span>Categories: </span>
-												{this.getCats(this.props.booth_data.Products_Services__c)}
+												{this.getCats(this.props.data["exhibitor-cat"])}
 											</i>
 										</p>
 									</div>

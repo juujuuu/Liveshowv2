@@ -88,7 +88,7 @@ class Video extends React.Component {
 	render() {
 		if (this.state.valid) {
 			return (
-				<div className="col-sm-4 exhibitor-drilldown__video" data-type={this.props["data-type"]}>
+				<div className="col-12 col-md-4 exhibitor-drilldown__video" data-type={this.props["data-type"]}>
 					<div>
 						{this.getEmbedIframe(this.props.link)}
 					</div>

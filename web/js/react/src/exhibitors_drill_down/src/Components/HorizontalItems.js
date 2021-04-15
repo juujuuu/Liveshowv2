@@ -10,7 +10,9 @@ class HorizontalItems extends React.Component {
 				<p id={this.props.id} style={{marginTop: "-90px", height: "0", marginBottom: "105px"}}></p>
 				<div>
 					<h4>{this.props.title}</h4>
-					{this.props.children}
+					<div className="row">
+						{this.props.children}
+					</div>
 				</div>
 			</div>
 		);

@@ -9,14 +9,15 @@ class QuickMenu extends React.Component {
 
 	handleClick = (event) => {
 		let jump = event.target.getAttribute("target");
-		document.getElementById(jump).scrollIntoView({ behavior: "smooth" });
-		document.getElementById(jump).scrollTop -= 50;
+		let offset = document.getElementById(jump).getBoundingClientRect().top -150;
+		window.scrollTo({
+			top: offset,
+			behavior: "smooth",
+		});
 	};
 
 	populateMenu = (types) => {
-		console.log("types");
-		console.log(types);
-		if(!types.length > 0){
+		if (!types.length > 0) {
 			return;
 		}
 		types = types.map((type, index) => {
@@ -52,11 +53,7 @@ class QuickMenu extends React.Component {
 	};
 
 	render() {
-		return (
-			<div className="exhibitor-drilldown__quickMenu">
-				{this.populateMenu(this.props.types)}
-			</div>
-		);
+		return <div className="exhibitor-drilldown__quickMenu">{this.populateMenu(this.props.types)}</div>;
 	}
 }
 export default QuickMenu;
