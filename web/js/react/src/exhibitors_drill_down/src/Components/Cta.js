@@ -1,5 +1,4 @@
 import React from "react";
-import ContactModal from "./ContactModal";
 
 class Cta extends React.Component {
 	constructor(props) {

@@ -17,7 +17,7 @@ class QuickMenu extends React.Component {
 	};
 
 	populateMenu = (types) => {
-		if (!types.length > 0) {
+		if (!types) {
 			return;
 		}
 		types = types.map((type, index) => {

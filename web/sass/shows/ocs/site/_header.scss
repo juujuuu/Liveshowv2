@@ -67,6 +67,23 @@ header {
 						&--reg--link {
 							background-color: $reg-color;
 						}
+						&.nav-item--secondary-menu {
+							.dropdown-menu {
+								background-color: #595757;
+								border-radius: 0px;
+								text-align: center;
+								margin-top: -1px;
+								margin-bottom: 0;
+								li {
+									& + li {
+										border-top: 1px solid gray;
+									}
+									a {
+										color: #fff;
+									}
+								}
+							}
+						}
 					}
 				}
 			}
@@ -232,6 +249,7 @@ header {
 								}
 							}
 						}
+
 						&:first-child {
 							a {
 								padding-left: 0;

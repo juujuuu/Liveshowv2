@@ -2,6 +2,9 @@
 	height: 600px;
 	.layout-map-footer__right {
 		padding-right: 0;
+		@media (max-width: $mobile-width) {
+			padding-left: 0;
+		}
 		iframe {
 			width: 100%;
 		}

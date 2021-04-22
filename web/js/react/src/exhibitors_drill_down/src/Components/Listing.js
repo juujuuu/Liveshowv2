@@ -15,8 +15,54 @@ class Listing extends React.Component {
 
 	getAssets = (data) => {
 		let types = this.getTypes(data);
-		return (
-			<div className="exhibitor-drilldown__content">
+		if (types) {
+			return (
+				<div className="exhibitor-drilldown__content">
+					<Bio
+						name={this.props.data.pagetitle}
+						logo={this.props.data.web_logo}
+						webbio={this.props.data.content}
+						enhancedbio={this.props.data.Company_Bio_Enhanced__c}
+						link={this.props.data.url}
+						cats={this.props.data["exhibitor-cat"]}
+					/>
+
+					{types.map((type, index) => {
+						switch (type) {
+							case "Video":
+								return (
+									<HorizontalItems id="videos" key={"HR " + index} title="Exhibitor Videos">
+										{this.populate(data, type)}
+									</HorizontalItems>
+								);
+								break;
+							case "Downloadable Resource":
+								return (
+									<HorizontalItems id="downloads" key={"HR " + index} title="Resource Downloads">
+										{this.populate(data, type)}
+									</HorizontalItems>
+								);
+								break;
+							case "Product":
+								return (
+									<VerticalItems id="products" key={"VR " + index} title="Featured Products">
+										{this.populate(data, type)}
+									</VerticalItems>
+								);
+								break;
+							case "News":
+								return (
+									<VerticalItems id="news" key={"VR " + index} title="News Articles">
+										{this.populate(data, type)}
+									</VerticalItems>
+								);
+								break;
+						}
+					})}
+				</div>
+			);
+		} else {
+			return (
 				<Bio
 					name={this.props.data.pagetitle}
 					logo={this.props.data.web_logo}
@@ -25,41 +71,8 @@ class Listing extends React.Component {
 					link={this.props.data.url}
 					cats={this.props.data["exhibitor-cat"]}
 				/>
-
-				{types.map((type, index) => {
-					switch (type) {
-						case "Video":
-							return (
-								<HorizontalItems id="videos" key={"HR " + index} title="Exhibitor Videos">
-									{this.populate(data, type)}
-								</HorizontalItems>
-							);
-							break;
-						case "Downloadable Resource":
-							return (
-								<HorizontalItems id="downloads" key={"HR " + index} title="Resource Downloads">
-									{this.populate(data, type)}
-								</HorizontalItems>
-							);
-							break;
-						case "Product":
-							return (
-								<VerticalItems id="products" key={"VR " + index} title="Featured Products">
-									{this.populate(data, type)}
-								</VerticalItems>
-							);
-							break;
-						case "News":
-							return (
-								<VerticalItems id="news" key={"VR " + index} title="News Articles">
-									{this.populate(data, type)}
-								</VerticalItems>
-							);
-							break;
-					}
-				})}
-			</div>
-		);
+			);
+		}
 	};
 
 	populate = (data, type) => {
@@ -130,6 +143,9 @@ class Listing extends React.Component {
 	};
 
 	getTypes = (data) => {
+		if (!data) {
+			return; //no exhibitor assets __ r
+		}
 		let types = [];
 		data.forEach((item) => {
 			if (!types.includes(item.Asset_Type__c)) {

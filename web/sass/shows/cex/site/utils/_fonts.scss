@@ -1,0 +1,68 @@
+$main-color: #b88e14;
+$strong-color: #2f2621;
+$body: #646464;
+h1,
+h2 {
+	font-family: Helvetica;
+}
+h3,
+h4,
+h5,
+p,
+a,
+li {
+	font-family: motiva-sans;
+}
+h1 {
+	font-size: 45px;
+	font-weight: bold;
+	color: #333333;
+}
+h2 {
+	font-size: 25px;
+	font-weight: bold;
+	color: $main-color;
+}
+h3 {
+	font-size: 20px;
+	font-weight: bold;
+	color: $strong-color;
+}
+h4 {
+	font-size: 18px;
+	font-weight: bold;
+	color: $strong-color;
+}
+p {
+	font-size: 18px;
+	color: $body;
+	margin-bottom: 10px;
+	strong {
+		//color: #333333;
+	}
+}
+li {
+	font-size: 18px;
+	color: $body;
+}
+a {
+	color: $strong-color;
+	text-decoration: none;
+	&:focus,
+	&:hover {
+		color: lighten($color: $strong-color, $amount: 10%);
+		text-decoration: underline;
+	}
+}
+.row {
+	@media (max-width: $mobile-width) {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+@media (max-width: $mobile-width) {
+	p,
+	a {
+		overflow-wrap: break-word;
+	}
+}

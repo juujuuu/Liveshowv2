@@ -82,7 +82,7 @@ class MainMenu extends React.Component {
 				href="https://cerionnano.com/?utm_source=ceramics-expo&utm_medium=display&utm_campaign=2021-ceramics-expo&utm_content=exhibitor-list-sponsor-banner-ad"
 				target="_blank"
 				className="main-menu__ctas__cerion-banner">
-				<img src="./assets/web/js/react/src/exhibitors/src/assets/banner_cerion_360x80_v1.jpg" alt="Cerion banner" />
+				<img src="./assets/web/js/react/src/exhibitors/assets/banner_cerion_360x80_v1.jpg" alt="Cerion banner" />
 			</a>
 		);
 	};

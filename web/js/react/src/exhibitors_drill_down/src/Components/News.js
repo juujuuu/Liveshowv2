@@ -4,7 +4,7 @@ import LazyLoad from "react-lazyload";
 class News extends React.Component {
 	constructor(props) {
 		super(props);
-		this.link = "../exhibitor-list/product?boothid=" + props.booth.Id + "&assetid=" + props.id;
+		this.link = "../exhibitor-list/product?boothid=" + props.booth.id + "&assetid=" + props.id;
 	}
 
 	openProduct = () => {
