@@ -60,10 +60,10 @@ class App extends React.Component {
 		console.log("get slides");
 		console.log(data);
 		let slides = data.map((session, index) => {
-			return <Slide session={session} key={`slide-${index + 1}`} />;
+			return <Slide session={session} key={`slide-${index + 1}`} test={index} />;
 		});
 		return (
-			<div className="accordion accordion-flush conference-agenda__sessions" id="accordionFlushExample">
+			<div className="accordion accordion-flush conference-agenda__sessions" id="conference-agenda__sessions">
 				{slides}
 			</div>
 		);
