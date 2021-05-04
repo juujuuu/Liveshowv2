@@ -3,14 +3,15 @@ import React from 'react';
 class SearchInput extends React.Component{
     constructor(props){
         super(props);
-        this.state = {value: ""}
+        //this.state = {value: ""}
     }
-    handleChange = ()=>{
-        return;
+    handleChange = (event)=>{
+        let val = event.target.value;
+        this.props.handler(val);
     }
     render(){
         return (
-            <input id="search" type="text" name="search" title="Search" placeholder="" value={this.state.value}/>
+            <input onChange={this.handleChange} className="search" id="conference_search" type="text" name="conference_search" placeholder="" value={this.props.value}/>
         );
     }
 }

@@ -5,28 +5,104 @@ class Slide extends React.Component {
 		super(props);
 		this.state = {
 			show: false,
+			activating: false,
 		};
+		this.bodyRef = React.createRef();
 	}
+	static defaultProps = {
+		open: false,
+	};
 
 	handleClick = (event) => {
 		this.setState((prevState) => {
 			prevState.show = !prevState.show;
+			prevState.activating = true;
 			return prevState;
 		});
+		setTimeout(() => {
+			this.setState((prevState) => {
+				prevState.activating = false;
+				return prevState;
+			});
+		}, 250);
 	};
-
+	getTime = (timeObj) => {
+		if (this.props.continent == "USA") {
+			let hour = timeObj.hour;
+			let minute = timeObj.minute;
+			if (timeObj.ampm == "PM") {
+				if (hour != 12) {
+					hour = hour - 12;
+				}
+			}
+			return `${hour}.${minute}${timeObj.ampm}`;
+		} else if (this.props.continent == "Germany") {
+			return `${hour}.${minute}`;
+		}
+	};
+	getSpeakers = () => {
+		if (this.props.session.presentations.length < 1) {
+			return;
+		}
+		let speakers = this.props.session.presentations.map((speaker, index) => {
+			return (
+				<div key={`speaker-${index}`} className={`row speakers__speaker`}>
+					<div className="col-3 speaker__headshot">
+						<img className="img-fluid" src={speaker.Head_Shot_URL__c} alt={`${speaker.First_Name__c} ${speaker.Last_Name__c}`} />
+					</div>
+					<div className="col-5 speaker__info">
+						<h3 className="speaker__info__name">{`${speaker.Title__c != null ? speaker.Title__c + " " : ""}${speaker.First_Name__c} ${
+							speaker.Last_Name__c
+						}`}</h3>
+						<h3 className="speaker__info__job-title">{`${speaker.Job_Title__c}`}</h3>
+						<h3 className="speaker__info__company">{`${speaker.Company__c}`}</h3>
+					</div>
+					<div className="col-4 speaker__company">
+						<img className="img-fluid" src={speaker.Logo_URL__c} alt={`${speaker.Company__c}`} />
+					</div>
+				</div>
+			);
+		});
+		return speakers;
+	};
 	render() {
 		return (
-			<div className="accordion-item">
-				<h2 className="accordion-header">
-					<button className={`accordion-button ${!this.state.show ? "collapsed" : ""}`} type="button">
-						Accordion Item #{this.props.test}
-					</button>
-				</h2>
-				<div className={`accordion-collapse collapse ${this.state.show ? "show" : ""}`}>
-					<div className="accordion-body">
-						Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the
-						first item's accordion body.
+			<div
+				className={`body__session accordion-item session--track-${this.props.session.Track_Number__c} session--day-${this.props.session.Day__c} session--type-${this.props.session.Type__c}`}>
+				<div className="row">
+					<div className="col-2 session__flag">
+						<h3>{this.getTime(this.props.session.normalTime)}</h3>
+					</div>
+					<div className="col-10 session__content">
+						{this.props.session.Type__c == "Break" ? (
+							<>
+								<div className="accordion-header session__title">
+									<button className={`accordion-button ${!this.state.show ? "collapsed" : ""}`} type="button">
+										<div>
+											<h3>{this.props.session.Long_Name__c}</h3>
+											<p>{this.getTime(this.props.session.normalTime)}</p>
+										</div>
+									</button>
+								</div>
+							</>
+						) : (
+							<>
+								<div className="accordion-header session__title" onClick={this.handleClick}>
+									<button className={`accordion-button ${!this.state.show ? "collapsed" : ""}`} type="button">
+										<div>
+											<h3>{this.props.session.Long_Name__c}</h3>
+											<p>{this.getTime(this.props.session.normalTime)}</p>
+										</div>
+									</button>
+								</div>
+								<div ref={this.bodyRef} className={`accordion-collapse collapse session__body ${this.state.show ? "show" : "collapsed"}`}>
+									<div className="accordion-body">
+										<div className="body__synopsis" dangerouslySetInnerHTML={{ __html: this.props.session.Synopsis__c }}></div>
+										<div className="body__speakers">{this.getSpeakers()}</div>
+									</div>
+								</div>
+							</>
+						)}
 					</div>
 				</div>
 			</div>

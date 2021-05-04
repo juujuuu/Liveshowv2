@@ -14,7 +14,7 @@ var options = {
     windowwidth: window.innerWidth,
     downloadagenda: document.querySelector("#root").getAttribute("downloadagenda"),
     convincepdf: document.querySelector("#root").getAttribute("convincepdf"),
-    additionalfilters: document.querySelector("#root").getAttribute("additionalfilters") != undefined ? document.querySelector("#root").getAttribute("additionalfilters").split(" | ") : undefined,
+    additionalfilters: document.querySelector("#root").getAttribute("additionalfilters") != undefined ? document.querySelector("#root").getAttribute("additionalfilters").split(" | ") : false,
     daynameoverride: document.querySelector("#root").getAttribute("daynameoverride") != "" ? document.querySelector("#root").getAttribute("daynameoverride").split(" | ") : undefined
 };
 

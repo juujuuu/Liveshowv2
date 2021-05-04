@@ -6,27 +6,53 @@ class Cta extends React.Component {
 	}
 	static defaultProps = {
 		link: false,
-		clickhandler: false,
+		handler: false,
 		children: "CTA",
+		/* max, reg , micro*/
 		size: "reg",
 		curved: true,
-		color: "primary",
+		/*primary == override
+		ocs-blue==OCS
+		sat-blue==SAT
+		sat-dark-blue==SAT Dark Blue
+		fmc==FMC
+		cex-gold==CEX Gold
+		cex-purple==CEX Purple
+		cex-secondary==CEX White
+		cex-red==CEX Red*/
+		color: "cex-red",
 		active: true,
+		value: false,
+		role: false
 	};
 	handleClick = () => {
-		if (this.props.clickHandler != false) {
-			this.props.clickHandler();
+		if (this.props.handler != false) {
+			if(this.props.role == false){
+				this.props.handler();
+			} else if(this.props.role == "expand"){
+				this.props.handler(true, true);
+			} else if(this.props.role == "collapse"){
+				this.props.handler(true, false);
+			}
 		}
 		return;
 	};
 	render() {
 		return (
 			<button
-				className={`conference-agenda__cta cta--${this.props.size} cta--${this.props.curved ? "curved" : "hard"} cta--${this.props.color}`}
-				clickHandler={this.handleClick}>
-				<a href={this.props.link != false ? this.props.link : ""} title={this.props.children}>
-					{this.props.children}
-				</a>
+				className={`conference-agenda__cta curved-cta curved-cta--${this.props.size} ${
+					!this.props.curved ? "curved-cta--hard" : ""
+				} curved-cta--${this.props.color} vertical-margin--10`}
+				onClick={this.handleClick}>
+				{this.props.link != false ? (
+					<a className="cta__link" href={this.props.link} title={this.props.children}>
+						{this.props.children}
+					</a>
+				) : (
+					<a className="cta__link" title={this.props.children}>
+						{this.props.children}
+					</a>
+				)}
 			</button>
 		);
 	}

@@ -1,0 +1,94 @@
+.conference-agenda {
+	&__body {
+		.conference-agenda__sessions {
+			.body__session {
+				margin: 5px 0;
+				//overrides for session types
+				&.session--type- {
+					&Break {
+						.session__flag {
+							background-color: #2e2b28 !important;
+							border-top: 15px solid #4e4845 !important;
+						}
+						.session__content {
+							background-color: #e4e2e2;
+							.session__title {
+								h3 {
+									color: #4e4845;
+								}
+								.accordion-button {
+									cursor: text;
+									&::after {
+										background-image: unset !important;
+									}
+								}
+							}
+						}
+					}
+				}
+				.session__flag {
+					background-color: red;
+					border-top: 15px solid gray;
+					padding-top: 1rem;
+					text-align: center;
+					h3 {
+						color: #fff;
+					}
+				}
+				.session__content {
+					.session__title {
+						.accordion-button {
+							padding: 0.5rem 1.25rem;
+							background-color: unset;
+							border: none;
+							border-top: none;
+							& > div {
+								padding: 10px 0;
+							}
+							&::after {
+								/*Chevron*/
+								margin-bottom: auto;
+								color: inherit;
+								font-weight: bold;
+								background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+								//margin-left: 30px;
+							}
+							&:focus {
+								box-shadow: unset;
+								border-color: inherit;
+							}
+						}
+					}
+					.session__body {
+						.accordion-body {
+							padding: 0rem 1.25rem 0.5rem 1.25rem;
+							.body__synopsis {
+							}
+							.body__speakers {
+								padding: 0.5rem 0;
+								.speakers__speaker {
+									padding: 0.5rem 0;
+									.speaker__headshot {
+										text-align: center;
+									}
+									.speaker__info {
+										&__name {
+										}
+										&__job-title {
+											font-weight: normal;
+										}
+										&__company {
+										}
+									}
+									.speaker__company {
+										text-align: center;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

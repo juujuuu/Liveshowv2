@@ -1,5 +1,22 @@
+@import "./elem/slide", "./override/override", "./elem/mainNav", "./elem/secondary-nav";
 .conference-agenda {
+	&__body {
+		margin-top: 30px;
+	}
 	&--loading {
 		min-height: 500px;
+	}
+	&__cta {
+		height: fit-content;
+		&.curved-cta--max {
+			width: 100%;
+			.cta__link {
+				font-size: 20px;
+			}
+		}
+		&.curved-cta--hard {
+			padding: 5px 40px 3px 40px;
+			border-radius: unset;
+		}
 	}
 }
