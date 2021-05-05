@@ -14,17 +14,14 @@ class Slide extends React.Component {
 	};
 
 	handleClick = (event) => {
-		this.setState((prevState) => {
-			prevState.show = !prevState.show;
-			prevState.activating = true;
-			return prevState;
-		});
-		setTimeout(() => {
-			this.setState((prevState) => {
-				prevState.activating = false;
-				return prevState;
-			});
-		}, 250);
+		console.log(this.bodyRef.current);
+		//jquery solution (probably not ideal)
+		$(this.bodyRef.current).collapse("toggle");
+		if ($(this.bodyRef.current).prev().find(".accordion-button").hasClass("collapsed")) {
+			$(this.bodyRef.current).prev().find(".accordion-button").removeClass("collapsed");
+		} else {
+			$(this.bodyRef.current).prev().find(".accordion-button").addClass("collapsed");
+		}
 	};
 	getTime = (timeObj) => {
 		if (this.props.continent == "USA") {
@@ -68,16 +65,17 @@ class Slide extends React.Component {
 	render() {
 		return (
 			<div
-				className={`body__session accordion-item session--track-${this.props.session.Track_Number__c} session--day-${this.props.session.Day__c} session--type-${this.props.session.Type__c}`}>
+				className={`body__session accordion-item session--track-${this.props.session.Track_Number__c} session--day-${this.props.session.Day__c} session--type-${this.props.session.Type__c}`}
+				id={this.props.session.Id}>
 				<div className="row">
-					<div className="col-2 session__flag">
+					<div className={`col-${this.props.windowwidth > 992 ? "2" : "3"} session__flag`}>
 						<h3>{this.getTime(this.props.session.normalTime)}</h3>
 					</div>
-					<div className="col-10 session__content">
+					<div className={`col-${this.props.windowwidth > 992 ? "10" : "9"} session__content`}>
 						{this.props.session.Type__c == "Break" ? (
 							<>
 								<div className="accordion-header session__title">
-									<button className={`accordion-button ${!this.state.show ? "collapsed" : ""}`} type="button">
+									<button className={`accordion-button`} type="button">
 										<div>
 											<h3>{this.props.session.Long_Name__c}</h3>
 											<p>{this.getTime(this.props.session.normalTime)}</p>
@@ -88,14 +86,16 @@ class Slide extends React.Component {
 						) : (
 							<>
 								<div className="accordion-header session__title" onClick={this.handleClick}>
-									<button className={`accordion-button ${!this.state.show ? "collapsed" : ""}`} type="button">
+									<button className={`accordion-button ${!this.props.open ? "collapsed" : ""}`} type="button">
 										<div>
 											<h3>{this.props.session.Long_Name__c}</h3>
 											<p>{this.getTime(this.props.session.normalTime)}</p>
 										</div>
 									</button>
 								</div>
-								<div ref={this.bodyRef} className={`accordion-collapse collapse session__body ${this.state.show ? "show" : "collapsed"}`}>
+								<div
+									ref={this.bodyRef}
+									className={`accordion-collapse collapse session__body ${this.props.open ? "show" : "collapsed"}`}>
 									<div className="accordion-body">
 										<div className="body__synopsis" dangerouslySetInnerHTML={{ __html: this.props.session.Synopsis__c }}></div>
 										<div className="body__speakers">{this.getSpeakers()}</div>

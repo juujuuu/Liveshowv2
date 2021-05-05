@@ -43,13 +43,7 @@ class App extends React.Component {
 		}
 		return sessions;
 	};
-	toggleSessions = (force = false, bool) => {
-		if (!force) {
-			let open = !this.state.openSessions;
-		} else {
-			//if force is true set state to value of bool instead
-			let open = bool;
-		}
+	toggleSessions = (open) => {
 		this.setState((prevState) => {
 			prevState.openSessions = open;
 			return prevState;
@@ -147,27 +141,34 @@ class App extends React.Component {
 		}
 	};
 	getSlides = (data) => {
+		console.log(data);
 		if (data == null) {
 			return;
 		}
-		console.log("get slides");
-		console.log(data);
-		let slides = data.map((session, index) => {
+		if (data.length > 0) {
+			let slides = data.map((session, index) => {
+				return (
+					<Slide
+						session={session}
+						windowwidth={this.props.options.windowwidth}
+						continent={this.props.options.continent}
+						key={`slide-${index + 1}`}
+						open={this.state.openSessions}
+					/>
+				);
+			});
 			return (
-				<Slide
-					session={session}
-					windowwidth={this.props.options.windowwidth}
-					continent={this.props.options.continent}
-					key={`slide-${index + 1}`}
-					open={this.state.openSessions}
-				/>
+				<div className="accordion accordion-flush conference-agenda__sessions" id="conference-agenda__sessions">
+					{slides}
+				</div>
 			);
-		});
-		return (
-			<div className="accordion accordion-flush conference-agenda__sessions" id="conference-agenda__sessions">
-				{slides}
-			</div>
-		);
+		} else {
+			return (
+				<div className="conference-agenda__sessions sessions--error-message">
+					<h2>No sessions found</h2>
+				</div>
+			);
+		}
 	};
 	getOptionalFilters = (adFilterList) => {
 		if (!adFilterList) {
@@ -199,7 +200,7 @@ class App extends React.Component {
 						handler={this.setDay}>
 						{this.props.options.daynameoverride == undefined || this.props.windowwidth < 992
 							? `Day ${index + 1}`
-							: `Day ${index + 1} - ${this.props.daynameoverride[index]}`}
+							: `Day ${index + 1} - ${this.props.options.daynameoverride[index]}`}
 					</MainNavButton>
 				</div>
 			);
@@ -242,8 +243,29 @@ class App extends React.Component {
 		});
 	};
 
+	/*orderSessions = (sessions, days) => {
+		//todo split data into an array per day and sort them
+		let tempSessions = JSON.parse(JSON.stringify(sessions));
+		let arr = [];
+		for (let index = 1; index <= days; index++) {
+			let day = tempSessions.filter((session) => {
+				return session.Day__c == index;
+			});
+			data = data.sort((a, b) => {
+				if (a.normalTime.hour + a.normalTime.minute > b.normalTime.hour + b.normalTime.minute) {
+					return 1;
+				}
+				if (a.normalTime.hour + a.normalTime.minute < b.normalTime.hour + b.normalTime.minute) {
+					return 1;
+				}
+				return 0;
+			});
+		}
+
+		return sessions;
+	};*/
+
 	getFullAgenda = (pipedSessions) => {
-		console.log(this.state);
 		//output jsx
 		return (
 			<section className={`conference-agenda conference-agenda--${this.props.options.show}`}>
@@ -254,8 +276,8 @@ class App extends React.Component {
 						</div>
 					</div>
 					<div className="main-nav__tracks">
-						<div className="container">
-							{this.props.options.windowwidth > 992 ? (
+						{this.props.options.windowwidth > 992 ? (
+							<div className="container">
 								<div className="row">
 									<div className="col-8 track-col">{this.getTrackButtons(this.state.sessions, this.state.metaNumbers.track)}</div>
 									<div className="col-4 control-col">
@@ -265,7 +287,8 @@ class App extends React.Component {
 											active={this.state.openSessions}
 											color="primary"
 											handler={this.toggleSessions}
-											role="expand">
+											role="expand"
+											value={true}>
 											Expand all
 										</Cta>
 										<Cta
@@ -274,25 +297,26 @@ class App extends React.Component {
 											active={!this.state.openSessions}
 											color="primary"
 											handler={this.toggleSessions}
-											role="collapse">
+											role="collapse"
+											value={false}>
 											Collapse all
 										</Cta>
 									</div>
 								</div>
-							) : (
-								<>
-									<div className="row ">
-										<div className="col-12">{this.getTrackButtons(this.state.sessions, this.state.metaNumbers.track)}</div>
-									</div>
+							</div>
+						) : (
+							<>
+								<div className="container-fluid tracks__mob-control">
 									<div className="row">
-										<div className="col-12">
+										<div className="col-12 control-col">
 											<Cta
 												key="cta expand"
 												curved={false}
 												active={this.state.openSessions}
 												color="primary"
 												handler={this.toggleSessions}
-												value={[true, true]}>
+												role="expand"
+												value={true}>
 												Expand all
 											</Cta>
 											<Cta
@@ -301,56 +325,66 @@ class App extends React.Component {
 												active={!this.state.openSessions}
 												color="primary"
 												handler={this.toggleSessions}
-												value={[true, false]}>
+												role="collapse"
+												value={false}>
 												Collapse all
 											</Cta>
 										</div>
 									</div>
-								</>
-							)}
-						</div>
+								</div>
+								<div className="container-fluid tracks__mob-tracks">
+									<div className="row ">
+										<div className="col-12 track-col">
+											{this.getTrackButtons(this.state.sessions, this.state.metaNumbers.track)}
+										</div>
+									</div>
+								</div>
+							</>
+						)}
 					</div>
 				</MainNav>
 				<Body>
-					<div className="container">
-						<div className="row">
-							{this.props.options.windowwidth > 992 ? (
-								<>
-									<div className="col-8">{this.getSlides(pipedSessions)}</div>
-									<div className="col-4">
-										<StickyNav>
-											<h3>Search</h3>
-											<SearchInput handler={this.setQuery} value={this.state.filters.query} />
-											{this.props.options.convincepdf != undefined ? (
-												<Cta key="cta convince your boss" size="max" color="primary">
-													CONVINCE YOUR BOSS
-												</Cta>
-											) : (
-												""
-											)}
-											{this.props.options.downloadagenda != undefined ? (
-												<Cta key="cta pdf agenda" size="max" color="primary">
-													DOWNLOAD PDF AGENDA
-												</Cta>
-											) : (
-												""
-											)}
-											{this.props.options.reglink != undefined ? (
-												<Cta key="cta reg button" size="max">
-													REGISTER FOR FREE
-												</Cta>
-											) : (
-												""
-											)}
-											{this.getOptionalFilters(this.props.options.additionalfilters)}
-										</StickyNav>
-									</div>
-								</>
-							) : (
-								<div className="col-12">{this.getSlides(pipedSessions)}</div>
-							)}
+					{this.props.options.windowwidth > 992 ? (
+						<div className="container">
+							<div className="row">
+								<div className="col-8">{this.getSlides(pipedSessions)}</div>
+								<div className="col-4">
+									<StickyNav>
+										<h3>Search</h3>
+										<SearchInput handler={this.setQuery} value={this.state.filters.query} key="search" />
+										{this.props.options.convincepdf != undefined ? (
+											<Cta key="cta convince your boss" size="max" color="primary">
+												CONVINCE YOUR BOSS
+											</Cta>
+										) : (
+											""
+										)}
+										{this.props.options.downloadagenda != undefined ? (
+											<Cta key="cta pdf agenda" size="max" color="primary">
+												DOWNLOAD PDF AGENDA
+											</Cta>
+										) : (
+											""
+										)}
+										{this.props.options.reglink != undefined ? (
+											<Cta key="cta reg button" size="max">
+												REGISTER FOR FREE
+											</Cta>
+										) : (
+											""
+										)}
+										{this.getOptionalFilters(this.props.options.additionalfilters)}
+									</StickyNav>
+								</div>
+							</div>
 						</div>
-					</div>
+					) : (
+						<div className="container-fluid">
+							<div className="row">
+								<div className="col-12">{this.getSlides(pipedSessions)}</div>
+							</div>
+						</div>
+					)}
 				</Body>
 			</section>
 		);
@@ -415,7 +449,7 @@ class App extends React.Component {
 							maxTracks = session.Track_Number__c;
 						}
 					});
-					//order by time
+					//order by day
 					data = data.sort((a, b) => {
 						if (a.Day__c > b.Day__c) {
 							return 1;
@@ -426,15 +460,20 @@ class App extends React.Component {
 						return 0;
 					});
 					data = this.normaliseTimeStamps(data);
+					//data = this.orderSessions(data, maxDays);
 					data = data.sort((a, b) => {
-						if (a.normalTime.hour + a.normalTime.minute > b.normalTime.hour + b.normalTime.minute) {
-							return 1;
-						}
-						if (a.normalTime.hour + a.normalTime.minute < b.normalTime.hour + b.normalTime.minute) {
-							return 1;
+						if (a.Day__c == b.Day__c) {
+							if (a.normalTime.hour + a.normalTime.minute > b.normalTime.hour + b.normalTime.minute) {
+								return 1;
+							}
+							if (a.normalTime.hour + a.normalTime.minute < b.normalTime.hour + b.normalTime.minute) {
+								return -1;
+							}
+							return 0;
 						}
 						return 0;
 					});
+
 					data = data.map((session) => {
 						session.Synopsis__c = session.Synopsis__c == null ? "" : session.Synopsis__c;
 						return session;

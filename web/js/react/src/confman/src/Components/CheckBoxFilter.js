@@ -13,7 +13,6 @@ class CheckBoxFilter extends React.Component{
     }
     handleClick = (event) =>{
         if (this.props.handler != false){
-            console.log("checkbox update");
             this.props.handler(this.props.value);
         }
     }

@@ -23,16 +23,16 @@ class Cta extends React.Component {
 		color: "cex-red",
 		active: true,
 		value: false,
-		role: false
+		role: false,
 	};
 	handleClick = () => {
 		if (this.props.handler != false) {
-			if(this.props.role == false){
+			if (this.props.role == false) {
 				this.props.handler();
-			} else if(this.props.role == "expand"){
-				this.props.handler(true, true);
-			} else if(this.props.role == "collapse"){
-				this.props.handler(true, false);
+			} else if (this.props.role == "expand") {
+				this.props.handler(this.props.value);
+			} else if (this.props.role == "collapse") {
+				this.props.handler(this.props.value);
 			}
 		}
 		return;
@@ -42,7 +42,7 @@ class Cta extends React.Component {
 			<button
 				className={`conference-agenda__cta curved-cta curved-cta--${this.props.size} ${
 					!this.props.curved ? "curved-cta--hard" : ""
-				} curved-cta--${this.props.color} vertical-margin--10`}
+				} curved-cta--${this.props.color} ${this.props.active ? "active" : ""} vertical-margin--10`}
 				onClick={this.handleClick}>
 				{this.props.link != false ? (
 					<a className="cta__link" href={this.props.link} title={this.props.children}>

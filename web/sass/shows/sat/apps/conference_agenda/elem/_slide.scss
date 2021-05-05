@@ -1,3 +1,4 @@
+$mobile-width: 992px;
 .conference-agenda {
 	&__body {
 		.conference-agenda__sessions {
@@ -29,6 +30,7 @@
 				.session__flag {
 					background-color: red;
 					border-top: 15px solid gray;
+					padding: 0;
 					padding-top: 1rem;
 					text-align: center;
 					h3 {
@@ -36,6 +38,9 @@
 					}
 				}
 				.session__content {
+					@media (max-width: $mobile-width) {
+						padding: 0;
+					}
 					.session__title {
 						.accordion-button {
 							padding: 0.5rem 1.25rem;
@@ -70,6 +75,9 @@
 									padding: 0.5rem 0;
 									.speaker__headshot {
 										text-align: center;
+										@media (max-width: $mobile-width) {
+											padding: 0;
+										}
 									}
 									.speaker__info {
 										&__name {
