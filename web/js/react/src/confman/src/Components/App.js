@@ -332,7 +332,7 @@ class App extends React.Component {
 									<StickyNav>
 										<h3>Search</h3>
 										<SearchInput handler={this.setQuery} value={this.state.filters.query} key="search" />
-										{this.props.options.convincepdf != undefined ? (
+										{this.props.options.convincepdf != undefined && this.props.options.convincepdf != "" ? (
 											<Cta key="cta convince your boss" size="max" color="primary">
 												CONVINCE YOUR BOSS
 											</Cta>
@@ -346,7 +346,7 @@ class App extends React.Component {
 										) : (
 											""
 										)}
-										{this.props.options.reglink != undefined ? (
+										{this.props.options.reglink != undefined && this.props.options.reglink != "" ? (
 											<Cta key="cta reg button" size="max">
 												REGISTER FOR FREE
 											</Cta>
