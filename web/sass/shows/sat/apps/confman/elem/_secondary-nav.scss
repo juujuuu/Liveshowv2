@@ -1,11 +1,11 @@
 .conference-agenda__secondary-nav {
-	.search {
-		display: block;
-		margin: auto;
-		width: 100%;
-	}
 	&.secondary-nav--affix {
 		position: fixed;
 		top: 80px;
 	}
+}
+.confman__search {
+	display: block;
+	margin: auto;
+	width: 100%;
 }

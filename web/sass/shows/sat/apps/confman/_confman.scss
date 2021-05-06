@@ -1,24 +1,31 @@
 @import "./elem/slide", "./override/override", "./elem/mainNav", "./elem/secondary-nav";
 $mobile-width: 992px;
-.conference-agenda {
-	&__body {
-		margin-top: 30px;
-		@media (max-width: 992px) {
-			margin-top: 10px;
-			& > .container-fluid {
-				padding: 0;
-				margin: 0;
-				& > .row .col-12 {
+.confman {
+	&.conference-agenda {
+		&__body {
+			margin-top: 30px;
+			@media (max-width: 992px) {
+				margin-top: 10px;
+				& > .container-fluid {
 					padding: 0;
 					margin: 0;
+					& > .row .col-12 {
+						padding: 0;
+						margin: 0;
+					}
 				}
 			}
 		}
+		&--loading {
+			min-height: 500px;
+		}
+		.conference-agenda__sessions {
+			&.sessions--error-message {
+				text-align: center;
+			}
+		}
 	}
-	&--loading {
-		min-height: 500px;
-	}
-	&__cta {
+	.confman__cta {
 		height: fit-content;
 		&.curved-cta--max {
 			width: 100%;
@@ -35,11 +42,6 @@ $mobile-width: 992px;
 				//transition: unset !important;
 				//-webkit-transition: unset !important;
 			}
-		}
-	}
-	.conference-agenda__sessions {
-		&.sessions--error-message {
-			text-align: center;
 		}
 	}
 }

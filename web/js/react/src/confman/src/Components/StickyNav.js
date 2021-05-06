@@ -29,7 +29,7 @@ class StickyNav extends React.Component {
 		return (
 			<div className="sticky-container" ref={this.ref}>
 				<div
-					className={`conference-agenda__secondary-nav secondary-nav--${this.getAffix()}`}
+					className={`confman__side-nav conference-agenda__secondary-nav secondary-nav--${this.getAffix()}`}
 					style={this.state.offsetWidth != false ? { width: this.state.offsetWidth } : {}}>
 					{this.props.children}
 				</div>

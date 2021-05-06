@@ -40,7 +40,7 @@ class Cta extends React.Component {
 	render() {
 		return (
 			<button
-				className={`conference-agenda__cta curved-cta curved-cta--${this.props.size} ${
+				className={`confman__cta curved-cta curved-cta--${this.props.size} ${
 					!this.props.curved ? "curved-cta--hard" : ""
 				} curved-cta--${this.props.color} ${this.props.active ? "active" : ""} vertical-margin--10`}
 				onClick={this.handleClick}>

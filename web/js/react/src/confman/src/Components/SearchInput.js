@@ -11,7 +11,7 @@ class SearchInput extends React.Component{
     }
     render(){
         return (
-            <input onChange={this.handleChange} className="search" id="conference_search" type="text" name="conference_search" placeholder="" value={this.props.value}/>
+            <input onChange={this.handleChange} className="confman__search" id="confman__search" type="text" name="confman_search" placeholder="" value={this.props.value}/>
         );
     }
 }

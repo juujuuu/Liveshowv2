@@ -14,7 +14,7 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			mode: props.options.mode,
-			loading: true,
+			initialLoad: true,
 			sessions: null,
 			speakers: null,
 			metaNumbers: null,
@@ -25,10 +25,11 @@ class App extends React.Component {
 				query: "",
 			},
 			openSessions: false,
+			dealtWithInitialParams: false,
 		};
 	}
 	getRenderList = () => {
-		if (this.props.options.mode === "full-agenda") {
+		if (this.state.mode === "full-agenda") {
 			let deepCloneSessions = JSON.parse(JSON.stringify(this.state)).sessions;
 			let pipedSessions = this.pipeSessions([this.filterDays, this.filterTracks, this.filterQuery], deepCloneSessions);
 			return this.getFullAgenda(pipedSessions);
@@ -71,6 +72,12 @@ class App extends React.Component {
 		}
 		this.setState((prevState) => {
 			prevState.filters.track = tracks;
+			return prevState;
+		});
+	};
+	setMode = (mode = "full-agenda") => {
+		this.setState((prevState) => {
+			prevState.mode = mode;
 			return prevState;
 		});
 	};
@@ -150,7 +157,7 @@ class App extends React.Component {
 				return (
 					<Slide
 						session={session}
-						windowwidth={this.props.options.windowwidth}
+						windowwidth={window.innerWidth}
 						continent={this.props.options.continent}
 						key={`slide-${index + 1}`}
 						open={this.state.openSessions}
@@ -198,7 +205,7 @@ class App extends React.Component {
 						active={index + 1 == this.state.filters.day}
 						value={index + 1}
 						handler={this.setDay}>
-						{this.props.options.daynameoverride == undefined || this.props.windowwidth < 992
+						{this.props.options.daynameoverride == undefined || window.innerWidth < 992
 							? `Day ${index + 1}`
 							: `Day ${index + 1} - ${this.props.options.daynameoverride[index]}`}
 					</MainNavButton>
@@ -234,49 +241,22 @@ class App extends React.Component {
 			let minute = timestamp.substring(14, 16);
 			let ampm = hour > 11 ? "PM" : "AM";
 			session.normalTime = { day: day, hour: hour, minute: minute, ampm: ampm };
-			/*if(index + 1 !== sessions.length ){
-				let nextTimestamp = sessions[index + 1];
-			} else{
-				let session.endNormalTime = -1;
-			}*/
 			return session;
 		});
 	};
 
-	/*orderSessions = (sessions, days) => {
-		//todo split data into an array per day and sort them
-		let tempSessions = JSON.parse(JSON.stringify(sessions));
-		let arr = [];
-		for (let index = 1; index <= days; index++) {
-			let day = tempSessions.filter((session) => {
-				return session.Day__c == index;
-			});
-			data = data.sort((a, b) => {
-				if (a.normalTime.hour + a.normalTime.minute > b.normalTime.hour + b.normalTime.minute) {
-					return 1;
-				}
-				if (a.normalTime.hour + a.normalTime.minute < b.normalTime.hour + b.normalTime.minute) {
-					return 1;
-				}
-				return 0;
-			});
-		}
-
-		return sessions;
-	};*/
-
 	getFullAgenda = (pipedSessions) => {
 		//output jsx
 		return (
-			<section className={`conference-agenda conference-agenda--${this.props.options.show}`}>
-				<MainNav desktop={this.props.options.windowwidth > 992}>
+			<section className={`confman conference-agenda conference-agenda--${this.props.options.show}`}>
+				<MainNav desktop={window.innerWidth > 992}>
 					<div className="main-nav__days">
 						<div className="container">
 							<div className="row">{this.getDayButtons(this.state.metaNumbers.day)}</div>
 						</div>
 					</div>
 					<div className="main-nav__tracks">
-						{this.props.options.windowwidth > 992 ? (
+						{window.innerWidth > 992 ? (
 							<div className="container">
 								<div className="row">
 									<div className="col-8 track-col">{this.getTrackButtons(this.state.sessions, this.state.metaNumbers.track)}</div>
@@ -344,7 +324,7 @@ class App extends React.Component {
 					</div>
 				</MainNav>
 				<Body>
-					{this.props.options.windowwidth > 992 ? (
+					{window.innerWidth > 992 ? (
 						<div className="container">
 							<div className="row">
 								<div className="col-8">{this.getSlides(pipedSessions)}</div>
@@ -429,12 +409,34 @@ class App extends React.Component {
 				console.error(e);
 				return e;
 			}
+		} else if (mode == "speaker-list") {
+			let url = `./rest/confman?call[]=presentation&confId=${id}`;
+			try {
+				let response = await fetch(url, {
+					method: "GET", // *GET, POST, PUT, DELETE, etc.
+					mode: "same-origin", // no-cors, *cors, same-origin
+					cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+					credentials: "same-origin", // include, *same-origin, omit
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+				let presentations;
+				await response.json().then((data) => {
+					//match presentations to sessions
+					presentations = data;
+				});
+				return presentations;
+			} catch (e) {
+				console.error(e);
+				return e;
+			}
 		}
 	};
 
 	componentDidMount = () => {
 		//Initial loading
-		switch (this.props.options.mode) {
+		switch (this.state.mode) {
 			case "full-agenda":
 				this.sfGet(this.props.options.conf, "full-agenda").then((data) => {
 					console.log("Returned");
@@ -460,7 +462,6 @@ class App extends React.Component {
 						return 0;
 					});
 					data = this.normaliseTimeStamps(data);
-					//data = this.orderSessions(data, maxDays);
 					data = data.sort((a, b) => {
 						if (a.Day__c == b.Day__c) {
 							if (a.normalTime.hour + a.normalTime.minute > b.normalTime.hour + b.normalTime.minute) {
@@ -480,25 +481,56 @@ class App extends React.Component {
 					});
 					this.setState((prevState) => {
 						prevState.sessions = data;
-						prevState.mode = this.props.options.mode;
 						prevState.metaNumbers = { track: maxTracks, day: maxDays };
-						prevState.loading = false;
+						prevState.initialLoad = false;
 						return prevState;
 					});
+				});
+				break;
+			case "speaker-list":
+				this.sfGet(this.props.options.conf, "speaker-list").then((data) => {
+					console.log("Returned");
+					console.log(data);
 				});
 				break;
 		}
 	};
 
+	componentDidUpdate = () => {
+		if (!this.state.dealtWithInitialParams) {
+			if (this.props.options.parameters !== null) {
+				//zap to session
+				if (
+					undefined !=
+					this.props.options.parameters.find((param) => {
+						return param[0] == "session-id";
+					})
+				) {
+					let sessionid = this.props.options.parameters.find((param) => {
+						return param[0] == "session-id";
+					})[1];
+					const el = document.querySelector(`#${sessionid} .session__anchor`);
+					el.scrollIntoView({ behavior: "smooth" });
+				}
+			}
+			this.setState((prevState) => {
+				prevState.dealtWithInitialParams = true;
+				return prevState;
+			});
+		}
+	};
+
 	render() {
-		if (this.state.loading) {
+		if (this.state.initialLoad) {
 			return (
-				<div className="conference-agenda conference-agenda--loading d-flex justify-content-center align-items-center">
+				<div className="confman conference-agenda conference-agenda--loading d-flex justify-content-center align-items-center">
 					<Spinner />
 				</div>
 			);
 		} else {
-			if (this.state.sessions != null) {
+			if (this.state.mode == "full-agenda" && this.state.sessions != null) {
+				return this.getRenderList();
+			} else if (this.state.mode == "speaker-list" && this.state.speakers != null) {
 				return this.getRenderList();
 			}
 		}

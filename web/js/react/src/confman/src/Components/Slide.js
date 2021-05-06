@@ -67,6 +67,7 @@ class Slide extends React.Component {
 			<div
 				className={`body__session accordion-item session--track-${this.props.session.Track_Number__c} session--day-${this.props.session.Day__c} session--type-${this.props.session.Type__c}`}
 				id={this.props.session.Id}>
+				<div className="session__anchor" style={{ marginTop: "-50px", height: "50px" }}></div>
 				<div className="row">
 					<div className={`col-${this.props.windowwidth > 992 ? "2" : "3"} session__flag`}>
 						<h3>{this.getTime(this.props.session.normalTime)}</h3>

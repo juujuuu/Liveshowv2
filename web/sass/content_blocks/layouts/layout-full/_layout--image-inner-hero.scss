@@ -17,6 +17,9 @@
 			padding-right: 10px;
 			padding-left: 10px;
 		}
+		h1 {
+			color: #fff;
+		}
 	}
 }
 [data-context^="OCS"] {
@@ -24,6 +27,24 @@
 		.layout--image-inner-hero__text-container {
 			& > * {
 				background-color: rgba(52, 117, 135, 0.85);
+			}
+		}
+	}
+}
+[data-context^="SAT"] {
+	.layout--image-inner-hero {
+		.layout--image-inner-hero__text-container {
+			& > * {
+				background-color: rgba(49, 68, 123, 0.85);
+			}
+		}
+	}
+}
+[data-context^="CEX"] {
+	.layout--image-inner-hero {
+		.layout--image-inner-hero__text-container {
+			& > * {
+				background-color: rgba(44, 51, 100, 0.85);
 			}
 		}
 	}
