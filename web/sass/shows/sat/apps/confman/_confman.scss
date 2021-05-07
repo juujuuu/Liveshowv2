@@ -2,7 +2,7 @@
 $mobile-width: 992px;
 .confman {
 	&.conference-agenda {
-		&__body {
+		.conference-agenda__body {
 			margin-top: 30px;
 			@media (max-width: 992px) {
 				margin-top: 10px;

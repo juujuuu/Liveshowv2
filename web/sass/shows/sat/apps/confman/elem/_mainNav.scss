@@ -2,6 +2,9 @@ $mobile-width: 992px;
 .conference-agenda {
 	&__main-nav {
 		.main-nav__tracks {
+			@media (min-width: $mobile-width) {
+				padding: 10px 0px;
+			}
 			@media (max-width: $mobile-width) {
 				.tracks__mob-control {
 					.control-col {
@@ -26,7 +29,7 @@ $mobile-width: 992px;
 					display: flex;
 					align-items: center;
 					&__checkbox {
-						margin: 0 10px;
+						margin: 0 15px;
 						-moz-transform: scale(2); /* FF */
 						-webkit-transform: scale(2); /* Safari and Chrome */
 						-o-transform: scale(2); /* Opera */
@@ -49,7 +52,8 @@ $mobile-width: 992px;
 		}
 		.main-nav__days {
 			@media (max-width: $mobile-width) {
-				.container {
+				.container-fluid {
+					padding: 0;
 					.row {
 						& > div {
 							&:first-child {

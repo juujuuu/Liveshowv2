@@ -21,7 +21,7 @@ class App extends React.Component {
 			//if a filter is -1 ignore
 			filters: {
 				track: [-1], //ignore these tracks
-				day: -1, //inverse of this ^^
+				day: 1, //inverse of this ^^
 				query: "",
 			},
 			openSessions: false,
@@ -31,7 +31,7 @@ class App extends React.Component {
 	getRenderList = () => {
 		if (this.state.mode === "full-agenda") {
 			let deepCloneSessions = JSON.parse(JSON.stringify(this.state)).sessions;
-			let pipedSessions = this.pipeSessions([this.filterDays, this.filterTracks, this.filterQuery], deepCloneSessions);
+			let pipedSessions = this.pipeSessions([this.filterDays, this.filterTracks, this.filterQuery, this.filterBreaks], deepCloneSessions);
 			return this.getFullAgenda(pipedSessions);
 		}
 	};
@@ -93,6 +93,20 @@ class App extends React.Component {
 			prevState.filters.query = value;
 			return prevState;
 		});
+	};
+	filterBreaks = (sessions) => {
+		//Stop break sessions from stacking up
+		for (let index = 0; index < sessions.length; index++) {
+			const session = sessions[index];
+			if (index + 1 < sessions.length) {
+				if (session.Type__c == "Break") {
+					if (sessions[index + 1].Type__c == "Break" && sessions[index].Start_Time__c == session.Start_Time__c) {
+						sessions.splice(sessions.indexOf(session), 1);
+					}
+				}
+			}
+		}
+		return sessions;
 	};
 	filterTracks = (sessions) => {
 		//remove tracks from that are in filters.track
@@ -251,7 +265,7 @@ class App extends React.Component {
 			<section className={`confman conference-agenda conference-agenda--${this.props.options.show}`}>
 				<MainNav desktop={window.innerWidth > 992}>
 					<div className="main-nav__days">
-						<div className="container">
+						<div className={`container${window.innerWidth < 992 ? "-fluid" : ""}`}>
 							<div className="row">{this.getDayButtons(this.state.metaNumbers.day)}</div>
 						</div>
 					</div>
@@ -331,7 +345,7 @@ class App extends React.Component {
 								<div className="col-4">
 									<StickyNav>
 										<h3>Search</h3>
-										<SearchInput handler={this.setQuery} value={this.state.filters.query} key="search" />
+										<SearchInput handler={this.setQuery} role="conference-search" key="search" />
 										{this.props.options.convincepdf != undefined && this.props.options.convincepdf != "" ? (
 											<Cta key="cta convince your boss" size="max" color="primary">
 												CONVINCE YOUR BOSS
@@ -502,9 +516,10 @@ class App extends React.Component {
 				//zap to session
 				if (
 					undefined !=
-					this.props.options.parameters.find((param) => {
-						return param[0] == "session-id";
-					})
+						this.props.options.parameters.find((param) => {
+							return param[0] == "session-id";
+						}) &&
+					null != this.state.sessions
 				) {
 					let sessionid = this.props.options.parameters.find((param) => {
 						return param[0] == "session-id";

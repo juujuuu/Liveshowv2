@@ -29,13 +29,13 @@ $main-color: #4565ad;
 	}
 	.conference-agenda__main-nav {
 		.main-nav__days {
-			background-color: #31447b;
+			background-color: $main-color;
 			.main-nav__nav-button {
 				&.active,
 				&:hover {
 					transition: background-color 0.25s ease-in;
 					-webkit-transition: background-color 0.25s ease-in;
-					background-color: darken($main-color, 25);
+					background-color: #31447b;
 				}
 				h3 {
 					font-family: motiva-sans;
@@ -44,6 +44,18 @@ $main-color: #4565ad;
 		}
 		.main-nav__tracks {
 			background-color: #e9e7f4;
+			.checkbox-filter {
+				$i: 1;
+				@each $track in $tracks {
+					&.checkbox-filter--track-#{$i} {
+						.bi-check-square-fill,
+						.bi-square {
+							color: nth($tracks, $i);
+						}
+					}
+					$i: $i + 1;
+				}
+			}
 		}
 	}
 	.conference-agenda__body {
@@ -85,5 +97,13 @@ $main-color: #4565ad;
 				}
 			}
 		}
+	}
+	.conference-agenda__secondary-nav {
+		.conference__search {
+			span {
+				background-color: $main-color;
+			}
+		}
+		background-color: $main-color;
 	}
 }

@@ -5,9 +5,9 @@ class Slide extends React.Component {
 		super(props);
 		this.state = {
 			show: false,
-			activating: false,
 		};
 		this.bodyRef = React.createRef();
+		this.mainRef = React.createRef();
 	}
 	static defaultProps = {
 		open: false,
@@ -19,8 +19,13 @@ class Slide extends React.Component {
 		$(this.bodyRef.current).collapse("toggle");
 		if ($(this.bodyRef.current).prev().find(".accordion-button").hasClass("collapsed")) {
 			$(this.bodyRef.current).prev().find(".accordion-button").removeClass("collapsed");
+			$(this.mainRef.current).removeClass("session--collapsed");
+			$(this.mainRef.current).addClass("session--show");
+
 		} else {
 			$(this.bodyRef.current).prev().find(".accordion-button").addClass("collapsed");
+			$(this.mainRef.current).removeClass("session--show");
+			$(this.mainRef.current).addClass("session--collapsed");
 		}
 	};
 	getTime = (timeObj) => {
@@ -44,19 +49,27 @@ class Slide extends React.Component {
 		let speakers = this.props.session.presentations.map((speaker, index) => {
 			return (
 				<div key={`speaker-${index}`} className={`row speakers__speaker`}>
-					<div className="col-3 speaker__headshot">
-						<img className="img-fluid" src={speaker.Head_Shot_URL__c} alt={`${speaker.First_Name__c} ${speaker.Last_Name__c}`} />
-					</div>
-					<div className="col-5 speaker__info">
+					{this.props.windowwidth > 992 ? (
+						<div className="col-3 speaker__headshot">
+							<img className="img-fluid" src={speaker.Head_Shot_URL__c} alt={`${speaker.First_Name__c} ${speaker.Last_Name__c}`} />
+						</div>
+					) : (
+						""
+					)}
+					<div className={`col-${this.props.windowwidth > 992 ? "5" : "12"} speaker__info`}>
 						<h3 className="speaker__info__name">{`${speaker.Title__c != null ? speaker.Title__c + " " : ""}${speaker.First_Name__c} ${
 							speaker.Last_Name__c
 						}`}</h3>
 						<h3 className="speaker__info__job-title">{`${speaker.Job_Title__c}`}</h3>
 						<h3 className="speaker__info__company">{`${speaker.Company__c}`}</h3>
 					</div>
-					<div className="col-4 speaker__company">
-						<img className="img-fluid" src={speaker.Logo_URL__c} alt={`${speaker.Company__c}`} />
-					</div>
+					{this.props.windowwidth > 992 ? (
+						<div className="col-4 speaker__company">
+							<img className="img-fluid" src={speaker.Logo_URL__c} alt={`${speaker.Company__c}`} />
+						</div>
+					) : (
+						""
+					)}
 				</div>
 			);
 		});
@@ -65,8 +78,8 @@ class Slide extends React.Component {
 	render() {
 		return (
 			<div
-				className={`body__session accordion-item session--track-${this.props.session.Track_Number__c} session--day-${this.props.session.Day__c} session--type-${this.props.session.Type__c}`}
-				id={this.props.session.Id}>
+				className={`body__session accordion-item session--track-${this.props.session.Track_Number__c} session--day-${this.props.session.Day__c} session--type-${this.props.session.Type__c} session--${this.props.open ? "show" : "collapsed"}`}
+				id={this.props.session.Id} ref={this.mainRef}>
 				<div className="session__anchor" style={{ marginTop: "-50px", height: "50px" }}></div>
 				<div className="row">
 					<div className={`col-${this.props.windowwidth > 992 ? "2" : "3"} session__flag`}>
@@ -78,8 +91,8 @@ class Slide extends React.Component {
 								<div className="accordion-header session__title">
 									<button className={`accordion-button`} type="button">
 										<div>
-											<h3>{this.props.session.Long_Name__c}</h3>
-											<p>{this.getTime(this.props.session.normalTime)}</p>
+											<h3 className="session__name">{this.props.session.Long_Name__c}</h3>
+											<p className="session__time">{this.getTime(this.props.session.normalTime)}</p>
 										</div>
 									</button>
 								</div>
@@ -89,8 +102,8 @@ class Slide extends React.Component {
 								<div className="accordion-header session__title" onClick={this.handleClick}>
 									<button className={`accordion-button ${!this.props.open ? "collapsed" : ""}`} type="button">
 										<div>
-											<h3>{this.props.session.Long_Name__c}</h3>
-											<p>{this.getTime(this.props.session.normalTime)}</p>
+											<h3 className="session__name">{this.props.session.Long_Name__c}</h3>
+											<p className="session__time">{this.getTime(this.props.session.normalTime)}</p>
 										</div>
 									</button>
 								</div>
