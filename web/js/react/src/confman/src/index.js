@@ -17,6 +17,7 @@ var options = {
 	conf: document.querySelector("#root").getAttribute("conf"),
 	show: document.querySelector("#root").getAttribute("show"),
 	reglink: document.querySelector("#root").getAttribute("reglink"),
+	reginterest: document.querySelector("#root").getAttribute("reginterest"),
 	event: document.querySelector("#root").getAttribute("event"),
 	contactcampaign: document.querySelector("#root").getAttribute("contactcampaign"),
 	continent: document.querySelector("#root").getAttribute("continent"),

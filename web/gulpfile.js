@@ -13,6 +13,13 @@ gulp.task("compress_react", function () {
 	return pipeline(gulp.src(srcpath), uglify(), gulp.dest(outpath));
 });
 
+//Uglify custom bundle in js/bundle.js
+gulp.task("compress_custom", function () {
+	let srcpath = "./js/bundle.js";
+	let outpath = "./js";
+	return pipeline(gulp.src(srcpath), uglify(), gulp.dest(outpath));
+});
+
 //Babel and compress react folders -- hmm needs webpack will finish later
 gulp.task("compile_react", () => {
 	let srcpath = "./js/react/src/**/src/index.js";

@@ -99,11 +99,15 @@ $main-color: #4565ad;
 		}
 	}
 	.conference-agenda__secondary-nav {
-		.conference__search {
+		.confman__search {
 			span {
 				background-color: $main-color;
+				cursor: pointer;
+				transition: background-color 0.15s ease-in-out;
+				&:hover {
+					background-color: lighten($main-color, 20);
+				}
 			}
 		}
-		background-color: $main-color;
 	}
 }

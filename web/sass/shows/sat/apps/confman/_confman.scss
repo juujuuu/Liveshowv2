@@ -34,7 +34,9 @@ $mobile-width: 992px;
 			}
 		}
 		&.curved-cta--hard {
-			padding: 5px 40px 3px 40px;
+			&.curved-cta--reg {
+				padding: 5px 40px 3px 40px;
+			}
 			border-radius: unset;
 			//transition: unset !important;
 			//-webkit-transition: unset !important;

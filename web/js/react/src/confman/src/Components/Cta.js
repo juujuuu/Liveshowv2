@@ -19,11 +19,13 @@ class Cta extends React.Component {
 		cex-gold==CEX Gold
 		cex-purple==CEX Purple
 		cex-secondary==CEX White
-		cex-red==CEX Red*/
+		cex-red==CEX Red
+		black==black*/
 		color: "cex-red",
 		active: true,
 		value: false,
 		role: false,
+		margin: "vertical-margin--10",
 	};
 	handleClick = () => {
 		if (this.props.handler != false) {
@@ -33,28 +35,44 @@ class Cta extends React.Component {
 				this.props.handler(this.props.value);
 			} else if (this.props.role == "collapse") {
 				this.props.handler(this.props.value);
+			} else if (this.props.role == "pop-form") {
+				//handle by site jquery
 			}
 		}
 		return;
 	};
 	render() {
-		return (
-			<button
-				className={`confman__cta curved-cta curved-cta--${this.props.size} ${
-					!this.props.curved ? "curved-cta--hard" : ""
-				} curved-cta--${this.props.color} ${this.props.active ? "active" : ""} vertical-margin--10`}
-				onClick={this.handleClick}>
-				{this.props.link != false ? (
+		if (this.props.role != "pop-form") {
+			return (
+				<button
+					className={`confman__cta curved-cta curved-cta--${this.props.size} ${!this.props.curved ? "curved-cta--hard" : ""} curved-cta--${
+						this.props.color
+					} ${this.props.active ? "active" : ""} ${this.props.margin}`}
+					onClick={this.handleClick}>
+					{this.props.link != false ? (
+						<a className="cta__link" href={this.props.link} title={this.props.children}>
+							{this.props.children}
+						</a>
+					) : (
+						<a className="cta__link" title={this.props.children}>
+							{this.props.children}
+						</a>
+					)}
+				</button>
+			);
+		} else {
+			/* modal pop up form */
+			return (
+				<button
+					className={`confman__cta curved-cta curved-cta--${this.props.size} ${!this.props.curved ? "curved-cta--hard" : ""} curved-cta--${
+						this.props.color
+					} ${this.props.active ? "active" : ""} ${this.props.margin} pop-form`}>
 					<a className="cta__link" href={this.props.link} title={this.props.children}>
 						{this.props.children}
 					</a>
-				) : (
-					<a className="cta__link" title={this.props.children}>
-						{this.props.children}
-					</a>
-				)}
-			</button>
-		);
+				</button>
+			);
+		}
 	}
 }
 export default Cta;

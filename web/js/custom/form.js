@@ -12,7 +12,7 @@ $(document).ready(function () {
 	/**
 	 * Pop up forms
 	 */
-	$(".image--form-modal a, .curved-cta--form-modal a, .nav-item--reg-link.nav-item--reg-link--pop a").click(function (event) {
+	 $("body").on("click", ".image--form-modal a, .curved-cta--form-modal a, .nav-item--reg-link.nav-item--reg-link--pop a, .pop-form a", function (event) {
 		event.preventDefault();
 		let formUri = $(this).attr("href");
 		getForm(formUri).then(function (formHtml) {
@@ -23,8 +23,8 @@ $(document).ready(function () {
 			$("body").append(modal);
 			let myModal = new bootstrap.Modal(document.getElementById("modal"));
 			myModal.show();
-		});
-	});
+		}); 
+	 });	
 
 	/**
 	 * Exhib contact requests

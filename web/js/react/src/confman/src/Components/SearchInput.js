@@ -28,7 +28,7 @@ class SearchInput extends React.Component {
 		return (
 			<form className="confman__search" onSubmit={this.handleSubmit}>
 				<input onChange={this.handleChange} id="confman__search" type="text" name="confman_search" placeholder="" value={this.state.value} />
-				{this.props.role == "conference-search" ? <span>{">"}</span> : ""}
+				{this.props.role == "conference-search" ? <span onClick={this.handleSubmit}>{">"}</span> : ""}
 			</form>
 		);
 	}

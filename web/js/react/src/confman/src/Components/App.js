@@ -94,6 +94,18 @@ class App extends React.Component {
 			return prevState;
 		});
 	};
+	resetFilters = () => {
+		document.querySelector(".confman__search input").value = "";
+		this.setState((prevState) => {
+			prevState.openSessions = false;
+			prevState.filters = {
+				track: [-1],
+				day: 1,
+				query: "",
+			};
+			return prevState;
+		});
+	};
 	filterBreaks = (sessions) => {
 		//Stop break sessions from stacking up
 		for (let index = 0; index < sessions.length; index++) {
@@ -344,7 +356,18 @@ class App extends React.Component {
 								<div className="col-8">{this.getSlides(pipedSessions)}</div>
 								<div className="col-4">
 									<StickyNav>
-										<h3>Search</h3>
+										<div className="side-nav__search">
+											<h3>Search</h3>
+											<Cta
+												key="cta reset"
+												size="micro"
+												color="black"
+												curved={false}
+												margin="vertical-margin--0"
+												handler={this.resetFilters}>
+												CLEAR FILTERS
+											</Cta>
+										</div>
 										<SearchInput handler={this.setQuery} role="conference-search" key="search" />
 										{this.props.options.convincepdf != undefined && this.props.options.convincepdf != "" ? (
 											<Cta key="cta convince your boss" size="max" color="primary">
@@ -363,6 +386,13 @@ class App extends React.Component {
 										{this.props.options.reglink != undefined && this.props.options.reglink != "" ? (
 											<Cta key="cta reg button" size="max">
 												REGISTER FOR FREE
+											</Cta>
+										) : (
+											""
+										)}
+										{this.props.options.reginterest != undefined && this.props.options.reginterest != "" ? (
+											<Cta key="cta reg interest" size="max" role="pop-form" link={this.props.options.reginterest}>
+												REGISTER INTEREST
 											</Cta>
 										) : (
 											""

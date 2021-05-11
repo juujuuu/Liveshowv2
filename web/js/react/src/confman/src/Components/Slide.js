@@ -14,7 +14,6 @@ class Slide extends React.Component {
 	};
 
 	handleClick = (event) => {
-		console.log(this.bodyRef.current);
 		//jquery solution (probably not ideal)
 		$(this.bodyRef.current).collapse("toggle");
 		if ($(this.bodyRef.current).prev().find(".accordion-button").hasClass("collapsed")) {
