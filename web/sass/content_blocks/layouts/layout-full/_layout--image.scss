@@ -23,4 +23,8 @@
 			font-size: 40px;
 		}
 	}
+	&.layout--image--repeat {
+		background-repeat: repeat;
+		height: auto !important;
+	}
 }

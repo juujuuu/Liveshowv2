@@ -127,7 +127,7 @@ header {
 			float: right;
 			display: flex;
 			justify-content: space-between;
-			width: 30%;
+			width: 50%;
 			margin-bottom: 0;
 			a {
 				text-decoration: none;
@@ -144,7 +144,7 @@ header {
 			}
 			//For search
 			&.active {
-				width: 100%;
+				width: 90%;
 				.header__search {
 					div {
 						input {
@@ -205,6 +205,9 @@ header {
 						.active {
 							color: $main-color !important;
 							font-weight: bold !important;
+							&::after {
+								color: #333333 !important;
+							}
 						}
 						.nav-link {
 							font-weight: bold;
