@@ -30,4 +30,15 @@
 		text-align: center;
 		overflow: hidden;
 	}
+	/**
+	/* mods
+	**/
+	&.layout--video--CEX {
+		h1 {
+			font-size: 45px;
+			font-weight: 700;
+			line-height: 50px;
+			font-family: motiva-sans;
+		}
+	}
 }

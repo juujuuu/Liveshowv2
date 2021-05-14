@@ -1,17 +1,18 @@
 $main-color: #b88e14;
 $strong-color: #2f2621;
-$body: #646464;
+$body: #333333;
 h1,
-h2 {
-	font-family: Helvetica;
-}
+h2,
 h3,
 h4,
-h5,
+h5 {
+	font-family: motiva-sans, Helvetica, Arial;
+}
 p,
 a,
 li {
-	font-family: motiva-sans;
+	font-family: Helvetica, Arial;
+	line-height: 26px;
 }
 h1 {
 	font-size: 60px;
@@ -37,12 +38,15 @@ p {
 	font-size: 18px;
 	color: $body;
 	margin-bottom: 10px;
+	font-weight: 400;
 	strong {
+		font-weight: 700;
 		//color: #333333;
 	}
 }
 li {
 	font-size: 18px;
+	font-weight: 400;
 	color: $body;
 }
 a {
