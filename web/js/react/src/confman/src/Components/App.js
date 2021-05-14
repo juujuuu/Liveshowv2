@@ -285,8 +285,8 @@ class App extends React.Component {
 						{window.innerWidth > 992 ? (
 							<div className="container">
 								<div className="row">
-									<div className="col-8 track-col">{this.getTrackButtons(this.state.sessions, this.state.metaNumbers.track)}</div>
-									<div className="col-4 control-col">
+									<div className="col-9 track-col">{this.getTrackButtons(this.state.sessions, this.state.metaNumbers.track)}</div>
+									<div className="col-3 control-col">
 										<Cta
 											key="cta expand"
 											curved={false}

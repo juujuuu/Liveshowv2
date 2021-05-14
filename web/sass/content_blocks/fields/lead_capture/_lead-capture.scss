@@ -36,4 +36,15 @@
 	.lead-capture__thankyou {
 		//color: unset;
 	}
+	&.lead-capture--align-left {
+		margin: auto;
+		margin-left: 0;
+	}
+	&.lead-capture--align-center {
+		margin: auto;
+	}
+	&.lead-capture--align-right {
+		margin: auto;
+		margin-right: 0;
+	}
 }

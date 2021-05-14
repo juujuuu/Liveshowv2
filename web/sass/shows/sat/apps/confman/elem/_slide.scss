@@ -18,6 +18,9 @@ $mobile-width: 992px;
 									color: #4e4845;
 								}
 								.accordion-button {
+									div {
+										width: 100%;
+									}
 									cursor: text;
 									&::after {
 										background-image: unset !important;
