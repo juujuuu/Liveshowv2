@@ -391,7 +391,12 @@ class App extends React.Component {
 											""
 										)}
 										{this.props.options.reginterest != undefined && this.props.options.reginterest != "" ? (
-											<Cta key="cta reg interest" size="max" role="pop-form" link={this.props.options.reginterest}>
+											<Cta
+												key="cta reg interest"
+												size="max"
+												role="pop-form"
+												link={this.props.options.reginterest}
+												value={this.props.options}>
 												REGISTER INTEREST
 											</Cta>
 										) : (

@@ -64,9 +64,9 @@ class Cta extends React.Component {
 			/* modal pop up form */
 			return (
 				<button
-					className={`confman__cta curved-cta curved-cta--${this.props.size} ${!this.props.curved ? "curved-cta--hard" : ""} curved-cta--${
-						this.props.color
-					} ${this.props.active ? "active" : ""} ${this.props.margin} pop-form`}>
+					className={`confman__cta curved-cta confman__cta--reg-pop curved-cta--${this.props.size} ${
+						!this.props.curved ? "curved-cta--hard" : ""
+					} curved-cta--${this.props.color} ${this.props.active ? "active" : ""} ${this.props.margin}`}>
 					<a className="cta__link" href={this.props.link} title={this.props.children}>
 						{this.props.children}
 					</a>
