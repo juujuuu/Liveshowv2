@@ -29,10 +29,15 @@ class App extends React.Component {
 		};
 	}
 	getRenderList = () => {
-		if (this.state.mode === "full-agenda") {
-			let deepCloneSessions = JSON.parse(JSON.stringify(this.state)).sessions;
-			let pipedSessions = this.pipeSessions([this.filterDays, this.filterTracks, this.filterQuery, this.filterBreaks], deepCloneSessions);
-			return this.getFullAgenda(pipedSessions);
+		switch (this.state.mode) {
+			case "full-agenda":
+				let deepCloneSessions = JSON.parse(JSON.stringify(this.state)).sessions;
+				let pipedSessions = this.pipeSessions([this.filterDays, this.filterTracks, this.filterQuery, this.filterBreaks], deepCloneSessions);
+				return this.getFullAgenda(pipedSessions);
+			case "speaker-list":
+				let deepCloneSpeakers = JSON.parse(JSON.stringify(this.state)).speakers;
+				let pipedSpeakers = this.pipeSpeakers([], deepCloneSpeakers);
+				return this.getSpeakerList(pipedSpeakers);
 		}
 	};
 
@@ -43,6 +48,14 @@ class App extends React.Component {
 			});
 		}
 		return sessions;
+	};
+	pipeSpeakers = (filterFunctions = [], speakers) => {
+		if (filterFunctions.length >= 1) {
+			filterFunctions.forEach((filter) => {
+				speakers = filter(speakers);
+			});
+		}
+		return speakers;
 	};
 	toggleSessions = (open) => {
 		this.setState((prevState) => {
@@ -80,6 +93,7 @@ class App extends React.Component {
 			prevState.mode = mode;
 			return prevState;
 		});
+		this.getConfman();
 	};
 	setDay = (value = -1) => {
 		this.setState((prevState) => {
@@ -270,7 +284,14 @@ class App extends React.Component {
 			return session;
 		});
 	};
+	getSpeakerList = (pipedSpeakers) =>{
+		//output jsx
+		return (
+			<section className={`confman speaker-list speaker-list--${this.props.options.show}`}>
 
+			</section>
+		);
+	}
 	getFullAgenda = (pipedSessions) => {
 		//output jsx
 		return (
@@ -459,7 +480,7 @@ class App extends React.Component {
 				return e;
 			}
 		} else if (mode == "speaker-list") {
-			let url = `./rest/confman?call[]=presentation&confId=${id}`;
+			let url = `./rest/confman.php?call[]=presentation&confId=${id}`;
 			try {
 				let response = await fetch(url, {
 					method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -482,9 +503,7 @@ class App extends React.Component {
 			}
 		}
 	};
-
-	componentDidMount = () => {
-		//Initial loading
+	getConfman = () => {
 		switch (this.state.mode) {
 			case "full-agenda":
 				this.sfGet(this.props.options.conf, "full-agenda").then((data) => {
@@ -539,10 +558,19 @@ class App extends React.Component {
 			case "speaker-list":
 				this.sfGet(this.props.options.conf, "speaker-list").then((data) => {
 					console.log("Returned");
-					console.log(data);
+					console.log(data.presentation);
+					this.setState((prevState) => {
+						prevState.speakers = data.presentation;
+						prevState.initialLoad = false;
+						return prevState;
+					});
 				});
 				break;
 		}
+	};
+	componentDidMount = () => {
+		//Initial loading
+		this.getConfman();
 	};
 
 	componentDidUpdate = () => {
@@ -579,9 +607,25 @@ class App extends React.Component {
 			);
 		} else {
 			if (this.state.mode == "full-agenda" && this.state.sessions != null) {
-				return this.getRenderList();
-			} else if (this.state.mode == "speaker-list" && this.state.speakers != null) {
-				return this.getRenderList();
+				if (this.state.sessions != null) {
+					return this.getRenderList();
+				} else {
+					return (
+						<div className="confman conference-agenda conference-agenda--loading d-flex justify-content-center align-items-center">
+							<Spinner />
+						</div>
+					);
+				}
+			} else if (this.state.mode == "speaker-list") {
+				if (this.state.speakers != null) {
+					return this.getRenderList();
+				} else {
+					return (
+						<div className="confman conference-agenda conference-agenda--loading d-flex justify-content-center align-items-center">
+							<Spinner />
+						</div>
+					);
+				}
 			}
 		}
 	}
