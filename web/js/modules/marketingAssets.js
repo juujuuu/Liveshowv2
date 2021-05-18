@@ -5,6 +5,7 @@ $(document).ready(function () {
     let Y1 = 0;
     let Y2 = 0;
     let height = 0;
+    let cache;
     buildAssets();
     function buildAssets() {
         if ($("#placeholder").attr("logo") == "none") {
@@ -17,6 +18,10 @@ $(document).ready(function () {
             if (window.location.href.split("?exhibitorid")[1] == undefined) {
                 element[0] = element[0].concat($("#placeholder").attr("backupid"));
             }
+            cache = "/";
+            if(window.location.href.split("?refresh")[1] != undefined){
+                cache = "/cache=false/";
+            } 
             let name = 'asset-' + (index + 1) + '.jpg';
             //Y1 = heightOffset;
             Y2 = element[1];
@@ -27,6 +32,7 @@ $(document).ready(function () {
             element[0] = element[0].replace("Y2", Y2);
             element[0] = element[0].replace("HEIGHT_INPUT", height);
             element[0] = element[0].replace("NAME", name);
+            element[0] = element[0].replace("/CACHE/", cache);
             let imgTitle = element[2] + " X " + element[1] + "px";
             let tempString = '<div class="repeating-block ' + "asset-" + (index + 1) + '"><h3 style="font-weight: bold;">' + imgTitle + '</h3><a href="" style="cursor: default;" title="Loading..." ><img src="../assets/files/images/media-load.gif" alt="Loading..."/></a></div><div style="margin-bottom: 100px;"></div>';
             $("#img-holder").append(tempString);

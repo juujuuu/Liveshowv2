@@ -1,6 +1,6 @@
 .lead-capture {
 	text-align: left;
-	padding: 8px;
+	padding: 12px;
 	position: relative;
 	.form-control {
 		&:focus {
@@ -13,6 +13,12 @@
 		.lead-capture__thankyou,
 		.lead-capture__thankyou {
 			color: #fff;
+		}
+		a {
+			color: inherit;
+			&:hover {
+				color: inherit;
+			}
 		}
 	}
 	.curved-cta {
