@@ -39,7 +39,7 @@ class App extends React.Component {
 				return this.getFullAgenda(pipedSessions);
 			case "speaker-list":
 				let deepCloneSpeakers = JSON.parse(JSON.stringify(this.state)).speakers;
-				let pipedSpeakers = this.pipeSpeakers([], deepCloneSpeakers);
+				let pipedSpeakers = this.pipeSpeakers([this.filterQuery], deepCloneSpeakers);
 				return this.getSpeakerList(pipedSpeakers);
 				break;
 		}
@@ -67,6 +67,10 @@ class App extends React.Component {
 			return prevState;
 		});
 	};
+	/**
+	 * 
+	 * Setters
+	 */
 	setTrack = (value = -1) => {
 		let tracks = [];
 		if (this.state.filters.track[0] == -1) {
@@ -118,6 +122,9 @@ class App extends React.Component {
 			return prevState;
 		});
 	};
+	/**
+	 * Filters
+	 */
 	resetFilters = () => {
 		document.querySelector(".confman__search input").value = "";
 		this.setState((prevState) => {
@@ -164,6 +171,15 @@ class App extends React.Component {
 			return sessions;
 		}
 	};
+	filterAlphabet = (data) =>{
+		if(this.state.filters.letter == "-1"){
+			return data;
+		} else{
+			data.filter((item)=>{
+				return this.state.filters.letter; //TODO************************ 
+			});
+		}
+	}
 	filterQuery = (data) => {
 		if (this.state.filters.query == "") {
 			return data;
@@ -193,7 +209,7 @@ class App extends React.Component {
 				}
 			});
 		} else if (this.state.mode == "speaker-list") {
-			return data.map((speaker) => {
+			return data.filter((speaker) => {
 				return (
 					lowercase(speaker.First_Name__c).includes(this.state.filters.query) ||
 					lowercase(speaker.Last_Name__c).includes(this.state.filters.query) ||
@@ -208,6 +224,9 @@ class App extends React.Component {
 			return input;
 		}
 	};
+	/**
+	 * Getters
+	 */
 	getSlides = (data) => {
 		console.log(data);
 		if (data == null) {
@@ -293,7 +312,6 @@ class App extends React.Component {
 		}
 		return <>{buttons}</>;
 	};
-
 	normaliseTimeStamps = (sessions) => {
 		return sessions.map((session, index) => {
 			let timestamp = session.Start_Time__c;
@@ -339,13 +357,13 @@ class App extends React.Component {
 		//output jsx
 		return (
 			<section className={`confman speaker-list speaker-list--${this.props.options.show}`}>
-				<MainNav>
+				<MainNav desktop={window.innerWidth > 992}>
 					<div className="container">
 						<div className="row">
-							<div className="col-12 col-md-10">
-								<SearchInput handler={this.setQuery} placeholder="Refine By Speaker Or Company Name" key="search" />
+							<div className="col-12 col-lg-10">
+								<SearchInput handler={this.setQuery} placeholder="Refine By Speaker Or Company Name" key="search" value={this.state.filters.query}/>
 							</div>
-							<div className="col-12 col-md-2">
+							<div className="col-12 col-lg-2">
 								<Cta key="cta speaker-clear" curved={false} color="black" handler={this.resetFilters} margin="vertical-margin--0">
 									CLEAR SEARCH
 								</Cta>
@@ -354,7 +372,7 @@ class App extends React.Component {
 					</div>
 					<div className="container speaker-list__alphabet">
 						<div className="row">
-							<div className="col-12 col-md-10">{this.getLetters()}</div>
+							<div className="col-12">{this.getLetters()}</div>
 						</div>
 					</div>
 				</MainNav>

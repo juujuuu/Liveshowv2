@@ -5,9 +5,15 @@
 			display: flex;
 			flex-direction: row;
 			justify-content: flex-start;
+			@media (max-width: 990px) {
+				justify-content: center;
+			}
 			padding: 0;
 			margin: 10px 0;
-			li {
+			flex-wrap: wrap;
+			a {
+				font-size: 16px;
+				white-space: nowrap;
 				&:hover {
 					text-decoration: underline;
 					cursor: pointer;

@@ -95,9 +95,9 @@ $mobile-width: 992px;
 				align-items: center;
 			}
 			.speaker-list__alphabet {
-				.row > .col-12.col-md-10 {
+				.row > .col-12 {
 					display: flex;
-					justify-content: center;
+					justify-content: flex-start;
 				}
 			}
 			.confman__search {
@@ -107,6 +107,10 @@ $mobile-width: 992px;
 			}
 			.confman__cta {
 				min-height: 48px;
+				@media (max-width: 990px) {
+					margin: 10px 0;
+					width: 100%;
+				}
 			}
 		}
 	}

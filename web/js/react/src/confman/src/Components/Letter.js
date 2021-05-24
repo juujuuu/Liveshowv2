@@ -4,7 +4,7 @@ class Letter extends React.Component {
 	constructor(props) {
 		super(props);
 	}
-	static defaultprops = {
+	static defaultProps = {
 		value: "-1",
 		handler: false,
 	};
@@ -15,9 +15,9 @@ class Letter extends React.Component {
     }
 	render() {
 		return (
-			<li className="confman__letter" onClick={this.handleClick}>
+			<a className="confman__letter" onClick={this.handleClick}>
 				{this.props.children}
-			</li>
+			</a>
 		);
 	}
 }
