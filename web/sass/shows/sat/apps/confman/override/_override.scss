@@ -27,7 +27,7 @@ $main-color: #4565ad;
 			}
 		}
 	}
-	.conference-agenda__main-nav {
+	.confman__main-nav {
 		.main-nav__days {
 			background-color: $main-color;
 			.main-nav__nav-button {
@@ -58,7 +58,7 @@ $main-color: #4565ad;
 			}
 		}
 	}
-	.conference-agenda__body {
+	.confman__body {
 		.body__session {
 			$i: 1;
 			@each $track in $tracks {

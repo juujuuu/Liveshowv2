@@ -8,6 +8,8 @@ import SearchInput from "./SearchInput";
 import Slide from "./Slide";
 import CheckBoxFilter from "./CheckBoxFilter";
 import Body from "./Body";
+import Letter from "./Letter";
+import SpeakerSlide from "./SpeakerSlide";
 
 class App extends React.Component {
 	constructor(props) {
@@ -23,6 +25,7 @@ class App extends React.Component {
 				track: [-1], //ignore these tracks
 				day: 1, //inverse of this ^^
 				query: "",
+				letter: "-1",
 			},
 			openSessions: false,
 			dealtWithInitialParams: false,
@@ -38,6 +41,7 @@ class App extends React.Component {
 				let deepCloneSpeakers = JSON.parse(JSON.stringify(this.state)).speakers;
 				let pipedSpeakers = this.pipeSpeakers([], deepCloneSpeakers);
 				return this.getSpeakerList(pipedSpeakers);
+				break;
 		}
 	};
 
@@ -95,6 +99,12 @@ class App extends React.Component {
 		});
 		this.getConfman();
 	};
+	setLetter = (value = -1) => {
+		this.setState((prevState) => {
+			prevState.filters.letter = value;
+			return prevState;
+		});
+	};
 	setDay = (value = -1) => {
 		this.setState((prevState) => {
 			prevState.filters.day = value;
@@ -116,6 +126,7 @@ class App extends React.Component {
 				track: [-1],
 				day: 1,
 				query: "",
+				letter: "-1",
 			};
 			return prevState;
 		});
@@ -153,33 +164,43 @@ class App extends React.Component {
 			return sessions;
 		}
 	};
-	filterQuery = (sessions) => {
+	filterQuery = (data) => {
 		if (this.state.filters.query == "") {
-			return sessions;
+			return data;
 		}
-		return sessions.filter((session) => {
-			//top level
-			if (
-				lowercase(session.Long_Name__c).includes(this.state.filters.query) ||
-				lowercase(session.Synopsis__c).includes(this.state.filters.query)
-			) {
-				return true;
-			} else if (session.presentations.length > 0) {
+		if (this.state.mode == "full-agenda") {
+			return data.filter((session) => {
+				//top level
 				if (
-					session.presentations.find((presentation) => {
-						if (
-							lowercase(presentation.Company__c).includes(this.state.query) ||
-							lowercase(presentation.First_Name__c).includes(this.state.query) ||
-							lowercase(presentation.Last_Name__c).includes(this.state.query)
-						) {
-							return true;
-						}
-					}) != undefined
+					lowercase(session.Long_Name__c).includes(this.state.filters.query) ||
+					lowercase(session.Synopsis__c).includes(this.state.filters.query)
 				) {
 					return true;
+				} else if (session.presentations.length > 0) {
+					if (
+						session.presentations.find((presentation) => {
+							if (
+								lowercase(presentation.Company__c).includes(this.state.query) ||
+								lowercase(presentation.First_Name__c).includes(this.state.query) ||
+								lowercase(presentation.Last_Name__c).includes(this.state.query)
+							) {
+								return true;
+							}
+						}) != undefined
+					) {
+						return true;
+					}
 				}
-			}
-		});
+			});
+		} else if (this.state.mode == "speaker-list") {
+			return data.map((speaker) => {
+				return (
+					lowercase(speaker.First_Name__c).includes(this.state.filters.query) ||
+					lowercase(speaker.Last_Name__c).includes(this.state.filters.query) ||
+					lowercase(speaker.Company__c).includes(this.state.filters.query)
+				);
+			});
+		}
 		function lowercase(input) {
 			if (typeof input == "string") {
 				input = input.toLowerCase();
@@ -284,14 +305,65 @@ class App extends React.Component {
 			return session;
 		});
 	};
-	getSpeakerList = (pipedSpeakers) =>{
+	getLetters = () => {
+		let alphabet = "View All|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z".split("|");
+		alphabet = alphabet.map((letter, index) => {
+			if (letter == "View All") {
+				return (
+					<Letter handler={this.setLetter} value="-1" key={`letter-View-all`}>
+						{letter}
+					</Letter>
+				);
+			} else {
+				return (
+					<Letter handler={this.setLetter} value={letter} key={`letter-${letter}`}>
+						{letter}
+					</Letter>
+				);
+			}
+		});
+		if ((this.state.mode = "speaker-list")) {
+			return <ul>{alphabet}</ul>;
+		}
+	};
+	getSpeakerSlides = (speakers) => {
+		if (speakers.length > 0) {
+			return speakers.map((speaker, index) => {
+				return <SpeakerSlide id={speaker.Id} speaker={speaker} key={`speaker-${speaker.Id}`} />;
+			});
+		} else {
+			return <h2>No Speakers Found</h2>;
+		}
+	};
+	getSpeakerList = (pipedSpeakers) => {
 		//output jsx
 		return (
 			<section className={`confman speaker-list speaker-list--${this.props.options.show}`}>
-
+				<MainNav>
+					<div className="container">
+						<div className="row">
+							<div className="col-12 col-md-10">
+								<SearchInput handler={this.setQuery} placeholder="Refine By Speaker Or Company Name" key="search" />
+							</div>
+							<div className="col-12 col-md-2">
+								<Cta key="cta speaker-clear" curved={false} color="black" handler={this.resetFilters} margin="vertical-margin--0">
+									CLEAR SEARCH
+								</Cta>
+							</div>
+						</div>
+					</div>
+					<div className="container speaker-list__alphabet">
+						<div className="row">
+							<div className="col-12 col-md-10">{this.getLetters()}</div>
+						</div>
+					</div>
+				</MainNav>
+				<Body>
+					<div className="container speaker-list__slide-list">{this.getSpeakerSlides(pipedSpeakers)}</div>
+				</Body>
 			</section>
 		);
-	}
+	};
 	getFullAgenda = (pipedSessions) => {
 		//output jsx
 		return (

@@ -5,7 +5,7 @@ class MainNav extends React.Component {
 		super(props);
 	}
 	render() {
-		return <div className={`conference-agenda__main-nav main-nav--${this.props.desktop ? "desktop" : "mobile"}`}>{this.props.children}</div>;
+		return <div className={`confman__main-nav main-nav--${this.props.desktop ? "desktop" : "mobile"}`}>{this.props.children}</div>;
 	}
 }
 export default MainNav;

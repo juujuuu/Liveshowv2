@@ -6,7 +6,7 @@ class Body extends React.Component {
 		super(props);
 	}
 	render() {
-		return <section className="conference-agenda__body">{this.props.children}</section>;
+		return <section className="confman__body">{this.props.children}</section>;
 	}
 }
 

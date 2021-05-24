@@ -8,6 +8,7 @@ class SearchInput extends React.Component {
 	static defaultprops = {
 		role: false,
 		handler: false,
+		placeholder: ""
 	};
 	handleChange = (event) => {
 		let val = event.target.value;
@@ -27,7 +28,7 @@ class SearchInput extends React.Component {
 	render() {
 		return (
 			<form className="confman__search" onSubmit={this.handleSubmit}>
-				<input onChange={this.handleChange} id="confman__search" type="text" name="confman_search" placeholder="" value={this.state.value} />
+				<input onChange={this.handleChange} id="confman__search" type="text" name="confman_search" placeholder={this.props.placeholder} value={this.state.value} />
 				{this.props.role == "conference-search" ? <span onClick={this.handleSubmit}>{">"}</span> : ""}
 			</form>
 		);
