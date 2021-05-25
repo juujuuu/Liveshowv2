@@ -5,7 +5,6 @@ const pipeline = require("readable-stream").pipeline;
 const babel = require("gulp-babel");
 const sourcemaps = require("gulp-sourcemaps");
 
-
 //Uglify react bundles in js/react/src/**/src/ directories and outputs to dist folder
 gulp.task("compress_react", function () {
 	let srcpath = "./js/react/src/**/bundle.js";
@@ -35,10 +34,13 @@ gulp.task("compile_react", () => {
 });
 
 gulp.task("sass", () => {
-	return gulp.src("./sass/**/main.scss")
-	.pipe(sourcemaps.init())
-	.pipe(sass())
-	.pipe(sourcemaps.write("."))
-	.pipe(gulp.dest("./stylesheets"));
+	const postcss = require("gulp-postcss");
+	const autoprefixer = require("autoprefixer");
+	return gulp
+		.src("./sass/**/main.scss")
+		.pipe(sourcemaps.init())
+		.pipe(sass())
+		.pipe(postcss([autoprefixer()]))
+		.pipe(sourcemaps.write("."))
+		.pipe(gulp.dest("./stylesheets"));
 });
-
