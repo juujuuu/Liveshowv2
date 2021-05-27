@@ -24,6 +24,7 @@ var options = {
 	mode: document.querySelector("#root").getAttribute("mode"),
 	downloadagenda: document.querySelector("#root").getAttribute("downloadagenda"),
 	convincepdf: document.querySelector("#root").getAttribute("convincepdf"),
+	fullagendalocation: document.querySelector("#root").getAttribute("fullagendalocation"),
 	additionalfilters:
 		document.querySelector("#root").getAttribute("additionalfilters") != undefined
 			? document.querySelector("#root").getAttribute("additionalfilters").split(" | ")

@@ -47,3 +47,11 @@ $mobile-width: 992px;
 		}
 	}
 }
+.modal.modal--speaker-list {
+	.modal-body {
+		img {
+			margin: auto;
+			display: block;
+		}
+	}
+}

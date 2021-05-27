@@ -39,7 +39,7 @@ class App extends React.Component {
 				return this.getFullAgenda(pipedSessions);
 			case "speaker-list":
 				let deepCloneSpeakers = JSON.parse(JSON.stringify(this.state)).speakers;
-				let pipedSpeakers = this.pipeSpeakers([this.filterQuery], deepCloneSpeakers);
+				let pipedSpeakers = this.pipeSpeakers([this.filterAlphabet, this.filterQuery], deepCloneSpeakers);
 				return this.getSpeakerList(pipedSpeakers);
 				break;
 		}
@@ -68,7 +68,7 @@ class App extends React.Component {
 		});
 	};
 	/**
-	 * 
+	 *
 	 * Setters
 	 */
 	setTrack = (value = -1) => {
@@ -105,7 +105,7 @@ class App extends React.Component {
 	};
 	setLetter = (value = -1) => {
 		this.setState((prevState) => {
-			prevState.filters.letter = value;
+			prevState.filters.letter = value.toLowerCase();
 			return prevState;
 		});
 	};
@@ -171,15 +171,24 @@ class App extends React.Component {
 			return sessions;
 		}
 	};
-	filterAlphabet = (data) =>{
-		if(this.state.filters.letter == "-1"){
+	filterAlphabet = (data) => {
+		if (this.state.filters.letter == "-1") {
 			return data;
-		} else{
-			data.filter((item)=>{
-				return this.state.filters.letter; //TODO************************ 
+		} else {
+			return data.filter((item) => {
+				return (
+					lowercase(item.Last_Name__c).charAt(0) == this.state.filters.letter ||
+					lowercase(item.Company__c).charAt(0) == this.state.filters.letter
+				);
 			});
 		}
-	}
+		function lowercase(input) {
+			if (typeof input == "string") {
+				input = input.toLowerCase();
+			}
+			return input;
+		}
+	};
 	filterQuery = (data) => {
 		if (this.state.filters.query == "") {
 			return data;
@@ -323,6 +332,71 @@ class App extends React.Component {
 			return session;
 		});
 	};
+	getModal = (data, role = false) =>{
+		let modal = $.parseHTML(
+			'<div class="modal fade" id="modal modal--speaker-list" role="dialog" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"></div></div></div></div>'
+		);
+		if(role == false){
+			console.error("Role on getModal not set");
+		} else if(role == "speaker-modal"){
+			let sessionsHtml;
+			data.sessions.forEach(session => {
+				let sessionType;
+				sessionType = session.roll;
+				let link = `${this.props.options.fullagendalocation}?session-id=${session.id}`;
+				sessionsHtml = `<p><a href="${link}" title="${session.name}">${session.name}</a></p>`;
+			});
+			console.log(sessionsHtml);
+			let modalBody = `<div class="container"><div class="row"><div class="col-12 col-md-2"><img src="${data.Head_Shot_URL__c}" class="img-fluid" alt="${data.First_Name__c} ${data.Last_Name__c}" /></div><div class="col-12 col-md-6"><p style="font-weight: bold;">${data.First_Name__c} ${data.Last_Name__c},</p><p>${data.Job_Title__c},</p><p style="font-weight: bold;">${data.Company__c}</p></div><div class="col-12 col-md-4"><img src="${data.Logo_URL__c}" class="img-fluid" alt="${data.Company__c}" /></div></div><div class="row"><div class="col-12"><h3 style="margin-top: 10px;">Speaker Bio</h3><p>${data.Speaker__r.Biography__c}</p><h3>Speaking at:</h3><div class="sessions">${sessionsHtml}</div></div></div></div>`;
+			$(modal).find(".modal-body").append(modalBody);
+			$("body").append(modal);
+			let myModal = new bootstrap.Modal(document.getElementById("modal modal--speaker-list"));
+			myModal.show();
+		}
+	};
+	speakerMerge = (originalSpeakers) => {
+		//merge multiple sessions onto one speaker
+		const referenceSpeakers = JSON.parse(JSON.stringify(originalSpeakers));
+		let outputArray = []; //will container unqique speaker__c
+
+		for (let i = 0; i < referenceSpeakers.length; i++) {
+			let element = referenceSpeakers[i];
+			if (
+				undefined !=
+				outputArray.find((speaker) => {
+					return element.Speaker__r.Id == speaker.Speaker__r.Id;
+				})
+			) {
+				//array already contains this speaker
+				//Push session data to array
+				let currentSpeaker = outputArray.find((speaker) => {
+					return element.Speaker__r.Id == speaker.Speaker__r.Id;
+				});
+				let index = outputArray.indexOf(currentSpeaker);
+				outputArray[index].sessions.push({
+					roll: element.Roll__c,
+					id: referenceSpeakers[i].Session__r.Id,
+					day: referenceSpeakers[i].Session__r.Day__c,
+					name: referenceSpeakers[i].Session__r.Name,
+					start: referenceSpeakers[i].Session__r.Start_Time__c,
+					track: referenceSpeakers[i].Session__r.Track_Number__c,
+				});
+			} else {
+				//array doesn't container this speaker__c
+				element.sessions = [];
+				element.sessions.push({
+					roll: element.Roll__c,
+					id: referenceSpeakers[i].Session__r.Id,
+					day: referenceSpeakers[i].Session__r.Day__c,
+					name: referenceSpeakers[i].Session__r.Name,
+					start: referenceSpeakers[i].Session__r.Start_Time__c,
+					track: referenceSpeakers[i].Session__r.Track_Number__c,
+				});
+				outputArray.push(element);
+			}
+		}
+		return outputArray;
+	};
 	getLetters = () => {
 		let alphabet = "View All|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z".split("|");
 		alphabet = alphabet.map((letter, index) => {
@@ -347,7 +421,7 @@ class App extends React.Component {
 	getSpeakerSlides = (speakers) => {
 		if (speakers.length > 0) {
 			return speakers.map((speaker, index) => {
-				return <SpeakerSlide id={speaker.Id} speaker={speaker} key={`speaker-${speaker.Id}`} />;
+				return <SpeakerSlide id={speaker.Id} speaker={speaker} key={`speaker-${speaker.Id}`} modalHandler={this.getModal}/>;
 			});
 		} else {
 			return <h2>No Speakers Found</h2>;
@@ -361,7 +435,12 @@ class App extends React.Component {
 					<div className="container">
 						<div className="row">
 							<div className="col-12 col-lg-10">
-								<SearchInput handler={this.setQuery} placeholder="Refine By Speaker Or Company Name" key="search" value={this.state.filters.query}/>
+								<SearchInput
+									handler={this.setQuery}
+									placeholder="Refine By Speaker Or Company Name"
+									key="search"
+									value={this.state.filters.query}
+								/>
 							</div>
 							<div className="col-12 col-lg-2">
 								<Cta key="cta speaker-clear" curved={false} color="black" handler={this.resetFilters} margin="vertical-margin--0">
@@ -529,7 +608,7 @@ class App extends React.Component {
 			</section>
 		);
 	};
-
+	
 	sfGet = async (id, mode = "full-agenda") => {
 		if (mode == "full-agenda") {
 			let url = `./rest/confman.php?call[]=presentation&call[]=session&confId=${id}`;
@@ -647,10 +726,11 @@ class App extends React.Component {
 				break;
 			case "speaker-list":
 				this.sfGet(this.props.options.conf, "speaker-list").then((data) => {
-					console.log("Returned");
 					console.log(data.presentation);
+					data = this.speakerMerge(data.presentation);
+					console.log(data);
 					this.setState((prevState) => {
-						prevState.speakers = data.presentation;
+						prevState.speakers = data;
 						prevState.initialLoad = false;
 						return prevState;
 					});

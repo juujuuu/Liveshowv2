@@ -34,7 +34,6 @@ class SearchInput extends React.Component {
 	};
 
 	render() {
-		console.log(this.props.role);
 		if (this.props.role == false) {
 			return (
 				<form className="confman__search confman__search--standard" onSubmit={this.handleSubmit}>
