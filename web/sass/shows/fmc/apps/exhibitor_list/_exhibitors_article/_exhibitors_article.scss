@@ -1,0 +1,137 @@
+@import "elem/cta";
+@import "elem/meta_info";
+@import "elem/modal";
+@import "./override/override";
+.exhibitor-article {
+	border-top: 1px solid black;
+	.listing-titles {
+		@media (max-width: 768px) {
+			margin-top: 50px;
+		}
+		h1 {
+			margin-top: 0px;
+			@media (max-width: 768px) {
+				margin: 20px 0px 20px 0px;
+			}
+		}
+		h2 {
+			cursor: pointer;
+			&:hover {
+				opacity: 0.9;
+			}
+		}
+	}
+	.padded-cta {
+		padding: 10px 0px 20px 0px;
+	}
+	.exhibitor-article__listing-cta {
+		.exhibitor-article__cta {
+			position: absolute;
+			right: 0;
+			z-index: 99;
+			margin-top: -1px;
+			& + h1 {
+				margin-left: -15px;
+			}
+			@media (max-width: 768px) {
+				right: -15px;
+			}
+		}
+	}
+	.exhibitor-article__Product {
+		@media (max-width: 768px) {
+			border-top: 1px solid black;
+			padding-top: 20px;
+		}
+		.image {
+			float: left;
+			max-width: 400px;
+			padding: 5px 20px 5px 0px;
+			@media (max-width: 768px) {
+				padding: 5px 0px 15px 0px;
+			}
+		}
+		.body {
+		}
+	}
+
+	/**
+		RETROFITS FOR THIS VERSION TO WORK IN BOOTSTRAP 5
+	*/
+
+	.exhibitor-article__listing-cta {
+		display: none;
+	}
+	.padded-cta {
+		padding: 10px 0px 20px 10px;
+	}
+	//starting points for bs5 grid
+	$xs: 0px;
+	$sm: 576px;
+	$md: 768px;
+	$lg: 992px;
+	$xl: 1200px;
+	$xxl: 1400px;
+
+	.hidden-xs {
+		@media (max-width: $sm) {
+			display: none !important;
+		}
+	}
+	.visible-xs {
+		@media (max-width: $sm) {
+			display: block !important;
+		}
+	}
+	.hidden-xxl {
+		@media (min-width: $xxl) {
+			display: none !important;
+		}
+	}
+	.visible-xxl {
+		@media (min-width: $xxl) {
+			display: block !important;
+		}
+	}
+
+	.hidden-sm {
+		@media (min-width: $sm) and (max-width: $md) {
+			display: none !important;
+		}
+	}
+	.visible-sm {
+		@media (min-width: $sm) and (max-width: $md) {
+			display: block !important;
+		}
+	}
+	.hidden-md {
+		@media (min-width: $md) and (max-width: $lg) {
+			display: none !important;
+		}
+	}
+	.visible-md {
+		@media (min-width: $md) and (max-width: $lg) {
+			display: block !important;
+		}
+	}
+	.hidden-lg {
+		@media (min-width: $lg) and (max-width: $xl) {
+			display: none !important;
+		}
+	}
+	.visible-lg {
+		@media (min-width: $lg) and (max-width: $xl) {
+			display: block !important;
+		}
+	}
+	.hidden-xl {
+		@media (min-width: $xl) and (max-width: $xxl) {
+			display: none !important;
+		}
+	}
+	.visible-xl {
+		@media (min-width: $xl) and (max-width: $xxl) {
+			display: block !important;
+		}
+	}
+}

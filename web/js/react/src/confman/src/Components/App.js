@@ -332,18 +332,18 @@ class App extends React.Component {
 			return session;
 		});
 	};
-	getModal = (data, role = false) =>{
+	getModal = (data, role = false) => {
 		let modal = $.parseHTML(
 			'<div class="modal fade" id="modal modal--speaker-list" role="dialog" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"></div></div></div></div>'
 		);
-		if(role == false){
+		if (role == false) {
 			console.error("Role on getModal not set");
-		} else if(role == "speaker-modal"){
+		} else if (role == "speaker-modal") {
 			let sessionsHtml;
-			data.sessions.forEach(session => {
+			data.sessions.forEach((session) => {
 				let sessionType;
 				sessionType = session.roll;
-				let link = `${this.props.options.fullagendalocation}?session-id=${session.id}`;
+				let link = `${this.props.options.fullagendalocation}?session-id=${session.id}&day=${session.day}`;
 				sessionsHtml = `<p><a href="${link}" title="${session.name}">${session.name}</a></p>`;
 			});
 			console.log(sessionsHtml);
@@ -421,7 +421,7 @@ class App extends React.Component {
 	getSpeakerSlides = (speakers) => {
 		if (speakers.length > 0) {
 			return speakers.map((speaker, index) => {
-				return <SpeakerSlide id={speaker.Id} speaker={speaker} key={`speaker-${speaker.Id}`} modalHandler={this.getModal}/>;
+				return <SpeakerSlide id={speaker.Id} speaker={speaker} key={`speaker-${speaker.Id}`} modalHandler={this.getModal} />;
 			});
 		} else {
 			return <h2>No Speakers Found</h2>;
@@ -608,7 +608,7 @@ class App extends React.Component {
 			</section>
 		);
 	};
-	
+
 	sfGet = async (id, mode = "full-agenda") => {
 		if (mode == "full-agenda") {
 			let url = `./rest/confman.php?call[]=presentation&call[]=session&confId=${id}`;
@@ -757,8 +757,26 @@ class App extends React.Component {
 					let sessionid = this.props.options.parameters.find((param) => {
 						return param[0] == "session-id";
 					})[1];
-					const el = document.querySelector(`#${sessionid} .session__anchor`);
-					el.scrollIntoView({ behavior: "smooth" });
+					let day = this.props.options.parameters.find((param) => {
+						return param[0] == "day";
+					})[1];
+					console.log(this.props.options.parameters);
+					console.log(day);
+					if (this.state.filters.day != day) {
+						this.setState(
+							(prevState) => {
+								prevState.filters.day = day;
+								return prevState;
+							},
+							() => {
+								const el = document.querySelector(`#${sessionid} .session__anchor`);
+								el.scrollIntoView({ behavior: "smooth" });
+							}
+						);
+					} else {
+						const el = document.querySelector(`#${sessionid} .session__anchor`);
+						el.scrollIntoView({ behavior: "smooth" });
+					}
 				}
 			}
 			this.setState((prevState) => {

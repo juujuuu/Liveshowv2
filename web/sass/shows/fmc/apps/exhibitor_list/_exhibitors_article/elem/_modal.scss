@@ -1,0 +1,20 @@
+.fade.modal-backdrop.show {
+	opacity: 0.5;
+}
+.exhibitor-article__modal.modal.show {
+	opacity: 1;
+	@media (max-width: 768px) {
+		top: 10px;
+	}
+	@media (min-width: 768px) {
+		.modal-content {
+			top: 250px;
+		}
+	}
+	.modal-title {
+		float: left;
+		&.h4 {
+			font-weight: bold;
+		}
+	}
+}

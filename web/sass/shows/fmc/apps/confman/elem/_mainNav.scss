@@ -1,0 +1,117 @@
+$mobile-width: 992px;
+.confman {
+	&.conference-agenda {
+		.confman__main-nav {
+			.main-nav__tracks {
+				@media (min-width: $mobile-width) {
+					padding: 10px 0px;
+				}
+				@media (max-width: $mobile-width) {
+					.tracks__mob-control {
+						.control-col {
+							justify-content: center;
+						}
+						.curved-cta--hard {
+							margin: 10px 10px;
+							padding: 5px 30px 3px 30px;
+						}
+					}
+					.tracks__mob-tracks {
+						background: #fff;
+					}
+				}
+				.track-col {
+					display: flex;
+					justify-content: flex-start;
+					flex-wrap: wrap;
+					.checkbox-filter {
+						min-height: 50px;
+						padding: 0 20px;
+						display: flex;
+						align-items: center;
+						&__checkbox {
+							margin: 0 15px;
+							-moz-transform: scale(2); /* FF */
+							-webkit-transform: scale(2); /* Safari and Chrome */
+							-o-transform: scale(2); /* Opera */
+							transform: scale(2);
+						}
+						&__name {
+							h3 {
+								margin: 0;
+								margin-top: 10px;
+								font-size: 16px;
+							}
+						}
+						@media (max-width: $mobile-width) {
+							padding: 10px;
+						}
+					}
+				}
+				.control-col {
+					display: flex;
+					align-items: center;
+				}
+			}
+			.main-nav__days {
+				@media (max-width: $mobile-width) {
+					.container-fluid {
+						padding: 0;
+						.row {
+							& > div {
+								&:first-child {
+									border-left: none;
+								}
+								&:last-child {
+									border-right: none;
+								}
+							}
+						}
+					}
+				}
+				.row {
+					& > div {
+						padding: 0;
+						border-right: 1px solid #fff;
+						border-left: 1px solid #fff;
+					}
+				}
+				.main-nav__nav-button {
+					cursor: pointer;
+					padding: 10px 0;
+					h3 {
+						color: #fff;
+						text-align: center;
+						margin: 0;
+					}
+				}
+			}
+		}
+	}
+	&.speaker-list {
+		.confman__main-nav {
+			margin-top: 20px;
+			.container .row {
+				align-items: center;
+			}
+			.speaker-list__alphabet {
+				.row > .col-12 {
+					display: flex;
+					justify-content: flex-start;
+				}
+			}
+			.confman__search {
+				input {
+					padding: 10px;
+				}
+			}
+			.confman__cta {
+				min-height: 48px;
+				@media (max-width: 990px) {
+					margin: 10px 0;
+					width: 100%;
+				}
+			}
+		}
+	}
+}
