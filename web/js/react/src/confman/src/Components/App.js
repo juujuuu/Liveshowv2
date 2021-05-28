@@ -126,7 +126,7 @@ class App extends React.Component {
 	 * Filters
 	 */
 	resetFilters = () => {
-		document.querySelector(".confman__search input").value = "";
+		document.getElementById("#confman__search").value = "";
 		this.setState((prevState) => {
 			prevState.openSessions = false;
 			prevState.filters = {

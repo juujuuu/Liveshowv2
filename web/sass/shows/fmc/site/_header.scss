@@ -1,5 +1,5 @@
 @use "sass:color";
-$main-color: #31447b;
+$main-color: #e30427;
 $reg-color: #b62f25;
 
 body {
@@ -14,7 +14,8 @@ header {
 			box-shadow: 0 3px 5px;
 			.header__sub-menu,
 			.header__info,
-			.header__main-logo {
+			.header__main-logo,
+			.header__covid-info {
 				display: none !important;
 			}
 			.header__main-menu {
@@ -37,7 +38,7 @@ header {
 			}
 		}
 	}
-	@media screen and (max-width: 990px) {
+	@media screen and (max-width: 992px) {
 		& > .container-fluid {
 			padding-left: 0;
 			padding-right: 0;
@@ -112,6 +113,13 @@ header {
 				}
 			}
 		}
+		.header__covid-info {
+			display: none;
+		}
+	}
+	.header__covid-info {
+		top: 4px;
+		position: absolute;
 	}
 	.header__sub-menu {
 		height: 70px;
@@ -186,7 +194,7 @@ header {
 		.header__sub-menu__co-locate {
 			clear: both;
 			float: right;
-			margin-top: 5px;
+			margin-top: 15px;
 		}
 	}
 	.header__main-menu {
@@ -217,12 +225,15 @@ header {
 								content: "|";
 								text-decoration: none;
 								padding: 0px 10px 0px 10px;
+								color: #333333;
+								font-weight: normal;
 							}
 						}
 						&:nth-last-child(2) {
 							.nav-link {
 								&::after {
-									content: "";
+									//content: "";
+									//^for reg
 								}
 							}
 						}
