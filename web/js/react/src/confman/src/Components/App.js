@@ -574,7 +574,7 @@ class App extends React.Component {
 											""
 										)}
 										{this.props.options.reglink != undefined && this.props.options.reglink != "" ? (
-											<Cta key="cta reg button" size="max">
+											<Cta key="cta reg button" size="max" link={this.props.options.reglink}>
 												REGISTER FOR FREE
 											</Cta>
 										) : (
