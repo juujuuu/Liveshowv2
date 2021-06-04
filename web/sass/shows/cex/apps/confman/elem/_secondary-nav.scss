@@ -13,7 +13,7 @@
 		}
 		.curved-cta--hard.curved-cta--black {
 			margin: 0;
-			&:hover {
+			/*&:hover {
 				box-shadow: none;
 				background-color: lighten(black, $amount: 20);
 				transition: background-color 0.2s linear !important;
@@ -21,7 +21,7 @@
 				.cta__link {
 					color: #fff;
 				}
-			}
+			}*/
 		}
 	}
 }

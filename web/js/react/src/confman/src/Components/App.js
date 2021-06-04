@@ -14,21 +14,37 @@ import SpeakerSlide from "./SpeakerSlide";
 class App extends React.Component {
 	constructor(props) {
 		super(props);
+		let filtersObj;
+		switch (props.options.show) {
+			case "CEX":
+				//if a filter is -1 ignore
+				filtersObj = {
+					track: [2], //ignore these tracks
+					day: 1, //inverse of this ^^
+					query: "",
+					letter: "-1",
+				};
+				break;
+			default:
+				//if a filter is -1 ignore
+				filtersObj = {
+					track: [-1], //ignore these tracks
+					day: 1, //inverse of this ^^
+					query: "",
+					letter: "-1",
+				};
+				break;
+		}
 		this.state = {
 			mode: props.options.mode,
 			initialLoad: true,
 			sessions: null,
 			speakers: null,
 			metaNumbers: null,
-			//if a filter is -1 ignore
-			filters: {
-				track: [-1], //ignore these tracks
-				day: 1, //inverse of this ^^
-				query: "",
-				letter: "-1",
-			},
+			filters: filtersObj,
 			openSessions: false,
 			dealtWithInitialParams: false,
+			queryKey: 0, //for forcing state resets on search components
 		};
 	}
 	getRenderList = () => {
@@ -126,7 +142,6 @@ class App extends React.Component {
 	 * Filters
 	 */
 	resetFilters = () => {
-		document.getElementById("#confman__search").value = "";
 		this.setState((prevState) => {
 			prevState.openSessions = false;
 			prevState.filters = {
@@ -135,6 +150,7 @@ class App extends React.Component {
 				query: "",
 				letter: "-1",
 			};
+			prevState.queryKey++;
 			return prevState;
 		});
 	};
@@ -237,7 +253,6 @@ class App extends React.Component {
 	 * Getters
 	 */
 	getSlides = (data) => {
-		console.log(data);
 		if (data == null) {
 			return;
 		}
@@ -440,6 +455,7 @@ class App extends React.Component {
 									placeholder="Refine By Speaker Or Company Name"
 									key="search"
 									value={this.state.filters.query}
+									key={`search-${this.state.queryKey}`}
 								/>
 							</div>
 							<div className="col-12 col-lg-2">
@@ -558,7 +574,7 @@ class App extends React.Component {
 												CLEAR FILTERS
 											</Cta>
 										</div>
-										<SearchInput handler={this.setQuery} role="conference-search" key="search" />
+										<SearchInput handler={this.setQuery} role="conference-search" key={`search-${this.state.queryKey}`} />
 										{this.props.options.convincepdf != undefined && this.props.options.convincepdf != "" ? (
 											<Cta key="cta convince your boss" size="max" color="primary">
 												CONVINCE YOUR BOSS
@@ -639,8 +655,18 @@ class App extends React.Component {
 							}
 							session.presentations.push(found);
 						}
+						session.presentations = session.presentations.sort((a, b) => {
+							if (a.Order__c > b.Order__c) {
+								return 1;
+							}
+							if (a.Order__c < b.Order__c) {
+								return -1;
+							}
+							return 0;
+						});
 						return session;
 					});
+
 					sessions = data;
 				});
 				return sessions;
@@ -662,7 +688,6 @@ class App extends React.Component {
 				});
 				let presentations;
 				await response.json().then((data) => {
-					//match presentations to sessions
 					presentations = data;
 				});
 				return presentations;
@@ -727,8 +752,18 @@ class App extends React.Component {
 			case "speaker-list":
 				this.sfGet(this.props.options.conf, "speaker-list").then((data) => {
 					console.log(data.presentation);
+
 					data = this.speakerMerge(data.presentation);
 					console.log(data);
+					data = data.sort((a, b) => {
+						if (a.Last_Name__c < b.Last_Name__c) {
+							return -1;
+						}
+						if (a.Last_Name__c > b.Last_Name__c) {
+							return 1;
+						}
+						return 0;
+					});
 					this.setState((prevState) => {
 						prevState.speakers = data;
 						prevState.initialLoad = false;

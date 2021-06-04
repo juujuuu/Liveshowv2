@@ -20,12 +20,17 @@ class Slide extends React.Component {
 			$(this.bodyRef.current).prev().find(".accordion-button").removeClass("collapsed");
 			$(this.mainRef.current).removeClass("session--collapsed");
 			$(this.mainRef.current).addClass("session--show");
-
 		} else {
 			$(this.bodyRef.current).prev().find(".accordion-button").addClass("collapsed");
 			$(this.mainRef.current).removeClass("session--show");
 			$(this.mainRef.current).addClass("session--collapsed");
 		}
+	};
+	getHeadShot = (headshot) => {
+		return headshot == null ? "./assets/resources/shared/web/apps/confman/silhouette.png" : headshot;
+	};
+	getCompany = (company) => {
+		return company == null ? "./assets/resources/shared/web/apps/confman/coming-soon.jpg" : company;
 	};
 	getTime = (timeObj) => {
 		if (this.props.continent == "USA") {
@@ -42,15 +47,17 @@ class Slide extends React.Component {
 		}
 	};
 	getSpeakers = () => {
-		if (this.props.session.presentations.length < 1) {
-			return;
-		}
-		let speakers = this.props.session.presentations.map((speaker, index) => {
+		let toJsx = (speaker, index = -1) => {
+			//quick converter function
 			return (
-				<div key={`speaker-${index}`} className={`row speakers__speaker`}>
+				<div key={`speaker-${index}`} className={`row speakers__speaker`} id={speaker.Id}>
 					{this.props.windowwidth > 992 ? (
 						<div className="col-3 speaker__headshot">
-							<img className="img-fluid" src={speaker.Head_Shot_URL__c} alt={`${speaker.First_Name__c} ${speaker.Last_Name__c}`} />
+							<img
+								className="img-fluid"
+								src={this.getHeadShot(speaker.Head_Shot_URL__c)}
+								alt={`${speaker.First_Name__c} ${speaker.Last_Name__c}`}
+							/>
 						</div>
 					) : (
 						""
@@ -64,22 +71,69 @@ class Slide extends React.Component {
 					</div>
 					{this.props.windowwidth > 992 ? (
 						<div className="col-4 speaker__company">
-							<img className="img-fluid" src={speaker.Logo_URL__c} alt={`${speaker.Company__c}`} />
+							<img className="img-fluid" src={this.getCompany(speaker.Logo_URL__c)} alt={`${speaker.Company__c}`} />
 						</div>
 					) : (
 						""
 					)}
 				</div>
 			);
+		};
+		if (this.props.session.presentations.length < 1) {
+			return;
+		}
+		let presentations = JSON.parse(JSON.stringify(this.props.session.presentations));
+		let hasModerator =
+			undefined !=
+			presentations.find((speaker) => {
+				return speaker.Roll__c == "Moderator";
+			});
+		let moderator;
+		if (hasModerator) {
+			moderator = presentations.find((speaker) => {
+				return speaker.Roll__c == "Moderator";
+			});
+			presentations.splice(presentations.indexOf(moderator), 1);
+			moderator = toJsx(moderator);
+		}
+		let speakers = presentations.map((speaker, index) => {
+			return toJsx(speaker, index);
 		});
-		return speakers;
+		return (
+			<>
+				{hasModerator ? (
+					<>
+						<h3>Moderator</h3>
+						{moderator}
+						<h3>Speakers</h3>
+						{speakers}
+					</>
+				) : (
+					<>
+						<h3>Speakers</h3>
+						{speakers}
+					</>
+				)}
+			</>
+		);
 	};
 	render() {
+		console.log(this.props.session.Id);
+		console.log(this.props.session);
 		return (
 			<div
-				className={`body__session accordion-item session--track-${this.props.session.Track_Number__c} session--day-${this.props.session.Day__c} session--type-${this.props.session.Type__c} session--${this.props.open ? "show" : "collapsed"}`}
-				id={this.props.session.Id} ref={this.mainRef}>
-				<div className="session__anchor" style={this.props.windowwidth > 992 ? { marginTop: "-250px", height: "250px", zIndex: "-1" } : { marginTop: "-150px", height: "150px" }}></div>
+				className={`body__session accordion-item session--track-${this.props.session.Track_Number__c} session--day-${
+					this.props.session.Day__c
+				} session--type-${this.props.session.Type__c} session--${this.props.open ? "show" : "collapsed"}`}
+				id={this.props.session.Id}
+				ref={this.mainRef}>
+				<div
+					className="session__anchor"
+					style={
+						this.props.windowwidth > 992
+							? { marginTop: "-250px", height: "250px", zIndex: "-1" }
+							: { marginTop: "-150px", height: "150px" }
+					}></div>
 				<div className="row">
 					<div className={`col-${this.props.windowwidth > 992 ? "2" : "3"} session__flag`}>
 						<h3>{this.getTime(this.props.session.normalTime)}</h3>
