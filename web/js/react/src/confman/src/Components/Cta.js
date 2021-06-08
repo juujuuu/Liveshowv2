@@ -6,6 +6,7 @@ class Cta extends React.Component {
 	}
 	static defaultProps = {
 		link: false,
+		download: false,
 		handler: false,
 		children: "CTA",
 		/* max, reg , micro*/
@@ -50,11 +51,11 @@ class Cta extends React.Component {
 					} ${this.props.active ? "active" : ""} ${this.props.margin}`}
 					onClick={this.handleClick}>
 					{this.props.link != false ? (
-						<a className="cta__link" href={this.props.link} title={this.props.children}>
+						<a className="curved-cta__link" href={this.props.link} download={this.props.download} title={this.props.children}>
 							{this.props.children}
 						</a>
 					) : (
-						<a className="cta__link" title={this.props.children}>
+						<a className="curved-cta__link" title={this.props.children}>
 							{this.props.children}
 						</a>
 					)}
@@ -67,7 +68,7 @@ class Cta extends React.Component {
 					className={`confman__cta curved-cta confman__cta--reg-pop curved-cta--${this.props.size} ${
 						!this.props.curved ? "curved-cta--hard" : ""
 					} curved-cta--${this.props.color} ${this.props.active ? "active" : ""} ${this.props.margin}`}>
-					<a className="cta__link" href={this.props.link} title={this.props.children}>
+					<a className="curved-cta__link" href={this.props.link} title={this.props.children}>
 						{this.props.children}
 					</a>
 				</button>

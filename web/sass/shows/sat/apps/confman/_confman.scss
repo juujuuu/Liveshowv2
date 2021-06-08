@@ -29,7 +29,7 @@ $mobile-width: 992px;
 		height: fit-content;
 		&.curved-cta--max {
 			width: 100%;
-			.cta__link {
+			.curved-cta__link {
 				font-size: 20px;
 			}
 		}
@@ -40,7 +40,7 @@ $mobile-width: 992px;
 			border-radius: unset;
 			//transition: unset !important;
 			//-webkit-transition: unset !important;
-			.cta__link {
+			.curved-cta__link {
 				//transition: unset !important;
 				//-webkit-transition: unset !important;
 			}

@@ -16,7 +16,7 @@ class App extends React.Component {
 		super(props);
 		let filtersObj;
 		switch (props.options.show) {
-			case "CEX":
+			/*case "CEX":
 				//if a filter is -1 ignore
 				filtersObj = {
 					track: [2], //ignore these tracks
@@ -24,7 +24,7 @@ class App extends React.Component {
 					query: "",
 					letter: "-1",
 				};
-				break;
+				break;*/
 			default:
 				//if a filter is -1 ignore
 				filtersObj = {
@@ -92,10 +92,24 @@ class App extends React.Component {
 		if (this.state.filters.track[0] == -1) {
 			//currently on all so convert empty and add value
 			tracks.push(value);
+			if(this.props.options.show == "CEX"){
+				if(value == 1){
+					this.setDay(2);
+				} else{
+					this.setDay(1);
+				}
+			}
 		} else {
 			tracks = this.state.filters.track;
 			//does the array contain value atm?
 			if (this.state.filters.track.indexOf(value) > -1) {
+				if(this.props.options.show == "CEX"){
+					if(value == 1){
+						this.setDay(1);
+					} else{
+						this.setDay(2);
+					}
+				}
 				//it does so remove
 				tracks.splice(tracks.indexOf(value), 1);
 			} else {
@@ -105,6 +119,9 @@ class App extends React.Component {
 			if (tracks.length < 1) {
 				//tracks now empty so convert to -1
 				tracks.push(-1);
+				if(this.props.options.show == "CEX"){
+					this.setDay(-1);
+				}
 			}
 		}
 		this.setState((prevState) => {
@@ -482,11 +499,15 @@ class App extends React.Component {
 		return (
 			<section className={`confman conference-agenda conference-agenda--${this.props.options.show}`}>
 				<MainNav desktop={window.innerWidth > 992}>
-					<div className="main-nav__days">
-						<div className={`container${window.innerWidth < 992 ? "-fluid" : ""}`}>
-							<div className="row">{this.getDayButtons(this.state.metaNumbers.day)}</div>
+					{this.props.options.show != "CEX" ? (
+						<div className="main-nav__days">
+							<div className={`container${window.innerWidth < 992 ? "-fluid" : ""}`}>
+								<div className="row">{this.getDayButtons(this.state.metaNumbers.day)}</div>
+							</div>
 						</div>
-					</div>
+					) : (
+						""
+					)}
 					<div className="main-nav__tracks">
 						{window.innerWidth > 992 ? (
 							<div className="container">
@@ -583,7 +604,7 @@ class App extends React.Component {
 											""
 										)}
 										{this.props.options.downloadagenda != undefined ? (
-											<Cta key="cta pdf agenda" size="max" color="primary">
+											<Cta key="cta pdf agenda" size="max" color="primary" link={`./assets/resources/shared/pdfs/conference/Conference Agenda ${this.props.options.show}.pdf`} download={true}>
 												DOWNLOAD PDF AGENDA
 											</Cta>
 										) : (
@@ -801,9 +822,11 @@ class App extends React.Component {
 						this.setState(
 							(prevState) => {
 								prevState.filters.day = day;
+								prevState.filters.track = [-1];
 								return prevState;
 							},
 							() => {
+								console.log(`#${sessionid} .session__anchor`);
 								const el = document.querySelector(`#${sessionid} .session__anchor`);
 								el.scrollIntoView({ behavior: "smooth" });
 							}
