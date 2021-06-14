@@ -12,6 +12,10 @@ header {
 			height: 50px;
 			background: #fff;
 			box-shadow: 0 3px 5px;
+			.navbar {
+				padding-bottom: 0;
+				padding-top: 0;
+			}
 			.header__sub-menu,
 			.header__info,
 			.header__main-logo,

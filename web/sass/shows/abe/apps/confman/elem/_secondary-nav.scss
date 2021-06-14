@@ -1,0 +1,45 @@
+.conference-agenda__secondary-nav {
+	&.secondary-nav--affix {
+		position: fixed;
+		top: 80px;
+	}
+	.side-nav__search {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 10px;
+		h3 {
+			margin: 0;
+		}
+		.curved-cta--hard.curved-cta--black {
+			margin: 0;
+			/*&:hover {
+				box-shadow: none;
+				background-color: lighten(black, $amount: 20);
+				transition: background-color 0.2s linear !important;
+				-webkit-transition: background-color 0.2s linear !important;
+				.cta__link {
+					color: #fff;
+				}
+			}*/
+		}
+	}
+}
+.confman__search {
+	position: relative;
+	input {
+		display: block;
+		margin: auto;
+		width: 100%;
+	}
+	span {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 100%;
+		text-align: center;
+		color: #fff;
+		font-weight: bold;
+		width: 30px;
+	}
+}

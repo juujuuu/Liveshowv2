@@ -16,15 +16,15 @@ class App extends React.Component {
 		super(props);
 		let filtersObj;
 		switch (props.options.show) {
-			/*case "CEX":
+			case "CEX":
 				//if a filter is -1 ignore
 				filtersObj = {
-					track: [2], //ignore these tracks
-					day: 1, //inverse of this ^^
+					track: [-1], //ignore these tracks
+					day: -1, //inverse of this ^^
 					query: "",
 					letter: "-1",
 				};
-				break;*/
+				break;
 			default:
 				//if a filter is -1 ignore
 				filtersObj = {
