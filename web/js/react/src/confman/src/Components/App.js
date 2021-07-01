@@ -92,10 +92,10 @@ class App extends React.Component {
 		if (this.state.filters.track[0] == -1) {
 			//currently on all so convert empty and add value
 			tracks.push(value);
-			if(this.props.options.show == "CEX"){
-				if(value == 1){
+			if (this.props.options.show == "CEX") {
+				if (value == 1) {
 					this.setDay(2);
-				} else{
+				} else {
 					this.setDay(1);
 				}
 			}
@@ -103,10 +103,10 @@ class App extends React.Component {
 			tracks = this.state.filters.track;
 			//does the array contain value atm?
 			if (this.state.filters.track.indexOf(value) > -1) {
-				if(this.props.options.show == "CEX"){
-					if(value == 1){
+				if (this.props.options.show == "CEX") {
+					if (value == 1) {
 						this.setDay(1);
-					} else{
+					} else {
 						this.setDay(2);
 					}
 				}
@@ -119,7 +119,7 @@ class App extends React.Component {
 			if (tracks.length < 1) {
 				//tracks now empty so convert to -1
 				tracks.push(-1);
-				if(this.props.options.show == "CEX"){
+				if (this.props.options.show == "CEX") {
 					this.setDay(-1);
 				}
 			}
@@ -238,9 +238,10 @@ class App extends React.Component {
 					if (
 						session.presentations.find((presentation) => {
 							if (
-								lowercase(presentation.Company__c).includes(this.state.query) ||
-								lowercase(presentation.First_Name__c).includes(this.state.query) ||
-								lowercase(presentation.Last_Name__c).includes(this.state.query)
+								lowercase(presentation.Company__c).includes(this.state.filters.query) ||
+								lowercase(presentation.First_Name__c).includes(this.state.filters.query) ||
+								lowercase(presentation.Last_Name__c).includes(this.state.filters.query) ||
+								lowercase(`${presentation.First_Name__c} ${presentation.Last_Name__c}`).includes(this.state.filters.query)
 							) {
 								return true;
 							}
@@ -604,7 +605,12 @@ class App extends React.Component {
 											""
 										)}
 										{this.props.options.downloadagenda != undefined ? (
-											<Cta key="cta pdf agenda" size="max" color="primary" link={`./assets/resources/shared/pdfs/conference/Conference Agenda ${this.props.options.show}.pdf`} download={true}>
+											<Cta
+												key="cta pdf agenda"
+												size="max"
+												color="primary"
+												link={`./assets/resources/shared/pdfs/conference/Conference Agenda ${this.props.options.show}.pdf`}
+												download={true}>
 												DOWNLOAD PDF AGENDA
 											</Cta>
 										) : (
@@ -760,6 +766,7 @@ class App extends React.Component {
 
 					data = data.map((session) => {
 						session.Synopsis__c = session.Synopsis__c == null ? "" : session.Synopsis__c;
+						session.Id = session.Id.substring(0, session.Id.length - 3);
 						return session;
 					});
 					this.setState((prevState) => {
@@ -784,6 +791,14 @@ class App extends React.Component {
 							return 1;
 						}
 						return 0;
+					});
+					//Switching 18bit id to 15
+					data = data.map((speaker) => {
+						speaker.sessions = speaker.sessions.map((session) => {
+							session.id = session.id.substring(0, session.id.length - 3);
+							return session;
+						});
+						return speaker;
 					});
 					this.setState((prevState) => {
 						prevState.speakers = data;

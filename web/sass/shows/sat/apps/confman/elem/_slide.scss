@@ -51,11 +51,22 @@ $mobile-width: 992px;
 								background-color: unset;
 								border: none;
 								border-top: none;
-								& > div {
-									padding: 10px 0;
+								.session--sponsored {
+									display: flex;
+									.session__meta {
+										width: 70%;
+									}
+									.session__sponsor {
+										width: 30%;
+										text-align: center;
+										p {
+											margin-bottom: 0;
+											overflow-wrap: unset;
+										}
+									}
 								}
-								.session__name {
-									padding-right: 10%;
+								& > div {
+									padding: 10px 5% 0 0;
 								}
 								&::after {
 									/*Chevron*/
