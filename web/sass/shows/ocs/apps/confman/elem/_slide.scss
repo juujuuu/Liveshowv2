@@ -1,0 +1,178 @@
+$mobile-width: 992px;
+.confman {
+	&.conference-agenda {
+		.confman__body {
+			.conference-agenda__sessions {
+				.body__session {
+					margin: 5px 0;
+					//overrides for session types
+					&.session--type- {
+						&Break {
+							.session__flag {
+								background-color: #2e2b28 !important;
+								border-top: 15px solid #4e4845 !important;
+							}
+							.session__content {
+								background-color: #e4e2e2;
+								.session__title {
+									h3 {
+										color: #4e4845;
+									}
+									.accordion-button {
+										div {
+											width: 100%;
+										}
+										cursor: text;
+										&::after {
+											background-image: unset !important;
+										}
+									}
+								}
+							}
+						}
+					}
+					.session__flag {
+						background-color: red;
+						border-top: 15px solid gray;
+						padding: 0;
+						padding-top: 1rem;
+						text-align: center;
+						h3 {
+							color: #fff;
+						}
+					}
+					.session__content {
+						@media (max-width: $mobile-width) {
+							padding: 0;
+						}
+						.session__title {
+							.accordion-button {
+								padding: 0.5rem 1.25rem;
+								background-color: unset;
+								border: none;
+								border-top: none;
+								.session--sponsored {
+									display: flex;
+									.session__meta {
+										width: 70%;
+									}
+									.session__sponsor {
+										width: 30%;
+										text-align: center;
+										p {
+											margin-bottom: 0;
+											overflow-wrap: unset;
+										}
+									}
+								}
+								& > div {
+									padding: 10px 5% 0 0;
+								}
+								&::after {
+									/*Chevron*/
+									margin-bottom: auto;
+									color: inherit;
+									font-weight: bold;
+									background-image: url("https://www.onboardconnectivitysummit.com/assets/resources/shared/web/apps/confman/chevron.png");
+									background-position: center;
+								}
+								&:focus {
+									box-shadow: unset;
+									border-color: inherit;
+								}
+							}
+						}
+						.session__body {
+							.accordion-body {
+								padding: 0rem 1.25rem 0.5rem 1.25rem;
+								.body__synopsis {
+								}
+								.body__speakers {
+									padding: 0.5rem 0;
+									.speakers__speaker {
+										padding: 0.5rem 0;
+										.speaker__headshot {
+											text-align: center;
+											@media (max-width: $mobile-width) {
+												padding: 0;
+											}
+										}
+										.speaker__info {
+											&__name {
+											}
+											&__job-title {
+												font-weight: normal;
+											}
+											&__company {
+											}
+										}
+										.speaker__company {
+											text-align: center;
+										}
+									}
+								}
+							}
+						}
+					}
+					&.session--show {
+						.session {
+							&__time {
+								color: #333;
+								font-weight: bold;
+								transition: color 0.15s linear;
+								transition: font-weight 0.15s linear;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	&.speaker-list {
+		.confman__body {
+			.speaker-list__slide-list {
+				border-top: 3px solid black;
+				padding: 10px 0;
+				.confman__speaker-slide {
+					.speaker- {
+						&headshot {
+							img {
+								width: 100px;
+							}
+							@media (max-width: 992px) {
+								padding: 0;
+							}
+						}
+						&details {
+							p {
+								margin-bottom: 0;
+							}
+							.speaker__ {
+								&name {
+									font-weight: bold;
+								}
+								&job-title {
+								}
+								&company {
+									font-weight: bold;
+								}
+							}
+						}
+						&company {
+							img {
+								display: block;
+								margin: auto;
+							}
+							@media (max-width: 992px) {
+								padding-left: 0;
+							}
+						}
+					}
+					& + .confman__speaker-slide {
+						margin-top: 10px;
+					}
+				}
+			}
+		}
+	}
+}

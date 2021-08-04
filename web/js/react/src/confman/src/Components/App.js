@@ -17,10 +17,25 @@ class App extends React.Component {
 		let filtersObj;
 		switch (props.options.show) {
 			case "CEX":
-				//if a filter is -1 ignore
 				filtersObj = {
 					track: [-1], //ignore these tracks
 					day: -1, //inverse of this ^^
+					query: "",
+					letter: "-1",
+				};
+				break;
+			case "OCS":
+				filtersObj = {
+					track: [-1], //ignore these tracks
+					day: 1, //inverse of this ^^
+					query: "",
+					letter: "-1",
+				};
+				break;
+			case "SAT":
+				filtersObj = {
+					track: [-1], //ignore these tracks
+					day: 1, //inverse of this ^^
 					query: "",
 					letter: "-1",
 				};
@@ -367,7 +382,7 @@ class App extends React.Component {
 	};
 	getModal = (data, role = false) => {
 		let modal = $.parseHTML(
-			'<div class="modal fade" id="modal modal--speaker-list" role="dialog" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"></div></div></div></div>'
+			'<div class="modal fade" id="modal" role="dialog" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"></div></div></div></div>'
 		);
 		if (role == false) {
 			console.error("Role on getModal not set");
@@ -379,11 +394,24 @@ class App extends React.Component {
 				let link = `${this.props.options.fullagendalocation}?session-id=${session.id}&day=${session.day}`;
 				sessionsHtml = `<p><a href="${link}" title="${session.name}">${session.name}</a></p>`;
 			});
-			console.log(sessionsHtml);
-			let modalBody = `<div class="container"><div class="row"><div class="col-12 col-md-2"><img src="${data.Head_Shot_URL__c}" class="img-fluid" alt="${data.First_Name__c} ${data.Last_Name__c}" /></div><div class="col-12 col-md-6"><p style="font-weight: bold;">${data.First_Name__c} ${data.Last_Name__c},</p><p>${data.Job_Title__c},</p><p style="font-weight: bold;">${data.Company__c}</p></div><div class="col-12 col-md-4"><img src="${data.Logo_URL__c}" class="img-fluid" alt="${data.Company__c}" /></div></div><div class="row"><div class="col-12"><h3 style="margin-top: 10px;">Speaker Bio</h3><p>${data.Speaker__r.Biography__c}</p><h3>Speaking at:</h3><div class="sessions">${sessionsHtml}</div></div></div></div>`;
+			
+			let modalBody = `<div class="container"><div class="row"><div class="col-12 col-md-2"><img src="${
+				data.Head_Shot_URL__c
+			}" class="img-fluid" alt="${data.First_Name__c} ${
+				data.Last_Name__c
+			}" /></div><div class="col-12 col-md-6"><p style="font-weight: bold;">${data.First_Name__c} ${data.Last_Name__c},</p><p>${
+				data.Job_Title__c
+			},</p><p style="font-weight: bold;">${data.Company__c}</p></div><div class="col-12 col-md-4"><img src="${
+				data.Logo_URL__c
+			}" class="img-fluid" alt="${
+				data.Company__c
+			}" /></div></div><div class="row"><div class="col-12"><h3 style="margin-top: 10px;">Speaker Bio</h3><p>${
+				data.Speaker__r.Biography__c == null ? `<i>Coming soon</i>` : data.Speaker__r.Biography__c
+			}</p><h3>Speaking at:</h3><div class="sessions">${sessionsHtml}</div></div></div></div>`;
 			$(modal).find(".modal-body").append(modalBody);
+			console.log(modalBody);
 			$("body").append(modal);
-			let myModal = new bootstrap.Modal(document.getElementById("modal modal--speaker-list"));
+			let myModal = new bootstrap.Modal(document.getElementById("modal"));
 			myModal.show();
 		}
 	};
@@ -609,7 +637,11 @@ class App extends React.Component {
 												key="cta pdf agenda"
 												size="max"
 												color="primary"
-												link={`./assets/resources/shared/pdfs/conference/Conference Agenda ${this.props.options.show}.pdf`}
+												link={`./assets/resources/shared/pdfs/conference/Conference Agenda ${
+													this.props.options.show == "OCS" || this.props.options.show == "SAT"
+														? "OCS SAT"
+														: this.props.options.show
+												}.pdf`}
 												download={true}>
 												DOWNLOAD PDF AGENDA
 											</Cta>

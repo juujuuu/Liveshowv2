@@ -26,7 +26,7 @@ header {
 				min-height: unset;
 				.header__locked-logo {
 					display: flex;
-					height: 50px;
+					height: 49px;
 					justify-content: center;
 					align-items: center;
 				}
@@ -295,7 +295,7 @@ header {
 		margin-top: 5px;
 		&--date,
 		&--location {
-			display: inline-block;
+			display: block;
 			font-size: 26px;
 		}
 		&--date {

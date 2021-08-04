@@ -33,9 +33,9 @@ class Slide extends React.Component {
 		return company == null ? "./assets/resources/shared/web/apps/confman/coming-soon.jpg" : company;
 	};
 	getTime = (timeObj) => {
+		let hour = timeObj.hour;
+		let minute = timeObj.minute;
 		if (this.props.continent == "USA") {
-			let hour = timeObj.hour;
-			let minute = timeObj.minute;
 			if (timeObj.ampm == "PM") {
 				if (hour != 12) {
 					hour = hour - 12;
@@ -43,7 +43,7 @@ class Slide extends React.Component {
 			}
 			return `${hour}.${minute}${timeObj.ampm}`;
 		} else if (this.props.continent == "Germany") {
-			return `${hour}.${minute}`;
+			return `${hour}:${minute}`;
 		}
 	};
 	getSpeakers = () => {
@@ -144,7 +144,7 @@ class Slide extends React.Component {
 										<div>
 											<div className="session__meta">
 												<h3 className="session__name">{this.props.session.Long_Name__c}</h3>
-												<p className="session__time">{this.getTime(this.props.session.normalTime)}</p>
+												{/*<p className="session__time">{this.getTime(this.props.session.normalTime)}</p>*/}
 											</div>
 										</div>
 									</button>
@@ -157,7 +157,7 @@ class Slide extends React.Component {
 										<div className={this.props.session.Sponsor_URL__c ? "session--sponsored" : ""}>
 											<div className="session__meta">
 												<h3 className="session__name">{this.props.session.Long_Name__c}</h3>
-												<p className="session__time">{this.getTime(this.props.session.normalTime)}</p>
+												{/*<p className="session__time">{this.getTime(this.props.session.normalTime)}</p>*/}
 											</div>
 											{this.props.session.Sponsor_URL__c ? (
 												<div className="session__sponsor">

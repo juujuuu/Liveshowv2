@@ -1,5 +1,5 @@
 @use "sass:color";
-$main-color: #b88e14;
+$main-color: #e7624f;
 $reg-color: #b62f25;
 
 body {
@@ -212,13 +212,13 @@ header {
 					.nav-item {
 						.active {
 							color: $main-color !important;
-							font-weight: bold !important;
+							font-weight: 1000 !important;
 							&::after {
 								color: #333333 !important;
 							}
 						}
 						.nav-link {
-							font-weight: 700;
+							font-weight: normal;
 							color: #333333;
 							font-size: 16px;
 							@media (min-width: 990px) and (max-width: 1200px) {
@@ -232,6 +232,8 @@ header {
 							}
 							&::after {
 								content: "|";
+								color: $main-color !important;
+								font-weight: normal;
 								text-decoration: none;
 								padding: 0px 8px 0px 8px;
 								@media (min-width: 990px) and (max-width: 1200px) {
@@ -242,7 +244,7 @@ header {
 						&:nth-last-child(2) {
 							.nav-link {
 								&::after {
-									content: "";
+									//content: ""; FOR REG BUTTON (NO REG ATM DEACTIVATING)
 								}
 							}
 						}
@@ -258,7 +260,7 @@ header {
 							.nav-link {
 								text-decoration: none;
 								padding: 4px 0px 0px 0px;
-								font-weight: bold;
+								font-weight: 1000;
 								color: #fff;
 							}
 							//anim
@@ -301,8 +303,9 @@ header {
 		margin-top: 10px;
 		&--date,
 		&--location {
-			display: inline-block;
-			font-size: 17px;
+			display: block;
+			font-size: 18px;
+			font-weight: 1000;
 		}
 		&--date {
 			color: $main-color;
@@ -310,7 +313,6 @@ header {
 		}
 		&--location {
 			color: #333333;
-			font-weight: 400;
 		}
 	}
 }

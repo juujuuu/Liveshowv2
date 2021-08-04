@@ -226,6 +226,8 @@ $(document).ready(function () {
 							modal.hide();
 						}, 2000);
 					} else {
+						let modal = bootstrap.Modal.getInstance(document.getElementById("modal"));
+						modal.hide();
 						window.open(gatedUrl);
 					}
 				}, 3000);
