@@ -19,7 +19,7 @@ class Video extends React.Component {
 
 	getVimeoIframe = (rawlink) => {
 		let id = rawlink.split(".com/")[1];
-		if(id.includes("&")){
+		if (id.includes("&")) {
 			id = id.split("&")[1]; //split of on & if there are other parameters
 		}
 		//Vimeo video ids are numbers eg 123424
@@ -47,6 +47,8 @@ class Video extends React.Component {
 			if (id.includes("?")) {
 				id = id.split("?")[0];
 			}
+		} else if (rawLink.includes("/embed/")) {
+			id = rawLink.split("/embed/")[1];
 		} else {
 			id = rawLink.split("watch?v=")[1];
 			if (id.length < 2) {
@@ -58,14 +60,15 @@ class Video extends React.Component {
 				this.setState({ valid: false });
 				console.log(rawLink);
 				return null;
-			} 
-			if (id.includes("&")) { //now we've got an id
+			}
+			if (id.includes("&")) {
+				//now we've got an id
 				//The video id isn't the end of the url so cut it at the parameter after
 				id = id.split("&")[0];
-			} 
+			}
 		}
 		link = `https://youtube.com/embed/${id}?enablejsapi=1`;
-		
+
 		return (
 			<iframe src={link} frameBorder="0" style={{ border: "0" }} allowFullScreen data-name={this.props.exName} data-id={this.props.id}></iframe>
 		);
@@ -89,9 +92,7 @@ class Video extends React.Component {
 		if (this.state.valid) {
 			return (
 				<div className="col-12 col-md-4 exhibitor-drilldown__video" data-type={this.props["data-type"]}>
-					<div>
-						{this.getEmbedIframe(this.props.link)}
-					</div>
+					<div>{this.getEmbedIframe(this.props.link)}</div>
 					<p>{this.props.title}</p>
 				</div>
 			);
