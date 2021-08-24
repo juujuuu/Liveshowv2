@@ -4,13 +4,13 @@ import ReactDOM from "react-dom";
 import App from "./Components/App";
 
 var params = null;
-if(window.location.href.includes("?")){
-    params = window.location.href.split("?")[1];
-    params = params.split("&");
-    params = params.map((param) => {
-        param = param.split("=");
-        return param;
-    });
+if (window.location.href.includes("?")) {
+	params = window.location.href.split("?")[1];
+	params = params.split("&");
+	params = params.map((param) => {
+		param = param.split("=");
+		return param;
+	});
 }
 
 var options = {
@@ -24,6 +24,7 @@ var options = {
 	mode: document.querySelector("#root").getAttribute("mode"),
 	downloadagenda: document.querySelector("#root").getAttribute("downloadagenda"),
 	convincepdf: document.querySelector("#root").getAttribute("convincepdf"),
+	ondemand: JSON.parse(document.querySelector("#root").getAttribute("ondemand")),
 	fullagendalocation: document.querySelector("#root").getAttribute("fullagendalocation"),
 	additionalfilters:
 		document.querySelector("#root").getAttribute("additionalfilters") != undefined

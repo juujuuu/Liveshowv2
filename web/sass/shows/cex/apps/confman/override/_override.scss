@@ -1,5 +1,5 @@
-$tracks: #233166, #357687;
-$tracks-lighter: lighten(#233166, 20), #5d919f;
+$tracks: #233166, #009577;
+$tracks-lighter: lighten(#233166, 20), lighten(#009577, 20);
 $main-color: #233166;
 
 .confman {
@@ -76,10 +76,13 @@ $main-color: #233166;
 						.session__body {
 							.body__speakers {
 								& > h3 {
-									color: $main-color;
+									color: nth($tracks, $i);
 								}
 								.speaker__info {
 									&__name {
+										color: nth($tracks, $i);
+									}
+									&__presentation {
 										color: nth($tracks, $i);
 									}
 								}

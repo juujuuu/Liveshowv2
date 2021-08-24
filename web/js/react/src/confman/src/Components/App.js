@@ -298,6 +298,7 @@ class App extends React.Component {
 						continent={this.props.options.continent}
 						key={`slide-${index + 1}`}
 						open={this.state.openSessions}
+						ondemand={this.props.options.ondemand}
 					/>
 				);
 			});
@@ -380,9 +381,13 @@ class App extends React.Component {
 			return session;
 		});
 	};
-	getModal = (data, role = false) => {
+	getModal = (data, role = false, size = "lg") => {
 		let modal = $.parseHTML(
-			'<div class="modal fade" id="modal" role="dialog" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"></div></div></div></div>'
+			`<div class="modal fade" id="modal" role="dialog" tabindex="-1" aria-hidden="true" ${
+				role == "on-demand-modal" ? `data-bs-backdrop="static" data-bs-keyboard="false"` : ""
+			}><div class="modal-dialog modal-${size}"><div class="modal-content"><div class="modal-header">${
+				role == "on-demand-modal" ? `` : `<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>`
+			}</div><div class="modal-body"></div></div></div></div>`
 		);
 		if (role == false) {
 			console.error("Role on getModal not set");
@@ -394,7 +399,6 @@ class App extends React.Component {
 				let link = `${this.props.options.fullagendalocation}?session-id=${session.id}&day=${session.day}`;
 				sessionsHtml = `<p><a href="${link}" title="${session.name}">${session.name}</a></p>`;
 			});
-			
 			let modalBody = `<div class="container"><div class="row"><div class="col-12 col-md-2"><img src="${
 				data.Head_Shot_URL__c
 			}" class="img-fluid" alt="${data.First_Name__c} ${
@@ -409,9 +413,14 @@ class App extends React.Component {
 				data.Speaker__r.Biography__c == null ? `<i>Coming soon</i>` : data.Speaker__r.Biography__c
 			}</p><h3>Speaking at:</h3><div class="sessions">${sessionsHtml}</div></div></div></div>`;
 			$(modal).find(".modal-body").append(modalBody);
-			console.log(modalBody);
 			$("body").append(modal);
 			let myModal = new bootstrap.Modal(document.getElementById("modal"));
+			myModal.show();
+		} else if (role == "on-demand-modal") {
+			let modalBody = `<div id="od-modal" class="container"><div class="row"><div class="col-12">			<h2>Enter your access code to view the conference on demand sessions</h2><form><div class="form-group"><div class="inputWrapper mb-3"><input id="code" type="code" name="code" value="" placeholder="Enter code" title="code" required="" class="required form-control"></div></div><button class="curved-cta curved-cta--micro curved-cta--cex-red mb-3" type="submit" name="submit">Access Sessions</button></div></form></div></div><script>$(document).ready(function(){$("#root").css("filter", "blur(4px)"); $("#root").css("transition", "1s -webkit-filter linear"); const urlParams = new URLSearchParams(window.location.search);if(urlParams.get('code').trim() !== "" && urlParams.get('code') !== null){console.log(urlParams.get('code'));$("#od-modal #code").val(urlParams.get('code'));}});$("#od-modal form").submit(function(){event.preventDefault();if($("#od-modal #code").val().includes("FA21OD")){			bootstrap.Modal.getInstance(document.getElementById("modal")).hide();$("#root").css("filter", "");} else{if($("#code-error").length < 1){$("#od-modal .inputWrapper").append('<span id="code-error" style="color: red; font-style: italic;">Code is incorrect please contact conferences@smartershows.com for more information</span>');}}});</script>`;
+			$(modal).find(".modal-body").append(modalBody);
+			$("body").append(modal);
+			let myModal = new bootstrap.Modal(document.getElementById("modal"), { backdrop: "static", keyboard: false });
 			myModal.show();
 		}
 	};
@@ -844,6 +853,9 @@ class App extends React.Component {
 	componentDidMount = () => {
 		//Initial loading
 		this.getConfman();
+		if (this.props.options.ondemand) {
+			this.getModal([], "on-demand-modal", "md");
+		}
 	};
 
 	componentDidUpdate = () => {

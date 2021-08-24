@@ -68,6 +68,18 @@ class Slide extends React.Component {
 						}`}</h3>
 						<h3 className="speaker__info__job-title">{`${speaker.Job_Title__c}`}</h3>
 						<h3 className="speaker__info__company">{`${speaker.Company__c}`}</h3>
+						{this.props.ondemand && speaker.Presentation_Slides_PDF_link__c ? (
+							<h3 className="speaker__info__presentation">
+								<i>
+									Download the presentation{" "}
+									<a href={speaker.Presentation_Slides_PDF_link__c} target="_blank" download>
+										here
+									</a>
+								</i>
+							</h3>
+						) : (
+							""
+						)}
 					</div>
 					{this.props.windowwidth > 992 ? (
 						<div className="col-4 speaker__company">
@@ -176,6 +188,17 @@ class Slide extends React.Component {
 									ref={this.bodyRef}
 									className={`accordion-collapse collapse session__body ${this.props.open ? "show" : "collapsed"}`}>
 									<div className="accordion-body">
+										{this.props.ondemand && this.props.session.Vimeo_Video_Link__c ? (
+											<div className="body__video">
+												<iframe
+													src={this.props.session.Vimeo_Video_Link__c}
+													frameborder="0"
+													allow="autoplay; fullscreen; picture-in-picture"
+													allowfullscreen=""></iframe>
+											</div>
+										) : (
+											""
+										)}
 										<div className="body__synopsis" dangerouslySetInnerHTML={{ __html: this.props.session.Synopsis__c }}></div>
 										<div className="body__speakers">{this.getSpeakers()}</div>
 									</div>

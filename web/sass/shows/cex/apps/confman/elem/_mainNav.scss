@@ -3,7 +3,7 @@ $mobile-width: 992px;
 	&.conference-agenda {
 		.confman__main-nav {
 			@media (min-width: $mobile-width) {
-				z-index: 99999;
+				z-index: 999;
 				position: relative;
 			}
 			.main-nav__tracks {
