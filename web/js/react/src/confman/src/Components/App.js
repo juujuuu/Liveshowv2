@@ -23,6 +23,7 @@ class App extends React.Component {
 					query: "",
 					letter: "-1",
 				};
+				props.options.odcode = "CEX21OD";
 				break;
 			case "OCS":
 				filtersObj = {
@@ -417,7 +418,7 @@ class App extends React.Component {
 			let myModal = new bootstrap.Modal(document.getElementById("modal"));
 			myModal.show();
 		} else if (role == "on-demand-modal") {
-			let modalBody = `<div id="od-modal" class="container"><div class="row"><div class="col-12">			<h2>Enter your access code to view the conference on demand sessions</h2><form><div class="form-group"><div class="inputWrapper mb-3"><input id="code" type="code" name="code" value="" placeholder="Enter code" title="code" required="" class="required form-control"></div></div><button class="curved-cta curved-cta--micro curved-cta--cex-red mb-3" type="submit" name="submit">Access Sessions</button></div></form></div></div><script>$(document).ready(function(){$("#root").css("filter", "blur(4px)"); $("#root").css("transition", "1s -webkit-filter linear"); const urlParams = new URLSearchParams(window.location.search);if(urlParams.get('code').trim() !== "" && urlParams.get('code') !== null){console.log(urlParams.get('code'));$("#od-modal #code").val(urlParams.get('code'));}});$("#od-modal form").submit(function(){event.preventDefault();if($("#od-modal #code").val().includes("FA21OD")){			bootstrap.Modal.getInstance(document.getElementById("modal")).hide();$("#root").css("filter", "");} else{if($("#code-error").length < 1){$("#od-modal .inputWrapper").append('<span id="code-error" style="color: red; font-style: italic;">Code is incorrect please contact conferences@smartershows.com for more information</span>');}}});</script>`;
+			let modalBody = `<div id="od-modal" class="container"><div class="row"><div class="col-12">			<h2>Enter your access code to view the conference on demand sessions</h2><form><div class="form-group"><div class="inputWrapper mb-3"><input id="code" type="code" name="code" value="" placeholder="Enter code" title="code" required="" class="required form-control"></div></div><button class="curved-cta curved-cta--micro curved-cta--cex-red mb-3" type="submit" name="submit">Access Sessions</button></div></form></div></div><script>$(document).ready(function(){$("#root").css("filter", "blur(4px)"); $("#root").css("transition", "1s -webkit-filter linear"); const urlParams = new URLSearchParams(window.location.search);if(urlParams.get('code').trim() !== "" && urlParams.get('code') !== null){console.log(urlParams.get('code'));$("#od-modal #code").val(urlParams.get('code'));}});$("#od-modal form").submit(function(){event.preventDefault();if($("#od-modal #code").val().includes("${this.props.options.odcode}")){			bootstrap.Modal.getInstance(document.getElementById("modal")).hide();$("#root").css("filter", "");} else{if($("#code-error").length < 1){$("#od-modal .inputWrapper").append('<span id="code-error" style="color: red; font-style: italic;">Code is incorrect please contact conferences@smartershows.com for more information</span>');}}});</script>`;
 			$(modal).find(".modal-body").append(modalBody);
 			$("body").append(modal);
 			let myModal = new bootstrap.Modal(document.getElementById("modal"), { backdrop: "static", keyboard: false });
@@ -466,6 +467,19 @@ class App extends React.Component {
 			}
 		}
 		return outputArray;
+	};
+	getConfPdfLink = (show) => {
+		const baseString = "./assets/resources/shared/pdfs/conference/Conference Agenda ";
+		switch (show) {
+			case "FMX" || "ABX":
+				return baseString + "FMX ABX" + ".pdf";
+			case "FME" || "ABE":
+				return baseString + "FME ABE" + ".pdf";
+			case "OCS" || "SAT":
+				return baseString + "OCS SAT" + ".pdf";
+			default:
+				return baseString + show + ".pdf";
+		}
 	};
 	getLetters = () => {
 		let alphabet = "View All|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z".split("|");
@@ -646,11 +660,7 @@ class App extends React.Component {
 												key="cta pdf agenda"
 												size="max"
 												color="primary"
-												link={`./assets/resources/shared/pdfs/conference/Conference Agenda ${
-													this.props.options.show == "OCS" || this.props.options.show == "SAT"
-														? "OCS SAT"
-														: this.props.options.show
-												}.pdf`}
+												link={this.getConfPdfLink(this.props.options.show)}
 												download={true}>
 												DOWNLOAD PDF AGENDA
 											</Cta>

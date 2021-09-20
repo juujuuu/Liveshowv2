@@ -78,7 +78,7 @@ $main-color: #233166;
 						.session__body {
 							.body__speakers {
 								& > h3 {
-									color: $main-color;
+									color: nth($tracks, $i);
 								}
 								.speaker__info {
 									&__name {

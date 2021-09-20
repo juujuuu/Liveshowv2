@@ -308,8 +308,9 @@ header {
 		&--date,
 		&--location {
 			display: block;
-			font-size: 17px;
+			font-size: 22px;
 			font-weight: normal;
+			text-transform: uppercase;
 		}
 		&--date {
 			color: $main-color;
