@@ -45,10 +45,10 @@ class MainMenu extends React.Component {
 			let expoPickers = exposArray.map((expo, index) => {
 				let infoObject;
 				switch (expo) {
-					case "a1x3A000001FLZr":
+					case "a1x3A000001FSz9":
 						infoObject = { show: "fmx", expo: expo };
 						break;
-					case "a1x3A000001FLZm":
+					case "a1x4V000001YVpe":
 						infoObject = { show: "abx", expo: expo };
 						break;
 					case "a1x4V000001Q9aU":
@@ -143,7 +143,7 @@ class MainMenu extends React.Component {
 						) : (
 							""
 						)}
-						{this.props.options.show == "CEX" || this.props.show == "CEX-Test" ? this.getCexSponsor() : ""}
+						{this.props.options.show == "CEX" || this.props.show == "CEX-Test" ? /*this.getCexSponsor()*/ "" : ""}
 					</div>
 					{this.props.children}
 				</div>
