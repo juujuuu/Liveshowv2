@@ -153,11 +153,21 @@ class Slide extends React.Component {
 							<>
 								<div className="accordion-header session__title">
 									<button className={`accordion-button`} type="button">
-										<div>
+										<div className={this.props.session.Sponsor_URL__c ? "session--sponsored" : ""}>
 											<div className="session__meta">
 												<h3 className="session__name">{this.props.session.Long_Name__c}</h3>
 												{/*<p className="session__time">{this.getTime(this.props.session.normalTime)}</p>*/}
 											</div>
+											{this.props.session.Sponsor_URL__c ? (
+												<div className="session__sponsor">
+													<p>
+														<i>Sponsored by: </i>
+													</p>
+													<img class="img-fluid" src={this.props.session.Sponsor_URL__c} alt="Sponsor" />
+												</div>
+											) : (
+												""
+											)}
 										</div>
 									</button>
 								</div>

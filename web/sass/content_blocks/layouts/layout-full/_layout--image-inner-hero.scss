@@ -69,6 +69,20 @@
 		}
 	}
 }
+[data-context^="FMX"] {
+	.layout--image-inner-hero {
+		.layout--image-inner-hero__text-container {
+			& > * {
+				background-color: rgba(81, 138, 148, 0.85);
+			}
+			h1 {
+				margin-bottom: 0;
+				//padding-top: 10px;
+				font-size: 45px;
+			}
+		}
+	}
+}
 [data-context^="TTE"] {
 	.layout--image-inner-hero {
 		.layout--image-inner-hero__text-container {
