@@ -6,6 +6,11 @@ class StickyNav extends React.Component {
 		this.ref = React.createRef();
 		this.state = { offsetTop: 0, offsetBottom: 0, offsetWidth: false };
 	}
+	static defaultProps = {
+		role: false,
+		startAffix: 0,
+		endAffix: 2000
+	};	
 	handleScroll = (event) => {
 		//something here
 		this.setState((prevState) => {

@@ -12,8 +12,6 @@ if (window.location.href.includes("?")) {
 		return param;
 	});
 }
-console.log("erkrfnrfni werfiknwen wenerfkon ergonergnerjgnernerignerkognergknergnergiknerogineriognergikneriognergioneriogneriognergn");
-
 var options = {
 	conf: document.querySelector("#root").getAttribute("conf"),
 	show: document.querySelector("#root").getAttribute("show"),
