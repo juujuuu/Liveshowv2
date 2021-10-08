@@ -1,9 +1,9 @@
-$tracks: #233166, #357687;
-$tracks-lighter: lighten(#233166, 20), #5d919f;
-$main-color: #233166;
+$tracks: #d52c60, #5bb7ce, #144f74;
+$tracks-lighter: lighten(#d52c60, 20), lighten(#5bb7ce, 20), lighten(#144f74, 20);
+$main-color: #4d8691;
 
 .confman {
-	&.conference-agenda--CEX {
+	&.conference-agenda--FMX {
 		.curved-cta--primary {
 			background-color: $main-color;
 			.curved-cta__link {
@@ -17,7 +17,7 @@ $main-color: #233166;
 				}
 			}
 			&.curved-cta--hard {
-				background: lighten($main-color, 40);
+				background: lighten($main-color, 20);
 				&:hover,
 				&.active {
 					background: $main-color;
@@ -37,9 +37,6 @@ $main-color: #233166;
 						transition: background-color 0.25s ease-in;
 						-webkit-transition: background-color 0.25s ease-in;
 						background-color: #31447b;
-					}
-					h3 {
-						font-family: motiva-sans;
 					}
 				}
 			}
@@ -76,10 +73,13 @@ $main-color: #233166;
 						.session__body {
 							.body__speakers {
 								& > h3 {
-									color: $main-color;
+									color: nth($tracks, $i);
 								}
 								.speaker__info {
 									&__name {
+										color: nth($tracks, $i);
+									}
+									&__presentation {
 										color: nth($tracks, $i);
 									}
 								}
@@ -89,9 +89,6 @@ $main-color: #233166;
 					$i: $i + 1;
 				}
 				.session__flag {
-					h2 {
-						font-family: motiva-sans;
-					}
 				}
 				.session__content {
 					.session__title {
@@ -117,7 +114,7 @@ $main-color: #233166;
 			}
 		}
 	}
-	&.speaker-list--CEX {
+	&.speaker-list--FMX {
 		.speaker {
 			&__name {
 				color: $main-color;
