@@ -1,13 +1,13 @@
 import React from "react";
 import MainNav from "./MainNav";
 import MainNavButton from "./MainNavButton";
-import Spinner from "./Spinner";
-import Cta from "./Cta";
-import StickyNav from "./StickyNav";
-import SearchInput from "./SearchInput";
+import Spinner from "../../../common_components/Spinner";
+import Cta from "../../../common_components/Cta";
+import StickyNav from "../../../common_components/StickyNav";
+import SearchInput from "../../../common_components/SearchInput";
 import Slide from "./Slide";
-import CheckBoxFilter from "./CheckBoxFilter";
-import Body from "./Body";
+import CheckBoxFilter from "../../../common_components/CheckBoxFilter";
+import Body from "../../../common_components/Body";
 import Letter from "./Letter";
 import SpeakerSlide from "./SpeakerSlide";
 
@@ -644,7 +644,7 @@ class App extends React.Component {
 							<div className="row">
 								<div className="col-8">{this.getSlides(pipedSessions)}</div>
 								<div className="col-4">
-									<StickyNav>
+									<StickyNav role="conference-agenda-side-nav">
 										<div className="side-nav__search">
 											<h3>Search</h3>
 											<Cta

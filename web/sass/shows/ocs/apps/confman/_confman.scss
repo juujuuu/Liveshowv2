@@ -2,7 +2,7 @@
 $mobile-width: 992px;
 .confman {
 	&.conference-agenda {
-		.confman__body {
+		.react__body {
 			margin-top: 30px;
 			@media (max-width: 992px) {
 				margin-top: 10px;
@@ -25,7 +25,7 @@ $mobile-width: 992px;
 			}
 		}
 	}
-	.confman__cta {
+	.react__cta {
 		height: fit-content;
 		&.curved-cta--max {
 			width: 100%;

@@ -61,7 +61,7 @@ $main-color: #233166;
 				}
 			}
 		}
-		.confman__body {
+		.react__body {
 			.body__session {
 				$i: 1;
 				@each $track in $tracks {
@@ -107,7 +107,7 @@ $main-color: #233166;
 			}
 		}
 		.conference-agenda__secondary-nav {
-			.confman__search {
+			.react__search {
 				span {
 					background-color: $main-color;
 					cursor: pointer;

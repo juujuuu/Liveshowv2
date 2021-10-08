@@ -1,7 +1,7 @@
 $mobile-width: 992px;
 .confman {
 	&.conference-agenda {
-		.confman__body {
+		.react__body {
 			.conference-agenda__sessions {
 				.body__session {
 					margin: 5px 0;
@@ -129,7 +129,7 @@ $mobile-width: 992px;
 		}
 	}
 	&.speaker-list {
-		.confman__body {
+		.react__body {
 			.speaker-list__slide-list {
 				border-top: 3px solid black;
 				padding: 10px 0;

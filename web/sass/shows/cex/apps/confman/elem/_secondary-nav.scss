@@ -1,5 +1,5 @@
 .conference-agenda__secondary-nav {
-	&.secondary-nav--affix {
+	&.nav-affix--affix {
 		position: fixed;
 		top: 80px;
 	}
@@ -25,7 +25,7 @@
 		}
 	}
 }
-.confman__search {
+.react__search {
 	position: relative;
 	input {
 		display: block;
