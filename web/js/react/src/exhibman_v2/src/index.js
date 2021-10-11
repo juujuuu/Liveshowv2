@@ -24,13 +24,23 @@ if (extraParams) {
 }
 let ids, multiExpo;
 if (document.querySelector("#root").getAttribute("mode") === "LIST") {
-	ids = document.querySelector("#root").getAttribute("expos").replace(/'/g, "").split(",");
-	multiExpo = document.querySelector("#root").getAttribute("expos").replace(/'/g, "").split(",").length > 1;
+	ids = document.querySelector("#root").getAttribute("expos").split(",");
+	multiExpo = document.querySelector("#root").getAttribute("expos").split(",").length > 1;
 } else {
 	ids = extraParams.find((param) => param.includes("ref="));
 	ids = ids.split("=")[1];
 	multiExpo = false;
 	extraParams = extraParams.filter((param) => !param.includes("ref="));
+}
+
+let filters = null;
+if(document.querySelector("#root").getAttribute("filters") != null){
+	filters = document.querySelector("#root").getAttribute("filters").split("|");
+} else{
+	filters = ["ALPHABET", "SEARCH"];
+	if(multiExpo){
+		filters.push("EXPO");
+	}
 }
 
 if (extraParams) {
@@ -49,6 +59,7 @@ const options = {
 	country, //US or Germany
 	mode: document.querySelector("#root").getAttribute("mode"), //Exhibitor list, profile or article
 	convincepdf: document.querySelector("#root").getAttribute("bosspdf"), //Convince your boss pdf
+	filters,
 	multiExpo, //multiple expo ids detected
 	extraParams, //extra arguments in the url, null if none
 };
