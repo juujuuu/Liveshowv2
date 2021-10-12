@@ -33,15 +33,6 @@ class App extends React.Component {
 					letter: "-1",
 				};
 				break;
-			case "FMX":
-				filtersObj = {
-					track: [-1], //ignore these tracks
-					day: -1, //inverse of this ^^
-					query: "",
-					letter: "-1",
-				};
-				props.options.odcode = "FA21OD";
-				break;
 			case "SAT":
 				filtersObj = {
 					track: [-1], //ignore these tracks
@@ -117,14 +108,13 @@ class App extends React.Component {
 		if (this.state.filters.track[0] == -1) {
 			//currently on all so convert empty and add value
 			tracks.push(value);
-			console.log("TEST", this.props.options.show == "CEX" || this.props.options.show == "FMX");
 			if (this.props.options.show == "CEX") {
 				if (value == 1) {
 					this.setDay(2);
 				} else {
 					this.setDay(1);
 				}
-			} 
+			}
 		} else {
 			tracks = this.state.filters.track;
 			//does the array contain value atm?
@@ -135,7 +125,7 @@ class App extends React.Component {
 					} else {
 						this.setDay(2);
 					}
-				} 
+				}
 				//it does so remove
 				tracks.splice(tracks.indexOf(value), 1);
 			} else {
@@ -145,7 +135,7 @@ class App extends React.Component {
 			if (tracks.length < 1) {
 				//tracks now empty so convert to -1
 				tracks.push(-1);
-				if (this.props.options.show == "CEX" || this.props.options.show == "FMX") {
+				if (this.props.options.show == "CEX") {
 					this.setDay(-1);
 				}
 			}
@@ -561,7 +551,7 @@ class App extends React.Component {
 		return (
 			<section className={`confman conference-agenda conference-agenda--${this.props.options.show}`}>
 				<MainNav desktop={window.innerWidth > 992}>
-					{this.props.options.show != "CEX" && this.props.options.show != "FMX" ? (
+					{this.props.options.show != "CEX" ? (
 						<div className="main-nav__days">
 							<div className={`container${window.innerWidth < 992 ? "-fluid" : ""}`}>
 								<div className="row">{this.getDayButtons(this.state.metaNumbers.day)}</div>
