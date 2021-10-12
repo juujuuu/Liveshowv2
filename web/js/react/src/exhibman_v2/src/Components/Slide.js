@@ -5,6 +5,17 @@ class Slide extends Component {
 		super(props);
 		this.state = {};
 	}
+
+	getCats = (cats) => {
+		let string = "";
+		cats.forEach((cat) => {
+			string = string + `${cat} | `;
+		});
+		string = string.substring(0, string.length - 2);
+		console.log(string);
+		return string;
+	};
+
 	render() {
 		const {
 			id,
@@ -21,12 +32,35 @@ class Slide extends Component {
 			corporateMember,
 			logo,
 		} = this.props.payload;
+
 		const smallLogo = web_logo;
 		const bigLogo = logo;
+		const booth = this.props.payload["exhibitor-booth"];
+		const featured = this.props.payload["exhibitor-featured"];
+
+		let cats;
+		if (this.props.payload["exhibitor-cat"].length > 0) {
+			cats = this.getCats(this.props.payload["exhibitor-cat"].split("||"));
+		} else {
+			cats = false;
+		}
 
 		return (
-			<div className={`exhibitor-slide`} id={id}>
-				{pagetitle}
+			<div className={`exhibitor-slide exhibitor-slide--${Exhibitor_listing_type__c} row`} id={id}>
+				<div className="col-md-3 exhibitor-slide__logo">
+					<a href="">
+						<img className="img-fluid" src={web_logo !== "" ? smallLogo : bigLogo} alt={pagetitle} />
+					</a>
+				</div>
+				<div className="col-md-5 exhibitor-slide__body">
+					<div>
+						<h4 className="exhibitor-name">
+							<a href="">{pagetitle}</a>
+						</h4>
+						<p className="exhibitor-booth">Booth Number: {booth}</p>
+					</div>
+				</div>
+				<div className="col-md-4 exhibitor-slide__cats">{cats != false ? cats : null}</div>
 			</div>
 		);
 	}

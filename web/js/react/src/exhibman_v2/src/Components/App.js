@@ -7,6 +7,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			loading: true,
 			exhibsData: [],
 			exhibitor: null,
 			product: null,
@@ -22,10 +23,12 @@ class App extends Component {
 	 */
 	componentDidMount() {
 		const { ids, mode } = this.props.options;
+		console.log("hi there");
 		this.getSF(ids, mode).then((response) => {
-			console.log("SF Query:  ", response);
-			this.setState((prevstate) => {
-				prevstate.exhibsData = response;
+			this.setState((prevState) => {
+				prevState.exhibsData = response;
+				prevState.loading = false;
+				return prevState;
 			});
 		});
 	}
@@ -80,6 +83,15 @@ class App extends Component {
 				.then((data) => {
 					response = data;
 				});
+			response.sort((a, b) => {
+				if (a.pagetitle < b.pagetitle) {
+					return -1;
+				}
+				if (a.pagetitle > b.pagetitle) {
+					return 1;
+				}
+				return 0;
+			});
 			return response;
 		} catch (error) {
 			console.error("Salesforce Controller failed:  ", error);
@@ -108,8 +120,8 @@ class App extends Component {
 		});
 	};
 
-	getExhibList = (exhibitors, options, queries) => {
-		if (!exhibitors) {
+	getExhibList = (exhibitors, options, queries, loading) => {
+		if (loading) {
 			return <Spinner></Spinner>;
 		}
 
@@ -128,15 +140,15 @@ class App extends Component {
 	};
 
 	render() {
-		const { exhibsData, exhibitor, product, queries } = this.state;
-		console.log("State: ",this.state);
+		const { exhibsData, exhibitor, product, queries, loading } = this.state;
+		console.log("State: ", this.state);
 		console.log("exhibsdata:  ", this.state.exhibsData);
 		console.log("destructured:  ", exhibsData);
 		const { mode } = this.props.options;
 		switch (mode) {
 			case "LIST":
 				console.log("Switch case:  ", exhibsData);
-				return this.getExhibList(exhibsData, this.props.options, queries);
+				return this.getExhibList(exhibsData, this.props.options, queries, loading);
 			default:
 				break;
 		}

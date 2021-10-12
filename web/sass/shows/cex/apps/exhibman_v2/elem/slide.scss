@@ -1,0 +1,21 @@
+.exhibmanV2 {
+	.exhibitor-slide {
+		border-top: 1px solid black;
+		height: 150px;
+		&__logo,
+		&__body,
+		&__cats {
+			display: flex;
+			align-items: center;
+		}
+		&__logo {
+			justify-content: center;
+		}
+		&__body {
+			justify-content: flex-start;
+		}
+		&__cats {
+			justify-content: center;
+		}
+	}
+}
