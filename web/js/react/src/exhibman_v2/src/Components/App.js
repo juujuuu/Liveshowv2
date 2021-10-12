@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+
 import Spinner from "../../../common_components/Spinner";
+import Slide from "./Slide";
 
 class App extends Component {
 	constructor(props) {
@@ -96,27 +98,45 @@ class App extends Component {
 		return exhibitors;
 	};
 
+	getSlides = (exhibitors, options) => {
+		if (exhibitors.length < 1) {
+			return <h2 className="no-exhibs-message d-flex justify-content-center align-items-center">No exhibitors found</h2>;
+		}
+		const { id } = exhibitors;
+		return exhibitors.map((exhibitor) => {
+			return <Slide key={id} payload={exhibitor} />;
+		});
+	};
+
 	getExhibList = (exhibitors, options, queries) => {
-		const { show, regLink, event, gtm, mode, convincepdf, multiExpo, filters } = options;
-		const filteredExhibitors = this.filterExhibitors(exhibitors, filters, queries);
 		if (!exhibitors) {
 			return <Spinner></Spinner>;
 		}
+
+		const { show, regLink, event, gtm, mode, convincepdf, multiExpo, filters } = options;
+		const filteredExhibitors = this.filterExhibitors(exhibitors, filters, queries);
+
 		return (
 			<section className={`exhibmanV2 exhibmanV2--${show} row`}>
 				<div className="col-md-4 control-col">control</div>
-				<div className="col-md-8 viewport-col">viewport</div>
+				<div className="col-md-8 viewport-col">
+					<div>alphabet</div>
+					<div className="slide-list">{this.getSlides(filteredExhibitors, options)}</div>
+				</div>
 			</section>
 		);
 	};
 
 	render() {
 		const { exhibsData, exhibitor, product, queries } = this.state;
+		console.log("State: ",this.state);
+		console.log("exhibsdata:  ", this.state.exhibsData);
+		console.log("destructured:  ", exhibsData);
 		const { mode } = this.props.options;
 		switch (mode) {
 			case "LIST":
+				console.log("Switch case:  ", exhibsData);
 				return this.getExhibList(exhibsData, this.props.options, queries);
-				break;
 			default:
 				break;
 		}
