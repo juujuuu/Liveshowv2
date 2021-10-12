@@ -37,6 +37,8 @@ gulp.task("copy_react", (done)=>{
 
 gulp.task("full_compile", gulp.series("build_all", "compress_react", "compress_custom", "copy_react"));
 
+gulp.task("buildncompress", gulp.series("build_all", "compress_react"));
+
 //Uglify custom bundle in js/bundle.js
 const compress_custom = () => {
 	let srcpath = "./js/bundle.js";

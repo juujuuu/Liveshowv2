@@ -1,9 +1,20 @@
 import React, { Component } from "react";
 
-class App extends React.Component {
+import Spinner from "../../../common_components/Spinner";
+import Slide from "./Slide";
+
+class App extends Component {
 	constructor(props) {
 		super(props);
-		this.state.sfData = null;
+		this.state = {
+			exhibsData: [],
+			exhibitor: null,
+			product: null,
+			queries: {
+				search: "",
+				alphabet: "",
+			},
+		};
 	}
 
 	/**
@@ -11,7 +22,12 @@ class App extends React.Component {
 	 */
 	componentDidMount() {
 		const { ids, mode } = this.props.options;
-        console.log("SF Query:  ", this.getSf(ids, mode));
+		this.getSF(ids, mode).then((response) => {
+			console.log("SF Query:  ", response);
+			this.setState((prevstate) => {
+				prevstate.exhibsData = response;
+			});
+		});
 	}
 
 	/**
@@ -19,38 +35,39 @@ class App extends React.Component {
 	 * @returns Salesforce data in an array
 	 */
 	getSF = async (ids = null, mode = null) => {
-		if (ids || mode === false) {
+		if (ids === false || mode === false) {
 			console.error("ID OR MODE AREN'T SET");
 			return null;
 		}
-        let url;
-        switch (mode) {
-            case "LIST":
-                let newIds;
-                if(ids.length > 1){                    
-                    ids.forEach(id => {
-                        newIds = newIds + id + ",";
-                    });
-                    newIds = newIds.substring(0, newIds.length - 1);
-                } else{
-                    newIds = ids[0];
-                }
-                url=`/rest/exhibman.php?expos=${newIds}`;
-                break;
-        
-            default:
-                if(ids.length > 1){                    
-                    ids.forEach(id => {
-                        newIds = newIds + id + ",";
-                    });
-                    newIds = newIds.substring(0, newIds.length - 1);
-                } else{
-                    newIds = ids[0];
-                }
-                url=`/rest/exhibman.php?expos=${newIds}`;
-        }
+		let url;
+		switch (mode) {
+			case "LIST":
+				let newIds;
+				if (ids.length > 1) {
+					ids.forEach((id) => {
+						newIds = `${newIds},`;
+					});
+					newIds = newIds.substring(0, newIds.length - 1);
+				} else {
+					newIds = ids[0];
+				}
+				url = `/rest/exhibman.php?expos=${newIds}`;
+				break;
+
+			default:
+				if (ids.length > 1) {
+					ids.forEach((id) => {
+						newIds = `${newIds},`;
+					});
+					newIds = newIds.substring(0, newIds.length - 1);
+				} else {
+					newIds = ids[0];
+				}
+				url = `/rest/exhibman.php?expos=${newIds}`;
+		}
 		try {
-			const response = await fetch(url, {
+			let response;
+			await fetch(url, {
 				method: "GET", // *GET, POST, PUT, DELETE, etc.
 				mode: "same-origin", // no-cors, *cors, same-origin
 				cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -58,15 +75,71 @@ class App extends React.Component {
 				headers: {
 					"Content-Type": "application/json",
 				},
-			});
-            return response.json();
+			})
+				.then((data) => data.json())
+				.then((data) => {
+					response = data;
+				});
+			return response;
 		} catch (error) {
 			console.error("Salesforce Controller failed:  ", error);
 		}
 	};
 
+	filterExhibitors = (exhibitors, filters, queries) => {
+		exhibitors = [...exhibitors];
+		filters.forEach((filter) => {
+			if (filter == "SEARCH") {
+				//exhibitors = this.searchFilter(exhibitors, queries.search);
+			} else if (filter == "ALPHABET") {
+				//exhibitors = this.alphabetFilter(exhibitors, queries.alphabet);
+			}
+		});
+		return exhibitors;
+	};
+
+	getSlides = (exhibitors, options) => {
+		if (exhibitors.length < 1) {
+			return <h2 className="no-exhibs-message d-flex justify-content-center align-items-center">No exhibitors found</h2>;
+		}
+		const { id } = exhibitors;
+		return exhibitors.map((exhibitor) => {
+			return <Slide key={id} payload={exhibitor} />;
+		});
+	};
+
+	getExhibList = (exhibitors, options, queries) => {
+		if (!exhibitors) {
+			return <Spinner></Spinner>;
+		}
+
+		const { show, regLink, event, gtm, mode, convincepdf, multiExpo, filters } = options;
+		const filteredExhibitors = this.filterExhibitors(exhibitors, filters, queries);
+
+		return (
+			<section className={`exhibmanV2 exhibmanV2--${show} row`}>
+				<div className="col-md-4 control-col">control</div>
+				<div className="col-md-8 viewport-col">
+					<div>alphabet</div>
+					<div className="slide-list">{this.getSlides(filteredExhibitors, options)}</div>
+				</div>
+			</section>
+		);
+	};
+
 	render() {
-		return <div>Test</div>;
+		const { exhibsData, exhibitor, product, queries } = this.state;
+		console.log("State: ",this.state);
+		console.log("exhibsdata:  ", this.state.exhibsData);
+		console.log("destructured:  ", exhibsData);
+		const { mode } = this.props.options;
+		switch (mode) {
+			case "LIST":
+				console.log("Switch case:  ", exhibsData);
+				return this.getExhibList(exhibsData, this.props.options, queries);
+			default:
+				break;
+		}
 	}
 }
 export default App;
