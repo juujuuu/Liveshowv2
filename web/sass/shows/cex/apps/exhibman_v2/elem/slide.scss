@@ -1,7 +1,13 @@
 .exhibmanV2 {
 	.exhibitor-slide {
 		border-top: 1px solid black;
-		height: 150px;
+		height: 170px;
+		&__profile-button {
+			position: absolute;
+			width: auto;
+			margin-top: -1px;
+			right: 4rem;
+		}
 		&__logo,
 		&__body,
 		&__cats {
@@ -13,9 +19,21 @@
 		}
 		&__body {
 			justify-content: flex-start;
+			& > div {
+				.exhibitor-name {
+					margin-bottom: 5px;
+				}
+				.exhibitor-booth {
+					margin-bottom: 0;
+				}
+			}
 		}
 		&__cats {
 			justify-content: center;
+			p {
+				font-size: 12px;
+				color: #5c5c5c;
+			}
 		}
 	}
 }

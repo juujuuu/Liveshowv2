@@ -27,7 +27,42 @@ class Cta extends React.Component {
 		value: false,
 		role: false,
 		margin: "vertical-margin--10",
+		bonusClass: "",
+		exhibAssets: false,
+		payload: false,
 	};
+
+	getExhibAssetsList = (exhibitor) => {
+		const { Assets_Downloadable_Resource_Count__c, Assets_News_Count__c, Assets_Product_Count__c, Assets_Video_Count__c } = exhibitor;
+		return (
+			<span className="curved-cta__exhib-assets">
+				<span>
+					<i className="bi bi-envelope-fill"></i>
+				</span>
+				{Assets_Downloadable_Resource_Count__c > 0 ? (
+					<span>
+						<i className="bi bi-file-earmark-fill"></i>
+					</span>
+				) : null}
+				{Assets_News_Count__c > 0 ? (
+					<span>
+						<i className="bi bi-newspaper"></i>
+					</span>
+				) : null}
+				{Assets_Product_Count__c > 0 ? (
+					<span>
+						<i className="bi bi-cart-fill"></i>
+					</span>
+				) : null}
+				{Assets_Video_Count__c > 0 ? (
+					<span>
+						<i className="bi bi-play-circle-fill"></i>
+					</span>
+				) : null}
+			</span>
+		);
+	};
+
 	handleClick = () => {
 		if (this.props.handler != false) {
 			if (this.props.role == false) {
@@ -44,32 +79,37 @@ class Cta extends React.Component {
 	};
 	render() {
 		if (this.props.role != "pop-form") {
+			const { size, curved, color, active, margin, bonusClass, link, download, children, exhibAssets, payload } = this.props;
 			return (
 				<button
-					className={`react__cta curved-cta curved-cta--${this.props.size} ${!this.props.curved ? "curved-cta--hard" : ""} curved-cta--${
-						this.props.color
-					} ${this.props.active ? "active" : ""} ${this.props.margin}`}
+					className={`react__cta curved-cta curved-cta--${size} ${!curved ? "curved-cta--hard" : ""} curved-cta--${color} ${
+						active ? "active" : ""
+					} ${margin} ${bonusClass}`}
 					onClick={this.handleClick}>
-					{this.props.link != false ? (
-						<a className="curved-cta__link" href={this.props.link} download={this.props.download} title={this.props.children}>
-							{this.props.children}
+					{exhibAssets != false ? "" : null}						
+					{link != false ? (
+						<a className="curved-cta__link" href={link} download={download} title={children}>
+							{children}
+							{exhibAssets != false ? this.getExhibAssetsList(payload) : null}
 						</a>
 					) : (
-						<a className="curved-cta__link" title={this.props.children}>
-							{this.props.children}
+						<a className="curved-cta__link" title={children}>
+							{children}
+							{exhibAssets != false ? this.getExhibAssetsList(payload) : null}
 						</a>
 					)}
 				</button>
 			);
 		} else {
 			/* modal pop up form */
+			const { curved, color, size, active, link, children, margin, bonusClass } = this.props;
 			return (
 				<button
-					className={`react__cta curved-cta react__cta--reg-pop curved-cta--${this.props.size} ${
-						!this.props.curved ? "curved-cta--hard" : ""
-					} curved-cta--${this.props.color} ${this.props.active ? "active" : ""} ${this.props.margin}`}>
-					<a className="curved-cta__link" href={this.props.link} title={this.props.children}>
-						{this.props.children}
+					className={`react__cta curved-cta react__cta--reg-pop curved-cta--${size} ${
+						!curved ? "curved-cta--hard" : ""
+					} curved-cta--${color} ${active ? "active" : ""} ${margin} ${bonusClass}`}>
+					<a className="curved-cta__link" href={link} title={children}>
+						{children}
 					</a>
 				</button>
 			);

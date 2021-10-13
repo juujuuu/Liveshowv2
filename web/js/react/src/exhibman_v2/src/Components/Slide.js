@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Cta from "../../../common_components/Cta";
 
 class Slide extends Component {
 	constructor(props) {
@@ -12,7 +13,6 @@ class Slide extends Component {
 			string = string + `${cat} | `;
 		});
 		string = string.substring(0, string.length - 2);
-		console.log(string);
 		return string;
 	};
 
@@ -47,6 +47,17 @@ class Slide extends Component {
 
 		return (
 			<div className={`exhibitor-slide exhibitor-slide--${Exhibitor_listing_type__c} row`} id={id}>
+				<Cta
+					color="black"
+					size="reg"
+					margin="vertical-margin--0"
+					link="##"
+					curved={false}
+					bonusClass="exhibitor-slide__profile-button"
+					exhibAssets={true}
+					payload={this.props.payload}>
+					View Profile
+				</Cta>
 				<div className="col-md-3 exhibitor-slide__logo">
 					<a href="">
 						<img className="img-fluid" src={web_logo !== "" ? smallLogo : bigLogo} alt={pagetitle} />
@@ -60,7 +71,9 @@ class Slide extends Component {
 						<p className="exhibitor-booth">Booth Number: {booth}</p>
 					</div>
 				</div>
-				<div className="col-md-4 exhibitor-slide__cats">{cats != false ? cats : null}</div>
+				<div className="col-md-4 exhibitor-slide__cats">
+					<p>{cats != false ? cats : null}</p>
+				</div>
 			</div>
 		);
 	}
