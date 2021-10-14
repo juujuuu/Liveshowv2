@@ -14,6 +14,7 @@ import SpeakerSlide from "./SpeakerSlide";
 class App extends React.Component {
 	constructor(props) {
 		super(props);
+		console.log("ergergergeragaerg");
 		let filtersObj;
 		switch (props.options.show) {
 			case "CEX":
@@ -480,12 +481,26 @@ class App extends React.Component {
 	};
 	getConfPdfLink = (show) => {
 		const baseString = "./assets/resources/shared/pdfs/conference/Conference Agenda ";
+		/* || in switch case gets compiled out???? */
 		switch (show) {
-			case "FMX" || "ABX":
+			/*case "FMX" || "ABX":
+				console.log("flare star");
 				return baseString + "FMX ABX" + ".pdf";
 			case "FME" || "ABE":
 				return baseString + "FME ABE" + ".pdf";
 			case "OCS" || "SAT":
+				return baseString + "OCS SAT" + ".pdf";*/
+			case "FMX":
+				return baseString + "FMX ABX" + ".pdf";
+			case "ABX":
+				return baseString + "FMX ABX" + ".pdf";
+			case "FME":
+				return baseString + "FME ABE" + ".pdf";
+			case "ABE":
+				return baseString + "FME ABE" + ".pdf";
+			case "OCS":
+				return baseString + "OCS SAT" + ".pdf";
+			case "SAT":
 				return baseString + "OCS SAT" + ".pdf";
 			default:
 				return baseString + show + ".pdf";

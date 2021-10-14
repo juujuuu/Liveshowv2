@@ -176,7 +176,7 @@ class Slide extends React.Component {
 													<p>
 														<i>Sponsored by: </i>
 													</p>
-													<img class="img-fluid" src={this.props.session.Sponsor_URL__c} alt="Sponsor" />
+													<img className="img-fluid" src={this.props.session.Sponsor_URL__c} alt="Sponsor" />
 												</div>
 											) : (
 												""
@@ -199,7 +199,7 @@ class Slide extends React.Component {
 													<p>
 														<i>Sponsored by: </i>
 													</p>
-													<img class="img-fluid" src={this.props.session.Sponsor_URL__c} alt="Sponsor" />
+													<img className="img-fluid" src={this.props.session.Sponsor_URL__c} alt="Sponsor" />
 												</div>
 											) : (
 												""
