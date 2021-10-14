@@ -102,6 +102,11 @@ $mobile-width: 992px;
 									padding: 0.5rem 0;
 									.speakers__speaker {
 										padding: 0.5rem 0;
+										.speaker__presentation-name {
+											@media (max-width: $mobile-width) {
+												padding: 0;
+											}
+										}
 										.speaker__headshot {
 											text-align: center;
 											@media (max-width: $mobile-width) {

@@ -47,32 +47,44 @@ class Slide extends React.Component {
 		}
 	};
 	getSpeakers = () => {
-		let toJsx = (speaker, index = -1) => {
+		let getSpeaker = (speaker, index = -1) => {
 			//quick converter function
+
+			const {
+				Id,
+				First_Name__c,
+				Prefix__c,
+				Last_Name__c,
+				Title__c,
+				Job_Title__c,
+				Company__c,
+				Presentation_Slides_PDF_link__c,
+				Logo_URL__c,
+				Head_Shot_URL__c,
+			} = speaker;
+			const { ondemand, windowwidth } = this.props;
+
 			return (
-				<div key={`speaker-${index}`} className={`row speakers__speaker`} id={speaker.Id}>
-					{this.props.windowwidth > 992 ? (
+				<div key={`speaker-${index}`} className={`row speakers__speaker`} id={Id}>
+					{Title__c != null ? <h3 className="speaker__presentation-name">{Title__c}</h3> : null}
+					{windowwidth > 992 ? (
 						<div className="col-3 speaker__headshot">
-							<img
-								className="img-fluid"
-								src={this.getHeadShot(speaker.Head_Shot_URL__c)}
-								alt={`${speaker.First_Name__c} ${speaker.Last_Name__c}`}
-							/>
+							<img className="img-fluid" src={this.getHeadShot(Head_Shot_URL__c)} alt={`${First_Name__c} ${Last_Name__c}`} />
 						</div>
 					) : (
 						""
 					)}
-					<div className={`col-${this.props.windowwidth > 992 ? "5" : "12"} speaker__info`}>
-						<h3 className="speaker__info__name">{`${speaker.Title__c != null ? speaker.Title__c + " " : ""}${speaker.First_Name__c} ${
+					<div className={`col-${windowwidth > 992 ? "5" : "12"} speaker__info`}>
+						<h3 className="speaker__info__name">{`${Prefix__c != null ? `${Prefix__c} ` : ""}${First_Name__c} ${
 							speaker.Last_Name__c
 						}`}</h3>
-						<h3 className="speaker__info__job-title">{`${speaker.Job_Title__c}`}</h3>
-						<h3 className="speaker__info__company">{`${speaker.Company__c}`}</h3>
-						{this.props.ondemand && speaker.Presentation_Slides_PDF_link__c ? (
+						<h3 className="speaker__info__job-title">{`${Job_Title__c}`}</h3>
+						<h3 className="speaker__info__company">{`${Company__c}`}</h3>
+						{ondemand && Presentation_Slides_PDF_link__c ? (
 							<h3 className="speaker__info__presentation">
 								<i>
 									Download the presentation{" "}
-									<a href={speaker.Presentation_Slides_PDF_link__c} target="_blank" download>
+									<a href={Presentation_Slides_PDF_link__c} target="_blank" download>
 										here
 									</a>
 								</i>
@@ -81,9 +93,9 @@ class Slide extends React.Component {
 							""
 						)}
 					</div>
-					{this.props.windowwidth > 992 ? (
+					{windowwidth > 992 ? (
 						<div className="col-4 speaker__company">
-							<img className="img-fluid" src={this.getCompany(speaker.Logo_URL__c)} alt={`${speaker.Company__c}`} />
+							<img className="img-fluid" src={this.getCompany(Logo_URL__c)} alt={`${Company__c}`} />
 						</div>
 					) : (
 						""
@@ -106,11 +118,12 @@ class Slide extends React.Component {
 				return speaker.Roll__c == "Moderator";
 			});
 			presentations.splice(presentations.indexOf(moderator), 1);
-			moderator = toJsx(moderator);
+			moderator = getSpeaker(moderator);
 		}
 		let speakers = presentations.map((speaker, index) => {
-			return toJsx(speaker, index);
+			return getSpeaker(speaker, index);
 		});
+
 		return (
 			<>
 				{hasModerator ? (
