@@ -12,6 +12,7 @@ if (window.location.href.includes("?")) {
 		return param;
 	});
 }
+
 var options = {
 	conf: document.querySelector("#root").getAttribute("conf"),
 	show: document.querySelector("#root").getAttribute("show"),

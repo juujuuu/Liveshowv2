@@ -14,6 +14,7 @@ import SpeakerSlide from "./SpeakerSlide";
 class App extends React.Component {
 	constructor(props) {
 		super(props);
+		console.log("ergergergeragaerg");
 		let filtersObj;
 		switch (props.options.show) {
 			case "CEX":
@@ -40,6 +41,15 @@ class App extends React.Component {
 					query: "",
 					letter: "-1",
 				};
+				break;
+			case "FMX":
+				filtersObj = {
+					track: [-1], //ignore these tracks
+					day: -1, //inverse of this ^^
+					query: "",
+					letter: "-1",
+				};
+				props.options.odcode = "FA21OD";
 				break;
 			default:
 				//if a filter is -1 ignore
@@ -108,6 +118,7 @@ class App extends React.Component {
 		if (this.state.filters.track[0] == -1) {
 			//currently on all so convert empty and add value
 			tracks.push(value);
+			console.log("TEST", this.props.options.show == "CEX" || this.props.options.show == "FMX");
 			if (this.props.options.show == "CEX") {
 				if (value == 1) {
 					this.setDay(2);
@@ -135,7 +146,7 @@ class App extends React.Component {
 			if (tracks.length < 1) {
 				//tracks now empty so convert to -1
 				tracks.push(-1);
-				if (this.props.options.show == "CEX") {
+				if (this.props.options.show == "CEX" || this.props.options.show == "FMX") {
 					this.setDay(-1);
 				}
 			}
@@ -470,12 +481,26 @@ class App extends React.Component {
 	};
 	getConfPdfLink = (show) => {
 		const baseString = "./assets/resources/shared/pdfs/conference/Conference Agenda ";
+		/* || in switch case gets compiled out???? */
 		switch (show) {
-			case "FMX" || "ABX":
+			/*case "FMX" || "ABX":
+				console.log("flare star");
 				return baseString + "FMX ABX" + ".pdf";
 			case "FME" || "ABE":
 				return baseString + "FME ABE" + ".pdf";
 			case "OCS" || "SAT":
+				return baseString + "OCS SAT" + ".pdf";*/
+			case "FMX":
+				return baseString + "FMX ABX" + ".pdf";
+			case "ABX":
+				return baseString + "FMX ABX" + ".pdf";
+			case "FME":
+				return baseString + "FME ABE" + ".pdf";
+			case "ABE":
+				return baseString + "FME ABE" + ".pdf";
+			case "OCS":
+				return baseString + "OCS SAT" + ".pdf";
+			case "SAT":
 				return baseString + "OCS SAT" + ".pdf";
 			default:
 				return baseString + show + ".pdf";
@@ -551,7 +576,7 @@ class App extends React.Component {
 		return (
 			<section className={`confman conference-agenda conference-agenda--${this.props.options.show}`}>
 				<MainNav desktop={window.innerWidth > 992}>
-					{this.props.options.show != "CEX" ? (
+					{this.props.options.show != "CEX" && this.props.options.show != "FMX" ? (
 						<div className="main-nav__days">
 							<div className={`container${window.innerWidth < 992 ? "-fluid" : ""}`}>
 								<div className="row">{this.getDayButtons(this.state.metaNumbers.day)}</div>

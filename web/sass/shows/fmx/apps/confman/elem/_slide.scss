@@ -1,7 +1,7 @@
 $mobile-width: 992px;
 .confman {
 	&.conference-agenda {
-		.confman__body {
+		.react__body {
 			.conference-agenda__sessions {
 				.body__session {
 					margin: 5px 0;
@@ -51,11 +51,22 @@ $mobile-width: 992px;
 								background-color: unset;
 								border: none;
 								border-top: none;
-								& > div {
-									padding: 10px 0;
+								.session--sponsored {
+									display: flex;
+									.session__meta {
+										width: 70%;
+									}
+									.session__sponsor {
+										width: 30%;
+										text-align: center;
+										p {
+											margin-bottom: 0;
+											overflow-wrap: unset;
+										}
+									}
 								}
-								.session__name {
-									padding-right: 10%;
+								& > div {
+									padding: 10px 5% 0 0;
 								}
 								&::after {
 									/*Chevron*/
@@ -74,12 +85,28 @@ $mobile-width: 992px;
 						.session__body {
 							.accordion-body {
 								padding: 0rem 1.25rem 0.5rem 1.25rem;
+								.body__video {
+									position: relative;
+									padding: 30%;
+									iframe {
+										position: absolute;
+										width: 100%;
+										height: 100%;
+										top: 0;
+										left: 0;
+									}
+								}
 								.body__synopsis {
 								}
 								.body__speakers {
 									padding: 0.5rem 0;
 									.speakers__speaker {
 										padding: 0.5rem 0;
+										.speaker__presentation-name {
+											@media (max-width: $mobile-width) {
+												padding: 0;
+											}
+										}
 										.speaker__headshot {
 											text-align: center;
 											@media (max-width: $mobile-width) {
@@ -93,6 +120,9 @@ $mobile-width: 992px;
 												font-weight: normal;
 											}
 											&__company {
+											}
+											&__presentation {
+												font-weight: normal;
 											}
 										}
 										.speaker__company {
@@ -118,7 +148,7 @@ $mobile-width: 992px;
 		}
 	}
 	&.speaker-list {
-		.confman__body {
+		.react__body {
 			.speaker-list__slide-list {
 				border-top: 3px solid black;
 				padding: 10px 0;
@@ -162,6 +192,18 @@ $mobile-width: 992px;
 					}
 				}
 			}
+		}
+	}
+}
+#od-modal {
+	h2 {
+		color: black;
+	}
+	button[type="submit"] {
+		padding: 3px 10px 5px 10px;
+		margin-right: 0;
+		&:hover {
+			color: #b62f25;
 		}
 	}
 }
