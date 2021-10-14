@@ -1,1 +1,12 @@
-@import "./elem/slide";
+@import "./elem/slide", "./elem/alphabet";
+.exhibmanV2 {
+	.viewport-col {
+		.viewport__header {
+			//margin-bottom: 10px;
+			h3 {
+				padding: 0;
+				margin: 0;
+			}
+		}
+	}
+}

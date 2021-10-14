@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import Spinner from "../../../common_components/Spinner";
 import Slide from "./Slide";
+import Alphabet from "../../../common_components/Alphabet";
 
 class App extends Component {
 	constructor(props) {
@@ -13,7 +14,7 @@ class App extends Component {
 			product: null,
 			queries: {
 				search: "",
-				alphabet: "",
+				letter: "Show All",
 			},
 		};
 	}
@@ -23,7 +24,6 @@ class App extends Component {
 	 */
 	componentDidMount() {
 		const { ids, mode } = this.props.options;
-		console.log("hi there");
 		this.getSF(ids, mode).then((response) => {
 			this.setState((prevState) => {
 				prevState.exhibsData = response;
@@ -98,6 +98,13 @@ class App extends Component {
 		}
 	};
 
+	setLetter = (letter) => {
+		this.setState((prevState) => {
+			prevState.queries.letter = letter;
+			return prevState;
+		});
+	};
+
 	filterExhibitors = (exhibitors, filters, queries) => {
 		exhibitors = [...exhibitors];
 		filters.forEach((filter) => {
@@ -115,8 +122,8 @@ class App extends Component {
 			return <h2 className="no-exhibs-message d-flex justify-content-center align-items-center">No exhibitors found</h2>;
 		}
 		const { id } = exhibitors;
-		return exhibitors.map((exhibitor) => {
-			return <Slide key={id} payload={exhibitor} />;
+		return exhibitors.map((exhibitor, index) => {
+			return <Slide key={`slide--${id}--${index}`} payload={exhibitor} />;
 		});
 	};
 
@@ -132,7 +139,14 @@ class App extends Component {
 			<section className={`exhibmanV2 exhibmanV2--${show} row`}>
 				<div className="col-md-4 control-col">control</div>
 				<div className="col-md-8 viewport-col">
-					<div>alphabet</div>
+					<div className="alphabet-filter">
+						<Alphabet activeLetter={queries.letter} handler={this.setLetter} />
+					</div>
+					<div className="row viewport__header">
+						<h3>
+							<strong>Exhibitors A-Z</strong>
+						</h3>
+					</div>
 					<div className="slide-list">{this.getSlides(filteredExhibitors, options)}</div>
 				</div>
 			</section>
@@ -141,9 +155,6 @@ class App extends Component {
 
 	render() {
 		const { exhibsData, exhibitor, product, queries, loading } = this.state;
-		console.log("State: ", this.state);
-		console.log("exhibsdata:  ", this.state.exhibsData);
-		console.log("destructured:  ", exhibsData);
 		const { mode } = this.props.options;
 		switch (mode) {
 			case "LIST":

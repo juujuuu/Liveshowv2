@@ -1,0 +1,22 @@
+.exhibmanV2 {
+	.alphabet-filter {
+		margin-bottom: 20px;
+		.alphabet {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			border-bottom: 1px solid black;
+
+			.alphabet__letter {
+				width: auto;
+				max-width: unset;
+				padding: 0;
+				cursor: pointer;
+				transition: font-weight 0.1s linear;
+				&--active {
+					font-weight: bold;
+				}
+			}
+		}
+	}
+}
