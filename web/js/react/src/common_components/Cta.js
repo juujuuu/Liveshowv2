@@ -78,41 +78,61 @@ class Cta extends React.Component {
 		return;
 	};
 	render() {
-		if (this.props.role != "pop-form") {
-			const { size, curved, color, active, margin, bonusClass, link, download, children, exhibAssets, payload } = this.props;
-			return (
-				<button
-					className={`react__cta curved-cta curved-cta--${size} ${!curved ? "curved-cta--hard" : ""} curved-cta--${color} ${
-						active ? "active" : ""
-					} ${margin} ${bonusClass}`}
-					onClick={this.handleClick}>
-					{exhibAssets != false ? "" : null}						
-					{link != false ? (
-						<a className="curved-cta__link" href={link} download={download} title={children}>
+		const { size, curved, color, active, margin, bonusClass, link, download, children, exhibAssets, payload } = this.props;
+		switch (this.props.role) {
+			case "pop-form":
+				/* modal pop up form */
+				return (
+					<button
+						className={`react__cta curved-cta react__cta--reg-pop curved-cta--${size} ${
+							!curved ? "curved-cta--hard" : ""
+						} curved-cta--${color} ${active ? "active" : ""} ${margin} ${bonusClass}`}>
+						<a className="curved-cta__link" href={link} title={children}>
 							{children}
-							{exhibAssets != false ? this.getExhibAssetsList(payload) : null}
 						</a>
-					) : (
-						<a className="curved-cta__link" title={children}>
-							{children}
-							{exhibAssets != false ? this.getExhibAssetsList(payload) : null}
-						</a>
-					)}
-				</button>
-			);
-		} else {
-			/* modal pop up form */
-			const { curved, color, size, active, link, children, margin, bonusClass } = this.props;
-			return (
-				<button
-					className={`react__cta curved-cta react__cta--reg-pop curved-cta--${size} ${
-						!curved ? "curved-cta--hard" : ""
-					} curved-cta--${color} ${active ? "active" : ""} ${margin} ${bonusClass}`}>
-					<a className="curved-cta__link" href={link} title={children}>
-						{children}
-					</a>
-				</button>
-			);
+					</button>
+				);
+			case false && this.props.exhibAssets != false:
+				//Exhib assets button
+				return (
+					<button
+						className={`react__cta curved-cta curved-cta--${size} ${!curved ? "curved-cta--hard" : ""} curved-cta--${color} ${
+							active ? "active" : ""
+						} ${margin} ${bonusClass}`}
+						onClick={this.handleClick}>
+							{link != false ? (
+							<a className="curved-cta__link" href={link} download={download} title={children}>
+								<span className="curved-cta__text">{children}</span>
+								{this.getExhibAssetsList(payload)}
+							</a>
+						) : (
+							<a className="curved-cta__link" title={children}>
+								<span className="curved-cta__text">{children}</span>
+								{this.getExhibAssetsList(payload)}
+							</a>
+						)}
+					</button>
+				);
+			default:
+				return (
+					<button
+						className={`react__cta curved-cta curved-cta--${size} ${!curved ? "curved-cta--hard" : ""} curved-cta--${color} ${
+							active ? "active" : ""
+						} ${margin} ${bonusClass}`}
+						onClick={this.handleClick}>
+						{link != false ? (
+							<a className="curved-cta__link" href={link} download={download} title={children}>
+								{children}
+								{exhibAssets != false ? this.getExhibAssetsList(payload) : null}
+							</a>
+						) : (
+							<a className="curved-cta__link" title={children}>
+								{children}
+								{exhibAssets != false ? this.getExhibAssetsList(payload) : null}
+							</a>
+						)}
+					</button>
+				);
 		}
 	}
 }

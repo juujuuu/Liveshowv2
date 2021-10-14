@@ -7,6 +7,34 @@
 			width: auto;
 			margin-top: -1px;
 			right: 4rem;
+			padding: 0 !important;
+			&:hover {
+				background-color: #fff;
+				box-shadow: inset 0 0 0 1.5px #000;
+				//transition: box-shadow 0.2s linear !important;
+				.curved-cta__exhib-assets {
+					background-color: #fff !important;
+					box-shadow: inset 0 0 0 1.5px #000;
+					transition: background 0.2s linear !important;
+					//transition: box-shadow 0.2s linear !important;
+				}
+			}
+			.curved-cta__link {
+				display: block;
+				.curved-cta__text,
+				.curved-cta__exhib-assets {
+					display: inline-block;
+					padding: 3px 5px 3px 10px;
+				}
+				.curved-cta__exhib-assets {
+					display: inline-block;
+					padding: 3px 5px 3px 5px;
+					background-color: #5a5a5a;
+					span {
+						padding: 3px;
+					}
+				}
+			}
 		}
 		&__logo,
 		&__body,
