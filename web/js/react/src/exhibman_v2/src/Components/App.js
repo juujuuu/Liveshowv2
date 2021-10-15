@@ -111,10 +111,33 @@ class App extends Component {
 			if (filter == "SEARCH") {
 				//exhibitors = this.searchFilter(exhibitors, queries.search);
 			} else if (filter == "ALPHABET") {
-				//exhibitors = this.alphabetFilter(exhibitors, queries.alphabet);
+				exhibitors = this.alphabetFilter(exhibitors, queries.letter);
 			}
 		});
 		return exhibitors;
+	};
+
+	alphabetFilter = (exhibitors, letter) =>{
+		letter = letter.toLowerCase();
+
+		if(letter == "show all"){
+			return exhibitors;
+		}
+		
+		return exhibitors.filter(exhibitor =>{
+			const {pagetitle} = exhibitor
+			const name = pagetitle.toLowerCase();
+			
+			if(letter == "0-9"){
+				return !isNaN(name.charAt(0)) 
+			} else if(letter.match(/[a-z]/i)){
+				//is a letter
+				return letter == name.charAt(0);
+			}
+			else{
+				return true;
+			}
+		});
 	};
 
 	getSlides = (exhibitors, options) => {

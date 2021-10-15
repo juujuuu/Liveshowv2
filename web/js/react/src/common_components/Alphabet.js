@@ -24,7 +24,6 @@ export default class Alphabet extends Component {
 		let letters = `Show All|0-9|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z`.split("|");
 
 		return letters.map((letter) => {
-			console.log("active letter: ", activeLetter, "Letter: ", letter, "Equal: ", activeLetter == letter);
 			return (
 				<span
 					onClick={this.handleClick}

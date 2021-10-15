@@ -2,11 +2,12 @@
 	.exhibitor-slide {
 		border-top: 1px solid black;
 		height: 170px;
+		position: relative;
 		&__profile-button {
 			position: absolute;
 			width: auto;
 			margin-top: -1px;
-			right: 4rem;
+			right: 0;
 			padding: 0 !important;
 			&:hover {
 				background-color: #fff;
