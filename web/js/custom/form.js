@@ -12,7 +12,7 @@ $(document).ready(function () {
 	/**
 	 * Pop up forms
 	 */
-	 $("body").on("click", ".image--form-modal, .curved-cta--form-modal, .nav-item--reg-link.nav-item--reg-link--pop, .pop-form", function (event) {
+	$("body").on("click", ".image--form-modal, .curved-cta--form-modal, .nav-item--reg-link.nav-item--reg-link--pop, .pop-form", function (event) {
 		event.preventDefault();
 		let formUri = $(this).children("a").attr("href");
 		getForm(formUri).then(function (formHtml) {
@@ -23,8 +23,8 @@ $(document).ready(function () {
 			$("body").append(modal);
 			let myModal = new bootstrap.Modal(document.getElementById("modal"));
 			myModal.show();
-		}); 
-	 });	
+		});
+	});
 
 	/**
 	 * Confman reg interest
@@ -40,13 +40,13 @@ $(document).ready(function () {
 			$("body").append(modal);
 			let myModal = new bootstrap.Modal(document.getElementById("modal"));
 			myModal.show();
-		}); 
+		});
 	});
 
-	/**	 
+	/**
 	 * Exhib contact requests
 	 */
-	 $(document).on("click", ".exhib-contact-cta", function (event) {
+	$(document).on("click", ".exhib-contact-cta", function (event) {
 		event.preventDefault();
 		let campaignid = $(this).attr("campaignid");
 		let exhibName = $(this).attr("name");
@@ -223,11 +223,15 @@ $(document).ready(function () {
 						parent.append(thankyou);
 						setTimeout(() => {
 							let modal = bootstrap.Modal.getInstance(document.getElementById("modal"));
-							modal.hide();
+							if (modal) {
+								modal.hide();
+							}
 						}, 2000);
 					} else {
 						let modal = bootstrap.Modal.getInstance(document.getElementById("modal"));
-						modal.hide();
+						if (modal) {
+							modal.hide();
+						}
 						window.open(gatedUrl);
 					}
 				}, 3000);
