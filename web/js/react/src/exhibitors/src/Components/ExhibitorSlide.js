@@ -22,29 +22,26 @@ class ExhibitorSlide extends React.Component {
 	openDrilldown = () => {
 		window.open(this.state.drilldownlink, "_self");
 	};
+	getListingCTA = (enhancedtext, listing_type, assettypes) => {
+		if (listing_type === "Premium") {
+			return (
+				<EnhancedCta text="Premium Listing" size="small" type="premium-listing" clickHandler={this.openDrilldown} assettypes={assettypes} />
+			);
+		} else if (listing_type === "Enhanced") {
+			return (
+				<EnhancedCta text="Enhanced Listing" size="small" type="enhanced-listing" clickHandler={this.openDrilldown} assettypes={assettypes} />
+			);
+		} else {
+			return <EnhancedCta text="View Profile" size="small" type="enhanced-listing" clickHandler={this.openDrilldown} assettypes={assettypes} />;
+		}
+	};
 	render() {
 		let cName = `row exhibitor-slide exhibitor-slide--${this.props.listing_type} exhibitor-slide--${this.props.show_code}`;
 		return (
 			<div className={cName} id={this.props.id}>
 				<div className="exhibitor-slide__hr">
 					<hr />
-					{this.props.listing_type === "Premium" ? (
-						<EnhancedCta
-							text={this.props.options.enhancedtext}
-							size="small"
-							type="premium-listing"
-							clickHandler={this.openDrilldown}
-							assettypes={this.props.assettypes}
-						/>
-					) : (
-						<EnhancedCta
-							text={this.props.options.enhancedtext}
-							size="small"
-							type="enhanced-listing"
-							clickHandler={this.openDrilldown}
-							assettypes={this.props.assettypes}
-						/>
-					)}
+					{this.getListingCTA(this.props.options.enhancedtext, this.props.listing_type, this.props.assettypes)}
 				</div>
 				<div className="exhibitor-slide__desk  visible-lg visible-xl visible-xxl hidden-xs hidden-sm hidden-md">
 					<div className="row">
