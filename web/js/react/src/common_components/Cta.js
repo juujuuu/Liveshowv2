@@ -79,6 +79,7 @@ class Cta extends React.Component {
 	};
 	render() {
 		const { size, curved, color, active, margin, bonusClass, link, download, children, exhibAssets, payload } = this.props;
+		console.log(this.props.bonusClass, this.props.role, "exhib assets " ,this.props.exhibAssets, " ", this.props.exhibAssets != false);
 		switch (this.props.role) {
 			case "pop-form":
 				/* modal pop up form */
@@ -92,8 +93,9 @@ class Cta extends React.Component {
 						</a>
 					</button>
 				);
-			case false && this.props.exhibAssets != false:
+			case false && this.props.exhibAssets !== false:
 				//Exhib assets button
+				console.log(this.props.bonusClass, " Here");
 				return (
 					<button
 						className={`react__cta curved-cta curved-cta--${size} ${!curved ? "curved-cta--hard" : ""} curved-cta--${color} ${
@@ -123,12 +125,10 @@ class Cta extends React.Component {
 						{link != false ? (
 							<a className="curved-cta__link" href={link} download={download} title={children}>
 								{children}
-								{exhibAssets != false ? this.getExhibAssetsList(payload) : null}
 							</a>
 						) : (
 							<a className="curved-cta__link" title={children}>
 								{children}
-								{exhibAssets != false ? this.getExhibAssetsList(payload) : null}
 							</a>
 						)}
 					</button>

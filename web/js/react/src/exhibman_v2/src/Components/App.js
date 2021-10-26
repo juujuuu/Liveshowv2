@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import Spinner from "../../../common_components/Spinner";
 import Slide from "./Slide";
 import Alphabet from "../../../common_components/Alphabet";
+import StickyNav from "../../../common_components/StickyNav";
+import Cta from "../../../common_components/Cta";
 
 class App extends Component {
 	constructor(props) {
@@ -160,7 +162,11 @@ class App extends Component {
 
 		return (
 			<section className={`exhibmanV2 exhibmanV2--${show} row`}>
-				<div className="col-md-4 control-col">control</div>
+				<div className="col-md-4 control-col">
+					<StickyNav>
+						<h3><strong>Refine Results</strong><span><Cta bonusClass="mega drive" handler={false} size="micro" color="black" margin="vertical-margin--0">Clear Filters</Cta></span></h3>
+					</StickyNav>
+				</div>
 				<div className="col-md-8 viewport-col">
 					<div className="alphabet-filter">
 						<Alphabet activeLetter={queries.letter} handler={this.setLetter} />
