@@ -28,7 +28,6 @@ class Cta extends React.Component {
 		role: false,
 		margin: "vertical-margin--10",
 		bonusClass: "",
-		exhibAssets: false,
 		payload: false,
 	};
 
@@ -64,23 +63,26 @@ class Cta extends React.Component {
 	};
 
 	handleClick = () => {
-		if (this.props.handler != false) {
-			if (this.props.role == false) {
-				this.props.handler();
-			} else if (this.props.role == "expand") {
-				this.props.handler(this.props.value);
-			} else if (this.props.role == "collapse") {
-				this.props.handler(this.props.value);
-			} else if (this.props.role == "pop-form") {
+		const { role, handler, value } = this.props;
+		if (handler != false) {
+			if (role == false) {
+				handler();
+			} else if (role == "expand") {
+				handler(value);
+			} else if (role == "collapse") {
+				handler(value);
+			} else if (role == "pop-form") {
 				//handle by site jquery
+			} else if (role == "expo-query") {
+				handler(value);
 			}
 		}
 		return;
 	};
 	render() {
-		const { size, curved, color, active, margin, bonusClass, link, download, children, exhibAssets, payload } = this.props;
-		console.log(this.props.bonusClass, this.props.role, "exhib assets " ,this.props.exhibAssets, " ", this.props.exhibAssets != false);
-		switch (this.props.role) {
+		const { size, curved, color, active, margin, bonusClass, link, download, children, payload, role } = this.props;
+
+		switch (role) {
 			case "pop-form":
 				/* modal pop up form */
 				return (
@@ -93,16 +95,15 @@ class Cta extends React.Component {
 						</a>
 					</button>
 				);
-			case false && this.props.exhibAssets !== false:
+			case "exhib-assets":
 				//Exhib assets button
-				console.log(this.props.bonusClass, " Here");
 				return (
 					<button
 						className={`react__cta curved-cta curved-cta--${size} ${!curved ? "curved-cta--hard" : ""} curved-cta--${color} ${
 							active ? "active" : ""
 						} ${margin} ${bonusClass}`}
 						onClick={this.handleClick}>
-							{link != false ? (
+						{link != false ? (
 							<a className="curved-cta__link" href={link} download={download} title={children}>
 								<span className="curved-cta__text">{children}</span>
 								{this.getExhibAssetsList(payload)}

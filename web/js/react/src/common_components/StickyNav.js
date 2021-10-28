@@ -24,7 +24,8 @@ class StickyNav extends React.Component {
 		window.addEventListener("scroll", this.handleScroll);
 	};
 	getAffix = () => {
-		if (this.state.offsetTop < 0 && this.state.offsetTop + document.body.clientHeight > 2000) {
+		const {offsetTop} = this.state;
+		if (offsetTop < 0 && offsetTop + document.body.clientHeight > 2000) {
 			return "affix";
 		} else {
 			return "fixed-top";

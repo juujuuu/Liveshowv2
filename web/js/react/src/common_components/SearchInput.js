@@ -9,6 +9,7 @@ class SearchInput extends React.Component {
 		role: false,
 		handler: false,
 		placeholder: "",
+		bonusClass: "",
 	};
 	handleChange = (event) => {
 		const val = event.target.value;
@@ -34,20 +35,22 @@ class SearchInput extends React.Component {
 	};
 
 	render() {
-		if (this.props.role == false) {
+		const { role, value, placeholder, bonusClass } = this.props;
+		if (role == false) {
 			return (
-				<form className="react__search react__search" onSubmit={this.handleSubmit}>
+				<form className={`react__search react__search`} onSubmit={this.handleSubmit}>
 					<input
 						id="react__search"
+						className={bonusClass}
 						type="text"
 						name="react__search"
-						placeholder={this.props.placeholder}
-						value={this.props.value}
+						placeholder={placeholder}
+						value={value}
 						onChange={this.handleChange}
 					/>
 				</form>
 			);
-		} else if (this.props.role=="conference-search") {
+		} else if (role == "conference-search") {
 			return (
 				<form className="react__search react__search--conference" onSubmit={this.handleSubmit}>
 					<input
@@ -55,10 +58,10 @@ class SearchInput extends React.Component {
 						id="confman__search"
 						type="text"
 						name="confman_search"
-						placeholder={this.props.placeholder}
-						value={this.state.value}
+						placeholder={placeholder}
+						value={value}
 					/>
-					{this.props.role == "conference-search" ? <span onClick={this.handleSubmit}>{">"}</span> : ""}
+					<span onClick={this.handleSubmit}>{">"}</span>
 				</form>
 			);
 		}

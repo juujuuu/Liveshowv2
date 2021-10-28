@@ -55,8 +55,9 @@ class Slide extends Component {
 					curved={false}
 					bonusClass="exhibitor-slide__profile-button"
 					exhibAssets={true}
+					role="exhib-assets"
 					payload={this.props.payload}>
-					View Profile
+					{Exhibitor_listing_type__c == "Standard" ? "View Profile" : "Enhanced Listing"}
 				</Cta>
 				<div className="col-md-3 exhibitor-slide__logo">
 					<a href="">

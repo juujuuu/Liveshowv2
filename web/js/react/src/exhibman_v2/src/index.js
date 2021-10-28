@@ -52,7 +52,7 @@ if (extraParams) {
 const options = {
 	ids, //Expo ids
 	show: document.querySelector("#root").getAttribute("show"), //Show acronym
-	reglink: document.querySelector("#root").getAttribute("reglink"), //N200 reg link
+	regLink: document.querySelector("#root").getAttribute("reglink"), //N200 reg link
 	event: document.querySelector("#root").getAttribute("event"), //Long Event name
 	contactcampaign: document.querySelector("#root").getAttribute("contactcampaign"), //Contact exhib camp id
 	gtm: document.querySelector("#root").getAttribute("gtm"), //Google Tag Manager ID
