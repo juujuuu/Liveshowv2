@@ -1,5 +1,19 @@
 .control-col {
 	.react__sticky-nav {
+		@media (max-width: $mobile-width) {
+			&.nav-affix {
+				&--affix {
+					top: 56px !important;
+					width: 100% !important;
+					background: #fff;
+					left: 0;
+					right: 0;
+					z-index: 1;
+					padding: 10px;
+					box-shadow: 0 4px 2px -2px gray;
+				}
+			}
+		}
 		&.nav-affix {
 			&--affix {
 				position: fixed;

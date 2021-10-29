@@ -311,7 +311,7 @@ class App extends Component {
 
 		return (
 			<section className={`exhibmanV2 exhibmanV2--${show} row`}>
-				<nav className="col-md-4 control-col">
+				<nav className="col-12 col-md-4 control-col">
 					<StickyNav>
 						<div className="control-col__header">
 							<h3>

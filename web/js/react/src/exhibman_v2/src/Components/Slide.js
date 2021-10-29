@@ -47,34 +47,40 @@ class Slide extends Component {
 
 		return (
 			<div className={`exhibitor-slide exhibitor-slide--${Exhibitor_listing_type__c} row`} id={id}>
-				<Cta
-					color="black"
-					size="reg"
-					margin="vertical-margin--0"
-					link="##"
-					curved={false}
-					bonusClass="exhibitor-slide__profile-button"
-					exhibAssets={true}
-					role="exhib-assets"
-					payload={this.props.payload}>
-					{Exhibitor_listing_type__c == "Standard" ? "View Profile" : "Enhanced Listing"}
-				</Cta>
-				<div className="col-md-3 exhibitor-slide__logo">
+				{Exhibitor_listing_type__c != "Standard" ? (
+					<Cta
+						color="black"
+						size="reg"
+						margin="vertical-margin--0"
+						link="##"
+						curved={false}
+						bonusClass="exhibitor-slide__profile-button"
+						exhibAssets={true}
+						role="exhib-assets"
+						payload={this.props.payload}>
+						{Exhibitor_listing_type__c == "Standard" ? "View Profile" : "Enhanced Listing"}
+					</Cta>
+				) : null}
+
+				<div className="col-6 col-md-3 exhibitor-slide__logo">
 					<a href="">
 						<img className="img-fluid" src={web_logo !== "" ? smallLogo : bigLogo} alt={pagetitle} />
 					</a>
 				</div>
-				<div className="col-md-5 exhibitor-slide__body">
+				<div className="col-6 col-md-5 exhibitor-slide__body">
 					<div>
 						<h4 className="exhibitor-name">
 							<a href="">{pagetitle}</a>
 						</h4>
 						<p className="exhibitor-booth">Booth Number: {booth}</p>
+						{window.innerWidth < 768 ? <>{cats != false ? <div className="exhibitor-slide__cats"><p>{cats}</p></div> : null}</> : null}
 					</div>
 				</div>
-				<div className="col-md-4 exhibitor-slide__cats">
-					<p>{cats != false ? cats : null}</p>
-				</div>
+				{window.innerWidth > 768 ? (
+					<div className="col-md-4 exhibitor-slide__cats">
+						<p>{cats != false ? cats : null}</p>
+					</div>
+				) : null}
 			</div>
 		);
 	}

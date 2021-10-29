@@ -1,8 +1,12 @@
 .exhibmanV2 {
 	.exhibitor-slide {
+		position: relative;
 		border-top: 1px solid black;
 		height: 170px;
-		position: relative;
+		overflow: hidden;
+		@media (max-width: $mobile-width) {
+			height: 260px;
+		}
 		&__profile-button {
 			position: absolute;
 			width: auto;
