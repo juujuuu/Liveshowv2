@@ -17,6 +17,9 @@ class Slide extends Component {
 	};
 
 	render() {
+		const { payload } = this.props;
+		const { switchMode } = this.props;
+
 		const {
 			id,
 			Expo__c,
@@ -35,12 +38,12 @@ class Slide extends Component {
 
 		const smallLogo = web_logo;
 		const bigLogo = logo;
-		const booth = this.props.payload["exhibitor-booth"];
-		const featured = this.props.payload["exhibitor-featured"];
+		const booth = payload["exhibitor-booth"];
+		const featured = payload["exhibitor-featured"];
 
 		let cats;
-		if (this.props.payload["exhibitor-cat"].length > 0) {
-			cats = this.getCats(this.props.payload["exhibitor-cat"].split("||"));
+		if (payload["exhibitor-cat"].length > 0) {
+			cats = this.getCats(payload["exhibitor-cat"].split("||"));
 		} else {
 			cats = false;
 		}
@@ -52,13 +55,13 @@ class Slide extends Component {
 						color="black"
 						size="reg"
 						margin="vertical-margin--0"
-						link="##"
+						handler={() => switchMode("PROFILE", id)}
 						curved={false}
 						bonusClass="exhibitor-slide__profile-button"
 						exhibAssets={true}
 						role="exhib-assets"
-						payload={this.props.payload}>
-						{Exhibitor_listing_type__c == "Standard" ? "View Profile" : "Enhanced Listing"}
+						payload={payload}>
+						Enhanced Listing
 					</Cta>
 				) : null}
 
@@ -73,7 +76,15 @@ class Slide extends Component {
 							<a href="">{pagetitle}</a>
 						</h4>
 						<p className="exhibitor-booth">Booth Number: {booth}</p>
-						{window.innerWidth < 768 ? <>{cats != false ? <div className="exhibitor-slide__cats"><p>{cats}</p></div> : null}</> : null}
+						{window.innerWidth < 768 ? (
+							<>
+								{cats != false ? (
+									<div className="exhibitor-slide__cats">
+										<p>{cats}</p>
+									</div>
+								) : null}
+							</>
+						) : null}
 					</div>
 				</div>
 				{window.innerWidth > 768 ? (

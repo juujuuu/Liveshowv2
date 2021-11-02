@@ -51,6 +51,7 @@ if (extraParams) {
 
 const options = {
 	ids, //Expo ids
+	profileId: document.querySelector("#root").getAttribute("profile"),
 	show: document.querySelector("#root").getAttribute("show"), //Show acronym
 	regLink: document.querySelector("#root").getAttribute("reglink"), //N200 reg link
 	event: document.querySelector("#root").getAttribute("event"), //Long Event name

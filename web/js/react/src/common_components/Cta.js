@@ -67,6 +67,8 @@ class Cta extends React.Component {
 		if (handler != false) {
 			if (role == false) {
 				handler();
+			} else if (role == "exhib-assets") {
+				handler();
 			} else if (role == "expand") {
 				handler(value);
 			} else if (role == "collapse") {

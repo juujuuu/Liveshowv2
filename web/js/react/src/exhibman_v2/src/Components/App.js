@@ -12,15 +12,18 @@ import PDFMake from "../Utils/PDFMake/PDFMake";
 class App extends Component {
 	constructor(props) {
 		super(props);
+		const { mode, ids, profileId } = props.options;
 		this.state = {
 			loading: true,
+			mode,
+			profileId: profileId,
 			exhibsData: [],
 			exhibitor: null,
 			product: null,
 			queries: {
 				search: "",
 				letter: "Show All",
-				expo: props.options.ids,
+				expo: ids,
 			},
 		};
 	}
@@ -54,7 +57,7 @@ class App extends Component {
 				let newIds;
 				if (ids.length > 1) {
 					ids.forEach((id) => {
-						newIds = `${newIds},`;
+						newIds = newIds + id + ", ";
 					});
 					newIds = newIds.substring(0, newIds.length - 1);
 				} else {
@@ -62,7 +65,9 @@ class App extends Component {
 				}
 				url = `/rest/exhibman.php?expos=${newIds}`;
 				break;
-
+			case "PROFILE":
+				url = `/rest/exhib_drilldown.php?booth='${ids}'`;
+				break;
 			default:
 				if (ids.length > 1) {
 					ids.forEach((id) => {
@@ -89,18 +94,50 @@ class App extends Component {
 				.then((data) => {
 					response = data;
 				});
-			response.sort((a, b) => {
-				if (a.pagetitle < b.pagetitle) {
-					return -1;
-				}
-				if (a.pagetitle > b.pagetitle) {
-					return 1;
-				}
-				return 0;
-			});
+			if (mode == "LIST") {
+				response.sort((a, b) => {
+					if (a.pagetitle < b.pagetitle) {
+						return -1;
+					}
+					if (a.pagetitle > b.pagetitle) {
+						return 1;
+					}
+					return 0;
+				});
+			}
 			return response;
 		} catch (error) {
 			console.error("Salesforce Controller failed:  ", error);
+		}
+	};
+
+	/**
+	 * Switch mode
+	 * @param {*} mode mode to switch to
+	 * @param {*} payload depends on mode
+	 */
+	switchMode = (mode = "LIST", payload) => {
+		//TODO LIST, PROFILE, PRODCUT
+		//LIST set mode, call sf, laoding true, re render
+		switch (mode) {
+			case "PROFILE":
+				this.setState((prevState) => {
+					prevState.loading = true;
+					prevState.mode = "PROFILE";
+					return prevState;
+				});
+				this.getSF(payload, mode).then((data) => {
+					this.setState((prevState) => {
+						prevState.exhibitor = data[0];
+						prevState.loading = false;
+						console.log("GET SF Profile data:  ", data[0]);
+						return prevState;
+					});
+				});
+				break;
+
+			default:
+				break;
 		}
 	};
 
@@ -217,9 +254,9 @@ class App extends Component {
 		if (exhibitors.length < 1) {
 			return <h2 className="no-exhibs-message d-flex justify-content-center align-items-center">No exhibitors found</h2>;
 		}
-		const { id } = exhibitors;
 		return exhibitors.map((exhibitor, index) => {
-			return <Slide key={`slide--${id}--${index}`} payload={exhibitor} />;
+			const { id } = exhibitor;
+			return <Slide key={`slide--${id}--${index}`} payload={exhibitor} switchMode={this.switchMode} />;
 		});
 	};
 	getExtraNavButtons = (options) => {
@@ -342,13 +379,44 @@ class App extends Component {
 			</section>
 		);
 	};
+	getProfile = (exhibitor, loading, options) => {		
+		if (loading) {
+			return <Spinner></Spinner>;
+		}
+		const { show } = options;
+		const { pagetitle, content, Company_Bio_Enhanced__c } = exhibitor;
+		const cats = exhibitor["exhibitor-cat"];
+		
+		return (
+			<section className={`exhibmanV2 exhibmanV2--${show} exhibman-profile row`}>
+				<div className="col-12 col-md-8 profile">
+					<h1 className="profile-title">{pagetitle}</h1>
+					<nav>QUICK MENU</nav>
+					<div className="profile-summary">
+						<div className="profile-logo"></div>
+						<div className="profile-bios">
+							<p className="profile-bios__short-bio">{content}</p>
+							{Company_Bio_Enhanced__c ? (
+								<div className="profile-bios__long-bio" dangerouslySetInnerHTML={{ __html: Company_Bio_Enhanced__c }}></div>
+							) : null}
+							<p className="profile-bios__cats">
+								<i><strong>Categories:  </strong>{cats}</i>
+							</p>
+						</div>
+					</div>
+				</div>
+				<nav className="col-12 col-md-4 meta-info"></nav>
+			</section>
+		);
+	};
 
 	render() {
-		const { exhibsData, exhibitor, product, queries, loading } = this.state;
-		const { mode } = this.props.options;
+		const { exhibsData, exhibitor, product, queries, loading, mode } = this.state;
 		switch (mode) {
 			case "LIST":
 				return this.getExhibList(exhibsData, this.props.options, queries, loading);
+			case "PROFILE":
+				return this.getProfile(exhibitor, loading, this.props.options);
 			default:
 				break;
 		}
