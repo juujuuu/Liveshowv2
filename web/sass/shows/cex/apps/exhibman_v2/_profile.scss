@@ -1,3 +1,62 @@
-@import "./elem/slide", "./elem/alphabet", "./elem/control-col", "./profile";
 .exhibmanV2.exhibman-profile {
+	.profile-summary {
+		.profile-logo {
+			float: left;
+			max-width: 400px;
+			padding: 10px;
+		}
+		.profile-bios {
+		}
+	}
+	.profile-assets {
+		padding: 20px 0;
+		border-top: 1px solid black;
+		&.profile-products {
+		}
+		&.profile-videos {
+			.profile-video {
+				& > div {
+					position: relative;
+					padding-bottom: 75%;
+					overflow: hidden;
+					iframe {
+						border: 0;
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+					}
+				}
+			}
+		}
+		&.profile-downloadables {
+			.profile-downloadable {
+				& > div {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					a {
+						position: relative;
+						img {
+							max-height: 200px;
+						}
+					}
+					p {
+						margin: 10px 0;
+						text-align: center;
+					}
+					.fi {
+						position: absolute;
+						bottom: -5px;
+						right: -10px;
+						.fi-content {
+							padding-top: 10px;
+							writing-mode: vertical-rl;
+						}
+					}
+				}
+			}
+		}
+	}
 }

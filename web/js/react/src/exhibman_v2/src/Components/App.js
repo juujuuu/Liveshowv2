@@ -8,6 +8,7 @@ import Cta from "../../../common_components/Cta";
 import SearchInput from "../../../common_components/SearchInput";
 
 import PDFMake from "../Utils/PDFMake/PDFMake";
+import VideoSanitizer from "../Utils/PDFMake/VideoSanitizer";
 
 class App extends Component {
 	constructor(props) {
@@ -118,6 +119,7 @@ class App extends Component {
 	 */
 	switchMode = (mode = "LIST", payload) => {
 		//TODO LIST, PROFILE, PRODCUT
+		document.body.scrollTop = document.documentElement.scrollTop = 0;
 		//LIST set mode, call sf, laoding true, re render
 		switch (mode) {
 			case "PROFILE":
@@ -135,7 +137,27 @@ class App extends Component {
 					});
 				});
 				break;
-
+			case "LIST":
+				this.setState((prevState) => {
+					prevState.loading = true;
+					prevState.mode = "LIST";
+					return prevState;
+				});
+				if (this.state.exhibsData.length === 0) {
+					this.getSF(payload, mode).then((data) => {
+						this.setState((prevState) => {
+							prevState.exhibsData = data;
+							prevState.loading = false;
+							return prevState;
+						});
+					});
+				} else {
+					this.setState((prevState) => {
+						prevState.loading = false;
+						return prevState;
+					});
+				}
+				break;
 			default:
 				break;
 		}
@@ -379,35 +401,180 @@ class App extends Component {
 			</section>
 		);
 	};
-	getProfile = (exhibitor, loading, options) => {		
+	getProfile = (exhibitor, loading, options) => {
 		if (loading) {
 			return <Spinner></Spinner>;
 		}
 		const { show } = options;
-		const { pagetitle, content, Company_Bio_Enhanced__c } = exhibitor;
+		const { pagetitle, content, Company_Bio_Enhanced__c, logo, Expo__c, Exhibitor_Assets__r } = exhibitor;
 		const cats = exhibitor["exhibitor-cat"];
-		
+
 		return (
 			<section className={`exhibmanV2 exhibmanV2--${show} exhibman-profile row`}>
 				<div className="col-12 col-md-8 profile">
+					<Cta
+						size="reg"
+						curved={false}
+						bonusClass={`profile-back-to-list left`}
+						key={`Back to Exhibitor List`}
+						color="black"
+						handler={() => this.switchMode("LIST", Expo__c)}>
+						Back to Exhibitor List
+					</Cta>
 					<h1 className="profile-title">{pagetitle}</h1>
 					<nav>QUICK MENU</nav>
 					<div className="profile-summary">
-						<div className="profile-logo"></div>
+						<div className="profile-logo">
+							<img className="img-fluid" src={logo} alt="Logo" />
+						</div>
 						<div className="profile-bios">
-							<p className="profile-bios__short-bio">{content}</p>
+							<p className="profile-bios__short-bio">
+								<strong>{content}</strong>
+							</p>
 							{Company_Bio_Enhanced__c ? (
 								<div className="profile-bios__long-bio" dangerouslySetInnerHTML={{ __html: Company_Bio_Enhanced__c }}></div>
 							) : null}
 							<p className="profile-bios__cats">
-								<i><strong>Categories:  </strong>{cats}</i>
+								<i>
+									<strong>Categories: </strong>
+									{cats}
+								</i>
 							</p>
+							{/* Products, news, videos , downloads */}
+
+							{Exhibitor_Assets__r.find((asset) => asset.Asset_Type__c === "Product") ? (
+								<div className="profile-assets profile-products row">
+									<h4>Products</h4>
+									{this.getAssets(Exhibitor_Assets__r, "Product")}
+								</div>
+							) : null}
+							{Exhibitor_Assets__r.find((asset) => asset.Asset_Type__c === "News") ? (
+								<div className="profile-assets profile-news row">
+									<h4>News</h4>
+									{this.getAssets(Exhibitor_Assets__r, "News")}
+								</div>
+							) : null}
+							{Exhibitor_Assets__r.find((asset) => asset.Asset_Type__c === "Video") ? (
+								<div className="profile-assets profile-videos row">
+									<h4>{pagetitle} Videos</h4>
+									{this.getAssets(Exhibitor_Assets__r, "Video")}
+								</div>
+							) : null}
+							{Exhibitor_Assets__r.find((asset) => asset.Asset_Type__c === "Video") ? (
+								<div className="profile-assets profile-downloadables row">
+									<h4>Resource Downloads</h4>
+									{this.getAssets(Exhibitor_Assets__r, "Downloadable Resource")}
+								</div>
+							) : null}
 						</div>
 					</div>
 				</div>
 				<nav className="col-12 col-md-4 meta-info"></nav>
 			</section>
 		);
+	};
+
+	/**
+	 *
+	 * @param {Array} assets Exhibitor Assets Array
+	 * @param {String} type Type of assets to output
+	 */
+	getAssets = (assets, type) => {
+		assets = assets.filter((asset) => asset.Asset_Type__c == type);
+
+		return assets.map((asset) => {
+			const { Id, Body__c, File_Type__c, Intro__c, Link__c, Name, Thumbnail_Link__c, Title__c } = asset;
+			switch (type) {
+				case "Product":
+					return (
+						<div className="profile-product row" key={`product--${Id}`}>
+							<div className="profile-product__thumb col-md-3">
+								<img className="img-fluid" src={Thumbnail_Link__c} alt="Thumbnail" />
+							</div>
+							<div className="profile-product__text col-md-9">
+								<h5>{Title__c}</h5>
+								<p>
+									{Intro__c}
+									{"  "}
+									<span>Read more...</span>
+								</p>
+							</div>
+						</div>
+					);
+					break;
+				case "News":
+					return (
+						<div className="profile-news row" key={`news--${Id}`}>
+							<div className="profile-news__thumb col-md-3">
+								<img className="img-fluid" src={Thumbnail_Link__c} alt="Thumbnail" />
+							</div>
+							<div className="profile-news__text col-md-9">
+								<h5>{Title__c}</h5>
+								<p>
+									{Intro__c}
+									{"  "}
+									<span>Read more...</span>
+								</p>
+							</div>
+						</div>
+					);
+					break;
+				case "Video":
+					let video = VideoSanitizer.getVideo(Link__c);
+					if (!video) {
+						return null;
+					} else {
+						return (
+							<div className="profile-video col-md-4">
+								<div>
+									<iframe
+										src={video}
+										title={Name}
+										frameBorder="0"
+										style={{ border: "0" }}
+										allowFullScreen
+										data-name={Name}
+										data-id={Id}></iframe>
+								</div>
+								<p>{Title__c}</p>
+							</div>
+						);
+					}
+					break;
+				case "Downloadable Resource":
+					let fileType;
+					switch (File_Type__c) {
+						case "application/pdf":
+							fileType = "pdf";
+							break;
+						default:
+							break;
+					}
+					return (
+						<div className="profile-downloadable col-md-4">
+							<div>
+								<a
+									href={Link__c}
+									target="_blank"
+									title={Title__c}
+									data-id={Id}
+									data-name={this.state.exhibitor.pagetitle}
+									data-type="Downloadable"
+									rel="noreferrer">
+									<img className="img-fluid" src={Thumbnail_Link__c} alt="Downloadable" />
+									<div className={`fi fi-size-lg fi-${fileType}`}>
+										<div className="fi-content">{fileType}</div>
+									</div>
+								</a>
+								<p>{Title__c}</p>
+							</div>
+						</div>
+					);
+					break;
+				default:
+					break;
+			}
+		});
 	};
 
 	render() {

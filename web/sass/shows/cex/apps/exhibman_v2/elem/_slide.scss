@@ -62,7 +62,10 @@
 			}
 		}
 		&__cats {
-			justify-content: center;
+			justify-content: flex-start;
+			@media (max-width: $mobile-width) {
+				justify-content: center;
+			}
 			p {
 				font-size: 12px;
 				color: #5c5c5c;
