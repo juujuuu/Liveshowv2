@@ -29,7 +29,7 @@ $(document).ready(function () {
 	/**
 	 * Confman reg interest
 	 */
-	$("#root").on("click", ".confman__cta.confman__cta--reg-pop", function (event) {
+	$("#root").on("click", ".react__cta.react__cta--reg-pop", function (event) {
 		event.preventDefault();
 		let formUri = $(this).children("a").attr("href");
 		getForm(formUri).then(function (formHtml) {

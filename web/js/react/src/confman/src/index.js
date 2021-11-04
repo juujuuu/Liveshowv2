@@ -23,6 +23,7 @@ var options = {
 	continent: document.querySelector("#root").getAttribute("continent"),
 	mode: document.querySelector("#root").getAttribute("mode"),
 	downloadagenda: document.querySelector("#root").getAttribute("downloadagenda"),
+	generalenquiry: document.querySelector("#root").getAttribute("generalenquiry"),
 	convincepdf: document.querySelector("#root").getAttribute("convincepdf"),
 	ondemand: JSON.parse(document.querySelector("#root").getAttribute("ondemand")),
 	fullagendalocation: document.querySelector("#root").getAttribute("fullagendalocation"),

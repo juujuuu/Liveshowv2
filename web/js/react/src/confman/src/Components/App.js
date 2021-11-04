@@ -118,7 +118,6 @@ class App extends React.Component {
 		if (this.state.filters.track[0] == -1) {
 			//currently on all so convert empty and add value
 			tracks.push(value);
-			console.log("TEST", this.props.options.show == "CEX" || this.props.options.show == "FMX");
 			if (this.props.options.show == "CEX") {
 				if (value == 1) {
 					this.setDay(2);
@@ -538,6 +537,8 @@ class App extends React.Component {
 	};
 	getSpeakerList = (pipedSpeakers) => {
 		//output jsx
+		const { queryKey } = this.state;
+		const { query } = this.state.filters;
 		return (
 			<section className={`confman speaker-list speaker-list--${this.props.options.show}`}>
 				<MainNav desktop={window.innerWidth > 992}>
@@ -548,8 +549,8 @@ class App extends React.Component {
 									handler={this.setQuery}
 									placeholder="Refine By Speaker Or Company Name"
 									key="search"
-									value={this.state.filters.query}
-									key={`search-${this.state.queryKey}`}
+									value={query}
+									key={`search-${queryKey}`}
 								/>
 							</div>
 							<div className="col-12 col-lg-2">
@@ -572,14 +573,17 @@ class App extends React.Component {
 		);
 	};
 	getFullAgenda = (pipedSessions) => {
+		const { show, convincepdf, downloadagenda, reglink, reginterest, additionalfilters, generalenquiry } = this.props.options;
+		const { sessions, openSessions, queryKey } = this.state;
+		const { day, track } = this.state.metaNumbers;
 		//output jsx
 		return (
-			<section className={`confman conference-agenda conference-agenda--${this.props.options.show}`}>
+			<section className={`confman conference-agenda conference-agenda--${show}`}>
 				<MainNav desktop={window.innerWidth > 992}>
-					{this.props.options.show != "CEX" && this.props.options.show != "FMX" ? (
+					{show != "CEX" && show != "FMX" ? (
 						<div className="main-nav__days">
 							<div className={`container${window.innerWidth < 992 ? "-fluid" : ""}`}>
-								<div className="row">{this.getDayButtons(this.state.metaNumbers.day)}</div>
+								<div className="row">{this.getDayButtons(day)}</div>
 							</div>
 						</div>
 					) : (
@@ -589,12 +593,12 @@ class App extends React.Component {
 						{window.innerWidth > 992 ? (
 							<div className="container">
 								<div className="row">
-									<div className="col-9 track-col">{this.getTrackButtons(this.state.sessions, this.state.metaNumbers.track)}</div>
+									<div className="col-9 track-col">{this.getTrackButtons(sessions, track)}</div>
 									<div className="col-3 control-col">
 										<Cta
 											key="cta expand"
 											curved={false}
-											active={this.state.openSessions}
+											active={openSessions}
 											color="primary"
 											handler={this.toggleSessions}
 											role="expand"
@@ -604,7 +608,7 @@ class App extends React.Component {
 										<Cta
 											key="cta collapse"
 											curved={false}
-											active={!this.state.openSessions}
+											active={!openSessions}
 											color="primary"
 											handler={this.toggleSessions}
 											role="collapse"
@@ -622,7 +626,7 @@ class App extends React.Component {
 											<Cta
 												key="cta expand"
 												curved={false}
-												active={this.state.openSessions}
+												active={openSessions}
 												color="primary"
 												handler={this.toggleSessions}
 												role="expand"
@@ -632,7 +636,7 @@ class App extends React.Component {
 											<Cta
 												key="cta collapse"
 												curved={false}
-												active={!this.state.openSessions}
+												active={!openSessions}
 												color="primary"
 												handler={this.toggleSessions}
 												role="collapse"
@@ -644,9 +648,7 @@ class App extends React.Component {
 								</div>
 								<div className="container-fluid tracks__mob-tracks">
 									<div className="row ">
-										<div className="col-12 track-col">
-											{this.getTrackButtons(this.state.sessions, this.state.metaNumbers.track)}
-										</div>
+										<div className="col-12 track-col">{this.getTrackButtons(sessions, track)}</div>
 									</div>
 								</div>
 							</>
@@ -672,46 +674,55 @@ class App extends React.Component {
 												CLEAR FILTERS
 											</Cta>
 										</div>
-										<SearchInput handler={this.setQuery} role="conference-search" key={`search-${this.state.queryKey}`} />
-										{this.props.options.convincepdf != undefined && this.props.options.convincepdf != "" ? (
+										<SearchInput handler={this.setQuery} role="conference-search" key={`search-${queryKey}`} />
+										{convincepdf != undefined && convincepdf != "" ? (
 											<Cta key="cta convince your boss" size="max" color="primary">
 												CONVINCE YOUR BOSS
 											</Cta>
 										) : (
 											""
 										)}
-										{this.props.options.downloadagenda != undefined ? (
-											<Cta
-												key="cta pdf agenda"
-												size="max"
-												color="primary"
-												link={this.getConfPdfLink(this.props.options.show)}
-												download={true}>
-												DOWNLOAD PDF AGENDA
-											</Cta>
+										{downloadagenda != undefined ? (
+											<>
+												{show == "OCS" || show == "SAT" ? (
+													<Cta
+														key="cta pdf agenda"
+														size="max"
+														color="primary"
+														role="pop-form"
+														link={generalenquiry}
+														download={true}>
+														DOWNLOAD PDF AGENDA
+													</Cta>
+												) : (
+													<Cta
+														key="cta pdf agenda"
+														size="max"
+														color="primary"
+														link={this.getConfPdfLink(show)}
+														download={true}>
+														DOWNLOAD PDF AGENDA
+													</Cta>
+												)}
+											</>
 										) : (
 											""
 										)}
-										{this.props.options.reglink != undefined && this.props.options.reglink != "" ? (
-											<Cta key="cta reg button" size="max" link={this.props.options.reglink}>
+										{reglink != undefined && reglink != "" ? (
+											<Cta key="cta reg button" size="max" link={reglink}>
 												REGISTER FOR FREE
 											</Cta>
 										) : (
 											""
 										)}
-										{this.props.options.reginterest != undefined && this.props.options.reginterest != "" ? (
-											<Cta
-												key="cta reg interest"
-												size="max"
-												role="pop-form"
-												link={this.props.options.reginterest}
-												value={this.props.options}>
+										{reginterest != undefined && reginterest != "" ? (
+											<Cta key="cta reg interest" size="max" role="pop-form" link={reginterest} value={this.props.options}>
 												REGISTER INTEREST
 											</Cta>
 										) : (
 											""
 										)}
-										{this.getOptionalFilters(this.props.options.additionalfilters)}
+										{this.getOptionalFilters(additionalfilters)}
 									</StickyNav>
 								</div>
 							</div>
