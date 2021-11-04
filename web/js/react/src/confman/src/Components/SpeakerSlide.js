@@ -19,8 +19,8 @@ class SpeakerSlide extends React.Component {
 		return company == null ? "./assets/resources/shared/web/apps/confman/coming-soon.jpg" : company;
 	};
 	render() {
-		const { id, First_Name__c } = this.props;
-		const { Head_Shot_URL__c, Last_Name__c, Job_Title__c, Company__c, Logo_URL__c } = this.props.speaker;
+		const { id } = this.props;
+		const { Head_Shot_URL__c, First_Name__c, Last_Name__c, Job_Title__c, Company__c, Logo_URL__c } = this.props.speaker;
 		return (
 			<div className="row confman__speaker-slide" id={id}>
 				<div className="col-3 speaker-headshot">
