@@ -199,6 +199,14 @@ header {
 			clear: both;
 			float: right;
 			margin-top: 15px;
+			p {
+				a {
+					color: unset;
+					&:hover {
+						color: #e30427;
+					}
+				}
+			}
 		}
 	}
 	.header__main-menu {
