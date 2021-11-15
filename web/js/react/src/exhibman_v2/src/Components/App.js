@@ -9,6 +9,8 @@ import SearchInput from "../../../common_components/SearchInput";
 
 import PDFMake from "../Utils/PDFMake/PDFMake";
 import VideoSanitizer from "../Utils/PDFMake/VideoSanitizer";
+import { getShowNameFromAcronym, getShowNameFromId } from "../Utils/GetShow";
+import fireModal from "../../../common_utils/Bootsrap5Modal";
 
 class App extends Component {
 	constructor(props) {
@@ -65,6 +67,10 @@ class App extends Component {
 					newIds = ids[0];
 				}
 				url = `/rest/exhibman.php?expos=${newIds}`;
+				break;
+			case "PRODUCT":
+				//ids = [Booth ID, Asset ID]
+				url = `/rest/exhib_drilldown.php?booth='${ids[0]}'`;
 				break;
 			case "PROFILE":
 				url = `/rest/exhib_drilldown.php?booth='${ids}'`;
@@ -136,6 +142,33 @@ class App extends Component {
 						return prevState;
 					});
 				});
+				break;
+			case "PRODUCT":
+				//payload = [Booth ID, Asset ID]
+				this.setState((prevState) => {
+					prevState.loading = true;
+					prevState.mode = "PRODUCT";
+					return prevState;
+				});
+				const { id } = this.state.exhibitor;
+				if (this.state.exhibitor && payload[0] == id) {
+					//Already have exhibitor loaded
+					this.setState((prevState) => {
+						prevState.product = payload[1];
+						prevState.loading = false;
+						return prevState;
+					});
+				} else {
+					this.getSF(payload, mode).then((data) => {
+						this.setState((prevState) => {
+							prevState.exhibitor = data[0];
+							prevState.product = payload[1];
+							prevState.loading = false;
+							console.log("GET SF Profile data:  ", data[0]);
+							return prevState;
+						});
+					});
+				}
 				break;
 			case "LIST":
 				this.setState((prevState) => {
@@ -318,26 +351,7 @@ class App extends Component {
 			ids.forEach((showId) => {
 				let text;
 				let sanitisedShowId = showId.replaceAll("'", "");
-				switch (sanitisedShowId) {
-					case "a1x3A000001FSz9":
-						text = "Foam Expo North America";
-						break;
-					case "a1x4V000001YVpeQAG":
-						text = "Adhesives & Bonding Expo";
-						break;
-					case "a1x4V000001Q9aU":
-						text = "Foam Expo Europe";
-						break;
-					case "a1x3A000001FOPe":
-						text = "Adhesives & Bonding Expo Europe";
-						break;
-					case "a1x4V000001Yg1J":
-						text = "Ceramics Expo USA";
-						break;
-					default:
-						text = "Expo not found";
-						break;
-				}
+				text = getShowNameFromId(sanitisedShowId);
 				let newShowButton = (
 					<Cta
 						size="max"
@@ -405,24 +419,54 @@ class App extends Component {
 		if (loading) {
 			return <Spinner></Spinner>;
 		}
-		const { show } = options;
-		const { pagetitle, content, Company_Bio_Enhanced__c, logo, Expo__c, Exhibitor_Assets__r } = exhibitor;
+		const { show, contactcampaign } = options;
+		const {
+			pagetitle,
+			content,
+			Company_Bio_Enhanced__c,
+			logo,
+			Expo__c,
+			Exhibitor_Assets__r,
+			url,
+			Twitter__c,
+			Facebook__c,
+			Linkedin__c,
+			Company_City__c,
+			Company_State__c,
+			Company_Zip__c,
+			Company_Address__c,
+			Youtube_channel__c,
+			country,
+			id,
+		} = exhibitor;
+		const boothnum = exhibitor["exhibitor-booth"];
 		const cats = exhibitor["exhibitor-cat"];
 
 		return (
 			<section className={`exhibmanV2 exhibmanV2--${show} exhibman-profile row`}>
-				<div className="col-12 col-md-8 profile">
-					<Cta
-						size="reg"
-						curved={false}
-						bonusClass={`profile-back-to-list left`}
-						key={`Back to Exhibitor List`}
-						color="black"
-						handler={() => this.switchMode("LIST", Expo__c)}>
-						Back to Exhibitor List
-					</Cta>
+				<div className="col-12 col-md-9 order-2 order-md-1 profile">
+					{window.innerWidth > 992 ? (
+						<Cta
+							size="reg"
+							curved={false}
+							bonusClass={`profile-back-to-list left`}
+							key={`Desk Back to Exhibitor List`}
+							color="black"
+							handler={() => this.switchMode("LIST", Expo__c)}>
+							Back to Exhibitor List
+						</Cta>
+					) : null}
 					<h1 className="profile-title">{pagetitle}</h1>
-					<nav>QUICK MENU</nav>
+					{Exhibitor_Assets__r && window.innerWidth > 992 ? (
+						<nav className="profile-quick-menu row">
+							<div className="profile-quick-menu__jump col-2">
+								<p>
+									<strong>Jump to:</strong>
+								</p>
+							</div>
+							<div className="profile-quick-menu__list col-10">{this.getJumpList(Exhibitor_Assets__r)}</div>
+						</nav>
+					) : null}
 					<div className="profile-summary">
 						<div className="profile-logo">
 							<img className="img-fluid" src={logo} alt="Logo" />
@@ -440,37 +484,189 @@ class App extends Component {
 									{cats}
 								</i>
 							</p>
-							{/* Products, news, videos , downloads */}
-
+						</div>
+					</div>
+					{Exhibitor_Assets__r ? (
+						<>
 							{Exhibitor_Assets__r.find((asset) => asset.Asset_Type__c === "Product") ? (
-								<div className="profile-assets profile-products row">
+								<div id="FeaturedProducts" className="profile-assets profile-products row">
 									<h4>Products</h4>
-									{this.getAssets(Exhibitor_Assets__r, "Product")}
+									{this.getAssets(Exhibitor_Assets__r, "Product", id)}
 								</div>
 							) : null}
 							{Exhibitor_Assets__r.find((asset) => asset.Asset_Type__c === "News") ? (
-								<div className="profile-assets profile-news row">
+								<div id="News" className="profile-assets profile-news row">
 									<h4>News</h4>
-									{this.getAssets(Exhibitor_Assets__r, "News")}
+									{this.getAssets(Exhibitor_Assets__r, "News", id)}
 								</div>
 							) : null}
 							{Exhibitor_Assets__r.find((asset) => asset.Asset_Type__c === "Video") ? (
-								<div className="profile-assets profile-videos row">
+								<div id="Videos" className="profile-assets profile-videos row">
 									<h4>{pagetitle} Videos</h4>
 									{this.getAssets(Exhibitor_Assets__r, "Video")}
 								</div>
 							) : null}
-							{Exhibitor_Assets__r.find((asset) => asset.Asset_Type__c === "Video") ? (
-								<div className="profile-assets profile-downloadables row">
+							{Exhibitor_Assets__r.find((asset) => asset.Asset_Type__c === "Downloadable Resource") ? (
+								<div id="ResourceDownloads" className="profile-assets profile-downloadables row">
 									<h4>Resource Downloads</h4>
 									{this.getAssets(Exhibitor_Assets__r, "Downloadable Resource")}
 								</div>
 							) : null}
-						</div>
-					</div>
+						</>
+					) : null}
 				</div>
-				<nav className="col-12 col-md-4 meta-info"></nav>
+				<nav className="col-12 col-md-3 order-1 order-md-2 meta-info-col">
+					<StickyNav endAffix={1800} disable={window.innerWidth < 992}>
+						{window.innerWidth < 992 ? (
+							<Cta
+								size="reg"
+								curved={false}
+								bonusClass={`profile-back-to-list left`}
+								key={`Mob Back to Exhibitor List`}
+								color="black"
+								handler={() => this.switchMode("LIST", Expo__c)}>
+								Back to Exhibitor List
+							</Cta>
+						) : null}
+						<div className="meta-info-col__button">
+							<Cta
+								size={"max"}
+								color="cex-red"
+								handler={() => fireModal([exhibitor, contactcampaign], "contact-exhibitor")}
+								bonusClass="center">
+								Contact Exhibitor
+							</Cta>
+						</div>
+						<div className="meta-info-col__booth-num">
+							<h4>Booth Number: {boothnum}</h4>
+						</div>
+						<div className="meta-info-col__contact-list">
+							<h4>Contact</h4>
+							{url ? (
+								<p>
+									<strong>
+										<a href={url} target="_blank" rel="noreferrer">
+											<i className="bi bi-link-45deg"></i> Website
+										</a>
+									</strong>
+								</p>
+							) : null}
+							{Linkedin__c ? (
+								<p>
+									<strong>
+										<a href={Linkedin__c} target="_blank" rel="noreferrer">
+											<i className="bi bi-linkedin"></i> Linkedin
+										</a>
+									</strong>
+								</p>
+							) : null}
+							{Facebook__c ? (
+								<p>
+									<strong>
+										<a href={Facebook__c} target="_blank" rel="noreferrer">
+											<i className="bi bi-facebook"></i> Facebook
+										</a>
+									</strong>
+								</p>
+							) : null}
+							{Twitter__c ? (
+								<p>
+									<strong>
+										<a href={Twitter__c} target="_blank" rel="noreferrer">
+											<i className="bi bi-twitter"></i> Twitter
+										</a>
+									</strong>
+								</p>
+							) : null}
+							{Youtube_channel__c ? (
+								<p>
+									<strong>
+										<a href={Youtube_channel__c} target="_blank" rel="noreferrer">
+											<i className="bi bi-youtube"></i>Youtube
+										</a>
+									</strong>
+								</p>
+							) : null}
+						</div>
+						{Company_Address__c ? (
+							<div className="meta-info-col__address">
+								<p>
+									<i className="bi bi-house-door-fill"></i> Address:{" "}
+								</p>
+								{Company_Address__c ? (
+									<p>
+										<strong>{Company_Address__c},</strong>
+									</p>
+								) : null}
+								{Company_City__c ? (
+									<p>
+										<strong>{Company_City__c},</strong>
+									</p>
+								) : null}
+								{Company_State__c ? (
+									<p>
+										<strong>{Company_State__c},</strong>
+									</p>
+								) : null}
+								{country ? (
+									<p>
+										<strong>{country}</strong>
+									</p>
+								) : null}
+							</div>
+						) : null}
+					</StickyNav>
+				</nav>
 			</section>
+		);
+	};
+
+	getProduct = (exhibitor, assetId, loading, options) => {
+		if (loading) {
+			return <Spinner></Spinner>;
+		}
+		const { pagetitle, id } = exhibitor;
+		const { show } = options;
+		const product = exhibitor.Exhibitor_Assets__r.find((asset) => assetId === asset.Id);
+		const { Body__c, Intro__c, Link__c, Title__c } = product;
+		return (
+			<section className={`exhibmanV2 exhibmanV2--${show} exhibman-product row`}>
+				<h2><a onClick={()=>this.switchMode("PROFILE", id)}>{pagetitle}</a></h2>
+				<h1>{Title__c}</h1>
+			</section>
+		);
+	};
+
+	getJumpList = (assets) => {
+		let types = [];
+		assets.forEach((asset) => {
+			switch (asset.Asset_Type__c) {
+				case "Product":
+					types = [...types, "Featured Products"];
+					break;
+				case "Video":
+					types = [...types, "Videos"];
+					break;
+				case "News":
+					types = [...types, "News"];
+					break;
+				case "Downloadable Resource":
+					types = [...types, "Resource Downloads"];
+					break;
+				default:
+					break;
+			}
+		});
+		return (
+			<>
+				{types.map((type) => {
+					return (
+						<div className="profile-quick-menu__type" onClick={() => this.zapTo(type.replace(" ", ""))}>
+							<p>{type}</p>
+						</div>
+					);
+				})}
+			</>
 		);
 	};
 
@@ -479,7 +675,7 @@ class App extends Component {
 	 * @param {Array} assets Exhibitor Assets Array
 	 * @param {String} type Type of assets to output
 	 */
-	getAssets = (assets, type) => {
+	getAssets = (assets, type, exhibId = false) => {
 		assets = assets.filter((asset) => asset.Asset_Type__c == type);
 
 		return assets.map((asset) => {
@@ -492,16 +688,17 @@ class App extends Component {
 								<img className="img-fluid" src={Thumbnail_Link__c} alt="Thumbnail" />
 							</div>
 							<div className="profile-product__text col-md-9">
-								<h5>{Title__c}</h5>
+								<h5>
+									<a onClick={() => this.switchMode("PRODUCT", [exhibId, Id])}>{Title__c}</a>
+								</h5>
 								<p>
 									{Intro__c}
 									{"  "}
-									<span>Read more...</span>
+									<a onClick={() => this.switchMode("PRODUCT", [exhibId, Id])}>Read more...</a>
 								</p>
 							</div>
 						</div>
 					);
-					break;
 				case "News":
 					return (
 						<div className="profile-news row" key={`news--${Id}`}>
@@ -518,7 +715,6 @@ class App extends Component {
 							</div>
 						</div>
 					);
-					break;
 				case "Video":
 					let video = VideoSanitizer.getVideo(Link__c);
 					if (!video) {
@@ -540,7 +736,6 @@ class App extends Component {
 							</div>
 						);
 					}
-					break;
 				case "Downloadable Resource":
 					let fileType;
 					switch (File_Type__c) {
@@ -570,22 +765,46 @@ class App extends Component {
 							</div>
 						</div>
 					);
-					break;
 				default:
 					break;
 			}
 		});
 	};
 
+	zapTo = (target) => {
+		let offset = document.getElementById(target).getBoundingClientRect().top - 150;
+		window.scrollTo({
+			top: offset,
+			behavior: "smooth",
+		});
+	};
+
 	render() {
 		const { exhibsData, exhibitor, product, queries, loading, mode } = this.state;
-		switch (mode) {
-			case "LIST":
-				return this.getExhibList(exhibsData, this.props.options, queries, loading);
-			case "PROFILE":
-				return this.getProfile(exhibitor, loading, this.props.options);
-			default:
-				break;
+		const errorMessage = (
+			<h1 className="d-flex justify-content-center align-items-center" style={{ minHeight: "500px" }}>
+				Sorry, an unexpected error has occurred
+			</h1>
+		);
+
+		try {
+			switch (mode) {
+				case "LIST":
+					return this.getExhibList(exhibsData, this.props.options, queries, loading);
+				case "PROFILE":
+					return this.getProfile(exhibitor, loading, this.props.options);
+				default:
+				case "PRODUCT":
+					return this.getProduct(exhibitor, product, loading, this.props.options);
+			}
+		} catch (error) {
+			console.error("Full error:  ", error);
+			console.error("Name:  ", error.name);
+			console.error("Message:  ", error.message);
+			console.error("Filename:  ", error.fileName, " Line:  ", error.lineNumber);
+			console.error("Stacktrace:  ", error.stack);
+
+			return errorMessage;
 		}
 	}
 }

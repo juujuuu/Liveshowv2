@@ -9,8 +9,9 @@ class StickyNav extends React.Component {
 	static defaultProps = {
 		role: false,
 		startAffix: 0,
-		endAffix: 2000
-	};	
+		endAffix: 2000, //Distance from bottom of page
+		disable: false,
+	};
 	handleScroll = (event) => {
 		//something here
 		this.setState((prevState) => {
@@ -24,8 +25,8 @@ class StickyNav extends React.Component {
 		window.addEventListener("scroll", this.handleScroll);
 	};
 	getAffix = () => {
-		const {offsetTop} = this.state;
-		if (offsetTop < 0 && offsetTop + document.body.clientHeight > 2000) {
+		const { offsetTop } = this.state;
+		if (offsetTop < 0 && offsetTop + document.body.clientHeight > this.props.endAffix) {
 			return "affix";
 		} else {
 			return "fixed-top";
@@ -33,13 +34,13 @@ class StickyNav extends React.Component {
 	};
 	render() {
 		let jsxClass = "";
-		if(this.props.role == "conference-agenda-side-nav"){
+		if (this.props.role == "conference-agenda-side-nav") {
 			jsxClass = "conference-agenda__secondary-nav";
 		}
 		return (
 			<div className="sticky-container" ref={this.ref}>
 				<div
-					className={`react__sticky-nav ${jsxClass} nav-affix--${this.getAffix()}`}
+					className={`react__sticky-nav ${jsxClass} ${!this.props.disable ? `nav-affix--${this.getAffix()}` : ""}`}
 					style={this.state.offsetWidth != false ? { width: this.state.offsetWidth } : {}}>
 					{this.props.children}
 				</div>

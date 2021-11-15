@@ -1,5 +1,6 @@
-@import "./elem/slide", "./elem/alphabet", "./elem/control-col", "./profile", "./css-file-icons";
+@import "./elem/slide", "./elem/alphabet", "./elem/control-col", "./profile", "./css-file-icons", "./elem/meta-info-col";
 .exhibmanV2 {
+	min-height: 100vh;
 	.viewport-col {
 		.viewport__header {
 			//margin-bottom: 10px;

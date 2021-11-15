@@ -388,7 +388,7 @@ class App extends React.Component {
 			let hour = timestamp.substring(11, 13);
 			let minute = timestamp.substring(14, 16);
 			let ampm = hour > 11 ? "PM" : "AM";
-			session.normalTime = { day: day, hour: hour, minute: minute, ampm: ampm };
+			session.normalTime = { day, hour, minute, ampm };
 			return session;
 		});
 	};

@@ -2,15 +2,44 @@ import "regenerator-runtime";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./Components/App";
+import TagManager from "react-gtm-module";
 
 let country;
 
-//GET COUNTRY
+let contactcampaign;
+//Show specific stuff
 switch (document.querySelector("#root").getAttribute("show")) {
-	case "CEX" || "FMX" || "ABX" || "TTE" || "HPP" || "SPC":
+	case "CEX":
 		country = "US";
 		break;
-	case "FME" || "BRE" || "OCS" || "SAT" || "ABE":
+	case "FMX":
+		country = "US";
+		break;
+	case "ABX":
+		country = "US";
+		break;
+	case "TTE":
+		country = "US";
+		break;
+	case "HPP":
+		country = "US";
+		break;
+	case "SPC":
+		country = "US";
+		break;
+	case "FME":
+		country = "GERMANY";
+		break;
+	case "BRE":
+		country = "GERMANY";
+		break;
+	case "OCS":
+		country = "GERMANY";
+		break;
+	case "SAT":
+		country = "GERMANY";
+		break;
+	case "ABE":
 		country = "GERMANY";
 		break;
 	default:
@@ -34,11 +63,11 @@ if (document.querySelector("#root").getAttribute("mode") === "LIST") {
 }
 
 let filters = null;
-if(document.querySelector("#root").getAttribute("filters") != null){
+if (document.querySelector("#root").getAttribute("filters") != null) {
 	filters = document.querySelector("#root").getAttribute("filters").split("|");
-} else{
+} else {
 	filters = ["ALPHABET", "SEARCH"];
-	if(multiExpo){
+	if (multiExpo) {
 		filters.push("EXPO");
 	}
 }
@@ -55,7 +84,7 @@ const options = {
 	show: document.querySelector("#root").getAttribute("show"), //Show acronym
 	regLink: document.querySelector("#root").getAttribute("reglink"), //N200 reg link
 	event: document.querySelector("#root").getAttribute("event"), //Long Event name
-	contactcampaign: document.querySelector("#root").getAttribute("contactcampaign"), //Contact exhib camp id
+	contactcampaign: document.querySelector("#root").getAttribute("contactcampaign"),
 	gtm: document.querySelector("#root").getAttribute("gtm"), //Google Tag Manager ID
 	country, //US or Germany
 	mode: document.querySelector("#root").getAttribute("mode"), //Exhibitor list, profile or article
@@ -67,4 +96,5 @@ const options = {
 
 console.log("OPTIONS: ", options);
 
+TagManager.initialize({ gtmId: document.querySelector("#root").getAttribute("gtm") });
 ReactDOM.render(<App options={options} />, document.querySelector("#root"));
