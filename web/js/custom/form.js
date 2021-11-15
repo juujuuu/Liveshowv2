@@ -27,7 +27,7 @@ $(document).ready(function () {
 	});
 
 	/**
-	 * Confman reg interest
+	 * Confman reg interest, download pdf
 	 */
 	$("#root").on("click", ".confman__cta.confman__cta--reg-pop", function (event) {
 		event.preventDefault();

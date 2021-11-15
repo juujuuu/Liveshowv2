@@ -3,15 +3,23 @@
 		position: relative;
 		border-top: 1px solid black;
 		height: 170px;
+		padding: 10px 0;
 		overflow: hidden;
 		@media (max-width: $mobile-width) {
-			height: 260px;
+			height: auto;
+			min-height: 200px;
 		}
 		&__profile-button {
+			@media (min-width: $mobile-width) {
+			}
+			@media (max-width: $mobile-width) {
+				height: fit-content;
+			}
 			position: absolute;
+			right: 0;
+			top: 0;
 			width: auto;
 			margin-top: -1px;
-			right: 0;
 			padding: 0 !important;
 			&:hover {
 				background-color: #fff;

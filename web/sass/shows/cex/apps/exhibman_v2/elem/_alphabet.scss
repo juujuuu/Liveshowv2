@@ -5,6 +5,18 @@
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
+			@media (max-width: $mobile-width) {
+				justify-content: center;
+				.alphabet__letter {
+					padding: 0 4px !important;
+					&:first-child {
+						padding-left: 0;
+					}
+					&:last-child {
+						padding-right: 0;
+					}
+				}
+			}
 			border-bottom: 1px solid black;
 
 			.alphabet__letter {
