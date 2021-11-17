@@ -1,6 +1,5 @@
-@import "./elem/slide", "./elem/alphabet", "./elem/control-col", "./profile", "./css-file-icons", "./elem/meta-info-col";
+@import "./elem/slide", "./elem/alphabet", "./elem/control-col", "./profile", "./css-file-icons", "./elem/meta-info-col", "./product";
 .exhibmanV2 {
-	min-height: 100vh;
 	.viewport-col {
 		.viewport__header {
 			//margin-bottom: 10px;
@@ -10,4 +9,10 @@
 			}
 		}
 	}
+}
+#root {
+	@media (max-width: $mobile-width) {
+		min-height: 30vh !important;
+	}
+	min-height: 75vh;
 }

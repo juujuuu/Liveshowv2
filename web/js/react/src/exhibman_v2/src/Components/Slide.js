@@ -66,15 +66,27 @@ class Slide extends Component {
 				) : null}
 
 				<div className="col-6 col-md-3 exhibitor-slide__logo">
-					<a href="">
+					{Exhibitor_listing_type__c !== "Standard" ? (
+						<img
+							onClick={() => switchMode("PROFILE", id)}
+							className="img-fluid"
+							src={web_logo !== "" ? smallLogo : bigLogo}
+							alt={pagetitle}
+						/>
+					) : (
 						<img className="img-fluid" src={web_logo !== "" ? smallLogo : bigLogo} alt={pagetitle} />
-					</a>
+					)}
 				</div>
 				<div className="col-6 col-md-5 exhibitor-slide__body">
 					<div>
-						<h4 className="exhibitor-name">
-							<a href="">{pagetitle}</a>
-						</h4>
+						{Exhibitor_listing_type__c !== "Standard" ? (
+							<h4 onClick={() => switchMode("PROFILE", id)} className="exhibitor-name">
+								{pagetitle}
+							</h4>
+						) : (
+							<h4 className="exhibitor-name">{pagetitle}</h4>
+						)}
+
 						<p className="exhibitor-booth">Booth Number: {booth}</p>
 						{window.innerWidth < 768 ? (
 							<>

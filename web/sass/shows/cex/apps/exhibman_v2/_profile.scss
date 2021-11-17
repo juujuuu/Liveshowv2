@@ -101,4 +101,26 @@
 			}
 		}
 	}
+	&.exhibman-profile--Enhanced {
+		.profile-products {
+			.profile-product {
+				.profile-product__text {
+					h5 {
+						cursor: pointer;
+						&:hover {
+							text-decoration: underline;
+						}
+					}
+				}
+				.profile-product__text {
+					p span {
+						cursor: pointer;
+						&:hover {
+							text-decoration: underline;
+						}
+					}
+				}
+			}
+		}
+	}
 }

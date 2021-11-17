@@ -79,5 +79,23 @@
 				color: #5c5c5c;
 			}
 		}
+		&.exhibitor-slide--Enhanced {
+			.exhibitor-slide__logo {
+				img {
+					cursor: pointer;
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+			}
+			.exhibitor-slide__body {
+				.exhibitor-name {
+					cursor: pointer;
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+			}
+		}
 	}
 }
