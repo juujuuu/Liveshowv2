@@ -15,14 +15,14 @@ import fireModal from "../../../common_utils/Bootsrap5Modal";
 class App extends Component {
 	constructor(props) {
 		super(props);
-		const { mode, ids, profileId } = props.options;
+		const { mode, ids, profileId, articleId } = props.options;
 		this.state = {
 			loading: true,
 			mode,
-			profileId: profileId,
+			profileId,
+			articleId,
 			exhibsData: [],
 			exhibitor: null,
-			product: null,
 			queries: {
 				search: "",
 				letter: "Show All",
@@ -35,10 +35,31 @@ class App extends Component {
 	 * Resolve inital params and run the iniital SF lookup
 	 */
 	componentDidMount() {
-		const { ids, mode } = this.props.options;
-		this.getSF(ids, mode).then((response) => {
+		const { ids, profileId, articleId, mode } = this.props.options;
+		let query;
+		console.log("mode: ", mode);
+		switch (mode) {
+			case "PROFILE":
+				query = profileId;
+				break;
+			case "PRODUCT":
+				query = profileId;
+				break;
+			case "LIST":
+				query = ids;
+				break;
+			default:
+				break;
+		}
+
+		this.getSF(query, mode).then((response) => {
 			this.setState((prevState) => {
-				prevState.exhibsData = response;
+				if (mode === "PROFILE" || mode === "PRODUCT") {
+					console.log("getsf response:  ", response);
+					prevState.exhibitor = response[0];
+				} else {
+					prevState.exhibsData = response;
+				}
 				prevState.loading = false;
 				return prevState;
 			});
@@ -50,7 +71,7 @@ class App extends Component {
 	 * @returns Salesforce data in an array
 	 */
 	getSF = async (ids = null, mode = null) => {
-		if (ids === false || mode === false) {
+		if (!ids || mode === false) {
 			console.error("ID OR MODE AREN'T SET");
 			return null;
 		}
@@ -58,6 +79,7 @@ class App extends Component {
 		switch (mode) {
 			case "LIST":
 				let newIds;
+				console.log("ids: ", ids);
 				if (ids.length > 1) {
 					ids.forEach((id) => {
 						newIds = newIds + id + ", ";
@@ -68,11 +90,10 @@ class App extends Component {
 				}
 				url = `/rest/exhibman.php?expos=${newIds}`;
 				break;
-			case "PRODUCT":
-				//ids = [Booth ID, Asset ID]
-				url = `/rest/exhib_drilldown.php?booth='${ids[0]}'`;
-				break;
 			case "PROFILE":
+				url = `/rest/exhib_drilldown.php?booth='${ids}'`;
+				break;
+			case "PRODUCT":
 				url = `/rest/exhib_drilldown.php?booth='${ids}'`;
 				break;
 			default:
@@ -156,15 +177,15 @@ class App extends Component {
 				if (this.state.exhibitor && payload[0] == id) {
 					//Already have exhibitor loaded
 					this.setState((prevState) => {
-						prevState.product = payload[1];
+						prevState.articleId = payload[1];
 						prevState.loading = false;
 						return prevState;
 					});
 				} else {
-					this.getSF(payload, mode).then((data) => {
+					this.getSF(payload[0], mode).then((data) => {
 						this.setState((prevState) => {
 							prevState.exhibitor = data[0];
-							prevState.product = payload[1];
+							prevState.articleId = payload[1];
 							prevState.loading = false;
 							console.log("GET SF Profile data:  ", data[0]);
 							return prevState;
@@ -382,8 +403,10 @@ class App extends Component {
 			return <Spinner></Spinner>;
 		}
 
-		const { show, filters } = options;
+		const { show, filters, debug } = options;
 		const filteredExhibitors = this.filterExhibitors(exhibitors, filters, queries);
+
+		this.setPathName("LIST", null, "Exhibitor List", debug);
 
 		return (
 			<section className={`exhibmanV2 exhibmanV2--${show} row`}>
@@ -423,9 +446,11 @@ class App extends Component {
 		if (loading) {
 			return <Spinner></Spinner>;
 		}
-		const { show } = options;
+		const { show, ids, mode, debug } = options;
 		const { pagetitle, content, Company_Bio_Enhanced__c, logo, Expo__c, Exhibitor_Assets__r, id, Exhibitor_listing_type__c } = exhibitor;
 		const cats = exhibitor["exhibitor-cat"];
+
+		this.setPathName("PROFILE", [id], pagetitle, debug);
 
 		return (
 			<section className={`exhibmanV2 exhibmanV2--${show} exhibman-profile exhibman-profile--${Exhibitor_listing_type__c} row`}>
@@ -437,7 +462,7 @@ class App extends Component {
 							bonusClass={`profile-back-to-list left`}
 							key={`Desk Back to Exhibitor List`}
 							color="black"
-							handler={() => this.switchMode("LIST", Expo__c)}>
+							handler={() => this.switchMode("LIST", ids)}>
 							Back to Exhibitor List
 						</Cta>
 					) : null}
@@ -510,9 +535,11 @@ class App extends Component {
 			return <Spinner></Spinner>;
 		}
 		const { pagetitle, id } = exhibitor;
-		const { show, contactcampaign } = options;
+		const { show, contactcampaign, debug } = options;
 		const product = exhibitor.Exhibitor_Assets__r.find((asset) => assetId === asset.Id);
 		const { Body__c, Intro__c, Link__c, Title__c, Asset_Type__c } = product;
+
+		this.setPathName("PRODUCT", [id, assetId], pagetitle, debug);
 
 		return (
 			<section className={`exhibmanV2 exhibmanV2--${show} exhibman-product row`}>
@@ -578,7 +605,7 @@ class App extends Component {
 	};
 
 	getMetaCol = (exhibitor, options, order = "order-1 order-md-2") => {
-		const { contactcampaign } = options;
+		const { contactcampaign, ids } = options;
 		const {
 			Expo__c,
 			url,
@@ -602,7 +629,7 @@ class App extends Component {
 							bonusClass={`profile-back-to-list left`}
 							key={`Mob Back to Exhibitor List`}
 							color="black"
-							handler={() => this.switchMode("LIST", Expo__c)}>
+							handler={() => this.switchMode("LIST", ids)}>
 							Back to Exhibitor List
 						</Cta>
 					) : null}
@@ -806,6 +833,26 @@ class App extends Component {
 		}
 	};
 
+	setPathName = (mode, ids = null, name = "", debug = false) => {
+		let path;
+		//ids 2 element array 0 - booth, 1 - asset
+		switch (mode) {
+			case "LIST":
+				path = `${debug ? "site/debug-" : ""}exhibitor-list/`;
+				break;
+			case "PROFILE":
+				path = `${debug ? "site/debug-" : ""}exhibitor-list/${debug ? "debug-": ""}exhibitor?boothid=${ids[0]}`;
+				break;
+			case "PRODUCT":
+				path = `${debug ? "site/debug-" : ""}exhibitor-list/${debug ? "debug-": ""}product?boothid=${ids[0]}&assetid=${ids[1]}`;
+				break;
+			default:
+				path = "exhibitor-list/";
+				break;
+		}				
+		window.history.pushState("", name, path);
+	};
+
 	zapTo = (target) => {
 		let offset = document.getElementById(target).getBoundingClientRect().top - 150;
 		window.scrollTo({
@@ -815,9 +862,12 @@ class App extends Component {
 	};
 
 	render() {
-		const { exhibsData, exhibitor, product, queries, loading, mode } = this.state;
+		const { exhibsData, exhibitor, articleId, queries, loading, mode } = this.state;
+		if (loading) {
+			return <Spinner />;
+		}
 		const errorMessage = (
-			<h1 className="d-flex justify-content-center align-items-center" style={{ minHeight: "500px" }}>
+			<h1 className="d-flex justify-content-center align-items-center" style={{ minHeight: "500px", textAlign: "center" }}>
 				Sorry, an unexpected error has occurred
 			</h1>
 		);
@@ -830,15 +880,10 @@ class App extends Component {
 					return this.getProfile(exhibitor, loading, this.props.options);
 				default:
 				case "PRODUCT":
-					return this.getProduct(exhibitor, product, loading, this.props.options);
+					return this.getProduct(exhibitor, articleId, loading, this.props.options);
 			}
 		} catch (error) {
 			console.error("Full error:  ", error);
-			console.error("Name:  ", error.name);
-			console.error("Message:  ", error.message);
-			console.error("Filename:  ", error.fileName, " Line:  ", error.lineNumber);
-			console.error("Stacktrace:  ", error.stack);
-
 			return errorMessage;
 		}
 	}

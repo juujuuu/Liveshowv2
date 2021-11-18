@@ -47,20 +47,9 @@ switch (document.querySelector("#root").getAttribute("show")) {
 		break;
 }
 
-let extraParams = window.location.href.includes("?") ? window.location.href.split("?")[1].split("&") : null;
-if (extraParams) {
-	extraParams = extraParams.includes("preview=true") ? null : extraParams;
-}
 let ids, multiExpo;
-if (document.querySelector("#root").getAttribute("mode") === "LIST") {
-	ids = document.querySelector("#root").getAttribute("expos").split(",");
-	multiExpo = document.querySelector("#root").getAttribute("expos").split(",").length > 1;
-} else {
-	ids = extraParams.find((param) => param.includes("ref="));
-	ids = ids.split("=")[1];
-	multiExpo = false;
-	extraParams = extraParams.filter((param) => !param.includes("ref="));
-}
+ids = document.querySelector("#root").getAttribute("expos").split(",");
+multiExpo = document.querySelector("#root").getAttribute("expos").split(",").length > 1;
 
 let filters = null;
 if (document.querySelector("#root").getAttribute("filters") != null) {
@@ -72,15 +61,35 @@ if (document.querySelector("#root").getAttribute("filters") != null) {
 	}
 }
 
+let extraParams = window.location.href.includes("?") ? window.location.href.split("?")[1].split("&") : null;
 if (extraParams) {
+	extraParams = extraParams.includes("preview=true") ? null : extraParams;
+}
+let profileId,
+	articleId = null;
+if (extraParams) {
+	let extraParamsObj = {};
 	extraParams = extraParams.forEach((param) => {
-		extraParams[param.split("=")[0]] = param.split("=")[1]; //converting to 2d array
+		extraParamsObj[param.split("=")[0]] = param.split("=")[1]; //converting to 2d array
 	});
+	for(const key in extraParamsObj){
+		switch (key) {
+			case "boothid":
+				profileId = extraParamsObj[key];
+				break;
+			case "assetid":
+				articleId = extraParamsObj[key];
+				break;
+			default:
+				break;
+		}
+	};
 }
 
 const options = {
 	ids, //Expo ids
-	profileId: document.querySelector("#root").getAttribute("profile"),
+	profileId,
+	articleId,
 	show: document.querySelector("#root").getAttribute("show"), //Show acronym
 	regLink: document.querySelector("#root").getAttribute("reglink"), //N200 reg link
 	event: document.querySelector("#root").getAttribute("event"), //Long Event name
@@ -92,6 +101,7 @@ const options = {
 	filters,
 	multiExpo, //multiple expo ids detected
 	extraParams, //extra arguments in the url, null if none
+	debug: document.querySelector("#root").getAttribute("debug") == "true" ? true: false
 };
 
 console.log("OPTIONS: ", options);
