@@ -5,7 +5,6 @@ import App from "./Components/App";
 import TagManager from "react-gtm-module";
 
 let country;
-
 let contactcampaign;
 //Show specific stuff
 switch (document.querySelector("#root").getAttribute("show")) {
