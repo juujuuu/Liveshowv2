@@ -1,11 +1,10 @@
 basename.exe.stackdump
 sh.exe.stackdump
 sed.exe.stackdump
-package.json
-package-lock.json
 node_modules
 .eslintrc.js
 bundle.js
 bundle.js*
 vendor
 composer.lock
+bundle.js.LICENSE.txt

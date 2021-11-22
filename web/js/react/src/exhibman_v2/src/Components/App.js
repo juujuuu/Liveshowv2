@@ -15,14 +15,14 @@ import fireModal from "../../../common_utils/Bootsrap5Modal";
 class App extends Component {
 	constructor(props) {
 		super(props);
-		const { mode, ids, profileId } = props.options;
+		const { mode, ids, profileId, articleId } = props.options;
 		this.state = {
 			loading: true,
 			mode,
-			profileId: profileId,
+			profileId,
+			articleId,
 			exhibsData: [],
 			exhibitor: null,
-			product: null,
 			queries: {
 				search: "",
 				letter: "Show All",
@@ -35,10 +35,31 @@ class App extends Component {
 	 * Resolve inital params and run the iniital SF lookup
 	 */
 	componentDidMount() {
-		const { ids, mode } = this.props.options;
-		this.getSF(ids, mode).then((response) => {
+		const { ids, profileId, articleId, mode } = this.props.options;
+		let query;
+		console.log("mode: ", mode);
+		switch (mode) {
+			case "PROFILE":
+				query = profileId;
+				break;
+			case "PRODUCT":
+				query = profileId;
+				break;
+			case "LIST":
+				query = ids;
+				break;
+			default:
+				break;
+		}
+
+		this.getSF(query, mode).then((response) => {
 			this.setState((prevState) => {
-				prevState.exhibsData = response;
+				if (mode === "PROFILE" || mode === "PRODUCT") {
+					console.log("getsf response:  ", response);
+					prevState.exhibitor = response[0];
+				} else {
+					prevState.exhibsData = response;
+				}
 				prevState.loading = false;
 				return prevState;
 			});
@@ -50,7 +71,7 @@ class App extends Component {
 	 * @returns Salesforce data in an array
 	 */
 	getSF = async (ids = null, mode = null) => {
-		if (ids === false || mode === false) {
+		if (!ids || mode === false) {
 			console.error("ID OR MODE AREN'T SET");
 			return null;
 		}
@@ -58,6 +79,7 @@ class App extends Component {
 		switch (mode) {
 			case "LIST":
 				let newIds;
+				console.log("ids: ", ids);
 				if (ids.length > 1) {
 					ids.forEach((id) => {
 						newIds = newIds + id + ", ";
@@ -68,11 +90,10 @@ class App extends Component {
 				}
 				url = `/rest/exhibman.php?expos=${newIds}`;
 				break;
-			case "PRODUCT":
-				//ids = [Booth ID, Asset ID]
-				url = `/rest/exhib_drilldown.php?booth='${ids[0]}'`;
-				break;
 			case "PROFILE":
+				url = `/rest/exhib_drilldown.php?booth='${ids}'`;
+				break;
+			case "PRODUCT":
 				url = `/rest/exhib_drilldown.php?booth='${ids}'`;
 				break;
 			default:
@@ -129,6 +150,7 @@ class App extends Component {
 		//LIST set mode, call sf, laoding true, re render
 		switch (mode) {
 			case "PROFILE":
+				this.showAppInfo(false);
 				this.setState((prevState) => {
 					prevState.loading = true;
 					prevState.mode = "PROFILE";
@@ -145,6 +167,7 @@ class App extends Component {
 				break;
 			case "PRODUCT":
 				//payload = [Booth ID, Asset ID]
+				this.showAppInfo(false);
 				this.setState((prevState) => {
 					prevState.loading = true;
 					prevState.mode = "PRODUCT";
@@ -154,15 +177,15 @@ class App extends Component {
 				if (this.state.exhibitor && payload[0] == id) {
 					//Already have exhibitor loaded
 					this.setState((prevState) => {
-						prevState.product = payload[1];
+						prevState.articleId = payload[1];
 						prevState.loading = false;
 						return prevState;
 					});
 				} else {
-					this.getSF(payload, mode).then((data) => {
+					this.getSF(payload[0], mode).then((data) => {
 						this.setState((prevState) => {
 							prevState.exhibitor = data[0];
-							prevState.product = payload[1];
+							prevState.articleId = payload[1];
 							prevState.loading = false;
 							console.log("GET SF Profile data:  ", data[0]);
 							return prevState;
@@ -171,6 +194,7 @@ class App extends Component {
 				}
 				break;
 			case "LIST":
+				this.showAppInfo(true);
 				this.setState((prevState) => {
 					prevState.loading = true;
 					prevState.mode = "LIST";
@@ -379,8 +403,10 @@ class App extends Component {
 			return <Spinner></Spinner>;
 		}
 
-		const { show, filters } = options;
+		const { show, filters, debug } = options;
 		const filteredExhibitors = this.filterExhibitors(exhibitors, filters, queries);
+
+		this.setPathName("LIST", null, "Exhibitor List", debug);
 
 		return (
 			<section className={`exhibmanV2 exhibmanV2--${show} row`}>
@@ -415,35 +441,19 @@ class App extends Component {
 			</section>
 		);
 	};
+
 	getProfile = (exhibitor, loading, options) => {
 		if (loading) {
 			return <Spinner></Spinner>;
 		}
-		const { show, contactcampaign } = options;
-		const {
-			pagetitle,
-			content,
-			Company_Bio_Enhanced__c,
-			logo,
-			Expo__c,
-			Exhibitor_Assets__r,
-			url,
-			Twitter__c,
-			Facebook__c,
-			Linkedin__c,
-			Company_City__c,
-			Company_State__c,
-			Company_Zip__c,
-			Company_Address__c,
-			Youtube_channel__c,
-			country,
-			id,
-		} = exhibitor;
-		const boothnum = exhibitor["exhibitor-booth"];
+		const { show, ids, mode, debug } = options;
+		const { pagetitle, content, Company_Bio_Enhanced__c, logo, Expo__c, Exhibitor_Assets__r, id, Exhibitor_listing_type__c } = exhibitor;
 		const cats = exhibitor["exhibitor-cat"];
 
+		this.setPathName("PROFILE", [id], pagetitle, debug);
+
 		return (
-			<section className={`exhibmanV2 exhibmanV2--${show} exhibman-profile row`}>
+			<section className={`exhibmanV2 exhibmanV2--${show} exhibman-profile exhibman-profile--${Exhibitor_listing_type__c} row`}>
 				<div className="col-12 col-md-9 order-2 order-md-1 profile">
 					{window.innerWidth > 992 ? (
 						<Cta
@@ -452,7 +462,7 @@ class App extends Component {
 							bonusClass={`profile-back-to-list left`}
 							key={`Desk Back to Exhibitor List`}
 							color="black"
-							handler={() => this.switchMode("LIST", Expo__c)}>
+							handler={() => this.switchMode("LIST", ids)}>
 							Back to Exhibitor List
 						</Cta>
 					) : null}
@@ -515,108 +525,7 @@ class App extends Component {
 						</>
 					) : null}
 				</div>
-				<nav className="col-12 col-md-3 order-1 order-md-2 meta-info-col">
-					<StickyNav endAffix={1800} disable={window.innerWidth < 992}>
-						{window.innerWidth < 992 ? (
-							<Cta
-								size="reg"
-								curved={false}
-								bonusClass={`profile-back-to-list left`}
-								key={`Mob Back to Exhibitor List`}
-								color="black"
-								handler={() => this.switchMode("LIST", Expo__c)}>
-								Back to Exhibitor List
-							</Cta>
-						) : null}
-						<div className="meta-info-col__button">
-							<Cta
-								size={"max"}
-								color="cex-red"
-								handler={() => fireModal([exhibitor, contactcampaign], "contact-exhibitor")}
-								bonusClass="center">
-								Contact Exhibitor
-							</Cta>
-						</div>
-						<div className="meta-info-col__booth-num">
-							<h4>Booth Number: {boothnum}</h4>
-						</div>
-						<div className="meta-info-col__contact-list">
-							<h4>Contact</h4>
-							{url ? (
-								<p>
-									<strong>
-										<a href={url} target="_blank" rel="noreferrer">
-											<i className="bi bi-link-45deg"></i> Website
-										</a>
-									</strong>
-								</p>
-							) : null}
-							{Linkedin__c ? (
-								<p>
-									<strong>
-										<a href={Linkedin__c} target="_blank" rel="noreferrer">
-											<i className="bi bi-linkedin"></i> Linkedin
-										</a>
-									</strong>
-								</p>
-							) : null}
-							{Facebook__c ? (
-								<p>
-									<strong>
-										<a href={Facebook__c} target="_blank" rel="noreferrer">
-											<i className="bi bi-facebook"></i> Facebook
-										</a>
-									</strong>
-								</p>
-							) : null}
-							{Twitter__c ? (
-								<p>
-									<strong>
-										<a href={Twitter__c} target="_blank" rel="noreferrer">
-											<i className="bi bi-twitter"></i> Twitter
-										</a>
-									</strong>
-								</p>
-							) : null}
-							{Youtube_channel__c ? (
-								<p>
-									<strong>
-										<a href={Youtube_channel__c} target="_blank" rel="noreferrer">
-											<i className="bi bi-youtube"></i>Youtube
-										</a>
-									</strong>
-								</p>
-							) : null}
-						</div>
-						{Company_Address__c ? (
-							<div className="meta-info-col__address">
-								<p>
-									<i className="bi bi-house-door-fill"></i> Address:{" "}
-								</p>
-								{Company_Address__c ? (
-									<p>
-										<strong>{Company_Address__c},</strong>
-									</p>
-								) : null}
-								{Company_City__c ? (
-									<p>
-										<strong>{Company_City__c},</strong>
-									</p>
-								) : null}
-								{Company_State__c ? (
-									<p>
-										<strong>{Company_State__c},</strong>
-									</p>
-								) : null}
-								{country ? (
-									<p>
-										<strong>{country}</strong>
-									</p>
-								) : null}
-							</div>
-						) : null}
-					</StickyNav>
-				</nav>
+				{this.getMetaCol(exhibitor, options)}
 			</section>
 		);
 	};
@@ -626,13 +535,38 @@ class App extends Component {
 			return <Spinner></Spinner>;
 		}
 		const { pagetitle, id } = exhibitor;
-		const { show } = options;
+		const { show, contactcampaign, debug } = options;
 		const product = exhibitor.Exhibitor_Assets__r.find((asset) => assetId === asset.Id);
-		const { Body__c, Intro__c, Link__c, Title__c } = product;
+		const { Body__c, Intro__c, Link__c, Title__c, Asset_Type__c } = product;
+
+		this.setPathName("PRODUCT", [id, assetId], pagetitle, debug);
+
 		return (
 			<section className={`exhibmanV2 exhibmanV2--${show} exhibman-product row`}>
-				<h2><a onClick={()=>this.switchMode("PROFILE", id)}>{pagetitle}</a></h2>
-				<h1>{Title__c}</h1>
+				<div className="col-12 col-md-9 order-1 meta-info-col">
+					<div className="product-header">
+						<h2 onClick={() => this.switchMode("PROFILE", id)}>{pagetitle}</h2>
+						<h1>{Title__c}</h1>
+					</div>
+					<div className="product-body">
+						<div className="product-body__image">
+							<img className="img-fluid" src={Link__c} alt="Product Image" />
+						</div>
+						<div className="product-body__text" dangerouslySetInnerHTML={{ __html: Body__c }}></div>
+						{Asset_Type__c === "Product" ? (
+							<div className="product-enquire">
+								<Cta
+									size={window.innerWidth > 992 ? "reg" : "max"}
+									color="cex-red"
+									handler={() => fireModal([exhibitor, contactcampaign], "contact-exhibitor", "lg")}
+									bonusClass={window.innerWidth > 992 ? "left" : "center"}>
+									Enquire About Product
+								</Cta>
+							</div>
+						) : null}
+					</div>
+				</div>
+				{this.getMetaCol(exhibitor, options, "order-2")}
 			</section>
 		);
 	};
@@ -670,6 +604,127 @@ class App extends Component {
 		);
 	};
 
+	getMetaCol = (exhibitor, options, order = "order-1 order-md-2") => {
+		const { contactcampaign, ids } = options;
+		const {
+			Expo__c,
+			url,
+			Twitter__c,
+			Facebook__c,
+			Linkedin__c,
+			Company_City__c,
+			Company_State__c,
+			Company_Address__c,
+			Youtube_channel__c,
+			country,
+		} = exhibitor;
+		const boothnum = exhibitor["exhibitor-booth"];
+		return (
+			<nav className={`col-12 col-md-3 ${order} meta-info-col`}>
+				<StickyNav endAffix={1800} disable={window.innerWidth < 992}>
+					{window.innerWidth < 992 ? (
+						<Cta
+							size="reg"
+							curved={false}
+							bonusClass={`profile-back-to-list left`}
+							key={`Mob Back to Exhibitor List`}
+							color="black"
+							handler={() => this.switchMode("LIST", ids)}>
+							Back to Exhibitor List
+						</Cta>
+					) : null}
+					<div className="meta-info-col__button">
+						<Cta
+							size={"max"}
+							color="cex-red"
+							handler={() => fireModal([exhibitor, contactcampaign], "contact-exhibitor", "lg")}
+							bonusClass="center">
+							Contact Exhibitor
+						</Cta>
+					</div>
+					<div className="meta-info-col__booth-num">
+						<h4>Booth Number: {boothnum}</h4>
+					</div>
+					<div className="meta-info-col__contact-list">
+						<h4>Contact</h4>
+						{url ? (
+							<p>
+								<strong>
+									<a href={url} target="_blank" rel="noreferrer">
+										<i className="bi bi-link-45deg"></i> Website
+									</a>
+								</strong>
+							</p>
+						) : null}
+						{Linkedin__c ? (
+							<p>
+								<strong>
+									<a href={Linkedin__c} target="_blank" rel="noreferrer">
+										<i className="bi bi-linkedin"></i> Linkedin
+									</a>
+								</strong>
+							</p>
+						) : null}
+						{Facebook__c ? (
+							<p>
+								<strong>
+									<a href={Facebook__c} target="_blank" rel="noreferrer">
+										<i className="bi bi-facebook"></i> Facebook
+									</a>
+								</strong>
+							</p>
+						) : null}
+						{Twitter__c ? (
+							<p>
+								<strong>
+									<a href={Twitter__c} target="_blank" rel="noreferrer">
+										<i className="bi bi-twitter"></i> Twitter
+									</a>
+								</strong>
+							</p>
+						) : null}
+						{Youtube_channel__c ? (
+							<p>
+								<strong>
+									<a href={Youtube_channel__c} target="_blank" rel="noreferrer">
+										<i className="bi bi-youtube"></i>Youtube
+									</a>
+								</strong>
+							</p>
+						) : null}
+					</div>
+					{Company_Address__c ? (
+						<div className="meta-info-col__address">
+							<p>
+								<i className="bi bi-house-door-fill"></i> Address:{" "}
+							</p>
+							{Company_Address__c ? (
+								<p>
+									<strong>{Company_Address__c},</strong>
+								</p>
+							) : null}
+							{Company_City__c ? (
+								<p>
+									<strong>{Company_City__c},</strong>
+								</p>
+							) : null}
+							{Company_State__c ? (
+								<p>
+									<strong>{Company_State__c},</strong>
+								</p>
+							) : null}
+							{country ? (
+								<p>
+									<strong>{country}</strong>
+								</p>
+							) : null}
+						</div>
+					) : null}
+				</StickyNav>
+			</nav>
+		);
+	};
+
 	/**
 	 *
 	 * @param {Array} assets Exhibitor Assets Array
@@ -688,13 +743,11 @@ class App extends Component {
 								<img className="img-fluid" src={Thumbnail_Link__c} alt="Thumbnail" />
 							</div>
 							<div className="profile-product__text col-md-9">
-								<h5>
-									<a onClick={() => this.switchMode("PRODUCT", [exhibId, Id])}>{Title__c}</a>
-								</h5>
+								<h5 onClick={() => this.switchMode("PRODUCT", [exhibId, Id])}>{Title__c}</h5>
 								<p>
 									{Intro__c}
 									{"  "}
-									<a onClick={() => this.switchMode("PRODUCT", [exhibId, Id])}>Read more...</a>
+									<span onClick={() => this.switchMode("PRODUCT", [exhibId, Id])}>Read more...</span>
 								</p>
 							</div>
 						</div>
@@ -706,11 +759,11 @@ class App extends Component {
 								<img className="img-fluid" src={Thumbnail_Link__c} alt="Thumbnail" />
 							</div>
 							<div className="profile-news__text col-md-9">
-								<h5>{Title__c}</h5>
+								<h5 onClick={() => this.switchMode("PRODUCT", [exhibId, Id])}>{Title__c}</h5>
 								<p>
 									{Intro__c}
 									{"  "}
-									<span>Read more...</span>
+									<span onClick={() => this.switchMode("PRODUCT", [exhibId, Id])}>Read more...</span>
 								</p>
 							</div>
 						</div>
@@ -771,6 +824,35 @@ class App extends Component {
 		});
 	};
 
+	showAppInfo = (boolean) => {
+		boolean = boolean ? "block" : "none";
+		try {
+			document.getElementById("info").style.display = boolean;
+		} catch (error) {
+			console.error("Exhib Info block not found.  ", error);
+		}
+	};
+
+	setPathName = (mode, ids = null, name = "", debug = false) => {
+		let path;
+		//ids 2 element array 0 - booth, 1 - asset
+		switch (mode) {
+			case "LIST":
+				path = `${debug ? "site/debug-" : ""}exhibitor-list/`;
+				break;
+			case "PROFILE":
+				path = `${debug ? "site/debug-" : ""}exhibitor-list/${debug ? "debug-": ""}exhibitor?boothid=${ids[0]}`;
+				break;
+			case "PRODUCT":
+				path = `${debug ? "site/debug-" : ""}exhibitor-list/${debug ? "debug-": ""}product?boothid=${ids[0]}&assetid=${ids[1]}`;
+				break;
+			default:
+				path = "exhibitor-list/";
+				break;
+		}				
+		window.history.pushState("", name, path);
+	};
+
 	zapTo = (target) => {
 		let offset = document.getElementById(target).getBoundingClientRect().top - 150;
 		window.scrollTo({
@@ -780,9 +862,12 @@ class App extends Component {
 	};
 
 	render() {
-		const { exhibsData, exhibitor, product, queries, loading, mode } = this.state;
+		const { exhibsData, exhibitor, articleId, queries, loading, mode } = this.state;
+		if (loading) {
+			return <Spinner />;
+		}
 		const errorMessage = (
-			<h1 className="d-flex justify-content-center align-items-center" style={{ minHeight: "500px" }}>
+			<h1 className="d-flex justify-content-center align-items-center" style={{ minHeight: "500px", textAlign: "center" }}>
 				Sorry, an unexpected error has occurred
 			</h1>
 		);
@@ -795,15 +880,10 @@ class App extends Component {
 					return this.getProfile(exhibitor, loading, this.props.options);
 				default:
 				case "PRODUCT":
-					return this.getProduct(exhibitor, product, loading, this.props.options);
+					return this.getProduct(exhibitor, articleId, loading, this.props.options);
 			}
 		} catch (error) {
 			console.error("Full error:  ", error);
-			console.error("Name:  ", error.name);
-			console.error("Message:  ", error.message);
-			console.error("Filename:  ", error.fileName, " Line:  ", error.lineNumber);
-			console.error("Stacktrace:  ", error.stack);
-
 			return errorMessage;
 		}
 	}

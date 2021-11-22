@@ -1,0 +1,52 @@
+{
+	"name": "v2-event-sites",
+	"version": "1.0.0",
+	"description": "All shows repositort",
+	"main": "gulpfile.js",
+	"dependencies": {
+		"gulp-babel": "^8.0.0",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"react-scripts": "^4.0.3"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.16.0",
+		"@babel/plugin-transform-runtime": "^7.16.4",
+		"@babel/preset-env": "^7.16.4",
+		"@babel/preset-react": "^7.16.0",
+		"@babel/runtime": "^7.16.3",
+		"@webpack-cli/generators": "^2.4.1",
+		"babel-loader": "^8.2.3",
+		"clean-webpack-plugin": "^4.0.0",
+		"css-loader": "^6.5.1",
+		"sass": "^1.43.4",
+		"sass-loader": "^12.3.0",
+		"style-loader": "^3.3.1",
+		"webpack": "^5.64.2",
+		"webpack-cli": "^4.9.1",
+		"webpack-dev-server": "^4.5.0"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"buildsrc:exhibsv2": "npx webpack --mode=development --node-env=development --config webpack.config.exhibmanv2.js",
+		"buildsrc:confman": "npx webpack --mode=development --node-env=development --config webpack.config.confman.js",
+		"buildsrc:exhibs": "npx webpack --mode=development --node-env=development --config webpack.config.exhibsv1.js",
+		"buildsrc:drilldown": "npx webpack --mode=development --node-env=development --config webpack.config.exhibsv1drilldown.js",
+		"buildsrc:article": "npx webpack --mode=development --node-env=development --config webpack.config.exhibsv1product.js",
+		"builddist:exhibsv2": "npx webpack --mode=production --node-env=production --config webpack.config.exhibmanv2.js",
+		"builddist:confman": "npx webpack --mode=production --node-env=production --config webpack.config.confman.js",
+		"builddist:exhibs": "npx webpack --mode=production --node-env=production --config webpack.config.exhibsv1.js",
+		"builddist:drilldown": "npx webpack --mode=production --node-env=production --config webpack.config.exhibsv1drilldown.js",
+		"builddist:article": "npx webpack --mode=production --node-env=production --config webpack.config.exhibsv1product.js",
+		"build:custom": "npx webpack --mode=production --node-env=production --config webpack.config.custom.js",
+		"buildsrc:all": "npx webpack --mode=development --node-env=development --config webpack.config.exhibmanv2.js && npx webpack --mode=development --node-env=development --config webpack.config.confman.js && npx webpack --mode=development --node-env=development --config webpack.config.exhibsv1.js && npx webpack --mode=development --node-env=development --config webpack.config.exhibsv1drilldown.js && npx webpack --mode=development --node-env=development --config webpack.config.exhibsv1product.js && npx webpack --mode=production --node-env=production --config webpack.config.custom.js",
+		"builddist:all": "npx webpack --mode=production --node-env=production --config webpack.config.exhibmanv2.js && npx webpack --mode=production --node-env=production --config webpack.config.confman.js && npx webpack --mode=production --node-env=production --config webpack.config.exhibsv1.js && npx webpack --mode=production --node-env=production --config webpack.config.exhibsv1drilldown.js && npx webpack --mode=production --node-env=production --config webpack.config.exhibsv1product.js",
+		"watchsrc:exhibsv2": "npx webpack --mode=development --node-env=development --config webpack.config.exhibmanv2.js --watch",
+		"watchsrc:confman": "npx webpack --mode=development --node-env=development --config webpack.config.confman.js --watch",
+		"watchsrc:exhibs": "npx webpack --mode=development --node-env=development --config webpack.config.exhibsv1.js --watch",
+		"watchsrc:drilldown": "npx webpack --mode=development --node-env=development --config webpack.config.exhibsv1drilldown.js --watch",
+		"watchsrc:article": "npx webpack --mode=development --node-env=development --config webpack.config.exhibsv1product.js --watch"
+	},
+	"author": "matt murphy",
+	"license": "ISC"
+}
