@@ -1,18 +1,21 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV == "production";
 
 const config = {
 	output: {
-		filename: 'bundle.js'
+		filename: "bundle.js",
 	},
 	module: {
 		//What to use. Object for each filetype
 		rules: [
 			{
 				test: /\.(js|jsx)$/i,
+				resolve: {
+					fullySpecified: false,
+				},
 				exclude: /node_modules/, //don't use this loader on node_modules
 				loader: "babel-loader",
 				options: {
@@ -26,7 +29,7 @@ const config = {
 						"@babel/preset-react",
 					],
 				},
-			},
+			},						
 			{
 				test: /\.s[ac]ss$/i,
 				use: ["style-loader", "css-loader", "sass-loader"],
@@ -43,7 +46,7 @@ module.exports = (appName) => {
 	} else {
 		config.mode = "development";
 	}
-	
+
 	let outputPath;
 	if (config.mode === "production") {
 		outputPath = "dist";
@@ -62,6 +65,6 @@ module.exports = (appName) => {
 		path.resolve(__dirname, `js/react/src/${appName}/src`),
 		path.resolve(__dirname, "js/react/src/common_components"),
 	];
-  
+
 	return config;
 };

@@ -35,10 +35,9 @@ class ExhibitorSlide extends React.Component {
 			return <EnhancedCta text="View Profile" size="small" type="enhanced-listing" clickHandler={this.openDrilldown} assettypes={assettypes} />;
 		}
 	};
-	render() {
-		let cName = `row exhibitor-slide exhibitor-slide--${this.props.listing_type} exhibitor-slide--${this.props.show_code}`;
+	render() {		
 		return (
-			<div className={cName} id={this.props.id}>
+			<div className={`row exhibitor-slide exhibitor-slide--${this.props.listing_type} exhibitor-slide--${this.props.show_code}`} id={this.props.id}>
 				<div className="exhibitor-slide__hr">
 					<hr />
 					{this.getListingCTA(this.props.options.enhancedtext, this.props.listing_type, this.props.assettypes)}
@@ -48,11 +47,9 @@ class ExhibitorSlide extends React.Component {
 						<div className="exhibitor-slide__side-flag"></div>
 						<div className="col-md-3 exhibitor-slide__logo">
 							<div>
-								<LazyLoad height={100} offset={100} once>
 									<a href={this.state.drilldownlink} target="_self" title={this.props.name}>
 										<img src={this.props.weblogo} alt="logo" />
 									</a>
-								</LazyLoad>
 							</div>
 						</div>
 						<div className="col-md-5 exhibitor-slide__body">
@@ -75,11 +72,9 @@ class ExhibitorSlide extends React.Component {
 						<div className="exhibitor-slide__side-flag"></div>
 						<div className="col-5 exhibitor-slide__logo">
 							<div>
-								<LazyLoad height={100} offset={100} once>
 									<a href={this.state.drilldownlink} target="_self" title={this.props.name}>
 										<img src={this.props.weblogo} alt="logo" />
 									</a>
-								</LazyLoad>
 							</div>
 						</div>
 						<div className="col-7 exhibitor-slide__body">
