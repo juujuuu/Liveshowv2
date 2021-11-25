@@ -188,9 +188,16 @@ header {
 			}
 		}
 		.header__sub-menu__co-locate {
-			clear: both;
-			float: right;
-			margin-top: 5px;
+			position: absolute;
+			right: 0;
+			top: 40px;
+			padding: 0 10px;
+			div {
+				padding: 5px;
+				img {
+					max-height: 34px;
+				}
+			}
 		}
 	}
 	.header__main-menu {
