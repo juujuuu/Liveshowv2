@@ -1,0 +1,138 @@
+import React from "react";
+
+import StickyNav from "../../../common_components/StickyNav";
+import Spinner from "../../../common_components/Spinner";
+import Cta from "../../../common_components/Cta";
+
+import fireModal from "../../../common_utils/Bootsrap5Modal";
+
+function Profile({ inputState, options, functionsBundle }) {
+	const { switchMode, getMetaCol, getAssets } = functionsBundle;
+	const { loading, exhibitor } = inputState;
+	const { show, ids, mode, debug } = options;
+	const { pagetitle, content, Company_Bio_Enhanced__c, logo, Expo__c, Exhibitor_Assets__r, id, Exhibitor_listing_type__c } = exhibitor;
+	const cats = exhibitor["exhibitor-cat"];
+
+	const getJumpList = (assets) => {
+		let types = [];
+		assets.forEach((asset) => {
+			switch (asset.Asset_Type__c) {
+				case "Product":
+					types = [...types, "Featured Products"];
+					break;
+				case "Video":
+					types = [...types, "Videos"];
+					break;
+				case "News":
+					types = [...types, "News"];
+					break;
+				case "Downloadable Resource":
+					types = [...types, "Resource Downloads"];
+					break;
+				default:
+					break;
+			}
+		});
+		return (
+			<>
+				{types.map((type) => {
+					return (
+						<div className="profile-quick-menu__type" onClick={() => zapTo(type.replace(" ", ""))}>
+							<p>{type}</p>
+						</div>
+					);
+				})}
+			</>
+		);
+	};
+
+	const zapTo = (target) => {
+		let offset = document.getElementById(target).getBoundingClientRect().top - 150;
+		window.scrollTo({
+			top: offset,
+			behavior: "smooth",
+		});
+	};
+
+	if (loading) {
+		return <Spinner></Spinner>;
+	} else {
+		return (
+			<section className={`exhibmanV2 exhibmanV2--${show} exhibman-profile exhibman-profile--${Exhibitor_listing_type__c} row`}>
+				<div className="col-12 col-md-9 order-2 order-md-1 profile">
+					{window.innerWidth > 992 ? (
+						<Cta
+							size="reg"
+							curved={false}
+							bonusClass={`profile-back-to-list left`}
+							key={`Desk Back to Exhibitor List`}
+							color="black"
+							handler={() => switchMode("LIST", ids, inputState)}>
+							Back to Exhibitor List
+						</Cta>
+					) : null}
+					<h1 className="profile-title">{pagetitle}</h1>
+					{Exhibitor_Assets__r && window.innerWidth > 992 ? (
+						<nav className="profile-quick-menu row">
+							<div className="profile-quick-menu__jump col-2">
+								<p>
+									<strong>Jump to:</strong>
+								</p>
+							</div>
+							<div className="profile-quick-menu__list col-10">{getJumpList(Exhibitor_Assets__r)}</div>
+						</nav>
+					) : null}
+					<div className="profile-summary">
+						<div className="profile-logo">
+							<img className="img-fluid" src={logo} alt="Logo" />
+						</div>
+						<div className="profile-bios">
+							<p className="profile-bios__short-bio">
+								<strong>{content}</strong>
+							</p>
+							{Company_Bio_Enhanced__c ? (
+								<div className="profile-bios__long-bio" dangerouslySetInnerHTML={{ __html: Company_Bio_Enhanced__c }}></div>
+							) : null}
+							<p className="profile-bios__cats">
+								<i>
+									<strong>Categories: </strong>
+									{cats}
+								</i>
+							</p>
+						</div>
+					</div>
+					{Exhibitor_Assets__r ? (
+						<>
+							{Exhibitor_Assets__r.find((asset) => asset.Asset_Type__c === "Product") ? (
+								<div id="FeaturedProducts" className="profile-assets profile-products row">
+									<h4>Products</h4>
+									{getAssets(Exhibitor_Assets__r, "Product", id, inputState)}
+								</div>
+							) : null}
+							{Exhibitor_Assets__r.find((asset) => asset.Asset_Type__c === "News") ? (
+								<div id="News" className="profile-assets profile-news row">
+									<h4>News</h4>
+									{getAssets(Exhibitor_Assets__r, "News", id, inputState)}
+								</div>
+							) : null}
+							{Exhibitor_Assets__r.find((asset) => asset.Asset_Type__c === "Video") ? (
+								<div id="Videos" className="profile-assets profile-videos row">
+									<h4>{pagetitle} Videos</h4>
+									{getAssets(Exhibitor_Assets__r, "Video", inputState)}
+								</div>
+							) : null}
+							{Exhibitor_Assets__r.find((asset) => asset.Asset_Type__c === "Downloadable Resource") ? (
+								<div id="ResourceDownloads" className="profile-assets profile-downloadables row">
+									<h4>Resource Downloads</h4>
+									{getAssets(Exhibitor_Assets__r, "Downloadable Resource", inputState)}
+								</div>
+							) : null}
+						</>
+					) : null}
+				</div>
+				{getMetaCol(exhibitor, options, inputState)}
+			</section>
+		);
+	}
+}
+export default Profile;
