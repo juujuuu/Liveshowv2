@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./Components/App";
 import TagManager from "react-gtm-module";
+import { BrowserRouter } from "react-router-dom";
 
 let country;
-let contactcampaign;
 //Show specific stuff
 switch (document.querySelector("#root").getAttribute("show")) {
 	case "CEX":
@@ -70,7 +70,7 @@ if (extraParams) {
 	extraParams = extraParams.forEach((param) => {
 		extraParamsObj[param.split("=")[0]] = param.split("=")[1]; //converting to 2d array
 	});
-	for(const key in extraParamsObj){
+	for (const key in extraParamsObj) {
 		switch (key) {
 			case "boothid":
 				profileId = extraParamsObj[key];
@@ -81,7 +81,7 @@ if (extraParams) {
 			default:
 				break;
 		}
-	};
+	}
 }
 
 const options = {
@@ -99,10 +99,15 @@ const options = {
 	filters,
 	multiExpo, //multiple expo ids detected
 	extraParams, //extra arguments in the url, null if none
-	debug: document.querySelector("#root").getAttribute("debug") == "true" ? true: false
+	debug: document.querySelector("#root").getAttribute("debug") == "true" ? true : false,
 };
 
 console.log("OPTIONS: ", options);
 
 TagManager.initialize({ gtmId: document.querySelector("#root").getAttribute("gtm") });
-ReactDOM.render(<App options={options} />, document.querySelector("#root"));
+ReactDOM.render(
+	<BrowserRouter>
+		<App options={options} />
+	</BrowserRouter>,
+	document.querySelector("#root")
+);
