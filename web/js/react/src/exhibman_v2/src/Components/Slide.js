@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Cta from "../../../common_components/Cta";
+import { getProfilePath } from "../Utils/GetPath";
 
 class Slide extends Component {
 	constructor(props) {
@@ -17,8 +19,7 @@ class Slide extends Component {
 	};
 
 	render() {
-		const { payload } = this.props;
-		const { switchMode } = this.props;
+		const { payload, switchMode, options, inputState } = this.props;
 
 		const {
 			id,
@@ -51,28 +52,26 @@ class Slide extends Component {
 		return (
 			<div className={`exhibitor-slide exhibitor-slide--${Exhibitor_listing_type__c} row`} id={id}>
 				{Exhibitor_listing_type__c != "Standard" ? (
-					<Cta
-						color="black"
-						size="reg"
-						margin="vertical-margin--0"
-						handler={() => switchMode("PROFILE", id)}
-						curved={false}
-						bonusClass="exhibitor-slide__profile-button"
-						exhibAssets={true}
-						role="exhib-assets"
-						payload={payload}>
-						Enhanced Listing
-					</Cta>
+					<Link className="router-link router-link--profile-button" to={getProfilePath(id, options.debug)} onClick={() => switchMode("PROFILE", id, inputState)}>
+						<Cta
+							color="black"
+							size="reg"
+							margin="vertical-margin--0"
+							curved={false}
+							bonusClass="exhibitor-slide__profile-button"
+							exhibAssets={true}
+							role="exhib-assets"
+							payload={payload}>
+							Enhanced Listing
+						</Cta>
+					</Link>
 				) : null}
 
 				<div className="col-6 col-md-3 exhibitor-slide__logo">
 					{Exhibitor_listing_type__c !== "Standard" ? (
-						<img
-							onClick={() => switchMode("PROFILE", id)}
-							className="img-fluid"
-							src={web_logo !== "" ? smallLogo : bigLogo}
-							alt={pagetitle}
-						/>
+						<Link className="router-link" to={getProfilePath(id, options.debug)} onClick={() => switchMode("PROFILE", id, inputState)}>
+							<img className="img-fluid" src={web_logo !== "" ? smallLogo : bigLogo} alt={pagetitle} />
+						</Link>
 					) : (
 						<img className="img-fluid" src={web_logo !== "" ? smallLogo : bigLogo} alt={pagetitle} />
 					)}
@@ -80,8 +79,13 @@ class Slide extends Component {
 				<div className="col-6 col-md-5 exhibitor-slide__body">
 					<div>
 						{Exhibitor_listing_type__c !== "Standard" ? (
-							<h4 onClick={() => switchMode("PROFILE", id)} className="exhibitor-name">
-								{pagetitle}
+							<h4 className="exhibitor-name">
+								<Link
+									className="router-link"
+									to={getProfilePath(id, options.debug)}
+									onClick={() => switchMode("PROFILE", id, inputState)}>
+									{pagetitle}
+								</Link>
 							</h4>
 						) : (
 							<h4 className="exhibitor-name">{pagetitle}</h4>

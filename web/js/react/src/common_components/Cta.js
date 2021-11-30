@@ -111,10 +111,10 @@ class Cta extends React.Component {
 								{this.getExhibAssetsList(payload)}
 							</a>
 						) : (
-							<a className="curved-cta__link" title={children}>
+							<span className="curved-cta__link" >
 								<span className="curved-cta__text">{children}</span>
 								{this.getExhibAssetsList(payload)}
-							</a>
+							</span>
 						)}
 					</button>
 				);
@@ -130,9 +130,9 @@ class Cta extends React.Component {
 								{children}
 							</a>
 						) : (
-							<a className="curved-cta__link" title={children}>
+							<span className="curved-cta__link" title={children}>
 								{children}
-							</a>
+							</span>
 						)}
 					</button>
 				);

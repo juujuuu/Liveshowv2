@@ -1,4 +1,5 @@
-@import "./elem/slide", "./elem/alphabet", "./elem/control-col", "./profile", "./css-file-icons", "./elem/meta-info-col", "./product";
+@import "./elem/slide", "./elem/alphabet", "./elem/control-col", "./profile", "./css-file-icons", "./elem/meta-info-col", "./product",
+	"./override/override";
 .exhibmanV2 {
 	.viewport-col {
 		.viewport__header {
@@ -7,6 +8,11 @@
 				padding: 0;
 				margin: 0;
 			}
+		}
+	}
+	.router-link {
+		&:hover {
+			text-decoration: none;
 		}
 	}
 }

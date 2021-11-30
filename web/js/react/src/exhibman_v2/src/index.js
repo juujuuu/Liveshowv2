@@ -5,7 +5,6 @@ import TagManager from "react-gtm-module";
 import { BrowserRouter } from "react-router-dom";
 
 let country;
-let contactcampaign;
 //Show specific stuff
 switch (document.querySelector("#root").getAttribute("show")) {
 	case "CEX":

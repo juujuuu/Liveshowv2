@@ -96,7 +96,7 @@ function ExhibitorList({ inputState, options, functionsBundle }) {
 		}
 		return exhibitors.map((exhibitor, index) => {
 			const { id } = exhibitor;
-			return <Slide key={`slide--${id}--${index}`} payload={exhibitor} switchMode={switchMode} />;
+			return <Slide key={`slide--${id}--${index}`} payload={exhibitor} switchMode={switchMode} options={options} inputState={inputState}/>;
 		});
 	};
 

@@ -4,13 +4,12 @@ import Spinner from "../../../common_components/Spinner";
 import StickyNav from "../../../common_components/StickyNav";
 import Cta from "../../../common_components/Cta";
 
-import VideoSanitizer from "../Utils/PDFMake/VideoSanitizer";
 import { getShowNameFromAcronym, getShowNameFromId } from "../Utils/GetShow";
 import fireModal from "../../../common_utils/Bootsrap5Modal";
 import ExhibitorList from "./ExhibitorList";
-import Profile from "./Profile";
+import Profile from "./Profile/Profile";
 import Product from "./Product";
-import { getExhibListPath, getProductPath, getProfilePath } from "../Utils/GetPath";
+import { getExhibListPathRoute, getProductPathRoute, getProfilePathRoute } from "../Utils/GetPath";
 
 class App extends Component {
 	constructor(props) {
@@ -19,10 +18,12 @@ class App extends Component {
 		this.state = {
 			loading: true,
 			mode,
+			ids,
 			profileId,
 			articleId,
 			exhibsData: [],
 			exhibitor: null,
+			mountError: false,
 			queries: {
 				search: "",
 				letter: "Show All",
@@ -52,18 +53,42 @@ class App extends Component {
 				break;
 		}
 
-		this.getSF(query, mode).then((response) => {
-			this.setState((prevState) => {
-				if (mode === "PROFILE" || mode === "PRODUCT") {
-					console.log("getsf response:  ", response);
-					prevState.exhibitor = response[0];
-				} else {
-					prevState.exhibsData = response;
-				}
-				prevState.loading = false;
-				return prevState;
+		this.getSF(query, mode)
+			.then((response) => {
+				this.setState((prevState) => {
+					if (mode === "PROFILE" || mode === "PRODUCT") {
+						console.log("getsf response:  ", response);
+						prevState.exhibitor = response[0];
+					} else {
+						prevState.exhibsData = response;
+					}
+					prevState.loading = false;
+					return prevState;
+				});
+			})
+			.catch((error) => {
+				console.error(error);
+				this.setState({ loading: false, mountError: true });
 			});
-		});
+	}
+
+	/** Just in case we have some empty data */
+	componentDidUpdate() {
+		const { exhibsData, mode, ids } = this.state;
+		if (mode === "LIST" && exhibsData.length <= 0) {
+			this.getSF(ids, mode)
+				.then((response) => {
+					this.setState((prevState) => {
+						prevState.exhibsData = response;
+						prevState.loading = false;
+						return prevState;
+					});
+				})
+				.catch((error) => {
+					console.error(error);
+					this.setState({ loading: false, mountError: true });
+				});
+		}
 	}
 
 	/**
@@ -72,8 +97,7 @@ class App extends Component {
 	 */
 	getSF = async (ids = null, mode = null) => {
 		if (!ids || mode === false) {
-			console.error("ID OR MODE AREN'T SET");
-			return null;
+			throw "ID OR MODE AREN'T SET";
 		}
 		let url;
 		switch (mode) {
@@ -144,7 +168,7 @@ class App extends Component {
 	 * @param {*} mode mode to switch to
 	 * @param {*} payload depends on mode
 	 */
-	switchMode = (mode = "LIST", payload, state) => {
+	switchMode = (mode = "LIST", payload) => {
 		//TODO LIST, PROFILE, PRODCUT
 		document.body.scrollTop = document.documentElement.scrollTop = 0;
 		//LIST set mode, call sf, laoding true, re render
@@ -173,25 +197,15 @@ class App extends Component {
 					prevState.mode = "PRODUCT";
 					return prevState;
 				});
-				const { id } = this.state.exhibitor;
-				if (this.state.exhibitor && payload[0] == id) {
-					//Already have exhibitor loaded
+				this.getSF(payload[0], mode).then((data) => {
 					this.setState((prevState) => {
+						prevState.exhibitor = data[0];
 						prevState.articleId = payload[1];
 						prevState.loading = false;
+						console.log("GET SF Profile data:  ", data[0]);
 						return prevState;
 					});
-				} else {
-					this.getSF(payload[0], mode).then((data) => {
-						this.setState((prevState) => {
-							prevState.exhibitor = data[0];
-							prevState.articleId = payload[1];
-							prevState.loading = false;
-							console.log("GET SF Profile data:  ", data[0]);
-							return prevState;
-						});
-					});
-				}
+				});
 				break;
 			case "LIST":
 				this.showAppInfo(true);
@@ -200,20 +214,13 @@ class App extends Component {
 					prevState.mode = "LIST";
 					return prevState;
 				});
-				if (state.exhibsData.length === 0) {
-					this.getSF(payload, mode).then((data) => {
-						this.setState((prevState) => {
-							prevState.exhibsData = data;
-							prevState.loading = false;
-							return prevState;
-						});
-					});
-				} else {
+				this.getSF(payload, mode).then((data) => {
 					this.setState((prevState) => {
+						prevState.exhibsData = data;
 						prevState.loading = false;
 						return prevState;
 					});
-				}
+				});
 				break;
 			default:
 				break;
@@ -314,7 +321,7 @@ class App extends Component {
 		});
 	};
 
-	getMetaCol = (exhibitor, options, state, order = "order-1 order-md-2") => {
+	getMetaCol = (exhibitor, options , order = "order-1 order-md-2") => {
 		const { contactcampaign, ids } = options;
 		const {
 			Expo__c,
@@ -329,6 +336,90 @@ class App extends Component {
 			country,
 		} = exhibitor;
 		const boothnum = exhibitor["exhibitor-booth"];
+		const getUrl = (url) => {
+			if (url) {
+				return (
+					<p>
+						<strong>
+							<a href={url} target="_blank" rel="noreferrer">
+								<i className="bi bi-link-45deg"></i> Website
+							</a>
+						</strong>
+					</p>
+				);
+			} else {
+				return null;
+			}
+		};
+		const getLinkedIn = (Linkedin__c) => {
+			if (Linkedin__c) {
+				return (
+					<p>
+						<strong>
+							<a href={Linkedin__c} target="_blank" rel="noreferrer">
+								<i className="bi bi-linkedin"></i> Linkedin
+							</a>
+						</strong>
+					</p>
+				);
+			} else {
+				return null;
+			}
+		};
+		const getFacebook = (Facebook__c) => {
+			if (Facebook__c) {
+				<p>
+					<strong>
+						<a href={Facebook__c} target="_blank" rel="noreferrer">
+							<i className="bi bi-facebook"></i> Facebook
+						</a>
+					</strong>
+				</p>;
+			} else {
+				return null;
+			}
+		};
+		const getTwitter = (Twitter__c) => {
+			if (Twitter__c) {
+				return (
+					<p>
+						<strong>
+							<a href={Twitter__c} target="_blank" rel="noreferrer">
+								<i className="bi bi-twitter"></i> Twitter
+							</a>
+						</strong>
+					</p>
+				);
+			} else {
+				return null;
+			}
+		};
+		const getYoutube = (Youtube_channel__c) => {
+			if (Youtube_channel__c) {
+				return (
+					<p>
+						<strong>
+							<a href={Youtube_channel__c} target="_blank" rel="noreferrer">
+								<i className="bi bi-youtube"></i>Youtube
+							</a>
+						</strong>
+					</p>
+				);
+			} else {
+				return null;
+			}
+		};
+		const getAddressField = (field) => {
+			if (field) {
+				return (
+					<p>
+						<strong>{field},</strong>
+					</p>
+				);
+			} else {
+				return null;
+			}
+		};
 		return (
 			<nav className={`col-12 col-md-3 ${order} meta-info-col`}>
 				<StickyNav endAffix={1800} disable={window.innerWidth < 992}>
@@ -339,7 +430,7 @@ class App extends Component {
 							bonusClass={`profile-back-to-list left`}
 							key={`Mob Back to Exhibitor List`}
 							color="black"
-							handler={() => this.switchMode("LIST", ids, state)}>
+							handler={() => this.switchMode("LIST", ids)}>
 							Back to Exhibitor List
 						</Cta>
 					) : null}
@@ -357,181 +448,26 @@ class App extends Component {
 					</div>
 					<div className="meta-info-col__contact-list">
 						<h4>Contact</h4>
-						{url ? (
-							<p>
-								<strong>
-									<a href={url} target="_blank" rel="noreferrer">
-										<i className="bi bi-link-45deg"></i> Website
-									</a>
-								</strong>
-							</p>
-						) : null}
-						{Linkedin__c ? (
-							<p>
-								<strong>
-									<a href={Linkedin__c} target="_blank" rel="noreferrer">
-										<i className="bi bi-linkedin"></i> Linkedin
-									</a>
-								</strong>
-							</p>
-						) : null}
-						{Facebook__c ? (
-							<p>
-								<strong>
-									<a href={Facebook__c} target="_blank" rel="noreferrer">
-										<i className="bi bi-facebook"></i> Facebook
-									</a>
-								</strong>
-							</p>
-						) : null}
-						{Twitter__c ? (
-							<p>
-								<strong>
-									<a href={Twitter__c} target="_blank" rel="noreferrer">
-										<i className="bi bi-twitter"></i> Twitter
-									</a>
-								</strong>
-							</p>
-						) : null}
-						{Youtube_channel__c ? (
-							<p>
-								<strong>
-									<a href={Youtube_channel__c} target="_blank" rel="noreferrer">
-										<i className="bi bi-youtube"></i>Youtube
-									</a>
-								</strong>
-							</p>
-						) : null}
+						{getUrl(url)}
+						{getLinkedIn(Linkedin__c)}
+						{getFacebook(Facebook__c)}
+						{getTwitter(Twitter__c)}
+						{getYoutube(Youtube_channel__c)}
 					</div>
 					{Company_Address__c ? (
 						<div className="meta-info-col__address">
 							<p>
 								<i className="bi bi-house-door-fill"></i> Address:{" "}
 							</p>
-							{Company_Address__c ? (
-								<p>
-									<strong>{Company_Address__c},</strong>
-								</p>
-							) : null}
-							{Company_City__c ? (
-								<p>
-									<strong>{Company_City__c},</strong>
-								</p>
-							) : null}
-							{Company_State__c ? (
-								<p>
-									<strong>{Company_State__c},</strong>
-								</p>
-							) : null}
-							{country ? (
-								<p>
-									<strong>{country}</strong>
-								</p>
-							) : null}
+							{getAddressField(Company_Address__c)}
+							{getAddressField(Company_City__c)}
+							{getAddressField(Company_State__c)}
+							{getAddressField(country)}
 						</div>
 					) : null}
 				</StickyNav>
 			</nav>
 		);
-	};
-
-	/**
-	 *
-	 * @param {Array} assets Exhibitor Assets Array
-	 * @param {String} type Type of assets to output
-	 */
-	getAssets = (assets, type, exhibId = false, state) => {
-		assets = assets.filter((asset) => asset.Asset_Type__c == type);
-
-		return assets.map((asset) => {
-			const { Id, Body__c, File_Type__c, Intro__c, Link__c, Name, Thumbnail_Link__c, Title__c } = asset;
-			switch (type) {
-				case "Product":
-					return (
-						<div className="profile-product row" key={`product--${Id}`}>
-							<div className="profile-product__thumb col-md-3">
-								<img className="img-fluid" src={Thumbnail_Link__c} alt="Thumbnail" />
-							</div>
-							<div className="profile-product__text col-md-9">
-								<h5 onClick={() => this.switchMode("PRODUCT", [exhibId, Id], state)}>{Title__c}</h5>
-								<p>
-									{Intro__c}
-									{"  "}
-									<span onClick={() => this.switchMode("PRODUCT", [exhibId, Id], state)}>Read more...</span>
-								</p>
-							</div>
-						</div>
-					);
-				case "News":
-					return (
-						<div className="profile-news row" key={`news--${Id}`}>
-							<div className="profile-news__thumb col-md-3">
-								<img className="img-fluid" src={Thumbnail_Link__c} alt="Thumbnail" />
-							</div>
-							<div className="profile-news__text col-md-9">
-								<h5 onClick={() => this.switchMode("PRODUCT", [exhibId, Id], state)}>{Title__c}</h5>
-								<p>
-									{Intro__c}
-									{"  "}
-									<span onClick={() => this.switchMode("PRODUCT", [exhibId, Id], state)}>Read more...</span>
-								</p>
-							</div>
-						</div>
-					);
-				case "Video":
-					let video = VideoSanitizer.getVideo(Link__c);
-					if (!video) {
-						return null;
-					} else {
-						return (
-							<div className="profile-video col-md-4">
-								<div>
-									<iframe
-										src={video}
-										title={Name}
-										frameBorder="0"
-										style={{ border: "0" }}
-										allowFullScreen
-										data-name={Name}
-										data-id={Id}></iframe>
-								</div>
-								<p>{Title__c}</p>
-							</div>
-						);
-					}
-				case "Downloadable Resource":
-					let fileType;
-					switch (File_Type__c) {
-						case "application/pdf":
-							fileType = "pdf";
-							break;
-						default:
-							break;
-					}
-					return (
-						<div className="profile-downloadable col-md-4">
-							<div>
-								<a
-									href={Link__c}
-									target="_blank"
-									title={Title__c}
-									data-id={Id}
-									data-name={this.state.exhibitor.pagetitle}
-									data-type="Downloadable"
-									rel="noreferrer">
-									<img className="img-fluid" src={Thumbnail_Link__c} alt="Downloadable" />
-									<div className={`fi fi-size-lg fi-${fileType}`}>
-										<div className="fi-content">{fileType}</div>
-									</div>
-								</a>
-								<p>{Title__c}</p>
-							</div>
-						</div>
-					);
-				default:
-					break;
-			}
-		});
 	};
 
 	showAppInfo = (boolean) => {
@@ -544,17 +480,19 @@ class App extends Component {
 	};
 
 	render() {
-		const { loading, mode, profileId, articleId } = this.state;
-		if (loading) {
-			return <Spinner />;
-		}
+		const { loading, mode, profileId, articleId, mountError } = this.state;
 		const errorMessage = (
 			<h1 className="d-flex justify-content-center align-items-center" style={{ minHeight: "500px", textAlign: "center" }}>
 				Sorry, an unexpected error has occurred
 			</h1>
 		);
+		if (loading) {
+			return <Spinner />;
+		} else if (mountError) {
+			return errorMessage;
+		}
 		try {
-			const { resetFilters, setSearch, setLetter, switchMode, alphabetFilter, searchFilter, expoFilter, getMetaCol, getAssets } = this;
+			const { resetFilters, setSearch, setLetter, switchMode, alphabetFilter, searchFilter, expoFilter, getMetaCol } = this;
 			const functionsBundle = {
 				resetFilters,
 				setSearch,
@@ -564,7 +502,6 @@ class App extends Component {
 				searchFilter,
 				expoFilter,
 				getMetaCol,
-				getAssets,
 			};
 
 			let component;
@@ -579,19 +516,19 @@ class App extends Component {
 					component = <Product inputState={this.state} options={this.props.options} functionsBundle={functionsBundle} />;
 					break;
 			}
-			console.log("Exhib List Path: ", getExhibListPath(this.props.options.debug));
-			console.log("Profile Path: ", getProfilePath(profileId, this.props.options.debug));
+			console.log("Exhib List Path: ", getExhibListPathRoute(this.props.options.debug));
+			console.log("Profile Path: ", getProfilePathRoute(profileId, this.props.options.debug));
 			return (
 				<Routes>
 					<Route
 						exact
-						path={getExhibListPath(this.props.options.debug)}
+						path={getExhibListPathRoute(this.props.options.debug)}
 						element={<ExhibitorList inputState={this.state} options={this.props.options} functionsBundle={functionsBundle} />}></Route>
-					<Route						
-						path={getProfilePath(profileId, this.props.options.debug)}
+					<Route
+						path={getProfilePathRoute(this.props.options.debug)}
 						element={<Profile inputState={this.state} options={this.props.options} functionsBundle={functionsBundle} />}></Route>
-					<Route						
-						path={getProductPath([profileId, articleId], this.props.options.debug)}
+					<Route
+						path={getProductPathRoute(this.props.options.debug)}
 						element={<Product inputState={this.state} options={this.props.options} functionsBundle={functionsBundle} />}></Route>
 				</Routes>
 			);

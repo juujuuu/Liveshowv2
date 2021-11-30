@@ -1,12 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import Spinner from "../../../common_components/Spinner";
 import Cta from "../../../common_components/Cta";
 
 import fireModal from "../../../common_utils/Bootsrap5Modal";
+import { getProfilePath } from "../Utils/GetPath";
 
 function Product({ inputState, options, functionsBundle }) {
-	const { exhibitor, articleId, loading } = this.state;
+	const { exhibitor, articleId, loading } = inputState;
 	const { switchMode, getMetaCol } = functionsBundle;
 	if (loading) {
 		return <Spinner></Spinner>;
@@ -19,7 +21,11 @@ function Product({ inputState, options, functionsBundle }) {
 		<section className={`exhibmanV2 exhibmanV2--${show} exhibman-product row`}>
 			<div className="col-12 col-md-9 order-1 meta-info-col">
 				<div className="product-header">
-					<h2 onClick={() => switchMode("PROFILE", id, inputState)}>{pagetitle}</h2>
+					<h2>
+						<Link className="router-link" to={getProfilePath(id, debug)} onClick={() => switchMode("PROFILE", id)}>
+							{pagetitle}
+						</Link>
+					</h2>
 					<h1>{Title__c}</h1>
 				</div>
 				<div className="product-body">
@@ -40,7 +46,7 @@ function Product({ inputState, options, functionsBundle }) {
 					) : null}
 				</div>
 			</div>
-			{getMetaCol(exhibitor, options, inputState, "order-2")}
+			{getMetaCol(exhibitor, options, "order-2")}
 		</section>
 	);
 }
