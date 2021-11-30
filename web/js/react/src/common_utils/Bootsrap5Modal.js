@@ -31,14 +31,13 @@ export default function fireModal(payload = false, role = false, size = "md") {
 			payload[0]
 		)}</div><div class="modal-body"></div></div></div></div>`
 	);
-	let myModal;
+	let myModal, sessionsHtml, modalBody;
 	switch (role) {
 		case "speaker-modal":
 			//payload [0] = speaker data, payload [1] on demand link
 			const agendaLink = payload[1];
 			const { Head_Shot_URL__c, First_Name__c, Last_Name__c, Job_Title__c, Logo_URL__c, Company__c } = payload[0];
 			const { Biography__c } = payload[0].Speaker__r;
-			let sessionsHtml, modalBody;
 
 			payload.sessions.forEach((session) => {
 				const { name, day, id } = session;

@@ -1,6 +1,8 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 
 const isProduction = process.env.NODE_ENV == "production";
 
@@ -56,6 +58,8 @@ module.exports = (appName) => {
 		};
 		config.plugins = [];
 		config.plugins[0] = new CleanWebpackPlugin();
+		config.plugins[1] = new MiniCssExtractPlugin();
+		config.module.rules[1].use = [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
 	} else {
 		outputPath = "src";
 	}
