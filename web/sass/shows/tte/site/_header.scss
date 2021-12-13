@@ -106,7 +106,7 @@ header {
 			}
 		}
 		.header__details {
-			//margin-top: 56px;
+			margin-top: 56px;
 			padding-top: 10px;
 			padding-bottom: 10px;
 			display: flex;
@@ -311,6 +311,7 @@ header {
 			font-size: 22px;
 			font-weight: normal;
 			text-transform: uppercase;
+			margin: 0;
 		}
 		&--date {
 			color: $main-color;
