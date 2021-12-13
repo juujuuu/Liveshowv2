@@ -4,6 +4,9 @@ import App from "./Components/App";
 import TagManager from "react-gtm-module";
 import { BrowserRouter } from "react-router-dom";
 
+import ReactGA from 'react-ga';
+ReactGA.initialize(document.querySelector("#root").getAttribute("gtm"));
+
 let country;
 //Show specific stuff
 switch (document.querySelector("#root").getAttribute("show")) {

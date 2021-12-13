@@ -10,6 +10,7 @@ import ExhibitorList from "./ExhibitorList";
 import Profile from "./Profile/Profile";
 import Product from "./Product";
 import { getExhibListPathRoute, getProductPathRoute, getProfilePathRoute } from "../Utils/GetPath";
+import { pushPageView } from "../Utils/pushPageView";
 
 class App extends Component {
 	constructor(props) {
@@ -171,6 +172,7 @@ class App extends Component {
 	switchMode = (mode = "LIST", payload) => {
 		//TODO LIST, PROFILE, PRODCUT
 		document.body.scrollTop = document.documentElement.scrollTop = 0;
+		pushPageView(); 
 		//LIST set mode, call sf, laoding true, re render
 		switch (mode) {
 			case "PROFILE":
