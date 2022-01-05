@@ -28,6 +28,7 @@ header {
 			.header__sub-menu,
 			.header__info,
 			.header__main-logo,
+			.header__info--bonus,
 			.header__covid-info {
 				display: none !important;
 			}
@@ -124,6 +125,9 @@ header {
 				.header__info--location {
 					margin-bottom: 5px;
 				}
+			}
+			.header__info--bonus{
+				text-align: center;
 			}
 		}
 	}
@@ -300,19 +304,28 @@ header {
 		}
 	}
 	.header__info {
-		margin-top: 10px;
+		//margin-top: 10px; //og line
+		margin: 0;
 		&--date,
 		&--location {
 			display: block;
 			font-size: 18px;
-			font-weight: 1000;
+			font-weight: bold;
+			//font-weight: 1000; //og line
 		}
 		&--date {
-			color: $main-color;
-			margin-right: 20px;
+			//color: $main-color;
+			//margin-right: 20px; //og line
+			margin: 0 20px 0 0;			
 		}
 		&--location {
 			color: #333333;
+		}
+		&--bonus{
+			margin: 0;
+			p{
+				margin: 0;
+			}
 		}
 	}
 }
