@@ -97,6 +97,20 @@
 		}
 	}
 }
+[data-context^="NZB"] {
+	.layout--image-inner-hero {
+		.layout--image-inner-hero__text-container {
+			& > * {
+				background-color: rgba(18,166,79, 0.85);
+			}
+			h1 {
+				margin-bottom: 0;
+				//padding-top: 10px;
+				font-size: 45px;
+			}
+		}
+	}
+}
 [data-context^="TTE"] {
 	.layout--image-inner-hero {
 		.layout--image-inner-hero__text-container {

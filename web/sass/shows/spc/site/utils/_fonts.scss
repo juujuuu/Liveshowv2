@@ -1,31 +1,31 @@
-$main-color: #167c9f;
-$strong-color: #2f2621;
-$body: #333333;
+$main-color: #1079a0;
+$strong-color: #000000;
+$body: #000000;
 h1,
 h2,
 h3,
 h4,
 h5 {
-	font-family: motiva-sans, Helvetica, Arial;
+	font-family: rift, Helvetica, Arial;
 }
 p,
 a,
 li {
-	font-family: Helvetica, Arial;
+	font-family: montserrat, Arial;
 	line-height: 26px;
 }
 h1 {
-	font-size: 60px;
-	font-weight: 700;
-	color: #333333;
+	font-size: 55px;
+	font-weight: bold;
+	color: $main-color;
 }
 h2 {
-	font-size: 25px;
+	font-size: 30px;
 	font-weight: bold;
 	color: $main-color;
 }
 h3 {
-	font-size: 20px;
+	font-size: 24px;
 	font-weight: bold;
 	color: $strong-color;
 }
@@ -35,7 +35,7 @@ h4 {
 	color: $strong-color;
 }
 p {
-	font-size: 18px;
+	font-size: 16px;
 	color: $body;
 	margin-bottom: 10px;
 	font-weight: 400;

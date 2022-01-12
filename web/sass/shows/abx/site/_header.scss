@@ -48,6 +48,9 @@ header {
 			}
 		}
 		&.header--default {
+			.header__main-menu {
+				margin-top: 30px;
+			}
 			border-top: 5px solid $main-color;
 			.header__locked-logo {
 				display: none;
@@ -200,14 +203,18 @@ header {
 				}
 			}
 		}
-		.header__sub-menu__co-locate {
-			clear: both;
-			float: right;
-			margin-top: 5px;
+		.header__sub-menu__co-located {
+			position: absolute;
+			right: 50px;
+			top: 50px;
+			max-width: 150px;
+			@media (max-width: 1200px) {
+				right: 40px;
+			}
 		}
 	}
 	.header__main-menu {
-		min-height: 130px;
+		min-height: 110px;
 		nav {
 			& > div {
 				padding: 0;
@@ -303,7 +310,7 @@ header {
 		}
 	}
 	.header__info {
-		margin-top: 20px;
+		//margin-top: 20px;
 		&--date,
 		&--location {
 			display: block;

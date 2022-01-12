@@ -4,7 +4,7 @@
 	}
 	$colors: ("cex-light-blue", #d7d7e6), ("sat-light-blue", #dbddf1), ("ocs-light-blue", #d9dfe5), ("spc-light-blue", #e2e8f1),
 		("bre-light-blue", #e2e8f1), ("fmx-black", #1a1411), ("black", black), ("hpp-light-blue", #dae2e6), ("fmx-light-blue", #d3dce0),
-		("fmx-light-grey", #e4e3e3), ("abx-blue", #348ac0), ("abx-light-blue", #e3ecf7);
+		("fmx-light-grey", #e4e3e3), ("abx-blue", #348ac0), ("abx-light-blue", #e3ecf7), ("spc-black", #000000), ("spc-grey", #ddddde), ("nzb-black", #313f42);
 	@each $color in $colors {
 		&#{nth($color, 1)} {
 			background-color: nth($color, 2);
