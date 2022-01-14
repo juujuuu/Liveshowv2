@@ -99,6 +99,8 @@ class Cta extends React.Component {
 				);
 			case "exhib-assets":
 				//Exhib assets button
+				const {Exhibitor_listing_type__c} = payload; 
+				const enhanced = Exhibitor_listing_type__c != "Standard"; //no assets if standard
 				return (
 					<button
 						className={`react__cta curved-cta curved-cta--${size} ${!curved ? "curved-cta--hard" : ""} curved-cta--${color} ${
@@ -108,12 +110,12 @@ class Cta extends React.Component {
 						{link != false ? (
 							<a className="curved-cta__link" href={link} download={download} title={children}>
 								<span className="curved-cta__text">{children}</span>
-								{this.getExhibAssetsList(payload)}
+								{enhanced ? this.getExhibAssetsList(payload): null}
 							</a>
 						) : (
 							<span className="curved-cta__link" >
 								<span className="curved-cta__text">{children}</span>
-								{this.getExhibAssetsList(payload)}
+								{enhanced ? this.getExhibAssetsList(payload) : null}
 							</span>
 						)}
 					</button>

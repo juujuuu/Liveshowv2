@@ -1,6 +1,9 @@
 @import "./elem/slide", "./elem/alphabet", "./elem/control-col", "./profile", "./css-file-icons", "./elem/meta-info-col", "./product",
 	"./override/override";
 .exhibmanV2 {
+	@media (min-width: 992px) {
+		margin-top: 20px;
+	}
 	.viewport-col {
 		.viewport__header {
 			//margin-bottom: 10px;

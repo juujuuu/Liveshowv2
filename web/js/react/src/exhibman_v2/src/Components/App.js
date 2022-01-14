@@ -1,15 +1,22 @@
 import React, { Component } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 import Spinner from "../../../common_components/Spinner";
 import StickyNav from "../../../common_components/StickyNav";
 import Cta from "../../../common_components/Cta";
 
 import { getShowNameFromAcronym, getShowNameFromId } from "../Utils/GetShow";
+import { getExhibListPath } from "../Utils/GetPath";
+import sanitizeUrl from "../Utils/SanitizeUrl";
+
 import fireModal from "../../../common_utils/Bootsrap5Modal";
 import ExhibitorList from "./ExhibitorList";
 import Profile from "./Profile/Profile";
 import Product from "./Product";
-import { getExhibListPathRoute, getProductPathRoute, getProfilePathRoute } from "../Utils/GetPath";
+import {
+	getExhibListPathRoute,
+	getProductPathRoute,
+	getProfilePathRoute,
+} from "../Utils/GetPath";
 import { pushPageView } from "../Utils/pushPageView";
 
 class App extends Component {
@@ -55,8 +62,8 @@ class App extends Component {
 		}
 
 		this.getSF(query, mode)
-			.then((response) => {
-				this.setState((prevState) => {
+			.then(response => {
+				this.setState(prevState => {
 					if (mode === "PROFILE" || mode === "PRODUCT") {
 						console.log("getsf response:  ", response);
 						prevState.exhibitor = response[0];
@@ -67,7 +74,7 @@ class App extends Component {
 					return prevState;
 				});
 			})
-			.catch((error) => {
+			.catch(error => {
 				console.error(error);
 				this.setState({ loading: false, mountError: true });
 			});
@@ -78,14 +85,14 @@ class App extends Component {
 		const { exhibsData, mode, ids } = this.state;
 		if (mode === "LIST" && exhibsData.length <= 0) {
 			this.getSF(ids, mode)
-				.then((response) => {
-					this.setState((prevState) => {
+				.then(response => {
+					this.setState(prevState => {
 						prevState.exhibsData = response;
 						prevState.loading = false;
 						return prevState;
 					});
 				})
-				.catch((error) => {
+				.catch(error => {
 					console.error(error);
 					this.setState({ loading: false, mountError: true });
 				});
@@ -106,7 +113,7 @@ class App extends Component {
 				let newIds;
 				console.log("ids: ", ids);
 				if (ids.length > 1) {
-					ids.forEach((id) => {
+					ids.forEach(id => {
 						newIds = newIds + id + ", ";
 					});
 					newIds = newIds.substring(0, newIds.length - 1);
@@ -123,7 +130,7 @@ class App extends Component {
 				break;
 			default:
 				if (ids.length > 1) {
-					ids.forEach((id) => {
+					ids.forEach(id => {
 						newIds = `${newIds},`;
 					});
 					newIds = newIds.substring(0, newIds.length - 1);
@@ -143,8 +150,8 @@ class App extends Component {
 					"Content-Type": "application/json",
 				},
 			})
-				.then((data) => data.json())
-				.then((data) => {
+				.then(data => data.json())
+				.then(data => {
 					response = data;
 				});
 			if (mode == "LIST") {
@@ -172,18 +179,18 @@ class App extends Component {
 	switchMode = (mode = "LIST", payload) => {
 		//TODO LIST, PROFILE, PRODCUT
 		document.body.scrollTop = document.documentElement.scrollTop = 0;
-		pushPageView(); 
+		pushPageView();
 		//LIST set mode, call sf, laoding true, re render
 		switch (mode) {
 			case "PROFILE":
 				this.showAppInfo(false);
-				this.setState((prevState) => {
+				this.setState(prevState => {
 					prevState.loading = true;
 					prevState.mode = "PROFILE";
 					return prevState;
 				});
-				this.getSF(payload, mode).then((data) => {
-					this.setState((prevState) => {
+				this.getSF(payload, mode).then(data => {
+					this.setState(prevState => {
 						prevState.exhibitor = data[0];
 						prevState.loading = false;
 						console.log("GET SF Profile data:  ", data[0]);
@@ -194,13 +201,13 @@ class App extends Component {
 			case "PRODUCT":
 				//payload = [Booth ID, Asset ID]
 				this.showAppInfo(false);
-				this.setState((prevState) => {
+				this.setState(prevState => {
 					prevState.loading = true;
 					prevState.mode = "PRODUCT";
 					return prevState;
 				});
-				this.getSF(payload[0], mode).then((data) => {
-					this.setState((prevState) => {
+				this.getSF(payload[0], mode).then(data => {
+					this.setState(prevState => {
 						prevState.exhibitor = data[0];
 						prevState.articleId = payload[1];
 						prevState.loading = false;
@@ -211,13 +218,13 @@ class App extends Component {
 				break;
 			case "LIST":
 				this.showAppInfo(true);
-				this.setState((prevState) => {
+				this.setState(prevState => {
 					prevState.loading = true;
 					prevState.mode = "LIST";
 					return prevState;
 				});
-				this.getSF(payload, mode).then((data) => {
-					this.setState((prevState) => {
+				this.getSF(payload, mode).then(data => {
+					this.setState(prevState => {
 						prevState.exhibsData = data;
 						prevState.loading = false;
 						return prevState;
@@ -229,37 +236,37 @@ class App extends Component {
 		}
 	};
 
-	setLetter = (letter) => {
-		this.setState((prevState) => {
+	setLetter = letter => {
+		this.setState(prevState => {
 			prevState.queries.letter = letter;
 			return prevState;
 		});
 	};
 
-	setExpo = (expoString) => {
+	setExpo = expoString => {
 		const { expo } = this.state.queries;
 		let newExpo;
 		if (expo.includes(expoString)) {
-			newExpo = expo.filter((id) => expoString != id);
+			newExpo = expo.filter(id => expoString != id);
 		} else {
 			newExpo = [...expo, expoString];
 		}
-		this.setState((prevState) => {
+		this.setState(prevState => {
 			prevState.queries.expo = newExpo;
 			return prevState;
 		});
 	};
 
-	setSearch = (term) => {
-		this.setState((prevState) => {
+	setSearch = term => {
+		this.setState(prevState => {
 			prevState.queries.search = term;
 			return prevState;
 		});
 	};
 
-	expoFilter = (exhibitors) => {
-		const expo = this.state.queries.expo.map((id) => id.replaceAll("'", ""));
-		return exhibitors.filter((exhibitor) => {
+	expoFilter = exhibitors => {
+		const expo = this.state.queries.expo.map(id => id.replaceAll("'", ""));
+		return exhibitors.filter(exhibitor => {
 			//overrride for abe
 			if (exhibitor.Expo__c == "a1x3A000001FOPe") {
 				const cat = exhibitor["exhibitor-cat"];
@@ -280,11 +287,15 @@ class App extends Component {
 			return exhibitors;
 		}
 		search = search.toLowerCase();
-		return exhibitors.filter((exhibitor) => {
+		return exhibitors.filter(exhibitor => {
 			const cats = exhibitor["exhibitor-cat"].toLowerCase();
 			const pagetitle = exhibitor.pagetitle.toLowerCase();
 			const content = exhibitor.content.toLowerCase();
-			if (cats.includes(search) || pagetitle.includes(search) || content.includes(search)) {
+			if (
+				cats.includes(search) ||
+				pagetitle.includes(search) ||
+				content.includes(search)
+			) {
 				return true;
 			} else {
 				return false;
@@ -299,7 +310,7 @@ class App extends Component {
 			return exhibitors;
 		}
 
-		return exhibitors.filter((exhibitor) => {
+		return exhibitors.filter(exhibitor => {
 			const { pagetitle } = exhibitor;
 			const name = pagetitle.toLowerCase();
 
@@ -316,14 +327,14 @@ class App extends Component {
 
 	resetFilters = () => {
 		document.getElementById("react__search").value = "";
-		this.setState((prevState) => {
+		this.setState(prevState => {
 			prevState.queries.search = "";
 			prevState.queries.letter = "Show All";
 			return prevState;
 		});
 	};
 
-	getMetaCol = (exhibitor, options , order = "order-1 order-md-2") => {
+	getMetaCol = (exhibitor, options, order = "order-1 order-md-2") => {
 		const { contactcampaign, ids } = options;
 		const {
 			Expo__c,
@@ -335,15 +346,17 @@ class App extends Component {
 			Company_State__c,
 			Company_Address__c,
 			Youtube_channel__c,
+			Exhibitor_listing_type__c,
 			country,
 		} = exhibitor;
 		const boothnum = exhibitor["exhibitor-booth"];
-		const getUrl = (url) => {
-			if (url) {
+		const enhanced = Exhibitor_listing_type__c != "Standard";
+		const getUrl = url => {
+			if (url) {				
 				return (
 					<p>
 						<strong>
-							<a href={url} target="_blank" rel="noreferrer">
+							<a href={sanitizeUrl(url)} target="_blank" rel="noreferrer">
 								<i className="bi bi-link-45deg"></i> Website
 							</a>
 						</strong>
@@ -353,12 +366,15 @@ class App extends Component {
 				return null;
 			}
 		};
-		const getLinkedIn = (Linkedin__c) => {
+		const getLinkedIn = Linkedin__c => {
 			if (Linkedin__c) {
 				return (
 					<p>
 						<strong>
-							<a href={Linkedin__c} target="_blank" rel="noreferrer">
+							<a
+								href={Linkedin__c}
+								target="_blank"
+								rel="noreferrer">
 								<i className="bi bi-linkedin"></i> Linkedin
 							</a>
 						</strong>
@@ -368,7 +384,7 @@ class App extends Component {
 				return null;
 			}
 		};
-		const getFacebook = (Facebook__c) => {
+		const getFacebook = Facebook__c => {
 			if (Facebook__c) {
 				<p>
 					<strong>
@@ -381,12 +397,15 @@ class App extends Component {
 				return null;
 			}
 		};
-		const getTwitter = (Twitter__c) => {
+		const getTwitter = Twitter__c => {
 			if (Twitter__c) {
 				return (
 					<p>
 						<strong>
-							<a href={Twitter__c} target="_blank" rel="noreferrer">
+							<a
+								href={Twitter__c}
+								target="_blank"
+								rel="noreferrer">
 								<i className="bi bi-twitter"></i> Twitter
 							</a>
 						</strong>
@@ -396,12 +415,15 @@ class App extends Component {
 				return null;
 			}
 		};
-		const getYoutube = (Youtube_channel__c) => {
+		const getYoutube = Youtube_channel__c => {
 			if (Youtube_channel__c) {
 				return (
 					<p>
 						<strong>
-							<a href={Youtube_channel__c} target="_blank" rel="noreferrer">
+							<a
+								href={Youtube_channel__c}
+								target="_blank"
+								rel="noreferrer">
 								<i className="bi bi-youtube"></i>Youtube
 							</a>
 						</strong>
@@ -411,7 +433,7 @@ class App extends Component {
 				return null;
 			}
 		};
-		const getAddressField = (field) => {
+		const getAddressField = field => {
 			if (field) {
 				return (
 					<p>
@@ -426,40 +448,59 @@ class App extends Component {
 			<nav className={`col-12 col-md-3 ${order} meta-info-col`}>
 				<StickyNav endAffix={1800} disable={window.innerWidth < 992}>
 					{window.innerWidth < 992 ? (
-						<Cta
-							size="reg"
-							curved={false}
-							bonusClass={`profile-back-to-list left`}
-							key={`Mob Back to Exhibitor List`}
-							color="black"
-							handler={() => this.switchMode("LIST", ids)}>
-							Back to Exhibitor List
-						</Cta>
+						<Link
+							className="router-link"
+							to={getExhibListPath(options.debug)}
+							onClick={() => this.switchMode("LIST", ids)}>
+							<Cta
+								size="reg"
+								curved={false}
+								bonusClass={`profile-back-to-list left`}
+								key={`Mob back to Exhibitor List`}
+								color="black">
+								Back to Exhibitor List
+							</Cta>
+						</Link>
 					) : null}
-					<div className="meta-info-col__button">
-						<Cta
-							size={"max"}
-							color="cex-red"
-							handler={() => fireModal([exhibitor, contactcampaign], "contact-exhibitor", "lg")}
-							bonusClass="center">
-							Contact Exhibitor
-						</Cta>
-					</div>
-					<div className="meta-info-col__booth-num">
+					{enhanced ? (
+						<div className="meta-info-col__button">
+							<Cta
+								size={"max"}
+								color="cex-red"
+								handler={() =>
+									fireModal(
+										[exhibitor, contactcampaign],
+										"contact-exhibitor",
+										"lg"
+									)
+								}
+								bonusClass="center">
+								Contact Exhibitor
+							</Cta>
+						</div>
+					) : null}
+					<div
+						className="meta-info-col__booth-num"
+						style={enhanced ? { marginTop: "10px" } : null}>
 						<h4>Booth Number: {boothnum}</h4>
 					</div>
 					<div className="meta-info-col__contact-list">
 						<h4>Contact</h4>
 						{getUrl(url)}
-						{getLinkedIn(Linkedin__c)}
-						{getFacebook(Facebook__c)}
-						{getTwitter(Twitter__c)}
-						{getYoutube(Youtube_channel__c)}
+						{enhanced ? (
+							<>
+								{getLinkedIn(Linkedin__c)}
+								{getFacebook(Facebook__c)}
+								{getTwitter(Twitter__c)}
+								{getYoutube(Youtube_channel__c)}{" "}
+							</>
+						) : null}
 					</div>
 					{Company_Address__c ? (
 						<div className="meta-info-col__address">
 							<p>
-								<i className="bi bi-house-door-fill"></i> Address:{" "}
+								<i className="bi bi-house-door-fill"></i>{" "}
+								Address:{" "}
 							</p>
 							{getAddressField(Company_Address__c)}
 							{getAddressField(Company_City__c)}
@@ -472,7 +513,7 @@ class App extends Component {
 		);
 	};
 
-	showAppInfo = (boolean) => {
+	showAppInfo = boolean => {
 		boolean = boolean ? "block" : "none";
 		try {
 			document.getElementById("info").style.display = boolean;
@@ -484,7 +525,9 @@ class App extends Component {
 	render() {
 		const { loading, mode, profileId, articleId, mountError } = this.state;
 		const errorMessage = (
-			<h1 className="d-flex justify-content-center align-items-center" style={{ minHeight: "500px", textAlign: "center" }}>
+			<h1
+				className="d-flex justify-content-center align-items-center"
+				style={{ minHeight: "500px", textAlign: "center" }}>
 				Sorry, an unexpected error has occurred
 			</h1>
 		);
@@ -494,7 +537,16 @@ class App extends Component {
 			return errorMessage;
 		}
 		try {
-			const { resetFilters, setSearch, setLetter, switchMode, alphabetFilter, searchFilter, expoFilter, getMetaCol } = this;
+			const {
+				resetFilters,
+				setSearch,
+				setLetter,
+				switchMode,
+				alphabetFilter,
+				searchFilter,
+				expoFilter,
+				getMetaCol,
+			} = this;
 			const functionsBundle = {
 				resetFilters,
 				setSearch,
@@ -506,32 +558,44 @@ class App extends Component {
 				getMetaCol,
 			};
 
-			let component;
-			switch (mode) {
-				case "LIST":
-					component = <ExhibitorList inputState={this.state} options={this.props.options} functionsBundle={functionsBundle} />;
-					break;
-				case "PROFILE":
-					component = <Profile inputState={this.state} options={this.props.options} functionsBundle={functionsBundle} />;
-					break;
-				case "PRODUCT":
-					component = <Product inputState={this.state} options={this.props.options} functionsBundle={functionsBundle} />;
-					break;
-			}
-			console.log("Exhib List Path: ", getExhibListPathRoute(this.props.options.debug));
-			console.log("Profile Path: ", getProfilePathRoute(profileId, this.props.options.debug));
+			console.log(
+				"Exhib List Path: ",
+				getExhibListPathRoute(this.props.options.debug)
+			);
+			console.log(
+				"Profile Path: ",
+				getProfilePathRoute(profileId, this.props.options.debug)
+			);
 			return (
 				<Routes>
 					<Route
 						exact
 						path={getExhibListPathRoute(this.props.options.debug)}
-						element={<ExhibitorList inputState={this.state} options={this.props.options} functionsBundle={functionsBundle} />}></Route>
+						element={
+							<ExhibitorList
+								inputState={this.state}
+								options={this.props.options}
+								functionsBundle={functionsBundle}
+							/>
+						}></Route>
 					<Route
 						path={getProfilePathRoute(this.props.options.debug)}
-						element={<Profile inputState={this.state} options={this.props.options} functionsBundle={functionsBundle} />}></Route>
+						element={
+							<Profile
+								inputState={this.state}
+								options={this.props.options}
+								functionsBundle={functionsBundle}
+							/>
+						}></Route>
 					<Route
 						path={getProductPathRoute(this.props.options.debug)}
-						element={<Product inputState={this.state} options={this.props.options} functionsBundle={functionsBundle} />}></Route>
+						element={
+							<Product
+								inputState={this.state}
+								options={this.props.options}
+								functionsBundle={functionsBundle}
+							/>
+						}></Route>
 				</Routes>
 			);
 		} catch (error) {

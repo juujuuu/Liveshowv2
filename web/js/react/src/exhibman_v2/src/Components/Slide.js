@@ -9,9 +9,9 @@ class Slide extends Component {
 		this.state = {};
 	}
 
-	getCats = (cats) => {
+	getCats = cats => {
 		let string = "";
-		cats.forEach((cat) => {
+		cats.forEach(cat => {
 			string = string + `${cat} | `;
 		});
 		string = string.substring(0, string.length - 2);
@@ -41,6 +41,7 @@ class Slide extends Component {
 		const bigLogo = logo;
 		const booth = payload["exhibitor-booth"];
 		const featured = payload["exhibitor-featured"];
+		const enhanced = Exhibitor_listing_type__c != "Standard";
 
 		let cats;
 		if (payload["exhibitor-cat"].length > 0) {
@@ -50,46 +51,49 @@ class Slide extends Component {
 		}
 
 		return (
-			<div className={`exhibitor-slide exhibitor-slide--${Exhibitor_listing_type__c} row`} id={id}>
-				{Exhibitor_listing_type__c != "Standard" ? (
-					<Link className="router-link router-link--profile-button" to={getProfilePath(id, options.debug)} onClick={() => switchMode("PROFILE", id, inputState)}>
-						<Cta
-							color="black"
-							size="reg"
-							margin="vertical-margin--0"
-							curved={false}
-							bonusClass="exhibitor-slide__profile-button"
-							exhibAssets={true}
-							role="exhib-assets"
-							payload={payload}>
-							Enhanced Listing
-						</Cta>
-					</Link>
-				) : null}
+			<div
+				className={`exhibitor-slide exhibitor-slide--${Exhibitor_listing_type__c} row`}
+				id={id}>
+				<Link
+					className="router-link router-link--profile-button"
+					to={getProfilePath(id, options.debug)}
+					onClick={() => switchMode("PROFILE", id, inputState)}>
+					<Cta
+						color="black"
+						size="reg"
+						margin="vertical-margin--0"
+						curved={false}
+						bonusClass={`exhibitor-slide__profile-button exhibitor-slide__profile-button--${Exhibitor_listing_type__c}`}
+						role="exhib-assets"
+						payload={payload}>
+						{enhanced ? "Enhanced Listing" : "View Profile"}
+					</Cta>
+				</Link>
 
 				<div className="col-6 col-md-3 exhibitor-slide__logo">
-					{Exhibitor_listing_type__c !== "Standard" ? (
-						<Link className="router-link" to={getProfilePath(id, options.debug)} onClick={() => switchMode("PROFILE", id, inputState)}>
-							<img className="img-fluid" src={web_logo !== "" ? smallLogo : bigLogo} alt={pagetitle} />
-						</Link>
-					) : (
-						<img className="img-fluid" src={web_logo !== "" ? smallLogo : bigLogo} alt={pagetitle} />
-					)}
+					<Link
+						className="router-link"
+						to={getProfilePath(id, options.debug)}
+						onClick={() => switchMode("PROFILE", id, inputState)}>
+						<img
+							className="img-fluid"
+							src={web_logo !== "" ? smallLogo : bigLogo}
+							alt={pagetitle}
+						/>
+					</Link>
 				</div>
 				<div className="col-6 col-md-5 exhibitor-slide__body">
 					<div>
-						{Exhibitor_listing_type__c !== "Standard" ? (
-							<h4 className="exhibitor-name">
-								<Link
-									className="router-link"
-									to={getProfilePath(id, options.debug)}
-									onClick={() => switchMode("PROFILE", id, inputState)}>
-									{pagetitle}
-								</Link>
-							</h4>
-						) : (
-							<h4 className="exhibitor-name">{pagetitle}</h4>
-						)}
+						<h4 className="exhibitor-name">
+							<Link
+								className="router-link"
+								to={getProfilePath(id, options.debug)}
+								onClick={() =>
+									switchMode("PROFILE", id, inputState)
+								}>
+								{pagetitle}
+							</Link>
+						</h4>
 
 						<p className="exhibitor-booth">Booth Number: {booth}</p>
 						{window.innerWidth < 768 ? (
