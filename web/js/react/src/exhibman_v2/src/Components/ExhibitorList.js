@@ -57,7 +57,7 @@ function ExhibitorList({ inputState, options, functionsBundle }) {
 			<Cta
 				size="max"
 				color="black"
-				handler={() => new PDFMake(options, state.exhibsData)}
+				handler={() => setTimeout(new PDFMake(options, state.exhibsData), 0) }
 				key={"download list"}
 				bonusClass="control-col__download-list">
 				Download Full List PDF

@@ -50,11 +50,11 @@ li {
 	color: $body;
 }
 a {
-	color: $strong-color;
+	color: $main-color;
 	text-decoration: none;
 	&:focus,
 	&:hover {
-		color: lighten($color: $strong-color, $amount: 10%);
+		color: lighten($color: $main-color, $amount: 10%);
 		text-decoration: underline;
 	}
 }

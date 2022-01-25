@@ -6,12 +6,12 @@ h2,
 h3,
 h4,
 h5 {
-	font-family: azo-sans-web, Montserrat, Helvetica, Arial;
+	font-family: caecilia, nunito-sans, Montserrat, Helvetica, Arial;
 }
 p,
 a,
 li {
-	font-family: azo-sans-web, Montserrat, Helvetica, Arial;
+	font-family: nunito-sans, Montserrat, Helvetica, Arial;
 	line-height: 26px;
 }
 h1 {
@@ -49,11 +49,11 @@ li {
 	color: $body;
 }
 a {
-	color: $strong-color;
-	text-decoration: none;
+	color: $main-color;
+	text-decoration: underline;
 	&:focus,
 	&:hover {
-		color: lighten($color: $strong-color, $amount: 10%);
+		color: lighten($color: $main-color, $amount: 10%);
 		text-decoration: underline;
 	}
 }

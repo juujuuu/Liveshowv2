@@ -1,6 +1,6 @@
 @use "sass:color";
 $main-color: #167c9f;
-$reg-color: #dc0c15;
+$reg-color: #b62f25;
 
 body {
 	margin-left: 0;
@@ -213,13 +213,13 @@ header {
 					.nav-item {
 						.active {
 							color: $main-color !important;
-							font-weight: bold !important;
+							font-weight: 700 !important;
 							&::after {
 								color: #333333 !important;
 							}
 						}
 						.nav-link {
-							font-weight: 700;
+							font-weight: 500;
 							color: #333333;
 							font-size: 16px;
 							@media (min-width: 990px) and (max-width: 1200px) {
@@ -259,7 +259,7 @@ header {
 							-webkit-transition: color 0.2s linear;
 							.nav-link {
 								text-decoration: none;
-								padding: 4px 0px 0px 0px;
+								padding: 3px 0px 0px 0px;
 								font-weight: bold;
 								color: #fff;
 							}
@@ -300,11 +300,11 @@ header {
 		}
 	}
 	.header__info {
-		margin: 0;
+		margin-top: 10px;
 		&--date,
 		&--location {
 			display: inline-block;
-			font-size: 17px;
+			font-size: 20px;
 		}
 		&--date {
 			color: #333333;
@@ -322,7 +322,7 @@ header {
 	.header__info--bonus {
 		margin: 0;
 		p {
-			font-size: 16px;
+			font-size: 14px;
 			margin: 0;
 			span {
 				color: $main-color;
