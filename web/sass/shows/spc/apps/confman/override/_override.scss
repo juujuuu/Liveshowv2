@@ -1,9 +1,9 @@
-$tracks: #233166, #009577;
-$tracks-lighter: lighten(#233166, 20), lighten(#009577, 20);
-$main-color: #233166;
+$tracks: #d02f14, #167c9f;
+$tracks-lighter: lighten(#d02f14, 20), lighten(#167c9f, 20);
+$main-color: #167c9f;
 
 .confman {
-	&.conference-agenda--CEX {
+	&.conference-agenda--SPC {
 		.curved-cta--primary {
 			background-color: $main-color;
 			.curved-cta__link {
@@ -39,12 +39,12 @@ $main-color: #233166;
 						background-color: #31447b;
 					}
 					h3 {
-						font-family: motiva-sans;
+						//font-family: motiva-sans;
 					}
 				}
 			}
 			.main-nav__tracks {
-				background-color: #e9e7f4;
+				background-color: #d7d7e6;
 				.checkbox-filter {
 					$i: 1;
 					@each $track in $tracks {
@@ -93,7 +93,7 @@ $main-color: #233166;
 				}
 				.session__flag {
 					h2 {
-						font-family: motiva-sans;
+						//font-family: motiva-sans;
 					}
 				}
 				.session__content {
@@ -120,7 +120,7 @@ $main-color: #233166;
 			}
 		}
 	}
-	&.speaker-list--CEX {
+	&.speaker-list--SPC {
 		.speaker {
 			&__name {
 				color: $main-color;
