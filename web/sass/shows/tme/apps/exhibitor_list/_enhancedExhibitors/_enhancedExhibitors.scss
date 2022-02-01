@@ -1,0 +1,192 @@
+@import "elem/slide";
+@import "elem/spinner";
+@import "elem/cta";
+@import "elem/mainMenu";
+@import "elem/Alphabet";
+@import "./override/override";
+.enhanced-exhibitors {
+	margin-top: 20px;
+	.featured-list,
+	.az-list {
+		min-height: 500px;
+		.exhibitor-slide:first-child {
+			.exhibitor-slide__hr {
+				margin-top: 0px;
+				hr {
+					border-top: 1px solid black;
+				}
+			}
+		}
+		.exhibitor-slide__hr {
+			hr {
+				border-top: 1px solid black;
+			}
+		}
+	}
+	/**
+		RETROFITS FOR THIS VERSION TO WORK IN BOOTSTRAP 5
+	*/
+	.exhibitor-slide__mob {
+		padding-top: 25px;
+		padding-bottom: 10px;
+		.row {
+			& > div {
+				height: unset !important;
+			}
+		}
+	}
+
+	//Main menu fixes
+	.main-menu {
+		.enhanced-exhibitors__cta--max {
+			font-size: 1rem;
+		}
+		.main-menu--default,
+		.main-menu--fixed-left {
+			@media (min-width: 768px) {
+				max-width: 356px;
+			}
+			@media (min-width: 1200px) {
+				width: 356px;
+			}
+			@media (min-width: 768px) and (max-width: 990px) {
+				h4 {
+					font-size: 16px;
+				}
+			}
+		}
+		.main-menu--fixed-left {
+			position: fixed;
+			top: 50px;
+			@media (min-width: 990px) and (max-width: 1200px) {
+				width: 300px;
+			}
+		}
+		.main-menu--fixed-top {
+			position: fixed;
+			z-index: 999;
+			top: 58px;
+			background-color: #fff;
+			left: 0;
+			right: 0;
+			padding-left: 15px;
+			padding-right: 15px;
+			button {
+				font-size: 16px;
+			}
+		}
+		&__title {
+			& > div {
+				position: relative;
+				h4 {
+					margin-top: 10px;
+					margin-bottom: 10px;
+				}
+			}
+			.enhanced-exhibitors__cta--reset {
+				right: 0;
+			}
+		}
+		.form-group {
+			//box-shadow: inset 0 0 0 0.1rem rgb(13 110 253 / 25%);
+		}
+	}
+	hr {
+		opacity: 1;
+	}
+	//slide view profile button fix
+	.exhibitor-slide {
+		.exhibitor-slide__hr {
+			position: relative;
+			hr {
+				height: 1px;
+			}
+		}
+	}
+
+	//replicating h3 margins in section headers
+	.section_header {
+		margin-top: 20px;
+		margin-bottom: 10px;
+	}
+
+	//Alphabet bottom border fix
+	.enhanced-exhibitors__alphabet {
+		.col-sm-12 {
+			border-bottom: none;
+			& > div {
+				border-bottom: 1px solid black;
+			}
+		}
+	}
+
+	//starting points for bs5 grid
+	$xs: 0px;
+	$sm: 576px;
+	$md: 768px;
+	$lg: 992px;
+	$xl: 1200px;
+	$xxl: 1400px;
+
+	.hidden-xs {
+		@media (max-width: $sm) {
+			display: none !important;
+		}
+	}
+	.visible-xs {
+		@media (max-width: $sm) {
+			display: block !important;
+		}
+	}
+	.hidden-xxl {
+		@media (min-width: $xxl) {
+			display: none !important;
+		}
+	}
+	.visible-xxl {
+		@media (min-width: $xxl) {
+			display: block !important;
+		}
+	}
+
+	.hidden-sm {
+		@media (min-width: $sm) and (max-width: $md) {
+			display: none !important;
+		}
+	}
+	.visible-sm {
+		@media (min-width: $sm) and (max-width: $md) {
+			display: block !important;
+		}
+	}
+	.hidden-md {
+		@media (min-width: $md) and (max-width: $lg) {
+			display: none !important;
+		}
+	}
+	.visible-md {
+		@media (min-width: $md) and (max-width: $lg) {
+			display: block !important;
+		}
+	}
+	.hidden-lg {
+		@media (min-width: $lg) and (max-width: $xl) {
+			display: none !important;
+		}
+	}
+	.visible-lg {
+		@media (min-width: $lg) and (max-width: $xl) {
+			display: block !important;
+		}
+	}
+	.hidden-xl {
+		@media (min-width: $xl) and (max-width: $xxl) {
+			display: none !important;
+		}
+	}
+	.visible-xl {
+		@media (min-width: $xl) and (max-width: $xxl) {
+			display: block !important;
+		}
+	}
+}
