@@ -1,5 +1,7 @@
-$main-colour: #b88e14;
-.enhanced-exhibitors--CEX {
+$main-colour: #4d8691;
+$abe-colour: #26358c;
+
+.enhanced-exhibitors--ABX {
 	.enhanced-exhibitors__alphabet {
 		@media (min-width: 1000px) and (max-width: 1200px) {
 			div > div {
@@ -9,6 +11,20 @@ $main-colour: #b88e14;
 	}
 	.enhanced-exhibitors__cta--premium-listing {
 		background-color: $main-colour;
+	}
+	.exhibitor-slide-- {
+		&fme {
+			.exhibitor-slide__side-flag {
+				padding: 0;
+				background-color: $main-colour;
+			}
+		}
+		&abe {
+			.exhibitor-slide__side-flag {
+				padding: 0;
+				background-color: $abe-colour;
+			}
+		}
 	}
 	.exhibitor-slide--Premium {
 		.exhibitor-slide__body {

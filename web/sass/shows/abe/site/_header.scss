@@ -10,7 +10,7 @@ header {
 	@media screen and (min-width: 990px) {
 		&.header--desktop {
 			.header__covid-info {
-				top: 4px;
+				top: 2px;
 				position: absolute;
 			}
 		}
@@ -21,6 +21,9 @@ header {
 			.navbar {
 				padding-bottom: 0;
 				padding-top: 0;
+			}
+			.navbar {
+				padding-bottom: 0;
 			}
 			.header__sub-menu,
 			.header__info,
@@ -35,6 +38,9 @@ header {
 					height: 50px;
 					justify-content: center;
 					align-items: center;
+					img {
+						//height: 50px;
+					}
 				}
 				nav {
 					height: 50px;
@@ -42,6 +48,9 @@ header {
 			}
 		}
 		&.header--default {
+			.header__main-menu {
+				margin-top: 30px;
+			}
 			border-top: 5px solid $main-color;
 			.header__locked-logo {
 				display: none;
@@ -125,7 +134,7 @@ header {
 		}
 	}
 	.header__sub-menu {
-		height: 100px;
+		height: 50px;
 		.header__sub-menu__list {
 			list-style-type: none;
 			float: right;
@@ -194,14 +203,18 @@ header {
 				}
 			}
 		}
-		.header__sub-menu__co-locate {
-			clear: both;
-			float: right;
-			margin-top: 10px;
+		.header__sub-menu__co-located {
+			position: absolute;
+			right: 50px;
+			top: 50px;
+			max-width: 150px;
+			@media (max-width: 1200px) {
+				right: 40px;
+			}
 		}
 	}
 	.header__main-menu {
-		min-height: 90px;
+		min-height: 110px;
 		nav {
 			& > div {
 				padding: 0;
@@ -209,13 +222,13 @@ header {
 					.nav-item {
 						.active {
 							color: $main-color !important;
-							font-weight: bold !important;
+							font-weight: 1000 !important;
 							&::after {
 								color: #333333 !important;
 							}
 						}
 						.nav-link {
-							font-weight: 700;
+							font-weight: normal;
 							color: #333333;
 							font-size: 16px;
 							@media (min-width: 990px) and (max-width: 1200px) {
@@ -229,6 +242,8 @@ header {
 							}
 							&::after {
 								content: "|";
+								color: $main-color !important;
+								font-weight: normal;
 								text-decoration: none;
 								padding: 0px 8px 0px 8px;
 								@media (min-width: 990px) and (max-width: 1200px) {
@@ -254,8 +269,8 @@ header {
 							-webkit-transition: color 0.2s linear;
 							.nav-link {
 								text-decoration: none;
-								padding: 4px 0px 0px 0px;
-								font-weight: bold;
+								padding: 3px 0px 0px 0px;
+								font-weight: 1000;
 								color: #fff;
 							}
 							//anim
@@ -295,11 +310,12 @@ header {
 		}
 	}
 	.header__info {
-		margin-top: 10px;
+		//margin-top: 20px;
 		&--date,
 		&--location {
-			display: inline-block;
-			font-size: 17px;
+			display: block;
+			font-size: 18px;
+			font-weight: 1000;
 		}
 		&--date {
 			color: $main-color;
@@ -307,7 +323,6 @@ header {
 		}
 		&--location {
 			color: #333333;
-			font-weight: 400;
 		}
 	}
 }

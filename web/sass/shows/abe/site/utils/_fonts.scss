@@ -1,52 +1,51 @@
 $main-color: #26358c;
-$strong-color: #060607;
-$body: #060607;
+$strong-color: #333333;
+$body: #333333;
 h1,
 h2,
 h3,
 h4,
 h5 {
-	font-family: azo-sans-web, Helvetica, Arial;
+	font-family: azo-sans-web, Montserrat, Helvetica, Arial;
 }
 p,
 a,
 li {
-	font-family: azo-sans-web, Helvetica, Arial;
+	font-family: azo-sans-web, Montserrat, Helvetica, Arial;
 	line-height: 26px;
 }
 h1 {
-	font-size: 60px;
-	font-weight: 900;
-	color: #333333;
-}
-h2 {
-	font-size: 25px;
-	font-weight: 900;
+	font-size: 55px;
+	font-weight: 1000;
 	color: $main-color;
 }
+h2 {
+	font-size: 30px;
+	font-weight: 1000;
+}
 h3 {
-	font-size: 20px;
-	font-weight: 900;
-	color: $strong-color;
+	font-size: 24px;
+	font-weight: 1000;
+	color: $main-color;
 }
 h4 {
 	font-size: 18px;
-	font-weight: 900;
+	font-weight: 1000;
 	color: $strong-color;
 }
 p {
-	font-size: 18px;
+	font-size: 16px;
 	color: $body;
 	margin-bottom: 10px;
-	font-weight: 400;
+	font-weight: normal;
 	strong {
-		font-weight: 900;
+		font-weight: 1000;
 		//color: #333333;
 	}
 }
 li {
 	font-size: 18px;
-	font-weight: 400;
+	font-weight: normal;
 	color: $body;
 }
 a {
