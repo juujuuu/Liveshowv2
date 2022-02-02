@@ -1,3 +1,3 @@
-const config = require("./webpack.config.core.js");
+const config = require("../webpack.config.core.js");
 
 module.exports = () => config("exhibitors_article");

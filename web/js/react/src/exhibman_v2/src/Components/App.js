@@ -4,9 +4,11 @@ import Spinner from "../../../common_components/Spinner";
 import StickyNav from "../../../common_components/StickyNav";
 import Cta from "../../../common_components/Cta";
 
-import { getShowNameFromAcronym, getShowNameFromId } from "../Utils/GetShow";
+import { getAcronymFromId, getShowNameFromAcronym, getShowNameFromId, getSiteFromAcronym, getSiteFromId } from "../Utils/GetShow";
 import { getExhibListPath } from "../Utils/GetPath";
 import sanitizeUrl from "../Utils/SanitizeUrl";
+import createAPI from "../Utils/api";
+import sanitizeIds from "../Utils/SanitizeIds";
 
 import fireModal from "../../../common_utils/Bootsrap5Modal";
 import ExhibitorList from "./ExhibitorList";
@@ -108,52 +110,25 @@ class App extends Component {
 			throw "ID OR MODE AREN'T SET";
 		}
 		let url;
+		const api = createAPI(getSiteFromId(ids instanceof Array ? ids[0] : ids));
+		const newIds = sanitizeIds(ids);
 		switch (mode) {
 			case "LIST":
-				let newIds;
-				console.log("ids: ", ids);
-				if (ids.length > 1) {
-					ids.forEach(id => {
-						newIds = newIds + id + ", ";
-					});
-					newIds = newIds.substring(0, newIds.length - 1);
-				} else {
-					newIds = ids[0];
-				}
 				url = `/rest/exhibman.php?expos=${newIds}`;
 				break;
 			case "PROFILE":
-				url = `/rest/exhib_drilldown.php?booth='${ids}'`;
+				url = `/rest/exhib_drilldown.php?booth='${newIds}'`;
 				break;
 			case "PRODUCT":
-				url = `/rest/exhib_drilldown.php?booth='${ids}'`;
+				url = `/rest/exhib_drilldown.php?booth='${newIds}'`;
 				break;
 			default:
-				if (ids.length > 1) {
-					ids.forEach(id => {
-						newIds = `${newIds},`;
-					});
-					newIds = newIds.substring(0, newIds.length - 1);
-				} else {
-					newIds = ids[0];
-				}
 				url = `/rest/exhibman.php?expos=${newIds}`;
+				break;
 		}
 		try {
-			let response;
-			await fetch(url, {
-				method: "GET", // *GET, POST, PUT, DELETE, etc.
-				mode: "same-origin", // no-cors, *cors, same-origin
-				cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-				credentials: "same-origin", // include, *same-origin, omit
-				headers: {
-					"Content-Type": "application/json",
-				},
-			})
-				.then(data => data.json())
-				.then(data => {
-					response = data;
-				});
+			let response = await api.get(url);
+			response = response.data;
 			if (mode == "LIST") {
 				response.sort((a, b) => {
 					if (a.pagetitle < b.pagetitle) {
@@ -557,19 +532,10 @@ class App extends Component {
 				expoFilter,
 				getMetaCol,
 			};
-
-			console.log(
-				"Exhib List Path: ",
-				getExhibListPathRoute(this.props.options.debug)
-			);
-			console.log(
-				"Profile Path: ",
-				getProfilePathRoute(profileId, this.props.options.debug)
-			);
+			console.log();
 			return (
 				<Routes>
 					<Route
-						exact
 						path={getExhibListPathRoute(this.props.options.debug)}
 						element={
 							<ExhibitorList
