@@ -14,7 +14,7 @@ function Product({ inputState, options, functionsBundle }) {
 		return <Spinner></Spinner>;
 	}
 	const { pagetitle, id } = exhibitor;
-	const { show, contactcampaign, debug } = options;
+	const { show, contactcampaign, debug, local } = options;
 	const product = exhibitor.Exhibitor_Assets__r.find((asset) => articleId === asset.Id);
 	const { Body__c, Intro__c, Link__c, Title__c, Asset_Type__c } = product;
 	return (
@@ -22,7 +22,7 @@ function Product({ inputState, options, functionsBundle }) {
 			<div className="col-12 col-md-9 order-1 meta-info-col">
 				<div className="product-header">
 					<h2>
-						<Link className="router-link" to={getProfilePath(id, debug)} onClick={() => switchMode("PROFILE", id)}>
+						<Link className="router-link" to={getProfilePath( debug, local, id)} onClick={() => switchMode("PROFILE", id)}>
 							{pagetitle}
 						</Link>
 					</h2>

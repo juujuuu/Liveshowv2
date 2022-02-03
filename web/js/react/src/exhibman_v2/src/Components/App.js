@@ -5,7 +5,6 @@ import StickyNav from "../../../common_components/StickyNav";
 import Cta from "../../../common_components/Cta";
 
 import { getAcronymFromId, getShowNameFromAcronym, getShowNameFromId, getSiteFromAcronym, getSiteFromId } from "../Utils/GetShow";
-import { getExhibListPath } from "../Utils/GetPath";
 import sanitizeUrl from "../Utils/SanitizeUrl";
 import createAPI from "../Utils/api";
 import sanitizeIds from "../Utils/SanitizeIds";
@@ -15,9 +14,9 @@ import ExhibitorList from "./ExhibitorList";
 import Profile from "./Profile/Profile";
 import Product from "./Product";
 import {
-	getExhibListPathRoute,
-	getProductPathRoute,
-	getProfilePathRoute,
+	getExhibListPath,
+	getProductPath,
+	getProfilePath,
 } from "../Utils/GetPath";
 import { pushPageView } from "../Utils/pushPageView";
 
@@ -40,6 +39,7 @@ class App extends Component {
 				expo: ids,
 			},
 		};
+		this.api = createAPI(getSiteFromId(ids instanceof Array ? ids[0] : ids));
 	}
 
 	/**
@@ -110,7 +110,6 @@ class App extends Component {
 			throw "ID OR MODE AREN'T SET";
 		}
 		let url;
-		const api = createAPI(getSiteFromId(ids instanceof Array ? ids[0] : ids));
 		const newIds = sanitizeIds(ids);
 		switch (mode) {
 			case "LIST":
@@ -127,7 +126,8 @@ class App extends Component {
 				break;
 		}
 		try {
-			let response = await api.get(url);
+			console.log("url", url);
+			let response = await this.api.get(url);
 			response = response.data;
 			if (mode == "LIST") {
 				response.sort((a, b) => {
@@ -425,7 +425,7 @@ class App extends Component {
 					{window.innerWidth < 992 ? (
 						<Link
 							className="router-link"
-							to={getExhibListPath(options.debug)}
+							to={getExhibListPath(options.debug, options.local)}
 							onClick={() => this.switchMode("LIST", ids)}>
 							<Cta
 								size="reg"
@@ -536,7 +536,7 @@ class App extends Component {
 			return (
 				<Routes>
 					<Route
-						path={getExhibListPathRoute(this.props.options.debug)}
+						path={getExhibListPath(this.props.options.debug, this.props.options.local)}
 						element={
 							<ExhibitorList
 								inputState={this.state}
@@ -545,7 +545,7 @@ class App extends Component {
 							/>
 						}></Route>
 					<Route
-						path={getProfilePathRoute(this.props.options.debug)}
+						path={getProfilePath(this.props.options.debug, this.props.options.local)}
 						element={
 							<Profile
 								inputState={this.state}
@@ -554,7 +554,7 @@ class App extends Component {
 							/>
 						}></Route>
 					<Route
-						path={getProductPathRoute(this.props.options.debug)}
+						path={getProductPath(this.props.options.debug, this.props.options.local)}
 						element={
 							<Product
 								inputState={this.state}

@@ -14,7 +14,7 @@ function ProfileProduct({ asset, functionsBundle, mode = "product", inputState, 
 				<h5>
 					<Link
 						className="router-link"
-						to={getProductPath([inputState.exhibitor.id, Id], options.debug)}
+						to={getProductPath( options.debug, options.local, [inputState.exhibitor.id, Id])}
 						onClick={() => switchMode("PRODUCT", [exhibId, Id])}>
 						{Title__c}
 					</Link>
@@ -24,7 +24,7 @@ function ProfileProduct({ asset, functionsBundle, mode = "product", inputState, 
 					{"  "}
 					<Link
 						className=""
-						to={getProductPath([inputState.exhibitor.id, Id], options.debug)}
+						to={getProductPath( options.debug, options.local, [inputState.exhibitor.id, Id])}
 						onClick={() => switchMode("PRODUCT", [exhibId, Id])}>
 						Read more...
 					</Link>

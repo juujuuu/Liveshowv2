@@ -125,7 +125,7 @@ function Profile({ inputState, options, functionsBundle }) {
 					{window.innerWidth > 992 ? (
 						<Link
 							className="router-link"
-							to={getExhibListPath(options.debug)}
+							to={getExhibListPath(options.debug, options.local)}
 							onClick={() => switchMode("LIST", ids)}>
 							<Cta
 								size="reg"

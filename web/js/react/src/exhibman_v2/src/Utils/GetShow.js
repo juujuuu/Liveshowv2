@@ -40,7 +40,7 @@ const getSiteFromAcronym = expo => {
 };
 const getSiteFromId = expo => {
 	expo = expo.replaceAll("'", "");
-	console.log(expo)
+	console.log("get site: ", expo)
 	switch (expo) {
 		case "a1x3A000001FSz9":
 			return "https://www.foam-expo.com/";

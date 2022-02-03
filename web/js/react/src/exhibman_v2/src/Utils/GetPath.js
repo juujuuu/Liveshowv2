@@ -1,20 +1,25 @@
-const getExhibListPathRoute = (debug = false) => {
-	return `/${debug ? "/debug-" : ""}exhibitor-list/`;
+const getExhibListPath = (debug = false, local = false) => {
+	return `${!local && debug? "/site" : ""}/${debug ? "debug-" : ""}exhibitor-list/`;
 };
-const getProfilePathRoute = (debug = false) => {
-	return `/${debug ? "/debug-" : ""}exhibitor-list/${debug ? "debug-" : ""}exhibitor/`;
+const getProfilePath = (debug = false, local = false, id = false) => {
+	console.log("id", id);
+	console.log("debug", debug);
+	console.log("local", local);
+	console.log(
+		"looking for path: ",
+		`${!local ? "/site" : ""}/${debug ? "debug-" : ""}exhibitor-list/${
+			debug ? "debug-" : ""
+		}exhibitor/${id ? `?boothid=${id}` : ""}`
+	);
+	console.log("actual path", window.location.pathname);
+	return `${!local && debug ? "/site" : ""}/${debug ? "debug-" : ""}exhibitor-list/${
+		debug ? "debug-" : ""
+	}exhibitor/${id ? `?boothid=${id}` : ""}`;
 };
-const getProductPathRoute = (debug = false) => {
-	return `/${debug ? "/debug-" : ""}exhibitor-list/${debug ? "debug-" : ""}product/`;
-};
-const getExhibListPath = (debug = false) => {
-	return `/${debug ? "/debug-" : ""}exhibitor-list/`;
-};
-const getProfilePath = (id, debug = false) => {
-	return `/${debug ? "/debug-" : ""}exhibitor-list/${debug ? "debug-" : ""}exhibitor/?boothid=${id}`;
-};
-const getProductPath = (ids, debug = false) => {
-	return `/${debug ? "/debug-" : ""}exhibitor-list/${debug ? "debug-" : ""}product/?boothid=${ids[0]}&assetid=${ids[1]}`;
+const getProductPath = (debug = false, local = false, ids = false) => {
+	return `${!local  && debug ? "/site" : ""}/${debug ? "debug-" : ""}exhibitor-list/${
+		debug ? "debug-" : ""
+	}product/${ids ? `?boothid=${ids[0]}&assetid=${ids[1]}` : ""}`;
 };
 
-export { getExhibListPathRoute, getProfilePathRoute, getProductPathRoute, getExhibListPath, getProfilePath, getProductPath };
+export { getExhibListPath, getProfilePath, getProductPath };

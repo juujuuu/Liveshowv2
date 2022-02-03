@@ -56,7 +56,7 @@ class Slide extends Component {
 				id={id}>
 				<Link
 					className="router-link router-link--profile-button"
-					to={getProfilePath(id, options.debug)}
+					to={getProfilePath( options.debug, options.local, id)}
 					onClick={() => switchMode("PROFILE", id, inputState)}>
 					<Cta
 						color="black"
@@ -73,7 +73,7 @@ class Slide extends Component {
 				<div className="col-6 col-md-3 exhibitor-slide__logo">
 					<Link
 						className="router-link"
-						to={getProfilePath(id, options.debug)}
+						to={getProfilePath( options.debug, options.local, id)}
 						onClick={() => switchMode("PROFILE", id, inputState)}>
 						<img
 							className="img-fluid"
@@ -87,7 +87,7 @@ class Slide extends Component {
 						<h4 className="exhibitor-name">
 							<Link
 								className="router-link"
-								to={getProfilePath(id, options.debug)}
+								to={getProfilePath( options.debug, options.local, id)}
 								onClick={() =>
 									switchMode("PROFILE", id, inputState)
 								}>

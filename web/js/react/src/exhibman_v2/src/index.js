@@ -103,6 +103,7 @@ const options = {
 	multiExpo, //multiple expo ids detected
 	extraParams, //extra arguments in the url, null if none
 	debug: document.querySelector("#root").getAttribute("debug") == "true" ? true : false,
+	local: document.querySelector("#root").getAttribute("local") == "true" ? true : false,
 };
 
 console.log("OPTIONS: ", options);
