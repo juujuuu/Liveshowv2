@@ -4,7 +4,13 @@ import Spinner from "../../../common_components/Spinner";
 import StickyNav from "../../../common_components/StickyNav";
 import Cta from "../../../common_components/Cta";
 
-import { getAcronymFromId, getShowNameFromAcronym, getShowNameFromId, getSiteFromAcronym, getSiteFromId } from "../Utils/GetShow";
+import {
+	getAcronymFromId,
+	getShowNameFromAcronym,
+	getShowNameFromId,
+	getSiteFromAcronym,
+	getSiteFromId,
+} from "../Utils/GetShow";
 import sanitizeUrl from "../Utils/SanitizeUrl";
 import createAPI from "../Utils/api";
 import sanitizeIds from "../Utils/SanitizeIds";
@@ -19,6 +25,7 @@ import {
 	getProfilePath,
 } from "../Utils/GetPath";
 import { pushPageView } from "../Utils/pushPageView";
+import { connect } from "react-redux";
 
 class App extends Component {
 	constructor(props) {
@@ -39,7 +46,13 @@ class App extends Component {
 				expo: ids,
 			},
 		};
-		this.api = createAPI(getSiteFromId(ids instanceof Array ? ids[0] : ids));
+		console.log(props);
+		console.log("getSite from id:  ", ids instanceof Array ? ids[0] : ids);
+		console.log("getSite from id:  ", ids);
+
+		this.api = createAPI(
+			getSiteFromId(ids instanceof Array ? ids[0] : ids)
+		);
 	}
 
 	/**
@@ -327,11 +340,14 @@ class App extends Component {
 		const boothnum = exhibitor["exhibitor-booth"];
 		const enhanced = Exhibitor_listing_type__c != "Standard";
 		const getUrl = url => {
-			if (url) {				
+			if (url) {
 				return (
 					<p>
 						<strong>
-							<a href={sanitizeUrl(url)} target="_blank" rel="noreferrer">
+							<a
+								href={sanitizeUrl(url)}
+								target="_blank"
+								rel="noreferrer">
 								<i className="bi bi-link-45deg"></i> Website
 							</a>
 						</strong>
@@ -536,7 +552,10 @@ class App extends Component {
 			return (
 				<Routes>
 					<Route
-						path={getExhibListPath(this.props.options.debug, this.props.options.local)}
+						path={getExhibListPath(
+							this.props.options.debug,
+							this.props.options.local
+						)}
 						element={
 							<ExhibitorList
 								inputState={this.state}
@@ -545,7 +564,10 @@ class App extends Component {
 							/>
 						}></Route>
 					<Route
-						path={getProfilePath(this.props.options.debug, this.props.options.local)}
+						path={getProfilePath(
+							this.props.options.debug,
+							this.props.options.local
+						)}
 						element={
 							<Profile
 								inputState={this.state}
@@ -554,7 +576,10 @@ class App extends Component {
 							/>
 						}></Route>
 					<Route
-						path={getProductPath(this.props.options.debug, this.props.options.local)}
+						path={getProductPath(
+							this.props.options.debug,
+							this.props.options.local
+						)}
 						element={
 							<Product
 								inputState={this.state}
@@ -570,4 +595,12 @@ class App extends Component {
 		}
 	}
 }
-export default App;
+//export default App;
+const mapStateToProps = (store, ownProps) => {
+	console.log("store", store);
+	return {
+		...ownProps,
+		newExhibs: store.exhibs,
+	};
+};
+export default connect(mapStateToProps)(App);
