@@ -11,3 +11,5 @@ bundle.js.LICENSE.txt
 /public/main.*.js
 /public/main.*.json
 /public/bundle.js
+**/public/main.*.hot-update.json
+**/public/main.*.hot-update.js

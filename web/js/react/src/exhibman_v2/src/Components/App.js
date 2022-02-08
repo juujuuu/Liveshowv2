@@ -598,9 +598,6 @@ class App extends Component {
 //export default App;
 const mapStateToProps = (store, ownProps) => {
 	console.log("store", store);
-	return {
-		...ownProps,
-		newExhibs: store.exhibs,
-	};
+	return store;
 };
 export default connect(mapStateToProps)(App);

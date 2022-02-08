@@ -6,11 +6,13 @@ import loadingReducer from "./loadingReducer";
 import modeReducer from "./modeReducer";
 import productReducer from "./productReducer";
 import optionsReducer from "./optionsReducer";
+import queriesReducer from "./queriesReducer";
 
 export default combineReducers({
 	exhibs: exhibsReducer,
 	exhibitor: exhibReducer,
 	product: productReducer,
+	queries: queriesReducer,
     options: optionsReducer,
 	mode: modeReducer,
 	loading: loadingReducer,

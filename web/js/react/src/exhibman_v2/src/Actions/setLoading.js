@@ -1,4 +1,4 @@
-const setLoading = bool =>{
+const setLoading = (bool = true) =>{
     return{
         type: 'SET_LOADING',
         payload: bool

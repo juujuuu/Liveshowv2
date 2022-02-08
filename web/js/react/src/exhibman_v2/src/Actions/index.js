@@ -5,5 +5,15 @@ import setLoading from "./setLoading";
 import setMode from "./setMode";
 import setError from "./setError";
 import setOptions from "./setOptions";
+import setQueries from "./setQueries";
 
-export { fetchExhibs, fetchExhib, setProduct, setLoading, setMode, setError, setOptions };
+export {
+	fetchExhibs,
+	fetchExhib,
+	setProduct,
+	setLoading,
+	setMode,
+	setError,
+	setOptions,
+	setQueries,
+};
