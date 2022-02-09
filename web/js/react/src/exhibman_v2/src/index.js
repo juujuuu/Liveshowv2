@@ -137,7 +137,7 @@ const store = createStore(reducers, applyMiddleware(thunk));
 ReactDOM.render(
 	<Provider store={store}>
 		<BrowserRouter>
-			<App options={options} />
+			<App initOptions={options} />
 		</BrowserRouter>
 	</Provider>,
 	document.querySelector("#root")

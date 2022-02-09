@@ -1,5 +1,5 @@
 /**
- * Split an array of ids into a nice comma delimited string
+ * Split an array of ids into a nice comma delimited string for apis
  * @param {array} ids
  * @returns comma delimited string
  */

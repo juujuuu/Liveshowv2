@@ -1,5 +1,5 @@
-const setQueries = (search, letter, expo) => {
-	return {
+const setQueries = ({search, letter, expo}) => {	
+    return {
 		type: "SET_QUERY",
 		payload: { search, letter, expo },
 	};

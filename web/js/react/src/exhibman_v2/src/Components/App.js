@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Route, Routes, Link } from "react-router-dom";
-import Spinner from "../../../common_components/Spinner";
-import StickyNav from "../../../common_components/StickyNav";
-import Cta from "../../../common_components/Cta";
+import { connect } from "react-redux";
+
+import fireModal from "../../../common_utils/Bootsrap5Modal";
 
 import {
 	getAcronymFromId,
@@ -14,54 +14,40 @@ import {
 import sanitizeUrl from "../Utils/SanitizeUrl";
 import createAPI from "../Utils/api";
 import sanitizeIds from "../Utils/SanitizeIds";
-
-import fireModal from "../../../common_utils/Bootsrap5Modal";
-import ExhibitorList from "./ExhibitorList";
-import Profile from "./Profile/Profile";
-import Product from "./Product";
+import { pushPageView } from "../Utils/pushPageView";
 import {
 	getExhibListPath,
 	getProductPath,
 	getProfilePath,
 } from "../Utils/GetPath";
-import { pushPageView } from "../Utils/pushPageView";
-import { connect } from "react-redux";
+
+import { fetchExhibs, setLoading, setQueries, setOptions } from "../Actions";
+
+import Spinner from "../../../common_components/Spinner";
+import StickyNav from "../../../common_components/StickyNav";
+import Cta from "../../../common_components/Cta";
+
+import ExhibitorList from "./ExhibitorList";
+import Profile from "./Profile/Profile";
+import Product from "./Product";
 
 class App extends Component {
 	constructor(props) {
 		super(props);
-		const { mode, ids, profileId, articleId } = props.options;
-		this.state = {
-			loading: true,
-			mode,
-			ids,
-			profileId,
-			articleId,
-			exhibsData: [],
-			exhibitor: null,
-			mountError: false,
-			queries: {
-				search: "",
-				letter: "Show All",
-				expo: ids,
-			},
-		};
-		console.log(props);
-		console.log("getSite from id:  ", ids instanceof Array ? ids[0] : ids);
-		console.log("getSite from id:  ", ids);
 
-		this.api = createAPI(
-			getSiteFromId(ids instanceof Array ? ids[0] : ids)
-		);
+		console.log("Constructor props: ", props);		
 	}
 
 	/**
 	 * Resolve inital params and run the iniital SF lookup
 	 */
 	componentDidMount() {
-		const { ids, profileId, articleId, mode } = this.props.options;
-		let query;
-		console.log("mode: ", mode);
+		const { fetchExhibs, setLoading, setQueries, setOptions, queries, initOptions } = this.props;
+		const { ids, profileId, articleId, mode } = initOptions;
+
+		setOptions(initOptions);
+
+		const siteURL = getSiteFromId(ids instanceof Array ? ids[0] : ids);
 		switch (mode) {
 			case "PROFILE":
 				query = profileId;
@@ -70,94 +56,21 @@ class App extends Component {
 				query = profileId;
 				break;
 			case "LIST":
-				query = ids;
-				break;
-			default:
-				break;
-		}
-
-		this.getSF(query, mode)
-			.then(response => {
-				this.setState(prevState => {
-					if (mode === "PROFILE" || mode === "PRODUCT") {
-						console.log("getsf response:  ", response);
-						prevState.exhibitor = response[0];
-					} else {
-						prevState.exhibsData = response;
-					}
-					prevState.loading = false;
-					return prevState;
-				});
-			})
-			.catch(error => {
-				console.error(error);
-				this.setState({ loading: false, mountError: true });
-			});
-	}
-
-	/** Just in case we have some empty data */
-	componentDidUpdate() {
-		const { exhibsData, mode, ids } = this.state;
-		if (mode === "LIST" && exhibsData.length <= 0) {
-			this.getSF(ids, mode)
-				.then(response => {
-					this.setState(prevState => {
-						prevState.exhibsData = response;
-						prevState.loading = false;
-						return prevState;
+				let expos = sanitizeIds(ids);
+				fetchExhibs(siteURL, expos).then(response=>{
+					setQueries({
+						search: queries.search,
+						letter: queries.letter,
+						expo: ids,
 					});
-				})
-				.catch(error => {
-					console.error(error);
-					this.setState({ loading: false, mountError: true });
+					setLoading(false);
 				});
+				break;
+			default:
+				break;
 		}
 	}
 
-	/**
-	 * Salesforce Query
-	 * @returns Salesforce data in an array
-	 */
-	getSF = async (ids = null, mode = null) => {
-		if (!ids || mode === false) {
-			throw "ID OR MODE AREN'T SET";
-		}
-		let url;
-		const newIds = sanitizeIds(ids);
-		switch (mode) {
-			case "LIST":
-				url = `/rest/exhibman.php?expos=${newIds}`;
-				break;
-			case "PROFILE":
-				url = `/rest/exhib_drilldown.php?booth='${newIds}'`;
-				break;
-			case "PRODUCT":
-				url = `/rest/exhib_drilldown.php?booth='${newIds}'`;
-				break;
-			default:
-				url = `/rest/exhibman.php?expos=${newIds}`;
-				break;
-		}
-		try {
-			console.log("url", url);
-			let response = await this.api.get(url);
-			response = response.data;
-			if (mode == "LIST") {
-				response.sort((a, b) => {
-					if (a.pagetitle < b.pagetitle) {
-						return -1;
-					}
-					if (a.pagetitle > b.pagetitle) {
-						return 1;
-					}
-					return 0;
-				});
-			}
-			return response;
-		} catch (error) {
-			console.error("Salesforce Controller failed:  ", error);
-		}
-	};
 
 	/**
 	 * Switch mode
@@ -252,257 +165,6 @@ class App extends Component {
 		});
 	};
 
-	expoFilter = exhibitors => {
-		const expo = this.state.queries.expo.map(id => id.replaceAll("'", ""));
-		return exhibitors.filter(exhibitor => {
-			//overrride for abe
-			if (exhibitor.Expo__c == "a1x3A000001FOPe") {
-				const cat = exhibitor["exhibitor-cat"];
-				if (
-					expo.includes(exhibitor.Expo__c) ||
-					cat.includes("Adhesives and Sealants") ||
-					cat.includes("Bonding Solutions / Technology Provider")
-				) {
-					return true;
-				}
-			}
-			return expo.includes(exhibitor.Expo__c);
-		});
-	};
-
-	searchFilter = (exhibitors, search) => {
-		if (search.trim() == "") {
-			return exhibitors;
-		}
-		search = search.toLowerCase();
-		return exhibitors.filter(exhibitor => {
-			const cats = exhibitor["exhibitor-cat"].toLowerCase();
-			const pagetitle = exhibitor.pagetitle.toLowerCase();
-			const content = exhibitor.content.toLowerCase();
-			if (
-				cats.includes(search) ||
-				pagetitle.includes(search) ||
-				content.includes(search)
-			) {
-				return true;
-			} else {
-				return false;
-			}
-		});
-	};
-
-	alphabetFilter = (exhibitors, letter) => {
-		letter = letter.toLowerCase();
-
-		if (letter == "show all") {
-			return exhibitors;
-		}
-
-		return exhibitors.filter(exhibitor => {
-			const { pagetitle } = exhibitor;
-			const name = pagetitle.toLowerCase();
-
-			if (letter == "0-9") {
-				return !isNaN(name.charAt(0));
-			} else if (letter.match(/[a-z]/i)) {
-				//is a letter
-				return letter == name.charAt(0);
-			} else {
-				return true;
-			}
-		});
-	};
-
-	resetFilters = () => {
-		document.getElementById("react__search").value = "";
-		this.setState(prevState => {
-			prevState.queries.search = "";
-			prevState.queries.letter = "Show All";
-			return prevState;
-		});
-	};
-
-	getMetaCol = (exhibitor, options, order = "order-1 order-md-2") => {
-		const { contactcampaign, ids } = options;
-		const {
-			Expo__c,
-			url,
-			Twitter__c,
-			Facebook__c,
-			Linkedin__c,
-			Company_City__c,
-			Company_State__c,
-			Company_Address__c,
-			Youtube_channel__c,
-			Exhibitor_listing_type__c,
-			country,
-		} = exhibitor;
-		const boothnum = exhibitor["exhibitor-booth"];
-		const enhanced = Exhibitor_listing_type__c != "Standard";
-		const getUrl = url => {
-			if (url) {
-				return (
-					<p>
-						<strong>
-							<a
-								href={sanitizeUrl(url)}
-								target="_blank"
-								rel="noreferrer">
-								<i className="bi bi-link-45deg"></i> Website
-							</a>
-						</strong>
-					</p>
-				);
-			} else {
-				return null;
-			}
-		};
-		const getLinkedIn = Linkedin__c => {
-			if (Linkedin__c) {
-				return (
-					<p>
-						<strong>
-							<a
-								href={Linkedin__c}
-								target="_blank"
-								rel="noreferrer">
-								<i className="bi bi-linkedin"></i> Linkedin
-							</a>
-						</strong>
-					</p>
-				);
-			} else {
-				return null;
-			}
-		};
-		const getFacebook = Facebook__c => {
-			if (Facebook__c) {
-				<p>
-					<strong>
-						<a href={Facebook__c} target="_blank" rel="noreferrer">
-							<i className="bi bi-facebook"></i> Facebook
-						</a>
-					</strong>
-				</p>;
-			} else {
-				return null;
-			}
-		};
-		const getTwitter = Twitter__c => {
-			if (Twitter__c) {
-				return (
-					<p>
-						<strong>
-							<a
-								href={Twitter__c}
-								target="_blank"
-								rel="noreferrer">
-								<i className="bi bi-twitter"></i> Twitter
-							</a>
-						</strong>
-					</p>
-				);
-			} else {
-				return null;
-			}
-		};
-		const getYoutube = Youtube_channel__c => {
-			if (Youtube_channel__c) {
-				return (
-					<p>
-						<strong>
-							<a
-								href={Youtube_channel__c}
-								target="_blank"
-								rel="noreferrer">
-								<i className="bi bi-youtube"></i>Youtube
-							</a>
-						</strong>
-					</p>
-				);
-			} else {
-				return null;
-			}
-		};
-		const getAddressField = field => {
-			if (field) {
-				return (
-					<p>
-						<strong>{field},</strong>
-					</p>
-				);
-			} else {
-				return null;
-			}
-		};
-		return (
-			<nav className={`col-12 col-md-3 ${order} meta-info-col`}>
-				<StickyNav endAffix={1800} disable={window.innerWidth < 992}>
-					{window.innerWidth < 992 ? (
-						<Link
-							className="router-link"
-							to={getExhibListPath(options.debug, options.local)}
-							onClick={() => this.switchMode("LIST", ids)}>
-							<Cta
-								size="reg"
-								curved={false}
-								bonusClass={`profile-back-to-list left`}
-								key={`Mob back to Exhibitor List`}
-								color="black">
-								Back to Exhibitor List
-							</Cta>
-						</Link>
-					) : null}
-					{enhanced ? (
-						<div className="meta-info-col__button">
-							<Cta
-								size={"max"}
-								color="cex-red"
-								handler={() =>
-									fireModal(
-										[exhibitor, contactcampaign],
-										"contact-exhibitor",
-										"lg"
-									)
-								}
-								bonusClass="center">
-								Contact Exhibitor
-							</Cta>
-						</div>
-					) : null}
-					<div
-						className="meta-info-col__booth-num"
-						style={enhanced ? { marginTop: "10px" } : null}>
-						<h4>Booth Number: {boothnum}</h4>
-					</div>
-					<div className="meta-info-col__contact-list">
-						<h4>Contact</h4>
-						{getUrl(url)}
-						{enhanced ? (
-							<>
-								{getLinkedIn(Linkedin__c)}
-								{getFacebook(Facebook__c)}
-								{getTwitter(Twitter__c)}
-								{getYoutube(Youtube_channel__c)}{" "}
-							</>
-						) : null}
-					</div>
-					{Company_Address__c ? (
-						<div className="meta-info-col__address">
-							<p>
-								<i className="bi bi-house-door-fill"></i>{" "}
-								Address:{" "}
-							</p>
-							{getAddressField(Company_Address__c)}
-							{getAddressField(Company_City__c)}
-							{getAddressField(Company_State__c)}
-							{getAddressField(country)}
-						</div>
-					) : null}
-				</StickyNav>
-			</nav>
-		);
-	};
 
 	showAppInfo = boolean => {
 		boolean = boolean ? "block" : "none";
@@ -514,7 +176,10 @@ class App extends Component {
 	};
 
 	render() {
-		const { loading, mode, profileId, articleId, mountError } = this.state;
+		console.log("Render Store: ", this.props);
+		// const { loading, mode, profileId, articleId, mountError } = this.state;
+		const { loading, error, exhibs, exhibitor, mode, options, queries } =
+			this.props;
 		const errorMessage = (
 			<h1
 				className="d-flex justify-content-center align-items-center"
@@ -524,31 +189,10 @@ class App extends Component {
 		);
 		if (loading) {
 			return <Spinner />;
-		} else if (mountError) {
+		} else if (error) {
 			return errorMessage;
 		}
 		try {
-			const {
-				resetFilters,
-				setSearch,
-				setLetter,
-				switchMode,
-				alphabetFilter,
-				searchFilter,
-				expoFilter,
-				getMetaCol,
-			} = this;
-			const functionsBundle = {
-				resetFilters,
-				setSearch,
-				setLetter,
-				switchMode,
-				alphabetFilter,
-				searchFilter,
-				expoFilter,
-				getMetaCol,
-			};
-			console.log();
 			return (
 				<Routes>
 					<Route
@@ -556,14 +200,8 @@ class App extends Component {
 							this.props.options.debug,
 							this.props.options.local
 						)}
-						element={
-							<ExhibitorList
-								inputState={this.state}
-								options={this.props.options}
-								functionsBundle={functionsBundle}
-							/>
-						}></Route>
-					<Route
+						element={<ExhibitorList />}></Route>
+					{/* <Route
 						path={getProfilePath(
 							this.props.options.debug,
 							this.props.options.local
@@ -586,7 +224,7 @@ class App extends Component {
 								options={this.props.options}
 								functionsBundle={functionsBundle}
 							/>
-						}></Route>
+						}></Route> */}
 				</Routes>
 			);
 		} catch (error) {
@@ -597,7 +235,11 @@ class App extends Component {
 }
 //export default App;
 const mapStateToProps = (store, ownProps) => {
-	console.log("store", store);
-	return store;
+	return { ...store };
 };
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, {
+	fetchExhibs,
+	setLoading,
+	setQueries,
+	setOptions
+})(App);
