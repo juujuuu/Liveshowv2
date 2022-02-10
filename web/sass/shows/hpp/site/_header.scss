@@ -126,7 +126,7 @@ header {
 					margin-bottom: 5px;
 				}
 			}
-			.header__info--bonus{
+			.header__info--bonus {
 				text-align: center;
 			}
 		}
@@ -304,8 +304,8 @@ header {
 		}
 	}
 	.header__info {
-		//margin-top: 10px; //og line
-		margin: 0;
+		margin-top: 25px; //og line
+		//margin: 0;
 		&--date,
 		&--location {
 			display: block;
@@ -316,14 +316,14 @@ header {
 		&--date {
 			//color: $main-color;
 			//margin-right: 20px; //og line
-			margin: 0 20px 0 0;			
+			margin: 0 20px 0 0;
 		}
 		&--location {
 			color: #333333;
 		}
-		&--bonus{
+		&--bonus {
 			margin: 0;
-			p{
+			p {
 				font-size: 16px;
 				margin: 0;
 			}
