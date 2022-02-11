@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Slide from "./Slide";
 import StickyNav from "../../../common_components/StickyNav";
@@ -7,14 +7,37 @@ import SearchInput from "../../../common_components/SearchInput";
 import Spinner from "../../../common_components/Spinner";
 import Alphabet from "../../../common_components/Alphabet";
 
-import { setQueries } from "../Actions";
+import { fetchExhibs, setQueries, setLoading } from "../Actions";
 
 import PDFMake from "../Utils/PDFMake/PDFMake";
 import { connect } from "react-redux";
+import { getSiteFromId } from "../Utils/GetShow";
+import sanitizeIds from "../Utils/SanitizeIds";
 
 const ExhibitorList = props => {
-	console.log("EXHIB LIST PROPS:  ", props);
-	const { options, exhibs, queries, loading, setQueries } = props;
+	const {
+		options,
+		exhibs,
+		queries,
+		loading,
+		setQueries,
+		setLoading,
+		fetchExhibs,
+	} = props;
+
+	useEffect(() => {
+		if (exhibs.length > 0) {
+			setLoading(false);
+		} else {
+			const siteURL = getSiteFromId(
+				options.ids instanceof Array ? options.ids[0] : options.ids
+			);
+			const expos = sanitizeIds(options.ids);
+			fetchExhibs(siteURL, expos).then(response => {
+				setLoading(false);
+			});
+		}
+	}, []);
 
 	const getMultiExpo = (options, expo) => {
 		const { ids, show, event, multiExpo } = options;
@@ -55,19 +78,14 @@ const ExhibitorList = props => {
 	};
 
 	const getExtraNavButtons = (options, exhibs) => {
-
-		const {
-			regLink,			
-		} = options;
+		const { regLink } = options;
 		let jsx = [];
 
 		const newJsx = (
 			<Cta
 				size="max"
 				color="black"
-				handler={() =>
-					setTimeout(new PDFMake(options, exhibs), 0)
-				}
+				handler={() => setTimeout(new PDFMake(options, exhibs), 0)}
 				key={"download list"}
 				bonusClass="control-col__download-list">
 				Download Full List PDF
@@ -88,7 +106,7 @@ const ExhibitorList = props => {
 			jsx = [...jsx, newJsx];
 		}
 		return jsx;
-	};	
+	};
 
 	const getSlides = (exhibitors, options) => {
 		if (exhibitors.length < 1) {
@@ -100,12 +118,7 @@ const ExhibitorList = props => {
 		}
 		return exhibitors.map((exhibitor, index) => {
 			const { id } = exhibitor;
-			return (
-				<Slide
-					key={`slide--${id}--${index}`}
-					payload={exhibitor}
-				/>
-			);
+			return <Slide key={`slide--${id}--${index}`} payload={exhibitor} />;
 		});
 	};
 
@@ -118,19 +131,19 @@ const ExhibitorList = props => {
 		document.getElementById("react__search").value = "";
 	};
 
-	const handleSearch = term =>{
+	const handleSearch = term => {
 		setQueries({
 			search: term,
 			letter: queries.letter,
-			expo: queries.expo
+			expo: queries.expo,
 		});
 	};
 
-	const handleSetLetter = letter =>{
+	const handleSetLetter = letter => {
 		setQueries({
 			search: queries.search,
 			letter: letter,
-			expo: queries.expo
+			expo: queries.expo,
 		});
 	};
 
@@ -213,7 +226,7 @@ const ExhibitorList = props => {
 	if (loading) {
 		return <Spinner></Spinner>;
 	} else {
-		const {multiExpo, filters, show} = options;
+		const { multiExpo, filters, show } = options;
 		const filteredExhibitors = filterExhibitors(
 			exhibs,
 			filters,
@@ -275,4 +288,8 @@ const mapStateToProps = (store, ownProps) => {
 	// console.log("EXHIB LIST MAP STATE", store);
 	return store;
 };
-export default connect(mapStateToProps, { setQueries })(ExhibitorList);
+export default connect(mapStateToProps, {
+	setQueries,
+	fetchExhibs,
+	setLoading,
+})(ExhibitorList);

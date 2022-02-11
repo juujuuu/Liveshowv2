@@ -1,15 +1,24 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
 import fireModal from "../../../common_utils/Bootsrap5Modal";
 import { getExhibListPath } from "../Utils/GetPath";
 import sanitizeUrl from "../Utils/SanitizeUrl";
+import sanitizeIds from "../Utils/SanitizeIds";
+import { pushPageView } from "../Utils/pushPageView";
 
-import { setMode, fetchExhibs } from "../Actions";
+import Cta from "../../../common_components/Cta";
+
+import { setMode, fetchExhibs, setLoading } from "../Actions";
 
 import StickyNav from "../../../common_components/StickyNav";
-import { Link } from "react-router-dom";
+import { getSiteFromId } from "../Utils/GetShow";
 
-const MetaCol = ({	
-	order = "order-1 order-md-2",
-}) => {
+const MetaCol = props => {
+	const { exhibitor, options, setLoading, setMode, fetchExhibs } = props;
+	let { order } = props;
+	order = !order ? "order-1 order-md-2" : order;
 	const { contactcampaign, ids } = options;
 	const {
 		Expo__c,
@@ -26,6 +35,7 @@ const MetaCol = ({
 	} = exhibitor;
 	const boothnum = exhibitor["exhibitor-booth"];
 	const enhanced = Exhibitor_listing_type__c != "Standard";
+
 	const getUrl = url => {
 		if (url) {
 			return (
@@ -44,59 +54,31 @@ const MetaCol = ({
 			return null;
 		}
 	};
-	const getLinkedIn = Linkedin__c => {
-		if (Linkedin__c) {
+	const getSocial = (field, social) => {
+		let icon;
+		if (field) {
+			switch (social) {
+				case "LINKEDIN":
+					icon = "linkedin";
+					break;
+				case "FACEBOOK":
+					icon = "facebook";
+					break;
+				case "TWITTER":
+					icon = "twitter";
+					break;
+				case "YOUTUBE":
+					icon = "youtube";
+					break;
+				default:
+					return null;
+			}
 			return (
 				<p>
 					<strong>
-						<a href={Linkedin__c} target="_blank" rel="noreferrer">
-							<i className="bi bi-linkedin"></i> Linkedin
-						</a>
-					</strong>
-				</p>
-			);
-		} else {
-			return null;
-		}
-	};
-	const getFacebook = Facebook__c => {
-		if (Facebook__c) {
-			<p>
-				<strong>
-					<a href={Facebook__c} target="_blank" rel="noreferrer">
-						<i className="bi bi-facebook"></i> Facebook
-					</a>
-				</strong>
-			</p>;
-		} else {
-			return null;
-		}
-	};
-	const getTwitter = Twitter__c => {
-		if (Twitter__c) {
-			return (
-				<p>
-					<strong>
-						<a href={Twitter__c} target="_blank" rel="noreferrer">
-							<i className="bi bi-twitter"></i> Twitter
-						</a>
-					</strong>
-				</p>
-			);
-		} else {
-			return null;
-		}
-	};
-	const getYoutube = Youtube_channel__c => {
-		if (Youtube_channel__c) {
-			return (
-				<p>
-					<strong>
-						<a
-							href={Youtube_channel__c}
-							target="_blank"
-							rel="noreferrer">
-							<i className="bi bi-youtube"></i>Youtube
+						<a href={social} target="_blank" rel="noreferrer">
+							<i className={`bi bi-${icon}`}></i>
+							{icon}
 						</a>
 					</strong>
 				</p>
@@ -117,14 +99,12 @@ const MetaCol = ({
 		}
 	};
 
-    const handleModeSwitch = () =>{
-        props.setMode("LIST");
-        if(exhibs.length < 1){
-            const siteURL = getSiteFromId(ids instanceof Array ? ids[0] : ids);
-            let expos = sanitizeIds(ids);
-			props.fetchExhibs(siteURL, expos);            
-        }
-    }
+	const handleListSwitch = () => {
+		setLoading(true);
+		setMode("LIST");
+		pushPageView();
+		document.body.scrollTop = document.documentElement.scrollTop = 0;
+	};
 	return (
 		<nav className={`col-12 col-md-3 ${order} meta-info-col`}>
 			<StickyNav endAffix={1800} disable={window.innerWidth < 992}>
@@ -132,7 +112,7 @@ const MetaCol = ({
 					<Link
 						className="router-link"
 						to={getExhibListPath(options.debug, options.local)}
-						onClick={() => handleModeSwitch()}>
+						onClick={() => handleListSwitch()}>
 						<Cta
 							size="reg"
 							curved={false}
@@ -170,10 +150,10 @@ const MetaCol = ({
 					{getUrl(url)}
 					{enhanced ? (
 						<>
-							{getLinkedIn(Linkedin__c)}
-							{getFacebook(Facebook__c)}
-							{getTwitter(Twitter__c)}
-							{getYoutube(Youtube_channel__c)}{" "}
+							{getSocial(Linkedin__c, "LINKEDIN")}
+							{getSocial(Facebook__c, "FACEBOOK")}
+							{getSocial(Twitter__c, "TWITTER")}
+							{getSocial(Youtube_channel__c, "YOUTUBE")}
 						</>
 					) : null}
 				</div>
@@ -197,10 +177,11 @@ const mapStateToProps = (store, ownProps) => {
 		exhibitor: store.exhibitor,
 		options: store.options,
 		order: ownProps.order,
-        exhibs: store.exhibs
+		exhibs: store.exhibs,
 	};
 };
 export default connect(mapStateToProps, {
 	setMode,
-    fetchExhibs
+	fetchExhibs,
+	setLoading,
 })(MetaCol);

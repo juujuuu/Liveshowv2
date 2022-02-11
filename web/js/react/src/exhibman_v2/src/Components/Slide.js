@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { setMode, fetchExhib } from "../Actions";
+import { setMode, setProfile, setLoading } from "../Actions";
 
 import Cta from "../../../common_components/Cta";
 
@@ -25,16 +25,17 @@ class Slide extends Component {
 	};
 
 	handleSwitchMode = (mode, profileId) => {
-		const { setMode, fetchExhib } = this.props;
-		fetchExhib(profileId).then(response =>{
-			setMode(mode);
-			pushPageView();
-			document.body.scrollTop = document.documentElement.scrollTop = 0;
-		});
+		const { setMode, setProfile, setLoading } = this.props;
+		
+		setLoading(true);
+		setProfile(profileId);
+		setMode(mode);
+		pushPageView(); 
+		document.body.scrollTop = document.documentElement.scrollTop = 0;
 	};
 
 	render() {
-		const { payload, options } = this.props;
+		const { payload, options, profileId } = this.props;
 
 		const {
 			id,
@@ -74,7 +75,7 @@ class Slide extends Component {
 				<Link
 					className="router-link router-link--profile-button"
 					to={getProfilePath(debug, local, id)}
-					onClick={() => this.handleSwitchMode("PROFILE", profileId)}>
+					onClick={() => this.handleSwitchMode("PROFILE", id)}>
 					<Cta
 						color="black"
 						size="reg"
@@ -92,7 +93,7 @@ class Slide extends Component {
 						className="router-link"
 						to={getProfilePath(debug, local, id)}
 						onClick={() =>
-							this.handleSwitchMode("PROFILE", profileId)
+							this.handleSwitchMode("PROFILE", id)
 						}>
 						<img
 							className="img-fluid"
@@ -108,7 +109,7 @@ class Slide extends Component {
 								className="router-link"
 								to={getProfilePath(debug, local, id)}
 								onClick={() =>
-									this.handleSwitchMode("PROFILE", profileId)
+									this.handleSwitchMode("PROFILE", id)
 								}>
 								{pagetitle}
 							</Link>
@@ -138,4 +139,4 @@ class Slide extends Component {
 const mapStateToProps = (store, ownProps) => {
 	return { ...store, payload: ownProps.payload };
 };
-export default connect(mapStateToProps, { setMode, fetchExhib })(Slide);
+export default connect(mapStateToProps, { setMode, setLoading, setProfile })(Slide);

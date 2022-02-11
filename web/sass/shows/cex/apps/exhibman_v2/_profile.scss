@@ -51,6 +51,19 @@
 		border-top: 1px solid black;
 		&.profile-products {
 			clear: both;
+			.profile-product{
+				& + .profile-product{
+					margin-top: 20px;
+				}
+			}
+		}
+		&.profile-news {
+			clear: both;
+			.profile-news{
+				& + .profile-product{
+					margin-top: 20px;
+				}
+			}
 		}
 		&.profile-videos {
 			.profile-video {

@@ -6,7 +6,7 @@ import setMode from "./setMode";
 import setError from "./setError";
 import setOptions from "./setOptions";
 import setQueries from "./setQueries";
-
+import setProfile from "./setProfile";
 export {
 	fetchExhibs,
 	fetchExhib,
@@ -16,4 +16,5 @@ export {
 	setError,
 	setOptions,
 	setQueries,
+	setProfile
 };
