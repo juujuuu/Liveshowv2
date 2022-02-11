@@ -1,17 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+
+import { getExhibListPath, getProductPath } from "../../Utils/GetPath";
+import { connect } from "react-redux";
+import {fetchExhib, setMode, setLoading } from "../../Actions";
+import { getSiteFromId } from "../../Utils/GetShow";
+import { pushPageView } from "../../Utils/pushPageView";
+import sanitizeIds from "../../Utils/SanitizeIds";
 
 import Spinner from "../../../../common_components/Spinner";
 import Cta from "../../../../common_components/Cta";
 
-import { getExhibListPath, getProductPath } from "../../Utils/GetPath";
 import Video from "./Video";
 import Downloadable from "./Downloadable";
 import ProfileProduct from "./ProfileProduct";
+import MetaCol from "../MetaCol";
 
-function Profile({ inputState, options, functionsBundle }) {
-	const { switchMode, getMetaCol } = functionsBundle;
-	const { loading, exhibitor } = inputState;
+function Profile(props) {
+	const {
+		loading,
+		exhibitor,
+		options,
+		setMode,
+		fetchExhib,
+		setLoading,
+		profileId
+	} = props;
+
 	const { show, ids, mode, debug } = options;
 	const {
 		pagetitle,
@@ -23,8 +38,20 @@ function Profile({ inputState, options, functionsBundle }) {
 		id,
 		Exhibitor_listing_type__c,
 	} = exhibitor;
+
 	const enhanced = Exhibitor_listing_type__c != "Standard";
 	const cats = exhibitor["exhibitor-cat"];
+
+	useEffect(() => {
+		if (Object.keys(exhibitor).length > 0 && id === profileId) {
+			setLoading(false);
+		} else {
+			const siteURL = getSiteFromId(ids instanceof Array ? ids[0] : ids);
+			fetchExhib(siteURL, profileId).then(response => {
+				setLoading(false);
+			});
+		}
+	}, []);
 
 	const getJumpList = assets => {
 		let types = [];
@@ -55,6 +82,7 @@ function Profile({ inputState, options, functionsBundle }) {
 				{types.map(type => {
 					return (
 						<div
+							key={`jump-${type}`}
 							className="profile-quick-menu__type"
 							onClick={() => zapTo(type.replace(" ", ""))}>
 							<p>{type}</p>
@@ -79,40 +107,46 @@ function Profile({ inputState, options, functionsBundle }) {
 	 * @param {Array} assets Exhibitor Assets Array
 	 * @param {String} type Type of assets to output
 	 */
-	const getAssets = (assets, type, exhibId = false, state) => {
+	const getAssets = (assets, type, exhibId = false) => {
 		assets = assets.filter(asset => asset.Asset_Type__c == type);
 		return assets.map(asset => {
-			const { pagetitle } = state.exhibitor;
+			const { pagetitle } = exhibitor;
 			switch (type) {
 				case "Product":
-					const { switchMode } = functionsBundle;
 					return (
 						<ProfileProduct
+							key={`asset-${asset.Id}`}
 							asset={asset}
-							functionsBundle={{ switchMode }}
-							mode={"product"}
-							inputState={state}
-							options={options}
 						/>
 					);
 				case "News":
 					return (
 						<ProfileProduct
+							key={`asset-${asset.Id}`}
 							asset={asset}
-							functionsBundle={{ switchMode }}
-							mode={"news"}
-							inputState={state}
-							options={options}
 						/>
 					);
 				case "Video":
-					return <Video asset={asset} />;
+					return <Video key={`asset-${asset.Id}`} asset={asset} />;
 				case "Downloadable Resource":
-					return <Downloadable asset={asset} pagetitle={pagetitle} />;
+					return (
+						<Downloadable
+							key={`asset-${asset.Id}`}
+							asset={asset}
+							pagetitle={pagetitle}
+						/>
+					);
 				default:
 					break;
 			}
 		});
+	};
+
+	const handleListSwitch = () => {
+		setLoading(true);
+		setMode("LIST");
+		pushPageView();
+		document.body.scrollTop = document.documentElement.scrollTop = 0;
 	};
 
 	if (loading) {
@@ -126,7 +160,7 @@ function Profile({ inputState, options, functionsBundle }) {
 						<Link
 							className="router-link"
 							to={getExhibListPath(options.debug, options.local)}
-							onClick={() => switchMode("LIST", ids)}>
+							onClick={async () => await handleListSwitch()}>
 							<Cta
 								size="reg"
 								curved={false}
@@ -187,8 +221,7 @@ function Profile({ inputState, options, functionsBundle }) {
 									{getAssets(
 										Exhibitor_Assets__r,
 										"Product",
-										id,
-										inputState
+										id
 									)}
 								</div>
 							) : null}
@@ -199,12 +232,7 @@ function Profile({ inputState, options, functionsBundle }) {
 									id="News"
 									className="profile-assets profile-news row">
 									<h4>News</h4>
-									{getAssets(
-										Exhibitor_Assets__r,
-										"News",
-										id,
-										inputState
-									)}
+									{getAssets(Exhibitor_Assets__r, "News", id)}
 								</div>
 							) : null}
 							{Exhibitor_Assets__r.find(
@@ -217,8 +245,7 @@ function Profile({ inputState, options, functionsBundle }) {
 									{getAssets(
 										Exhibitor_Assets__r,
 										"Video",
-										id,
-										inputState
+										id
 									)}
 								</div>
 							) : null}
@@ -234,17 +261,23 @@ function Profile({ inputState, options, functionsBundle }) {
 									{getAssets(
 										Exhibitor_Assets__r,
 										"Downloadable Resource",
-										id,
-										inputState
+										id
 									)}
 								</div>
 							) : null}
 						</>
 					) : null}
 				</div>
-				{getMetaCol(exhibitor, options)}
+				<MetaCol />
 			</section>
 		);
 	}
 }
-export default Profile;
+const mapStateToProps = (store, ownProps) => {
+	return { ...store };
+};
+export default connect(mapStateToProps, {
+	fetchExhib,
+	setLoading,
+	setMode,
+})(Profile);

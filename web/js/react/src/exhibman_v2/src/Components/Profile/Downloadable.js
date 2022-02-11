@@ -2,7 +2,6 @@ import React from "react";
 
 function Downloadable({asset, pagetitle}) {
 	const { Id, Body__c, File_Type__c, Intro__c, Link__c, Name, Thumbnail_Link__c, Title__c } = asset;
-	console.log(asset);
 
 	const getFileType = (fileType) => {
 		switch (fileType) {

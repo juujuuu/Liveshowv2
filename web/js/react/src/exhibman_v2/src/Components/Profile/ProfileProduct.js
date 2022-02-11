@@ -1,21 +1,63 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getProductPath } from "../../Utils/GetPath";
 
-function ProfileProduct({ asset, functionsBundle, mode = "product", inputState, options }) {
-	const { Id, Thumbnail_Link__c, Title__c, Intro__c } = asset;
-	const { switchMode } = functionsBundle;
+import {
+	fetchExhibs,
+	fetchExhib,
+	setMode,
+	setLoading,
+	setProduct,
+} from "../../Actions";
+
+import { getProductPath } from "../../Utils/GetPath";
+import sanitizeIds from "../../Utils/SanitizeIds";
+import { pushPageView } from "../../Utils/pushPageView";
+
+function ProfileProduct(props) {
+	const {
+		asset,
+		options,
+		mode,
+		exhibitor,
+		setMode,
+		setLoading,
+		setProduct,
+	} = props;
+	const { Id: assetId, Thumbnail_Link__c, Title__c, Intro__c, Asset_Type__c } = asset;
+	const { id: exhibId } = exhibitor;
+	const { debug, local, ids } = options;
+
+	const handleListSwitch = () => {
+		setLoading(true);
+		setMode("LIST");
+		pushPageView();
+		document.body.scrollTop = document.documentElement.scrollTop = 0;
+	};
+
+	const handleProductSwitch = (boothId, assetId) => {
+		setLoading(true);
+		setProduct(assetId);
+		setMode("PRODUCT");
+		pushPageView();
+		document.body.scrollTop = document.documentElement.scrollTop = 0;
+	};
+
 	return (
-		<div className={`profile-${mode} row`} key={`${mode}--${Id}`}>
-			<div className={`profile-${mode}__thumb col-md-3`}>
-				<img className="img-fluid" src={Thumbnail_Link__c} alt="Thumbnail" />
+		<div className={`profile-${Asset_Type__c.toLowerCase()} row`} key={`${Asset_Type__c.toLowerCase()}--${assetId}`}>
+			<div className={`profile-${Asset_Type__c.toLowerCase()}__thumb col-md-3`}>
+				<img
+					className="img-fluid"
+					src={Thumbnail_Link__c}
+					alt="Thumbnail"
+				/>
 			</div>
-			<div className={`profile-${mode}__text col-md-9`}>
+			<div className={`profile-${Asset_Type__c.toLowerCase()}__text col-md-9`}>
 				<h5>
 					<Link
 						className="router-link"
-						to={getProductPath( options.debug, options.local, [inputState.exhibitor.id, Id])}
-						onClick={() => switchMode("PRODUCT", [exhibId, Id])}>
+						to={getProductPath(debug, local, [exhibId, assetId])}
+						onClick={() => handleProductSwitch(exhibId, assetId)}>
 						{Title__c}
 					</Link>
 				</h5>
@@ -24,8 +66,8 @@ function ProfileProduct({ asset, functionsBundle, mode = "product", inputState, 
 					{"  "}
 					<Link
 						className=""
-						to={getProductPath( options.debug, options.local, [inputState.exhibitor.id, Id])}
-						onClick={() => switchMode("PRODUCT", [exhibId, Id])}>
+						to={getProductPath(debug, local, [exhibId, assetId])}
+						onClick={() => handleProductSwitch(exhibId, assetId)}>
 						Read more...
 					</Link>
 				</p>
@@ -34,4 +76,13 @@ function ProfileProduct({ asset, functionsBundle, mode = "product", inputState, 
 	);
 }
 
-export default ProfileProduct;
+const mapStateToProps = (store, ownProps) => {
+	return { ...store };
+};
+export default connect(mapStateToProps, {
+	fetchExhibs,
+	fetchExhib,
+	setMode,
+	setLoading,
+	setProduct,
+})(ProfileProduct);

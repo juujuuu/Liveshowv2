@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from "react";
 
 import Slide from "./Slide";
 import StickyNav from "../../../common_components/StickyNav";
@@ -7,23 +7,47 @@ import SearchInput from "../../../common_components/SearchInput";
 import Spinner from "../../../common_components/Spinner";
 import Alphabet from "../../../common_components/Alphabet";
 
+import { fetchExhibs, setQueries, setLoading } from "../Actions";
+
 import PDFMake from "../Utils/PDFMake/PDFMake";
+import { connect } from "react-redux";
+import { getSiteFromId } from "../Utils/GetShow";
+import sanitizeIds from "../Utils/SanitizeIds";
 
-function ExhibitorList({ inputState, options, functionsBundle }) {
-	const { resetFilters, setSearch, setLetter, switchMode, alphabetFilter, searchFilter, expoFilter } = functionsBundle;
+const ExhibitorList = props => {
+	const {
+		options,
+		exhibs,
+		queries,
+		loading,
+		setQueries,
+		setLoading,
+		fetchExhibs,
+	} = props;
 
-	const { show, filters, debug, multiExpo } = options;
-	const { exhibsData: exhibitors, queries, loading } = inputState;
+	useEffect(() => {
+		if (exhibs.length > 0) {
+			setLoading(false);
+		} else {
+			const siteURL = getSiteFromId(
+				options.ids instanceof Array ? options.ids[0] : options.ids
+			);
+			const expos = sanitizeIds(options.ids);
+			fetchExhibs(siteURL, expos).then(response => {
+				setLoading(false);
+			});
+		}
+	}, []);
 
-	const getMultiExpo = (options, state) => {
+	const getMultiExpo = (options, expo) => {
 		const { ids, show, event, multiExpo } = options;
-		const { expo } = state;
+
 		if (!multiExpo) {
 			return null;
 		} else {
 			let jsx = [];
 
-			ids.forEach((showId) => {
+			ids.forEach(showId => {
 				let text;
 				let sanitisedShowId = showId.replaceAll("'", "");
 				text = getShowNameFromId(sanitisedShowId);
@@ -39,7 +63,11 @@ function ExhibitorList({ inputState, options, functionsBundle }) {
 						value={showId}>
 						<span>{text}</span>
 						{expo.includes(showId) ? (
-							<img className="img-fluid" src="../assets/web/js/react/src/exhibman_v2/Assets/tick.png" alt="tick" />
+							<img
+								className="img-fluid"
+								src="../assets/web/js/react/src/exhibman_v2/Assets/tick.png"
+								alt="tick"
+							/>
 						) : null}
 					</Cta>
 				);
@@ -49,15 +77,15 @@ function ExhibitorList({ inputState, options, functionsBundle }) {
 		}
 	};
 
-	const getExtraNavButtons = (options, state) => {
-		const { show, regLink, event, gtm, mode, convincepdf, multiExpo, filters } = options;
+	const getExtraNavButtons = (options, exhibs) => {
+		const { regLink } = options;
 		let jsx = [];
 
 		const newJsx = (
 			<Cta
 				size="max"
 				color="black"
-				handler={() => setTimeout(new PDFMake(options, state.exhibsData), 0) }
+				handler={() => setTimeout(new PDFMake(options, exhibs), 0)}
 				key={"download list"}
 				bonusClass="control-col__download-list">
 				Download Full List PDF
@@ -66,7 +94,12 @@ function ExhibitorList({ inputState, options, functionsBundle }) {
 		jsx = [...jsx, newJsx];
 		if (regLink) {
 			const newJsx = (
-				<Cta size="max" color="cex-red" link={regLink} bonusClass="control-col__reg-link" key={"register to attend"}>
+				<Cta
+					size="max"
+					color="cex-red"
+					link={regLink}
+					bonusClass="control-col__reg-link"
+					key={"register to attend"}>
 					Register To Attend
 				</Cta>
 			);
@@ -75,9 +108,109 @@ function ExhibitorList({ inputState, options, functionsBundle }) {
 		return jsx;
 	};
 
+	const getSlides = (exhibitors, options) => {
+		if (exhibitors.length < 1) {
+			return (
+				<h2 className="no-exhibs-message d-flex justify-content-center align-items-center">
+					No exhibitors found
+				</h2>
+			);
+		}
+		return exhibitors.map((exhibitor, index) => {
+			const { id } = exhibitor;
+			return <Slide key={`slide--${id}--${index}`} payload={exhibitor} />;
+		});
+	};
+
+	const handleReset = () => {
+		setQueries({
+			search: "",
+			letter: "Show All",
+			expo: options.ids,
+		});
+		document.getElementById("react__search").value = "";
+	};
+
+	const handleSearch = term => {
+		setQueries({
+			search: term,
+			letter: queries.letter,
+			expo: queries.expo,
+		});
+	};
+
+	const handleSetLetter = letter => {
+		setQueries({
+			search: queries.search,
+			letter: letter,
+			expo: queries.expo,
+		});
+	};
+
+	const expoFilter = exhibitors => {
+		const expo = this.state.queries.expo.map(id => id.replaceAll("'", ""));
+		return exhibitors.filter(exhibitor => {
+			//overrride for abe
+			if (exhibitor.Expo__c == "a1x3A000001FOPe") {
+				const cat = exhibitor["exhibitor-cat"];
+				if (
+					expo.includes(exhibitor.Expo__c) ||
+					cat.includes("Adhesives and Sealants") ||
+					cat.includes("Bonding Solutions / Technology Provider")
+				) {
+					return true;
+				}
+			}
+			return expo.includes(exhibitor.Expo__c);
+		});
+	};
+
+	const searchFilter = (exhibitors, search) => {
+		if (search.trim() == "") {
+			return exhibitors;
+		}
+		search = search.toLowerCase();
+		return exhibitors.filter(exhibitor => {
+			const cats = exhibitor["exhibitor-cat"].toLowerCase();
+			const pagetitle = exhibitor.pagetitle.toLowerCase();
+			const content = exhibitor.content.toLowerCase();
+			if (
+				cats.includes(search) ||
+				pagetitle.includes(search) ||
+				content.includes(search)
+			) {
+				return true;
+			} else {
+				return false;
+			}
+		});
+	};
+
+	const alphabetFilter = (exhibitors, letter) => {
+		letter = letter.toLowerCase();
+
+		if (letter == "show all") {
+			return exhibitors;
+		}
+
+		return exhibitors.filter(exhibitor => {
+			const { pagetitle } = exhibitor;
+			const name = pagetitle.toLowerCase();
+
+			if (letter == "0-9") {
+				return !isNaN(name.charAt(0));
+			} else if (letter.match(/[a-z]/i)) {
+				//is a letter
+				return letter == name.charAt(0);
+			} else {
+				return true;
+			}
+		});
+	};
+
 	const filterExhibitors = (exhibitors, filters, queries, multiExpo) => {
 		exhibitors = [...exhibitors];
-		filters.forEach((filter) => {
+		filters.forEach(filter => {
 			if (filter == "SEARCH") {
 				exhibitors = searchFilter(exhibitors, queries.search);
 			} else if (filter == "ALPHABET") {
@@ -90,22 +223,16 @@ function ExhibitorList({ inputState, options, functionsBundle }) {
 		return exhibitors;
 	};
 
-	const getSlides = (exhibitors, options) => {
-		if (exhibitors.length < 1) {
-			return <h2 className="no-exhibs-message d-flex justify-content-center align-items-center">No exhibitors found</h2>;
-		}
-		return exhibitors.map((exhibitor, index) => {
-			const { id } = exhibitor;
-			return <Slide key={`slide--${id}--${index}`} payload={exhibitor} switchMode={switchMode} options={options} inputState={inputState}/>;
-		});
-	};
-
 	if (loading) {
 		return <Spinner></Spinner>;
 	} else {
-		console.log(exhibitors, filters, queries);
-
-		const filteredExhibitors = filterExhibitors(exhibitors, filters, queries, multiExpo);
+		const { multiExpo, filters, show } = options;
+		const filteredExhibitors = filterExhibitors(
+			exhibs,
+			filters,
+			queries,
+			multiExpo
+		);
 
 		return (
 			<section className={`exhibmanV2 exhibmanV2--${show} row`}>
@@ -115,30 +242,54 @@ function ExhibitorList({ inputState, options, functionsBundle }) {
 							<h3>
 								<strong>Refine Results</strong>
 							</h3>
-							<Cta bonusClass="control-col__reset" handler={resetFilters} size="micro" color="black" margin="vertical-margin--0">
+							<Cta
+								bonusClass="control-col__reset"
+								handler={handleReset}
+								size="micro"
+								color="black"
+								margin="vertical-margin--0">
 								Clear Filters
 							</Cta>
 						</div>
 						<div className="control-col__search vertical-margin--10">
-							<SearchInput handler={setSearch} value={filters.search} bonusClass="form-control" placeholder="Refine by Keyword" />
-							{getMultiExpo(options, inputState)}
+							<SearchInput
+								handler={handleSearch}
+								value={queries.search}
+								bonusClass="form-control"
+								placeholder="Refine by Keyword"
+							/>
+							{getMultiExpo(options, queries.expo)}
 						</div>
-						{getExtraNavButtons(options, inputState)}
+						{getExtraNavButtons(options, exhibs)}
 					</StickyNav>
 				</nav>
 				<div className="col-md-8 viewport-col">
 					<div className="alphabet-filter">
-						<Alphabet activeLetter={queries.letter} handler={setLetter} />
+						<Alphabet
+							activeLetter={queries.letter}
+							handler={handleSetLetter}
+						/>
 					</div>
 					<div className="row viewport__header">
 						<h3>
 							<strong>Exhibitors A-Z</strong>
 						</h3>
 					</div>
-					<div className="slide-list">{getSlides(filteredExhibitors, options)}</div>
+					<div className="slide-list">
+						{getSlides(filteredExhibitors, options)}
+					</div>
 				</div>
 			</section>
 		);
 	}
-}
-export default ExhibitorList;
+};
+
+const mapStateToProps = (store, ownProps) => {
+	// console.log("EXHIB LIST MAP STATE", store);
+	return store;
+};
+export default connect(mapStateToProps, {
+	setQueries,
+	fetchExhibs,
+	setLoading,
+})(ExhibitorList);

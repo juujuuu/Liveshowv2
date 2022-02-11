@@ -1,7 +1,13 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+
+import { setMode, setProfile, setLoading } from "../Actions";
+
 import Cta from "../../../common_components/Cta";
+
 import { getProfilePath } from "../Utils/GetPath";
+import { pushPageView } from "../Utils/pushPageView";
 
 class Slide extends Component {
 	constructor(props) {
@@ -18,8 +24,18 @@ class Slide extends Component {
 		return string;
 	};
 
+	handleSwitchMode = (mode, profileId) => {
+		const { setMode, setProfile, setLoading } = this.props;
+		
+		setLoading(true);
+		setProfile(profileId);
+		setMode(mode);
+		pushPageView(); 
+		document.body.scrollTop = document.documentElement.scrollTop = 0;
+	};
+
 	render() {
-		const { payload, switchMode, options, inputState } = this.props;
+		const { payload, options, profileId } = this.props;
 
 		const {
 			id,
@@ -36,6 +52,8 @@ class Slide extends Component {
 			corporateMember,
 			logo,
 		} = this.props.payload;
+
+		const { debug, local } = options;
 
 		const smallLogo = web_logo;
 		const bigLogo = logo;
@@ -56,8 +74,8 @@ class Slide extends Component {
 				id={id}>
 				<Link
 					className="router-link router-link--profile-button"
-					to={getProfilePath( options.debug, options.local, id)}
-					onClick={() => switchMode("PROFILE", id, inputState)}>
+					to={getProfilePath(debug, local, id)}
+					onClick={() => this.handleSwitchMode("PROFILE", id)}>
 					<Cta
 						color="black"
 						size="reg"
@@ -73,8 +91,10 @@ class Slide extends Component {
 				<div className="col-6 col-md-3 exhibitor-slide__logo">
 					<Link
 						className="router-link"
-						to={getProfilePath( options.debug, options.local, id)}
-						onClick={() => switchMode("PROFILE", id, inputState)}>
+						to={getProfilePath(debug, local, id)}
+						onClick={() =>
+							this.handleSwitchMode("PROFILE", id)
+						}>
 						<img
 							className="img-fluid"
 							src={web_logo !== "" ? smallLogo : bigLogo}
@@ -87,9 +107,9 @@ class Slide extends Component {
 						<h4 className="exhibitor-name">
 							<Link
 								className="router-link"
-								to={getProfilePath( options.debug, options.local, id)}
+								to={getProfilePath(debug, local, id)}
 								onClick={() =>
-									switchMode("PROFILE", id, inputState)
+									this.handleSwitchMode("PROFILE", id)
 								}>
 								{pagetitle}
 							</Link>
@@ -116,4 +136,7 @@ class Slide extends Component {
 		);
 	}
 }
-export default Slide;
+const mapStateToProps = (store, ownProps) => {
+	return { ...store, payload: ownProps.payload };
+};
+export default connect(mapStateToProps, { setMode, setLoading, setProfile })(Slide);
