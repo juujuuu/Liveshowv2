@@ -26,9 +26,12 @@ header {
 				min-height: unset;
 				.header__locked-logo {
 					display: flex;
-					height: 49px;
+					height: 50px;
 					justify-content: center;
 					align-items: center;
+					img{
+						height: 50px;
+					}
 				}
 				nav {
 					height: 50px;
@@ -300,7 +303,7 @@ header {
 		}
 	}
 	.header__info {
-		margin-top: 5px;
+		margin-top: 25px;
 		&--date,
 		&--location {
 			display: block;
