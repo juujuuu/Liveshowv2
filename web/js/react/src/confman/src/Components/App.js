@@ -14,7 +14,6 @@ import SpeakerSlide from "./SpeakerSlide";
 class App extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log("ergergergeragaerg");
 		let filtersObj;
 		switch (props.options.show) {
 			case "CEX":
@@ -27,6 +26,15 @@ class App extends React.Component {
 				props.options.odcode = "CEX21OD";
 				break;
 			case "SPC":
+				filtersObj = {
+					track: [-1], //ignore these tracks
+					day: -1, //inverse of this ^^
+					query: "",
+					letter: "-1",
+				};
+				props.options.odcode = "SPC21OD";
+				break;
+			case "NZB":
 				filtersObj = {
 					track: [-1], //ignore these tracks
 					day: -1, //inverse of this ^^
@@ -138,11 +146,12 @@ class App extends React.Component {
 	 * Setters
 	 */
 	setTrack = (value = -1) => {
+		const { show } = this.props.options;
 		let tracks = [];
 		if (this.state.filters.track[0] == -1) {
 			//currently on all so convert empty and add value
 			tracks.push(value);
-			if (this.props.options.show == "CEX" || this.props.options.show == "SPC") {
+			if (show == "CEX" || show == "SPC" || show == "NZB") {
 				if (value == 1) {
 					this.setDay(2);
 				} else {
@@ -153,7 +162,7 @@ class App extends React.Component {
 			tracks = this.state.filters.track;
 			//does the array contain value atm?
 			if (this.state.filters.track.indexOf(value) > -1) {
-				if (this.props.options.show == "CEX" || this.props.options.show == "SPC") {
+				if (show == "CEX" || show == "SPC" || show == "NZB") {
 					if (value == 1) {
 						this.setDay(1);
 					} else {
@@ -170,8 +179,10 @@ class App extends React.Component {
 				//tracks now empty so convert to -1
 				tracks.push(-1);
 				if (
-					this.props.options.show == "CEX" ||
-					this.props.options.show == "FMX" || this.props.options.show == "SPC"
+					show == "CEX" ||
+					show == "FMX" ||
+					show == "SPC" ||
+					show == "NZB"
 				) {
 					this.setDay(-1);
 				}
@@ -473,6 +484,8 @@ class App extends React.Component {
 		if (role == false) {
 			console.error("Role on getModal not set");
 		} else if (role == "speaker-modal") {
+			const { options } = this.props;
+			const { speakerAgendaLinks } = options;
 			let sessionsHtml;
 			data.sessions.forEach(session => {
 				let sessionType;
@@ -480,25 +493,24 @@ class App extends React.Component {
 				let link = `${this.props.options.fullagendalocation}?session-id=${session.id}&day=${session.day}`;
 				sessionsHtml = `<p><a href="${link}" title="${session.name}">${session.name}</a></p>`;
 			});
-			let modalBody = `<div class="container"><div class="row"><div class="col-12 col-md-2"><img src="${
-				data.Head_Shot_URL__c
-			}" class="img-fluid" alt="${data.First_Name__c} ${
-				data.Last_Name__c
-			}" /></div><div class="col-12 col-md-6"><p style="font-weight: bold;">${
-				data.First_Name__c
-			} ${data.Last_Name__c},</p><p>${
-				data.Job_Title__c
-			},</p><p style="font-weight: bold;">${
-				data.Company__c
-			}</p></div><div class="col-12 col-md-4"><img src="${
-				data.Logo_URL__c
-			}" class="img-fluid" alt="${
-				data.Company__c
-			}" /></div></div><div class="row"><div class="col-12"><h3 style="margin-top: 10px;">Speaker Bio</h3><p>${
-				data.Speaker__r.Biography__c == null
+			const {
+				Head_Shot_URL__c,
+				Last_Name__c,
+				First_Name__c,
+				Job_Title__c,
+				Company__c,
+				Logo_URL__c,
+				Speaker__r,
+			} = data;
+			let modalBody = `<div class="container"><div class="row"><div class="col-12 col-md-2"><img src="${Head_Shot_URL__c}" class="img-fluid" alt="${First_Name__c} ${Last_Name__c}" /></div><div class="col-12 col-md-6"><p style="font-weight: bold;">${First_Name__c} ${Last_Name__c},</p><p>${Job_Title__c},</p><p style="font-weight: bold;">${Company__c}</p></div><div class="col-12 col-md-4"><img src="${Logo_URL__c}" class="img-fluid" alt="${Company__c}" /></div></div><div class="row"><div class="col-12"><h3 style="margin-top: 10px;">Speaker Bio</h3><p>${
+				Speaker__r.Biography__c == null
 					? `<i>Coming soon</i>`
-					: data.Speaker__r.Biography__c
-			}</p><h3>Speaking at:</h3><div class="sessions">${sessionsHtml}</div></div></div></div>`;
+					: Speaker__r.Biography__c
+			}</p>${
+				speakerAgendaLinks
+					? `<h3>Speaking at:</h3><div class="sessions">${sessionsHtml}</div>`
+					: ``
+			}</div></div></div>`;
 			$(modal).find(".modal-body").append(modalBody);
 			$("body").append(modal);
 			let myModal = new bootstrap.Modal(document.getElementById("modal"));
@@ -693,7 +705,7 @@ class App extends React.Component {
 			<section
 				className={`confman conference-agenda conference-agenda--${show}`}>
 				<MainNav desktop={window.innerWidth > 992}>
-					{show != "CEX" && show != "FMX" && show != "SPC" ? (
+					{show != "CEX" && show != "NZB" && show != "FMX" && show != "SPC" ? (
 						<div className="main-nav__days">
 							<div
 								className={`container${

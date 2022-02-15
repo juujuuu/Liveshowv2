@@ -1,9 +1,9 @@
-$tracks: #d52c60, #5bb7ce, #144f74;
-$tracks-lighter: lighten(#d52c60, 20), lighten(#5bb7ce, 20), lighten(#144f74, 20);
-$main-color: #4d8691;
+$tracks: #0ea64f, #0ea64f;
+$tracks-lighter: lighten(#0ea64f, 20), lighten(#0ea64f, 20);
+$main-color: #0ea64f;
 
 .confman {
-	&.conference-agenda--FMX {
+	&.conference-agenda--NZB {
 		.curved-cta--primary {
 			background-color: $main-color;
 			.curved-cta__link {
@@ -17,7 +17,7 @@ $main-color: #4d8691;
 				}
 			}
 			&.curved-cta--hard {
-				background: lighten($main-color, 20);
+				background: lighten($main-color, 40);
 				&:hover,
 				&.active {
 					background: $main-color;
@@ -38,10 +38,13 @@ $main-color: #4d8691;
 						-webkit-transition: background-color 0.25s ease-in;
 						background-color: #31447b;
 					}
+					h3 {
+						//font-family: motiva-sans;
+					}
 				}
 			}
 			.main-nav__tracks {
-				background-color: #e9e7f4;
+				background-color: #d7d7e6;
 				.checkbox-filter {
 					$i: 1;
 					@each $track in $tracks {
@@ -89,6 +92,9 @@ $main-color: #4d8691;
 					$i: $i + 1;
 				}
 				.session__flag {
+					h2 {
+						//font-family: motiva-sans;
+					}
 				}
 				.session__content {
 					.session__title {
@@ -114,7 +120,7 @@ $main-color: #4d8691;
 			}
 		}
 	}
-	&.speaker-list--FMX {
+	&.speaker-list--NZB {
 		.speaker {
 			&__name {
 				color: $main-color;

@@ -6,11 +6,22 @@ var params = null;
 if (window.location.href.includes("?")) {
 	params = window.location.href.split("?")[1];
 	params = params.split("&");
-	params = params.map((param) => {
+	params = params.map(param => {
 		param = param.split("=");
 		return param;
 	});
 }
+
+let speakerAgendaLinks =
+	document.querySelector("#root").getAttribute("speakeragendalinks") !=
+	undefined
+		? document
+				.querySelector("#root")
+				.getAttribute("speakeragendalinks")
+				.toLowerCase()
+		: false;
+
+speakerAgendaLinks = speakerAgendaLinks === "true" ? true : false;
 
 var options = {
 	conf: document.querySelector("#root").getAttribute("conf"),
@@ -18,21 +29,39 @@ var options = {
 	reglink: document.querySelector("#root").getAttribute("reglink"),
 	reginterest: document.querySelector("#root").getAttribute("reginterest"),
 	event: document.querySelector("#root").getAttribute("event"),
-	contactcampaign: document.querySelector("#root").getAttribute("contactcampaign"),
+	contactcampaign: document
+		.querySelector("#root")
+		.getAttribute("contactcampaign"),
 	continent: document.querySelector("#root").getAttribute("continent"),
 	mode: document.querySelector("#root").getAttribute("mode"),
-	downloadagenda: document.querySelector("#root").getAttribute("downloadagenda"),
-	generalenquiry: document.querySelector("#root").getAttribute("generalenquiry"),
+	downloadagenda: document
+		.querySelector("#root")
+		.getAttribute("downloadagenda"),
+	generalenquiry: document
+		.querySelector("#root")
+		.getAttribute("generalenquiry"),
 	convincepdf: document.querySelector("#root").getAttribute("convincepdf"),
-	ondemand: JSON.parse(document.querySelector("#root").getAttribute("ondemand")),
-	fullagendalocation: document.querySelector("#root").getAttribute("fullagendalocation"),
+	ondemand: JSON.parse(
+		document.querySelector("#root").getAttribute("ondemand")
+	),
+	fullagendalocation: document
+		.querySelector("#root")
+		.getAttribute("fullagendalocation"),
+	speakerAgendaLinks,
 	additionalfilters:
-		document.querySelector("#root").getAttribute("additionalfilters") != undefined
-			? document.querySelector("#root").getAttribute("additionalfilters").split(" | ")
+		document.querySelector("#root").getAttribute("additionalfilters") !=
+		undefined
+			? document
+					.querySelector("#root")
+					.getAttribute("additionalfilters")
+					.split(" | ")
 			: false,
 	daynameoverride:
 		document.querySelector("#root").getAttribute("daynameoverride") != ""
-			? document.querySelector("#root").getAttribute("daynameoverride").split(" | ")
+			? document
+					.querySelector("#root")
+					.getAttribute("daynameoverride")
+					.split(" | ")
 			: undefined,
 	parameters: params,
 };
