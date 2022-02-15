@@ -2,19 +2,7 @@ import React, { Component } from "react";
 import { Route, Routes, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import fireModal from "../../../common_utils/Bootsrap5Modal";
 
-import {
-	getAcronymFromId,
-	getShowNameFromAcronym,
-	getShowNameFromId,
-	getSiteFromAcronym,
-	getSiteFromId,
-} from "../Utils/GetShow";
-import sanitizeUrl from "../Utils/SanitizeUrl";
-import createAPI from "../Utils/api";
-import sanitizeIds from "../Utils/SanitizeIds";
-import { pushPageView } from "../Utils/pushPageView";
 import {
 	getExhibListPath,
 	getProductPath,
@@ -50,8 +38,6 @@ class App extends Component {
 	 */
 	componentDidMount() {
 		const {
-			fetchExhibs,
-			fetchExhib,
 			setMode,
 			setLoading,
 			setQueries,
@@ -96,7 +82,7 @@ class App extends Component {
 	showAppInfo = boolean => {
 		boolean = boolean ? "block" : "none";
 		try {
-			document.getElementById("info").style.display = boolean;
+			document.getElementById("exhib_header").style.display = boolean;
 		} catch (error) {
 			console.error("Exhib Info block not found.  ", error);
 		}
@@ -116,6 +102,9 @@ class App extends Component {
 		);
 		if (error) {
 			return errorMessage;
+		} else if(Object.keys(options).length < 1){
+			//Options not yet set on mount
+			return <Spinner/>
 		}
 		try {
 			return (

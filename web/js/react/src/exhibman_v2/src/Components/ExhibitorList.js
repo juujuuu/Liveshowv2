@@ -29,6 +29,7 @@ const ExhibitorList = props => {
 		if (exhibs.length > 0) {
 			setLoading(false);
 		} else {
+			console.log("EXHIB PROPS:  ", props)
 			const siteURL = getSiteFromId(
 				options.ids instanceof Array ? options.ids[0] : options.ids
 			);

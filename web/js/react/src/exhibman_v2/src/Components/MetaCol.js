@@ -76,9 +76,9 @@ const MetaCol = props => {
 			return (
 				<p>
 					<strong>
-						<a href={social} target="_blank" rel="noreferrer">
+						<a href={field} target="_blank" rel="noreferrer">
 							<i className={`bi bi-${icon}`}></i>
-							{icon}
+							{" "}{icon.charAt(0).toUpperCase() + icon.slice(1)}
 						</a>
 					</strong>
 				</p>
