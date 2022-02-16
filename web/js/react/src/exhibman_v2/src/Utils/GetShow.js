@@ -44,12 +44,12 @@ const getSiteFromId = expo => {
 	switch (expo) {
 		case "a1x3A000001FSz9":
 			return "https://www.foam-expo.com/";
-		case "a1x4V000001YVpeQAG":
+		case "a1x4V000001YVpe":
 			return "https://www.adhesivesandbondingexpo.com/";
-		case "a1x4V000001Q9aU":
+		case "a1x4V000001YVpy":
 			return "https://www.foam-expo.eu/";
-		case "a1x3A000001FOPe":
-			return "https://www.adhesivesandbondingexpo.com/";
+		case "a1x4V000000xCSR":
+			return "https://www.adhesivesandbondingexpo.eu/";
 		case "a1x4V000001Yg1J":
 			return "https://www.ceramicsexpousa.com/";
 		case "a1x4V000001Ye1A":
@@ -65,11 +65,11 @@ const getShowNameFromId = id => {
 	switch (id) {
 		case "a1x3A000001FSz9":
 			return "Foam Expo North America";
-		case "a1x4V000001YVpeQAG":
+		case "a1x4V000001YVpe":
 			return "Adhesives & Bonding Expo";
-		case "a1x4V000001Q9aU":
+		case "a1x4V000001YVpy":
 			return "Foam Expo Europe";
-		case "a1x3A000001FOPe":
+		case "a1x4V000000xCSR":
 			return "Adhesives & Bonding Expo Europe";
 		case "a1x4V000001Yg1J":
 			return "Ceramics Expo";
@@ -86,11 +86,11 @@ const getAcronymFromId = id => {
 	switch (id) {
 		case "a1x3A000001FSz9":
 			return "Foam Expo North America";
-		case "a1x4V000001YVpeQAG":
+		case "a1x4V000001YVpe":
 			return "Adhesives & Bonding Expo";
-		case "a1x4V000001Q9aU":
+		case "a1x4V000001YVpy":
 			return "Foam Expo Europe";
-		case "a1x3A000001FOPe":
+		case "a1x4V000000xCSR":
 			return "Adhesives & Bonding Expo Europe";
 		case "a1x4V000001Yg1J":
 			return "Ceramics Expo";

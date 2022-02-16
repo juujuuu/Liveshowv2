@@ -107,6 +107,7 @@ class App extends Component {
 			return <Spinner/>
 		}
 		try {
+
 			return (
 				<Routes>
 					<Route
