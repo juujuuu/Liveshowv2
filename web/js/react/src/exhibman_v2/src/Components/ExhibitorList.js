@@ -11,7 +11,7 @@ import { fetchExhibs, setQueries, setLoading } from "../Actions";
 
 import PDFMake from "../Utils/PDFMake/PDFMake";
 import { connect } from "react-redux";
-import { getSiteFromId } from "../Utils/GetShow";
+import { getSiteFromId, getShowNameFromId } from "../Utils/GetShow";
 import sanitizeIds from "../Utils/SanitizeIds";
 
 const ExhibitorList = props => {
@@ -29,59 +29,23 @@ const ExhibitorList = props => {
 		if (exhibs.length > 0) {
 			setLoading(false);
 		} else {
-			console.log("EXHIB PROPS:  ", props)
+			console.log("EXHIB PROPS:  ", props);
 			const siteURL = getSiteFromId(
 				options.ids instanceof Array ? options.ids[0] : options.ids
 			);
 			const expos = sanitizeIds(options.ids);
+			console.log("sanitizeIds:", expos);
 			fetchExhibs(siteURL, expos).then(response => {
 				setLoading(false);
 			});
 		}
 	}, []);
 
-	const getMultiExpo = (options, expo) => {
-		const { ids, show, event, multiExpo } = options;
-
-		if (!multiExpo) {
-			return null;
-		} else {
-			let jsx = [];
-
-			ids.forEach(showId => {
-				let text;
-				let sanitisedShowId = showId.replaceAll("'", "");
-				text = getShowNameFromId(sanitisedShowId);
-				let newShowButton = (
-					<Cta
-						size="max"
-						curved={false}
-						active={expo.includes(showId)}
-						bonusClass={`control-col__show-filter control-col__show-filter--${sanitisedShowId}`}
-						key={`show-filter-${showId}`}
-						handler={this.setExpo}
-						role="expo-query"
-						value={showId}>
-						<span>{text}</span>
-						{expo.includes(showId) ? (
-							<img
-								className="img-fluid"
-								src="../assets/web/js/react/src/exhibman_v2/Assets/tick.png"
-								alt="tick"
-							/>
-						) : null}
-					</Cta>
-				);
-				jsx = [...jsx, newShowButton];
-			});
-			return jsx;
-		}
-	};
-
+	
 	const getExtraNavButtons = (options, exhibs) => {
 		const { regLink } = options;
 		let jsx = [];
-
+		
 		const newJsx = (
 			<Cta
 				size="max"
@@ -96,9 +60,9 @@ const ExhibitorList = props => {
 		if (regLink) {
 			const newJsx = (
 				<Cta
-					size="max"
-					color="cex-red"
-					link={regLink}
+				size="max"
+				color="cex-red"
+				link={regLink}
 					bonusClass="control-col__reg-link"
 					key={"register to attend"}>
 					Register To Attend
@@ -122,7 +86,7 @@ const ExhibitorList = props => {
 			return <Slide key={`slide--${id}--${index}`} payload={exhibitor} />;
 		});
 	};
-
+	
 	const handleReset = () => {
 		setQueries({
 			search: "",
@@ -140,6 +104,29 @@ const ExhibitorList = props => {
 		});
 	};
 
+	const handleSetExpo = expo => {
+		let newExpoQuery;
+		let hasExpo = expo === queries.expo.find(queryExpo => queryExpo.includes(expo));
+		console.log("QUERY EXPOS:  ", queries.expo)
+		console.log("INPUT EXPOS:  ", expo);
+		console.log("HAS EXPO:", hasExpo );
+		console.log("QUERY EXPO FIND:", expo === queries.expo.find(queryExpo => queryExpo.includes(expo)) );
+		
+
+		if (hasExpo) {
+			newExpoQuery = queries.expo.filter(
+				queryExpo => !queryExpo.includes(expo)
+			);
+		} else{
+			newExpoQuery = [...queries.expo, expo];
+		}
+		setQueries({
+			search: queries.search,
+			letter: queries.letter,
+			expo: newExpoQuery,
+		});
+	};
+	
 	const handleSetLetter = letter => {
 		setQueries({
 			search: queries.search,
@@ -149,7 +136,7 @@ const ExhibitorList = props => {
 	};
 
 	const expoFilter = exhibitors => {
-		const expo = this.state.queries.expo.map(id => id.replaceAll("'", ""));
+		const expo = props.queries.expo.map(id => id.replaceAll("'", ""));
 		return exhibitors.filter(exhibitor => {
 			//overrride for abe
 			if (exhibitor.Expo__c == "a1x3A000001FOPe") {
@@ -158,7 +145,7 @@ const ExhibitorList = props => {
 					expo.includes(exhibitor.Expo__c) ||
 					cat.includes("Adhesives and Sealants") ||
 					cat.includes("Bonding Solutions / Technology Provider")
-				) {
+					) {
 					return true;
 				}
 			}
@@ -208,7 +195,44 @@ const ExhibitorList = props => {
 			}
 		});
 	};
-
+	
+	const getMultiExpo = (options, expos) => {
+		const { ids, show, event, multiExpo } = options;
+	
+		if (!multiExpo) {
+			return null;
+		} else {
+			let jsx = [];
+			ids.forEach(showId => {
+				let text;
+				let sanitisedShowId = showId.replaceAll("'", "");
+				text = getShowNameFromId(sanitisedShowId);
+				let newShowButton = (
+					<Cta
+						size="max"
+						curved={false}
+						active={expos.includes(showId)}
+						bonusClass={`control-col__show-filter control-col__show-filter--${sanitisedShowId}`}
+						key={`show-filter-${showId}`}
+						handler={handleSetExpo}
+						role="expo-query"
+						value={showId}>
+						<span>{text}</span>
+						{expos.includes(showId) ? (
+							<img
+								className="img-fluid"
+								src="../assets/web/js/react/src/exhibman_v2/Assets/tick.png"
+								alt="tick"
+							/>
+						) : null}
+					</Cta>
+				);
+				jsx = [...jsx, newShowButton];
+			});
+			return jsx;
+		}
+	};
+	
 	const filterExhibitors = (exhibitors, filters, queries, multiExpo) => {
 		exhibitors = [...exhibitors];
 		filters.forEach(filter => {

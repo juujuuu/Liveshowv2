@@ -10,7 +10,7 @@ const getProfilePath = (debug = false, local = false, id = false) => {
 		id ? `?boothid=${id}` : ""
 	}`;
 };
-const getProductPath = (debug = false, local = false, ids = false) => {	
+const getProductPath = (debug = false, local = false, ids = false) => {
 	return `${!local && debug ? "/site" : ""}/${
 		debug ? "debug-" : ""
 	}exhibitor-list/${debug ? "debug-" : ""}product/${

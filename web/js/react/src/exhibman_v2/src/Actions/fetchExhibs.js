@@ -4,6 +4,7 @@ const fetchExhibs = (site, expos) => async dispatch => {
 	const api = createAPI(site);
 	let response = await api.get(`/rest/exhibman.php?expos=${expos}`);
 	let { data } = response;
+	console.log("FETCH EXHIBS:", `/rest/exhibman.php?expos=${expos}`)
 	data.sort((a, b) =>{
 		if(a.pagetitle < b.pagetitle){
 			return -1;
