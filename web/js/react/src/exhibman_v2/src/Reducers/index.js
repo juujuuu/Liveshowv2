@@ -8,6 +8,7 @@ import productReducer from "./productReducer";
 import optionsReducer from "./optionsReducer";
 import queriesReducer from "./queriesReducer";
 import profileReducer from "./profileReducer";
+import setDownloadListReducer from "./setDownloadListReducer";
 
 export default combineReducers({
 	exhibs: exhibsReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
 	mode: modeReducer,
 	loading: loadingReducer,
 	error: errorReducer,
-	profileId: profileReducer
+	profileId: profileReducer,
+	downloadList: setDownloadListReducer
 });

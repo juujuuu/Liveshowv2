@@ -21,12 +21,11 @@ import {
 } from "../Actions";
 
 import Spinner from "../../../common_components/Spinner";
-import StickyNav from "../../../common_components/StickyNav";
-import Cta from "../../../common_components/Cta";
 
 import ExhibitorList from "./ExhibitorList";
 import Profile from "./Profile/Profile";
 import Product from "./Product";
+import DesignExhibitorList from "./DesignExhibitorList";
 
 class App extends Component {
 	constructor(props) {
@@ -105,6 +104,8 @@ class App extends Component {
 		} else if(Object.keys(options).length < 1){
 			//Options not yet set on mount
 			return <Spinner/>
+		} else if(mode === "DESIGN_LIST"){
+			return <DesignExhibitorList/>;
 		}
 		try {
 
