@@ -75,11 +75,11 @@ class Slide extends React.Component {
 						""
 					)}
 					<div className={`col-${windowwidth > 992 ? "5" : "12"} speaker__info`}>
-						<h3 className="speaker__info__name">{`${Prefix__c != null ? `${Prefix__c} ` : ""}${First_Name__c} ${
+						<h4 className="speaker__info__name">{`${Prefix__c != null ? `${Prefix__c} ` : ""}${First_Name__c} ${
 							speaker.Last_Name__c
-						}`}</h3>
-						<h3 className="speaker__info__job-title">{`${Job_Title__c}`}</h3>
-						<h3 className="speaker__info__company">{`${Company__c}`}</h3>
+						}`}</h4>
+						<h4 className="speaker__info__job-title">{`${Job_Title__c}`}</h4>
+						<h4 className="speaker__info__company">{`${Company__c}`}</h4>
 						{ondemand && Presentation_Slides_PDF_link__c ? (
 							<h3 className="speaker__info__presentation">
 								<i>
