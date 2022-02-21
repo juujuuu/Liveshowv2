@@ -11,7 +11,7 @@ $(function () {
 	$(".header--desktop .nav-item a").each(function () {
 		//console.log("parsed " + this.href);
 		if (this.href == url) {
-			if (!this.href.includes("book-now") && !this.href.includes("booking-page")) {
+			if (!this.href.includes("book-now") && !this.href.includes("booking-page") && !this.title.includes("BOOK YOUR BOOTH")) {
 				console.log("url found!");
 				$(this).addClass("active");
 			}

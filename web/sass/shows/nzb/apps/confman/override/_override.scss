@@ -1,5 +1,5 @@
-$tracks: #0ea64f, #0ea64f;
-$tracks-lighter: lighten(#0ea64f, 20), lighten(#0ea64f, 20);
+$tracks: #0ea64f, #313f42;
+$tracks-lighter: lighten(#0ea64f, 20), lighten(#313f42, 20);
 $main-color: #0ea64f;
 
 .confman {
@@ -52,6 +52,11 @@ $main-color: #0ea64f;
 							.bi-check-square-fill,
 							.bi-square {
 								color: nth($tracks, $i);
+							}
+							.checkbox-filter__name {
+								h3 {
+									color: nth($tracks, $i);
+								}
 							}
 						}
 						$i: $i + 1;
