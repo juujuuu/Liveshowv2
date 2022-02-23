@@ -11,9 +11,12 @@ import Body from "../../../common_components/Body";
 import Letter from "./Letter";
 import SpeakerSlide from "./SpeakerSlide";
 
+import axios from "axios";
+import { getOnDemandCode } from "./Utils/getOnDemand";
 class App extends React.Component {
 	constructor(props) {
 		super(props);
+		props.options.odcode = getOnDemandCode(props.options.show)
 		let filtersObj;
 		switch (props.options.show) {
 			case "CEX":
@@ -23,7 +26,6 @@ class App extends React.Component {
 					query: "",
 					letter: "-1",
 				};
-				props.options.odcode = "CEX21OD";
 				break;
 			case "SPC":
 				filtersObj = {
@@ -32,7 +34,6 @@ class App extends React.Component {
 					query: "",
 					letter: "-1",
 				};
-				props.options.odcode = "SPC21OD";
 				break;
 			case "NZB":
 				filtersObj = {
@@ -41,7 +42,6 @@ class App extends React.Component {
 					query: "",
 					letter: "-1",
 				};
-				props.options.odcode = "SPC21OD";
 				break;
 			case "OCS":
 				filtersObj = {
@@ -66,7 +66,6 @@ class App extends React.Component {
 					query: "",
 					letter: "-1",
 				};
-				props.options.odcode = "FA21OD";
 				break;
 			default:
 				//if a filter is -1 ignore
@@ -705,7 +704,10 @@ class App extends React.Component {
 			<section
 				className={`confman conference-agenda conference-agenda--${show}`}>
 				<MainNav desktop={window.innerWidth > 992}>
-					{show != "CEX" && show != "NZB" && show != "FMX" && show != "SPC" ? (
+					{show != "CEX" &&
+					show != "NZB" &&
+					show != "FMX" &&
+					show != "SPC" ? (
 						<div className="main-nav__days">
 							<div
 								className={`container${
@@ -904,55 +906,47 @@ class App extends React.Component {
 	};
 
 	sfGet = async (id, mode = "full-agenda") => {
+		const api = axios.create({
+			baseURL: "https://www.spacetechexpo.com/rest",
+		});
 		if (mode == "full-agenda") {
-			let url = `./rest/confman.php?call[]=presentation&call[]=session&confId=${id}`;
 			try {
-				let response = await fetch(url, {
-					method: "GET", // *GET, POST, PUT, DELETE, etc.
-					mode: "same-origin", // no-cors, *cors, same-origin
-					cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-					credentials: "same-origin", // include, *same-origin, omit
-					headers: {
-						"Content-Type": "application/json",
-					},
-				});
-				let sessions;
-				await response.json().then(data => {
-					//match presentations to sessions
-					let presentations = data.presentation;
-					data = data.session.map(session => {
-						//check if any presentations match the session id
-						session.presentations = [];
-						while (
-							presentations.find(
-								presentation =>
-									presentation.Session__c == session.Id
-							) != undefined
-						) {
-							let found = presentations.find(presentation => {
-								return presentation.Session__c == session.Id;
-							});
-							let index = presentations.indexOf(found);
-							if (index > -1) {
-								presentations.splice(index, 1);
-							}
-							session.presentations.push(found);
+				let response = await api.get(
+					`/confman.php?call[]=presentation&call[]=session&confId=${id}`
+				);
+				console.log(response);
+				let {presentation, session} = response.data;
+				//match presentations to sessions
+				const sessions = session.map(session => {
+					//check if any presentations match the session id
+					session.presentations = [];
+					while (
+						presentation.find(
+							presentation =>
+								presentation.Session__c == session.Id
+						) != undefined
+					) {
+						let found = presentation.find(presentation => {
+							return presentation.Session__c == session.Id;
+						});
+						let index = presentation.indexOf(found);
+						if (index > -1) {
+							presentation.splice(index, 1);
 						}
-						session.presentations = session.presentations.sort(
-							(a, b) => {
-								if (a.Order__c > b.Order__c) {
-									return 1;
-								}
-								if (a.Order__c < b.Order__c) {
-									return -1;
-								}
-								return 0;
+						session.presentations.push(found);
+					}
+					session.presentations = session.presentations.sort(
+						(a, b) => {
+							if (a.Order__c > b.Order__c) {
+								return 1;
 							}
-						);
-						return session;
-					});
-
-					sessions = data;
+							if (a.Order__c < b.Order__c) {
+								return -1;
+							}
+							return 0;
+						}
+					);
+					return session;
 				});
 				return sessions;
 			} catch (e) {
@@ -960,17 +954,10 @@ class App extends React.Component {
 				return e;
 			}
 		} else if (mode == "speaker-list") {
-			let url = `./rest/confman.php?call[]=presentation&confId=${id}`;
 			try {
-				let response = await fetch(url, {
-					method: "GET", // *GET, POST, PUT, DELETE, etc.
-					mode: "same-origin", // no-cors, *cors, same-origin
-					cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-					credentials: "same-origin", // include, *same-origin, omit
-					headers: {
-						"Content-Type": "application/json",
-					},
-				});
+				let response = await api.get(
+					`/rest/confman.php?call[]=presentation&confId=${id}`
+				);
 				let presentations;
 				await response.json().then(data => {
 					presentations = data;

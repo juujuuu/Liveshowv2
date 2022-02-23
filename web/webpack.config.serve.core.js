@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 //TODO FIX THE SASS, HANDLEBAR INJECTION?
 
-const config = {
+let config = {
 	devServer: {
 		compress: false,
 		devMiddleware: {
@@ -66,6 +66,13 @@ module.exports = appName => {
 	config.output.path = outPath;
 
 	config.output.publicPath = outPath;
+
+	if(appName === "confman"){
+		config.devServer.static.directory =  path.resolve(
+			__dirname,
+			`js/react/src/${appName}/public/`
+		)
+	}	
 
 	config.module.rules[0].include = [
 		path.resolve(__dirname, `js/react/src/${appName}/src`),
