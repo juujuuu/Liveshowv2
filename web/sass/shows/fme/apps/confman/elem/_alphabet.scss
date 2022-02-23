@@ -1,0 +1,37 @@
+.confman {
+	.speaker-list__alphabet {
+		ul {
+			list-style: none;
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+			@media (max-width: 990px) {
+				justify-content: center;
+			}
+			padding: 0;
+			margin: 10px 0;
+			flex-wrap: wrap;
+			a {
+				font-size: 16px;
+				white-space: nowrap;
+				&:hover {
+					text-decoration: underline;
+					cursor: pointer;
+				}
+				&::after {
+					content: "|";
+					padding: 0 10px;
+					&:hover {
+						text-decoration: none !important;
+					}
+				}
+				&:last-child {
+					&::after {
+						content: "";
+						padding: 0;
+					}
+				}
+			}
+		}
+	}
+}

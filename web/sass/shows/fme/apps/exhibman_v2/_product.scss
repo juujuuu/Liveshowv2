@@ -1,0 +1,28 @@
+.exhibmanV2.exhibman-product {
+	.product-header {
+		h2 {
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+		h1 {
+		}
+	}
+	.product-body {
+		&__image {
+			@media (min-width: $mobile-width) {
+				float: left;
+			}
+			max-width: 400px;
+			padding: 10px;
+		}
+		&__text {
+		}
+	}
+	.product-enquire {
+	}
+	.profile-back-to-list {
+		display: none;
+	}
+}

@@ -1,0 +1,55 @@
+$main-colour: #b88e14;
+.enhanced-exhibitors--CEX {
+	.enhanced-exhibitors__alphabet {
+		@media (min-width: 1000px) and (max-width: 1200px) {
+			div > div {
+				line-height: 10px;
+			}
+		}
+	}
+	.enhanced-exhibitors__cta--premium-listing {
+		background-color: $main-colour;
+	}
+	.exhibitor-slide--Premium {
+		.exhibitor-slide__body {
+			h4 {
+				color: $main-colour;
+			}
+		}
+	}
+	.exhibitor-slide__cats {
+		li {
+			color: #5c5c5c;
+		}
+	}
+	.main-menu {
+		.affix {
+			@media (min-width: 768px) and (max-width: 900px) {
+				width: 30%;
+			}
+			@media (min-width: 900px) and (max-width: 1090px) {
+				width: 25%;
+			}
+			@media (min-width: 1090px) and (max-width: 1200px) {
+				width: 22%;
+			}
+		}
+		.enhanced-exhibitors__cta {
+			border-radius: 10px;
+		}
+		.affix-top {
+			.main-menu__ctas__cerion-banner {
+				display: none;
+			}
+		}
+		.main-menu__ctas__cerion-banner {
+			@media (max-width: 768px) {
+				display: none;
+			}
+			img {
+				max-width: 100%;
+				border: 1px solid black;
+			}
+		}
+	}
+}
