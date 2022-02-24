@@ -34,6 +34,15 @@ class App extends React.Component {
 				};
 				props.options.odcode = "SPC21OD";
 				break;
+			case "FME":
+				filtersObj = {
+					track: [-1], //ignore these tracks
+					day: -1, //inverse of this ^^
+					query: "",
+					letter: "-1",
+				};
+				props.options.odcode = "FME21OD";
+				break;
 			case "NZB":
 				filtersObj = {
 					track: [-1], //ignore these tracks
@@ -181,6 +190,9 @@ class App extends React.Component {
 				if (
 					show == "CEX" ||
 					show == "FMX" ||
+					show == "FME" ||
+					show == "ABE" ||
+					show == "ABX" ||
 					show == "SPC" ||
 					show == "NZB"
 				) {
@@ -705,7 +717,14 @@ class App extends React.Component {
 			<section
 				className={`confman conference-agenda conference-agenda--${show}`}>
 				<MainNav desktop={window.innerWidth > 992}>
-					{show != "CEX" && show != "NZB" && show != "FMX" && show != "SPC" ? (
+					{show != "CEX" &&
+					show != "NZB" &&
+					show != "FMX" &&
+					show != "ABX" &&
+					show != "FME" &&
+					show != "ABE" &&
+
+					show != "SPC" ? (
 						<div className="main-nav__days">
 							<div
 								className={`container${
