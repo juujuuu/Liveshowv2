@@ -37,9 +37,9 @@ class DesignSlide extends Component {
 		const { id, Exhibitor_listing_type__c, pagetitle, web_logo, logo } =
 			this.props.payload;
 
-		const smallLogo = web_logo;
-		const bigLogo = logo;
 		const booth = payload["exhibitor-booth"];
+		
+		console.log("Payload ---->", this.props.payload);	
 
 		return (
 			<div
@@ -49,7 +49,7 @@ class DesignSlide extends Component {
 					<span>
 						<img
 							className="img-fluid"
-							src={web_logo !== "" ? smallLogo : bigLogo}
+							src={web_logo !== "" ? web_logo : logo}
 							alt={pagetitle}
 						/>
 					</span>
@@ -62,8 +62,8 @@ class DesignSlide extends Component {
 					<div
 						className="d-flex flex-column justify-content-center align-items-center"
 						style={{ width: "25%" }}>
-						{web_logo !== "" && web_logo.includes("filestack")? (
-							<Cta link={web_logo}>Big Logo</Cta>
+						{logo !== "" && logo.includes("filestack") ? (
+							<Cta link={logo}>Big Logo</Cta>
 						) : (
 							<Cta size="max" color="black">
 								No Big Logo
@@ -73,14 +73,14 @@ class DesignSlide extends Component {
 					<div
 						className="d-flex flex-column justify-content-center align-items-center"
 						style={{ width: "25%" }}>
-						{smallLogo !== "" && smallLogo.includes("filestack") ? (
-							<Cta link={smallLogo}>Small Logo</Cta>
+						{web_logo !== "" && web_logo.includes("filestack") ? (
+							<Cta link={web_logo}>Small Logo</Cta>
 						) : (
 							<Cta size="max" color="black">
-								Small Logo
+								No Small Logo
 							</Cta>
 						)}
-					</div>
+					</div>					
 					<div
 						className="checkboxes d-flex flex-column justify-content-center align-items-center"
 						style={{ width: "25%" }}>
@@ -110,7 +110,7 @@ class DesignSlide extends Component {
 								)}
 							</div>
 						) : null}
-						{smallLogo !== "" && smallLogo.includes("filestack")? (
+						{logo !== "" && logo.includes("filestack") ? (
 							<div className="d-flex align-items-center">
 								<label>Add Small Logo</label>
 								{this.isListed(

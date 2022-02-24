@@ -108,9 +108,9 @@ const DesignExhibitorList = props => {
 		downloads.forEach(({ id, size }) => {
 			const exhibitor = exhibitors.find(exhibitor => exhibitor.id === id);
 			if (size === "BIG") {
-				output = [...output, exhibitor.web_logo.split(".com/")[1]];
-			} else {
 				output = [...output, exhibitor.logo.split(".com/")[1]];
+			} else {
+				output = [...output, exhibitor.web_logo.split(".com/")[1]];
 			}
 		});
 		if (output.length > 0) {
