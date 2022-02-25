@@ -8,6 +8,8 @@ import setOpenSlides from "./setOpenSlides";
 import setError from "./setError";
 import setOptions from "./setOptions";
 import setLoading from "./setLoading";
+import setMaxDays from "./setMaxDays";
+import setMaxTracks from "./setMaxTracks";
 
 export {
 	setLetter,
@@ -16,8 +18,10 @@ export {
 	setQuery,
 	fetchConference,
 	fetchSpeakerList,
-    setOpenSlides,
-    setError,
+	setOpenSlides,
+	setError,
 	setOptions,
-	setLoading
+	setLoading,
+	setMaxDays,
+	setMaxTracks,
 };
