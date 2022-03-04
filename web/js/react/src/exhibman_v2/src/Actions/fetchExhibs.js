@@ -6,10 +6,10 @@ const fetchExhibs = (site, expos) => async dispatch => {
 	let { data } = response;
 	console.log("FETCH EXHIBS:", `/rest/exhibman.php?expos=${expos}`)
 	data.sort((a, b) =>{
-		if(a.pagetitle < b.pagetitle){
+		if(a.pagetitle.toLowerCase() < b.pagetitle.toLowerCase() ){
 			return -1;
 		}
-		if(a.pagetitle < b.pagetitle){
+		if(a.pagetitle.toLowerCase()  < b.pagetitle.toLowerCase() ){
 			return 1;
 		}
 		return 0;
