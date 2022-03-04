@@ -7,6 +7,7 @@ import openSlidesReducer from "./openSidesReducer";
 import fetchConferenceReducer from "./fetchConferenceReducer";
 import fetchSpeakersReducer from "./fetchSpeakersReducer";
 import maxAttributesReducer from "./maxAttributesReducer";
+import initialParamsReducer from "./initialParamsReducer";
 
 export default combineReducers({
 	error: errorReducer,
@@ -18,4 +19,5 @@ export default combineReducers({
 	speakers: fetchSpeakersReducer,
 	maxDays: maxAttributesReducer,
 	maxTracks: maxAttributesReducer,
+	initialParams: initialParamsReducer
 });

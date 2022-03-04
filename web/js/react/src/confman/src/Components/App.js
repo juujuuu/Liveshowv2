@@ -1170,4 +1170,10 @@ class App extends React.Component {
 		}
 	}
 }
-export default App;
+const mapStateToProps = (store, ownProps) => {
+	return { ...store };
+};
+export default connect(mapStateToProps, {
+	setLoading,
+	dealtWithInitialParams
+})(App);

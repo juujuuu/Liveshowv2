@@ -1,5 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+
+import reducers from "./Reducers";
+
 import App from "./Components/App";
 
 var params = null;
@@ -29,6 +35,7 @@ var options = {
 	reglink: document.querySelector("#root").getAttribute("reglink"),
 	reginterest: document.querySelector("#root").getAttribute("reginterest"),
 	event: document.querySelector("#root").getAttribute("event"),
+	topNav: document.querySelector("#root").getAttribute("topnav"),
 	contactcampaign: document
 		.querySelector("#root")
 		.getAttribute("contactcampaign"),
@@ -71,4 +78,11 @@ if (options.show.includes("-Test")) {
 	options.show = options.show.replace("-Test", "");
 }
 
-ReactDOM.render(<App options={options} />, document.querySelector("#root"));
+const store = createStore(reducers, applyMiddleware(thunk));
+
+ReactDOM.render(
+	<Provider store={store}>
+		<App initOptions={options} />
+	</Provider>,
+	document.querySelector("#root")
+);

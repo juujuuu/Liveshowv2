@@ -10,6 +10,7 @@ import setOptions from "./setOptions";
 import setLoading from "./setLoading";
 import setMaxDays from "./setMaxDays";
 import setMaxTracks from "./setMaxTracks";
+import dealtWithInitialParams from "./dealtWithInitialParams";
 
 export {
 	setLetter,
@@ -24,4 +25,5 @@ export {
 	setLoading,
 	setMaxDays,
 	setMaxTracks,
+	dealtWithInitialParams
 };
