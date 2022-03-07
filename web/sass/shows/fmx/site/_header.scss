@@ -204,6 +204,11 @@ header {
 			clear: both;
 			float: right;
 			margin-top: 5px;
+			@media (max-width: 1200px) {
+				img {
+					max-width: 75%;
+				}
+			}
 		}
 	}
 	.header__main-menu {
