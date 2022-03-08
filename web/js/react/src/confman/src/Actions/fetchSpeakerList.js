@@ -1,4 +1,4 @@
-import createAPI from "../Utils/api";
+import createAPI from "../Utils/createApi";
 
 const fetchSpeakerList = (site, conferenceId) => async dispatch => {
 	const api = createAPI(site);

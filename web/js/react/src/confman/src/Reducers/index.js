@@ -19,5 +19,5 @@ export default combineReducers({
 	speakers: fetchSpeakersReducer,
 	maxDays: maxAttributesReducer,
 	maxTracks: maxAttributesReducer,
-	initialParams: initialParamsReducer
+	dealtWithInitialParams: initialParamsReducer
 });

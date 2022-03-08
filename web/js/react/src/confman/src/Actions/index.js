@@ -10,7 +10,8 @@ import setOptions from "./setOptions";
 import setLoading from "./setLoading";
 import setMaxDays from "./setMaxDays";
 import setMaxTracks from "./setMaxTracks";
-import dealtWithInitialParams from "./dealtWithInitialParams";
+import setDealtWithInitialParams from "./setDealtWithInitialParams";
+import resetFiltersAction from "./resetFilters";
 
 export {
 	setLetter,
@@ -25,5 +26,6 @@ export {
 	setLoading,
 	setMaxDays,
 	setMaxTracks,
-	dealtWithInitialParams
+	setDealtWithInitialParams,
+	resetFiltersAction
 };

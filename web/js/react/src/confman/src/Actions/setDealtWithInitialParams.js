@@ -1,8 +1,8 @@
-const dealtWithInitialParams = (boolean) =>{
+const setDealtWithInitialParams = (boolean) =>{
     return {
         type: "SET_DEALT_INITIAL_PARAMS",
         payload: boolean
     };
 }
 
-export default dealtWithInitialParams;
+export default setDealtWithInitialParams;

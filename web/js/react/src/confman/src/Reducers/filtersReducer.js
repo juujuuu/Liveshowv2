@@ -1,20 +1,17 @@
-const filtersReducer = (
-	state = { track: [], day: [], query: "", letter: -1 },
-	action
-) => {
+const filtersReducer = (state = { track: [], day: [], query: "", letter: -1 }, action) => {
 	const { type, payload } = action;
 	switch (type) {
 		case "SET_DAY":
 			if (state.day.find(d => d === payload) !== undefined) {
 				let newDays = state.day.filter(d => d !== payload);
-				return { ...state, day: newDays };
+				return { ...state, day: newDays }; //already have this day so get rid of it
 			} else {
-				return { ...state, day: [...state.day, payload] };
+				return { ...state, day: [...state.day, payload] }; //Don't have it, so add it to the array
 			}
 		case "SET_TRACK":
 			if (state.track.find(t => t === payload) !== undefined) {
-				let newTracks = state.track.filter(d => d !== payload);
-				return { ...state, day: newTracks };
+				let newTracks = state.track.filter(t => t !== payload);
+				return { ...state, track: newTracks };
 			} else {
 				return { ...state, track: [...state.track, payload] };
 			}
@@ -22,6 +19,8 @@ const filtersReducer = (
 			return { ...state, letter: payload };
 		case "SET_QUERY":
 			return { ...state, query: payload };
+		case "RESET_FILTERS":
+			return { track: [], day: [], query: "", letter: -1 };
 		default:
 			return state;
 	}

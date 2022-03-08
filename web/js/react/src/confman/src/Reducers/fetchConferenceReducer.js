@@ -1,9 +1,8 @@
 const fetchConferenceReducer = (state = [], action) => {
 	const { type } = action;
 	let { payload: data } = action;
-	switch (action.type) {
+	switch (type) {
 		case "FETCH_CONFERENCE":
-			console.log("Conference Reducer receiving: ", data)
 			let { session: sessions, presentation: presentations } = data;
 			//Assign presentations to session
 			sessions = sessions.map(session => {
