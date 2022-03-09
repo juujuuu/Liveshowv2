@@ -5,27 +5,27 @@ const fetchSpeakersReducer = (state = [], action) => {
 		case "FETCH_SPEAKERLIST":
 			let { presentation: presentations } = data;
 			console.log("Speaker List Reducer receiving: ", presentations);
-			//Merge multiple speakers into one element
+			//Merge multiple speakers into one newSpeaker
 			const referenceSpeakers = [...presentations];
 			let newSpeakers = [];
 			for (let i = 0; i < referenceSpeakers.length; i++) {
-				let element = referenceSpeakers[i];
+				let newSpeaker = referenceSpeakers[i];
 				if (
 					undefined !=
 					newSpeakers.find(
 						speaker =>
-							element.Speaker__r.Id == speaker.Speaker__r.Id
+							newSpeaker.Speaker__r.Id == speaker.Speaker__r.Id
 					)
 				) {
 					//array already contains this speaker
 					//Push session data to array
 					let currentSpeaker = newSpeakers.find(
 						speaker =>
-							element.Speaker__r.Id == speaker.Speaker__r.Id
+							newSpeaker.Speaker__r.Id == speaker.Speaker__r.Id
 					);
 					let index = newSpeakers.indexOf(currentSpeaker);
 					newSpeakers[index].sessions.push({
-						roll: element.Roll__c,
+						roll: newSpeaker.Roll__c,
 						id: referenceSpeakers[i].Session__r.Id,
 						day: referenceSpeakers[i].Session__r.Day__c,
 						name: referenceSpeakers[i].Session__r.Name,
@@ -34,16 +34,16 @@ const fetchSpeakersReducer = (state = [], action) => {
 					});
 				} else {
 					//array doesn't container this speaker__c
-					element.sessions = [];
-					element.sessions.push({
-						roll: element.Roll__c,
+					newSpeaker.sessions = [];
+					newSpeaker.sessions.push({
+						roll: newSpeaker.Roll__c,
 						id: referenceSpeakers[i].Session__r.Id,
 						day: referenceSpeakers[i].Session__r.Day__c,
 						name: referenceSpeakers[i].Session__r.Name,
 						start: referenceSpeakers[i].Session__r.Start_Time__c,
 						track: referenceSpeakers[i].Session__r.Track_Number__c,
 					});
-					newSpeakers.push(element);
+					newSpeakers.push(newSpeaker);
 				}
 			}
 			//Alphabetize
@@ -64,6 +64,7 @@ const fetchSpeakersReducer = (state = [], action) => {
 				});
 				return speaker;
 			});
+			return newSpeakers;
 		default:
 			return state;
 	}

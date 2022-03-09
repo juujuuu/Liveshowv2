@@ -24,9 +24,10 @@ import {
 	setDealtWithInitialParams,
 	setQuery,
 	resetFiltersAction,
-	setError
+	setError,
 } from "../Actions";
 import getModal from "../Utils/getModal";
+import { getOnDemandCode } from "../Utils/getOnDemand";
 
 const FullAgenda = props => {
 	const {
@@ -47,7 +48,7 @@ const FullAgenda = props => {
 		setOpenSlides,
 		filters,
 		setError,
-		resetFiltersAction
+		resetFiltersAction,
 	} = props;
 
 	const {
@@ -72,36 +73,28 @@ const FullAgenda = props => {
 				setLoading(false);
 			});
 			if (ondemand) {
-				getModal({ role: "on-demand-modal" });
+				getModal({ role: "on-demand-modal",  odcode: getOnDemandCode(show)});
 			}
-		}		
+		}
 	}, []);
-	useEffect(()=>{
+	useEffect(() => {
 		if (!dealtWithInitialParams && !loading) {
 			if (parameters.find(param => param[0] == "session-id")) {
 				const [name, sessionId] = parameters.find(param => param[0] == "session-id");
-				try {
-					// const day = parameters.find(param => param[0] == "day")[1];
-					// let array = [1, 2, 3, 4];
-					// array.forEach(d => {
-					// 	if (d !== day) {
-					// 		setDay(d);
-					// 	}
-					// });
+				try {				
 					setDealtWithInitialParams(true);
-					setOpenSlides(true)
-					setTimeout(()=>{
+					setOpenSlides(true);
+					setTimeout(() => {
 						const el = document.querySelector(`#${sessionId} .session__anchor`);
 						el.scrollIntoView({ behavior: "smooth" });
-
-					},0);
+					}, 0);
 				} catch (error) {
 					console.error("Problem trying to load session param", error);
 					setError(true);
 				}
 			}
 		}
-	},[loading]);
+	}, [loading]);
 
 	const getDayButtons = numberOfDays => {
 		let colNum = 12 / numberOfDays;
@@ -447,5 +440,5 @@ export default connect(mapStateToProps, {
 	setLetter,
 	setDealtWithInitialParams,
 	resetFiltersAction,
-	setError
+	setError,
 })(FullAgenda);

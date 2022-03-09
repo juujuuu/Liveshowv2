@@ -10,6 +10,10 @@ const getOnDemandCode = acronym => {
 			return "FA21OD";
 		case "ABX":
 			return "FA21OD";
+		case "FME":
+			return "FME21OD";
+		case "ABE":
+			return "FME21OD";
 		default:
 			return "DefaultCode";
 	}

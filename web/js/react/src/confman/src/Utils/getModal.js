@@ -11,6 +11,7 @@ const getModal = ({ data = {}, options = {}, role = false, size = "lg", odcode =
 	if (role == false) {
 		console.error("Role on getModal not set");
 	} else if (role == "speaker-modal") {
+		console.log("DATA: ", data.sessions);
 		const { speakerAgendaLinks } = options;
 		let sessionsHtml;
 		data.sessions.forEach(session => {

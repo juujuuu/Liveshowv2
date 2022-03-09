@@ -1,46 +1,40 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 
-class StickyNav extends React.Component {
-	constructor(props) {
-		super(props);
-		this.ref = React.createRef();
-		this.state = { offsetTop: 0, offsetBottom: 0, offsetWidth: false };
-	}
-	static defaultProps = {
-		role: false,
-		startAffix: 0,
-		endAffix: 2000
-	};	
-	handleScroll = (event) => {
+const StickyNav = ({ children, role = false, startAffix = 0, endAffix = 2000 }) => {
+	let ref = useRef();
+	const [offsetTop, setOffsetTop] = useState(0);
+	const [offsetBottom, setOffsetBottom] = useState(0);
+	const [offsetWidth, setOffsetWidth] = useState(false);
+
+	const handleScroll = event => {
 		//something here
-		this.setState((prevState) => {
-			prevState.offsetTop = this.ref.current.getBoundingClientRect().top;
-			prevState.offsetBottom = this.ref.current.getBoundingClientRect().bottom;
-			prevState.offsetWidth = this.ref.current.offsetWidth;
-			return prevState;
-		});
+		const {current} = ref;
+		setOffsetTop(current.getBoundingClientRect().top);
+		setOffsetBottom(current.getBoundingClientRect().bottom);
+		setOffsetWidth(current.offsetWidth);
 	};
-	componentDidMount = () => {
-		window.addEventListener("scroll", this.handleScroll);
-	};
-	getAffix = () => {
-		if (this.state.offsetTop < 0 && this.state.offsetTop + document.body.clientHeight > 2000) {
+	
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll);
+	}, []);
+
+	const getAffix = () => {
+		if (offsetTop < 0 && offsetTop + document.body.clientHeight > 2000) {
 			return "affix";
 		} else {
 			return "fixed-top";
 		}
 	};
-	render() {
-		return (
-			<div className="sticky-container" ref={this.ref}>
-				<div
-					className={`confman__side-nav conference-agenda__secondary-nav secondary-nav--${this.getAffix()}`}
-					style={this.state.offsetWidth != false ? { width: this.state.offsetWidth } : {}}>
-					{this.props.children}
-				</div>
+
+	return (
+		<div className="sticky-container" ref={ref}>
+			<div
+				className={`confman__side-nav conference-agenda__secondary-nav secondary-nav--${getAffix()}`}
+				style={offsetWidth != false ? { width: offsetWidth } : {}}>
+				{children}
 			</div>
-		);
-	}
-}
+		</div>
+	);
+};
 
 export default StickyNav;

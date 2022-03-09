@@ -1,25 +1,16 @@
 import React from "react";
 
-class Letter extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-	static defaultProps = {
-		value: "-1",
-		handler: false,
+const Letter = ({ value = "-1", handler = false, children }) => {
+	const handleClick = event => {
+		if (handler != false) {
+			handler(value);
+		}
 	};
-    handleClick = (event) =>{
-        if(this.props.handler != false){
-            this.props.handler(this.props.value);
-        }
-    }
-	render() {
-		return (
-			<a className="confman__letter" onClick={this.handleClick}>
-				{this.props.children}
-			</a>
-		);
-	}
-}
+	return (
+		<a className="confman__letter" onClick={handleClick}>
+			{children}
+		</a>
+	);
+};
 
 export default Letter;

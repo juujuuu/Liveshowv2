@@ -1,11 +1,6 @@
 import React from "react";
 
-class MainNav extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-	render() {
-		return <div className={`confman__main-nav main-nav--${this.props.desktop ? "desktop" : "mobile"}`}>{this.props.children}</div>;
-	}
-}
+const MainNav = ({ desktop, children }) => {
+	return <div className={`confman__main-nav main-nav--${desktop ? "desktop" : "mobile"}`}>{children}</div>;
+};
 export default MainNav;
