@@ -8,6 +8,7 @@ import StickyNav from "../../../common_components/StickyNav";
 import SearchInput from "../../../common_components/SearchInput";
 
 import MainNav from "./MainNav";
+import MainNavButton from "./MainNavButton";
 import Slide from "./Slide";
 import CheckBoxFilter from "./CheckBoxFilter";
 
@@ -103,7 +104,7 @@ const FullAgenda = props => {
 		for (index = 0; index < numberOfDays; index++) {
 			dayButtons.push(
 				<div className={`col-${colNum}`}>
-					<MainNavButton
+					<MainNavButton 
 						options={options}
 						key={`day-button-${index + 1}`}
 						active={filters.day.includes(index + 1)}
@@ -127,7 +128,7 @@ const FullAgenda = props => {
 			buttons.push(
 				<CheckBoxFilter
 					name={trackName}
-					class={`track-${i + 1}`}
+					inputClass={`track-${i + 1}`}
 					handler={setTrack}
 					value={i + 1}
 					key={`checkboxfilter ${i + 1}`}
