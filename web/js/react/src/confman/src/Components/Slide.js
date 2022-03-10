@@ -1,55 +1,53 @@
-import React from "react";
+import React, { useState, useRef } from "react";
+import { connect } from "react-redux";
 
-class Slide extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			show: false,
-		};
-		this.bodyRef = React.createRef();
-		this.mainRef = React.createRef();
-	}
-	static defaultProps = {
-		open: false,
-	};
+const Slide = props => {
+	let [show, setShow] = useState(false);
+	const bodyRef = useRef();
+	const mainRef = useRef();
 
-	handleClick = (event) => {
+	// static defaultProps = {
+	// 	open: false,
+	// };
+
+	const { options, session, openSlides: open, windowwidth } = props;
+	const { continent, ondemand } = options;
+
+	const handleClick = event => {
 		//jquery solution (probably not ideal)
-		$(this.bodyRef.current).collapse("toggle");
-		if ($(this.bodyRef.current).prev().find(".accordion-button").hasClass("collapsed")) {
-			$(this.bodyRef.current).prev().find(".accordion-button").removeClass("collapsed");
-			$(this.mainRef.current).removeClass("session--collapsed");
-			$(this.mainRef.current).addClass("session--show");
+		$(bodyRef.current).collapse("toggle");
+		if ($(bodyRef.current).prev().find(".accordion-button").hasClass("collapsed")) {
+			$(bodyRef.current).prev().find(".accordion-button").removeClass("collapsed");
+			$(mainRef.current).removeClass("session--collapsed");
+			$(mainRef.current).addClass("session--show");
 		} else {
-			$(this.bodyRef.current).prev().find(".accordion-button").addClass("collapsed");
-			$(this.mainRef.current).removeClass("session--show");
-			$(this.mainRef.current).addClass("session--collapsed");
+			$(bodyRef.current).prev().find(".accordion-button").addClass("collapsed");
+			$(mainRef.current).removeClass("session--show");
+			$(mainRef.current).addClass("session--collapsed");
 		}
 	};
-	getHeadShot = (headshot) => {
-		return headshot == null ? "./assets/resources/shared/web/apps/confman/silhouette.png" : headshot;
-	};
-	getCompany = (company) => {
-		return company == null ? "./assets/resources/shared/web/apps/confman/coming-soon.jpg" : company;
-	};
-	getTime = (timeObj) => {
+	const getHeadShot = headshot => (headshot ? headshot : "./assets/resources/shared/web/apps/confman/silhouette.png");
+
+	const getCompany = company => (company ? company : "./assets/resources/shared/web/apps/confman/coming-soon.jpg");
+
+	const getTime = timeObj => {
 		let hour = timeObj.hour;
 		let minute = timeObj.minute;
-		if (this.props.continent == "USA") {
+		if (continent == "USA") {
 			if (timeObj.ampm == "PM") {
 				if (hour != 12) {
 					hour = hour - 12;
 				}
 			}
 			return `${hour}.${minute}${timeObj.ampm}`;
-		} else if (this.props.continent == "Germany") {
+		} else if (continent == "Germany") {
 			return `${hour}:${minute}`;
 		}
 	};
-	getSpeakers = () => {
+
+	const getSpeakers = () => {
 		let getSpeaker = (speaker, index = -1) => {
 			//quick converter function
-
 			const {
 				Id,
 				First_Name__c,
@@ -62,22 +60,25 @@ class Slide extends React.Component {
 				Logo_URL__c,
 				Head_Shot_URL__c,
 			} = speaker;
-			const { ondemand, windowwidth } = this.props;
 
 			return (
 				<div key={`speaker-${index}`} className={`row speakers__speaker`} id={Id}>
 					{Title__c != null ? <h3 className="speaker__presentation-name">{Title__c}</h3> : null}
 					{windowwidth > 992 ? (
 						<div className="col-3 speaker__headshot">
-							<img className="img-fluid" src={this.getHeadShot(Head_Shot_URL__c)} alt={`${First_Name__c} ${Last_Name__c}`} />
+							<img
+								className="img-fluid"
+								src={getHeadShot(Head_Shot_URL__c)}
+								alt={`${First_Name__c} ${Last_Name__c}`}
+							/>
 						</div>
 					) : (
 						""
 					)}
 					<div className={`col-${windowwidth > 992 ? "5" : "12"} speaker__info`}>
-						<h4 className="speaker__info__name">{`${Prefix__c != null ? `${Prefix__c} ` : ""}${First_Name__c} ${
-							speaker.Last_Name__c
-						}`}</h4>
+						<h4 className="speaker__info__name">{`${
+							Prefix__c != null ? `${Prefix__c} ` : ""
+						}${First_Name__c} ${Last_Name__c}`}</h4>
 						<h4 className="speaker__info__job-title">{`${Job_Title__c}`}</h4>
 						<h4 className="speaker__info__company">{`${Company__c}`}</h4>
 						{ondemand && Presentation_Slides_PDF_link__c ? (
@@ -95,7 +96,7 @@ class Slide extends React.Component {
 					</div>
 					{windowwidth > 992 ? (
 						<div className="col-4 speaker__company">
-							<img className="img-fluid" src={this.getCompany(Logo_URL__c)} alt={`${Company__c}`} />
+							<img className="img-fluid" src={getCompany(Logo_URL__c)} alt={`${Company__c}`} />
 						</div>
 					) : (
 						""
@@ -103,26 +104,18 @@ class Slide extends React.Component {
 				</div>
 			);
 		};
-		if (this.props.session.presentations.length < 1) {
+		if (session.presentations.length < 1) {
 			return;
 		}
-		let presentations = JSON.parse(JSON.stringify(this.props.session.presentations));
-		let hasModerator =
-			undefined !=
-			presentations.find((speaker) => {
-				return speaker.Roll__c == "Moderator";
-			});
+		let presentations = [...session.presentations];
+		let hasModerator = undefined != presentations.find(speaker => speaker.Roll__c == "Moderator");
 		let moderator;
 		if (hasModerator) {
-			moderator = presentations.find((speaker) => {
-				return speaker.Roll__c == "Moderator";
-			});
+			moderator = presentations.find(speaker => speaker.Roll__c === "Moderator");
 			presentations.splice(presentations.indexOf(moderator), 1);
 			moderator = getSpeaker(moderator);
 		}
-		let speakers = presentations.map((speaker, index) => {
-			return getSpeaker(speaker, index);
-		});
+		let speakers = presentations.map((speaker, index) => getSpeaker(speaker, index));
 
 		return (
 			<>
@@ -142,97 +135,119 @@ class Slide extends React.Component {
 			</>
 		);
 	};
-	render() {
-		return (
+
+	const {
+		Track_Number__c,
+		Day__c,
+		Type__c,
+		Id,
+		Sponsor_URL__c,
+		normalTime,
+		Long_Name__c,
+		Vimeo_Video_Link__c,
+		Synopsis__c,
+	} = session;
+
+	return (
+		<div
+			className={`body__session accordion-item session--track-${Track_Number__c} session--day-${Day__c} session--type-${Type__c} session--${
+				open ? "show" : "collapsed"
+			}`}
+			id={Id}
+			ref={mainRef}>
 			<div
-				className={`body__session accordion-item session--track-${this.props.session.Track_Number__c} session--day-${
-					this.props.session.Day__c
-				} session--type-${this.props.session.Type__c} session--${this.props.open ? "show" : "collapsed"}`}
-				id={this.props.session.Id}
-				ref={this.mainRef}>
-				<div
-					className="session__anchor"
-					style={
-						this.props.windowwidth > 992
-							? { marginTop: "-250px", height: "250px", zIndex: "-1" }
-							: { marginTop: "-150px", height: "150px" }
-					}></div>
-				<div className="row">
-					<div className={`col-${this.props.windowwidth > 992 ? "2" : "3"} session__flag`}>
-						<h3>{this.getTime(this.props.session.normalTime)}</h3>
-					</div>
-					<div className={`col-${this.props.windowwidth > 992 ? "10" : "9"} session__content`}>
-						{this.props.session.Type__c == "Break" ? (
-							<>
-								<div className="accordion-header session__title">
-									<button className={`accordion-button`} type="button">
-										<div className={this.props.session.Sponsor_URL__c ? "session--sponsored" : ""}>
-											<div className="session__meta">
-												<h3 className="session__name">{this.props.session.Long_Name__c}</h3>
-												{/*<p className="session__time">{this.getTime(this.props.session.normalTime)}</p>*/}
-											</div>
-											{this.props.session.Sponsor_URL__c ? (
-												<div className="session__sponsor">
-													<p>
-														<i>Sponsored by: </i>
-													</p>
-													<img className="img-fluid" src={this.props.session.Sponsor_URL__c} alt="Sponsor" />
-												</div>
-											) : (
-												""
-											)}
+				className="session__anchor"
+				style={
+					windowwidth > 992
+						? {
+								marginTop: "-250px",
+								height: "250px",
+								zIndex: "-1",
+						  }
+						: { marginTop: "-150px", height: "150px" }
+				}></div>
+			<div className="row">
+				<div className={`col-${windowwidth > 992 ? "2" : "3"} session__flag`}>
+					<h3>{getTime(normalTime)}</h3>
+				</div>
+				<div className={`col-${windowwidth > 992 ? "10" : "9"} session__content`}>
+					{Type__c == "Break" ? (
+						<>
+							<div className="accordion-header session__title">
+								<button className={`accordion-button`} type="button">
+									<div className={Sponsor_URL__c ? "session--sponsored" : ""}>
+										<div className="session__meta">
+											<h3 className="session__name">{Long_Name__c}</h3>
+											{/*<p className="session__time">{this.getTime(session.normalTime)}</p>*/}
 										</div>
-									</button>
-								</div>
-							</>
-						) : (
-							<>
-								<div className="accordion-header session__title" onClick={this.handleClick}>
-									<button className={`accordion-button ${!this.props.open ? "collapsed" : ""}`} type="button">
-										<div className={this.props.session.Sponsor_URL__c ? "session--sponsored" : ""}>
-											<div className="session__meta">
-												<h3 className="session__name">{this.props.session.Long_Name__c}</h3>
-												{/*<p className="session__time">{this.getTime(this.props.session.normalTime)}</p>*/}
-											</div>
-											{this.props.session.Sponsor_URL__c ? (
-												<div className="session__sponsor">
-													<p>
-														<i>Sponsored by: </i>
-													</p>
-													<img className="img-fluid" src={this.props.session.Sponsor_URL__c} alt="Sponsor" />
-												</div>
-											) : (
-												""
-											)}
-										</div>
-									</button>
-								</div>
-								<div
-									ref={this.bodyRef}
-									className={`accordion-collapse collapse session__body ${this.props.open ? "show" : "collapsed"}`}>
-									<div className="accordion-body">
-										{this.props.ondemand && this.props.session.Vimeo_Video_Link__c ? (
-											<div className="body__video">
-												<iframe
-													src={this.props.session.Vimeo_Video_Link__c}
-													frameborder="0"
-													allow="autoplay; fullscreen; picture-in-picture"
-													allowfullscreen=""></iframe>
+										{Sponsor_URL__c ? (
+											<div className="session__sponsor">
+												<p>
+													<i>Sponsored by: </i>
+												</p>
+												<img className="img-fluid" src={Sponsor_URL__c} alt="Sponsor" />
 											</div>
 										) : (
 											""
 										)}
-										<div className="body__synopsis" dangerouslySetInnerHTML={{ __html: this.props.session.Synopsis__c }}></div>
-										<div className="body__speakers">{this.getSpeakers()}</div>
 									</div>
+								</button>
+							</div>
+						</>
+					) : (
+						<>
+							<div className="accordion-header session__title" onClick={handleClick}>
+								<button className={`accordion-button ${!open ? "collapsed" : ""}`} type="button">
+									<div className={Sponsor_URL__c ? "session--sponsored" : ""}>
+										<div className="session__meta">
+											<h3 className="session__name">{Long_Name__c}</h3>
+											{/*<p className="session__time">{this.getTime(session.normalTime)}</p>*/}
+										</div>
+										{Sponsor_URL__c ? (
+											<div className="session__sponsor">
+												<p>
+													<i>Sponsored by: </i>
+												</p>
+												<img className="img-fluid" src={Sponsor_URL__c} alt="Sponsor" />
+											</div>
+										) : (
+											""
+										)}
+									</div>
+								</button>
+							</div>
+							<div
+								ref={bodyRef}
+								className={`accordion-collapse collapse session__body ${open ? "show" : "collapsed"}`}>
+								<div className="accordion-body">
+									{ondemand && Vimeo_Video_Link__c ? (
+										<div className="body__video">
+											<iframe
+												src={Vimeo_Video_Link__c}
+												frameborder="0"
+												allow="autoplay; fullscreen; picture-in-picture"
+												allowfullscreen=""></iframe>
+										</div>
+									) : (
+										""
+									)}
+									<div
+										className="body__synopsis"
+										dangerouslySetInnerHTML={{
+											__html: Synopsis__c,
+										}}></div>
+									<div className="body__speakers">{getSpeakers()}</div>
 								</div>
-							</>
-						)}
-					</div>
+							</div>
+						</>
+					)}
 				</div>
 			</div>
-		);
-	}
-}
+		</div>
+	);
+};
 
-export default Slide;
+const mapStateToProps = (store, ownProps) => {
+	return { ...store, session: ownProps.session };
+};
+export default connect(mapStateToProps, {})(Slide);

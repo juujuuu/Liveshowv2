@@ -1,68 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 
-class SearchInput extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = { value: "" };
-	}
-	static defaultProps = {
-		role: false,
-		handler: false,
-		placeholder: "",
-	};
-	handleChange = (event) => {
+const SearchInput = ({ role = false, handler = false, placeholder = "", value }) => {
+	const [internalValue, setinternalValue] = useState("");
+
+	const handleChange = event => {
 		const val = event.target.value;
-		if (this.props.role == "conference-search") {
-			this.setState((prevState) => {
-				prevState.value = val;
-				return prevState;
-			});
+		if (role == "conference-search") {
+			setinternalValue(val)			
 		} else {
-			if (this.props.handler != false) {
-				this.props.handler(val);
+			if (handler != false) {
+				handler(val);
 			}
 		}
 	};
-	handleSubmit = (event) => {
+	const handleSubmit = event => {
 		event.preventDefault();
-		if (this.props.role != false) {
-			if (this.props.handler != false) {
-				let val = this.state.value;
-				this.props.handler(val);
+		if (role != false) {
+			if (handler != false) {
+				let val = internalValue;
+				handler(val);
 			}
 		}
 	};
 
-	render() {
-		if (this.props.role == false) {
-			return (
-				<form className="confman__search confman__search--standard" onSubmit={this.handleSubmit}>
-					<input
-						id="confman__search"
-						type="text"
-						name="confman_search"
-						placeholder={this.props.placeholder}
-						value={this.props.value}
-						onChange={this.handleChange}
-					/>
-				</form>
-			);
-		} else {
-			return (
-				<form className="confman__search confman__search--conference" onSubmit={this.handleSubmit}>
-					<input
-						onChange={this.handleChange}
-						id="confman__search"
-						type="text"
-						name="confman_search"
-						placeholder={this.props.placeholder}
-						value={this.state.value}
-					/>
-					{this.props.role == "conference-search" ? <span onClick={this.handleSubmit}>{">"}</span> : ""}
-				</form>
-			);
-		}
+	if (role == false) {
+		return (
+			<form className="confman__search confman__search--standard" onSubmit={handleSubmit}>
+				<input
+					id="confman__search"
+					type="text"
+					name="confman_search"
+					placeholder={placeholder}
+					value={value}
+					onChange={handleChange}
+				/>
+			</form>
+		);
+	} else {
+		return (
+			<form className="confman__search confman__search--conference" onSubmit={handleSubmit}>
+				<input
+					onChange={handleChange}
+					id="confman__search"
+					type="text"
+					name="confman_search"
+					placeholder={placeholder}
+					value={internalValue}
+				/>
+				{role == "conference-search" ? <span onClick={handleSubmit}>{">"}</span> : ""}
+			</form>
+		);
 	}
-}
+};
 
 export default SearchInput;

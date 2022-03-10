@@ -4,12 +4,14 @@
   "description": "Conference agenda and speaker list",
   "main": "src/index.js",
   "dependencies": {
+    "axios": "^0.26.0",
     "faker": "^5.5.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "^4.0.3"
+    "react-redux": "^7.2.6",
+    "react-scripts": "^4.0.3",
+    "redux-thunk": "^2.4.1"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
