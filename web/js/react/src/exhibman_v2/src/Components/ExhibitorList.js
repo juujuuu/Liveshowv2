@@ -15,24 +15,14 @@ import { getSiteFromId, getShowNameFromId } from "../Utils/GetShow";
 import sanitizeIds from "../Utils/SanitizeIds";
 
 const ExhibitorList = props => {
-	const {
-		options,
-		exhibs,
-		queries,
-		loading,
-		setQueries,
-		setLoading,
-		fetchExhibs,
-	} = props;
+	const { options, exhibs, queries, loading, setQueries, setLoading, fetchExhibs } = props;
 
 	useEffect(() => {
 		if (exhibs.length > 0) {
 			setLoading(false);
 		} else {
 			console.log("EXHIB PROPS:  ", props);
-			const siteURL = getSiteFromId(
-				options.ids instanceof Array ? options.ids[0] : options.ids
-			);
+			const siteURL = getSiteFromId(options.ids instanceof Array ? options.ids[0] : options.ids);
 			const expos = sanitizeIds(options.ids);
 			console.log("sanitizeIds:", expos);
 			fetchExhibs(siteURL, expos).then(response => {
@@ -41,12 +31,11 @@ const ExhibitorList = props => {
 		}
 	}, []);
 
-	
 	const getExtraNavButtons = (options, exhibs) => {
-		const { regLink } = options;
+		const { regLink, show } = options;
 		let jsx = [];
-		
-		const newJsx = (
+
+		let newJsx = (
 			<Cta
 				size="max"
 				color="black"
@@ -58,11 +47,11 @@ const ExhibitorList = props => {
 		);
 		jsx = [...jsx, newJsx];
 		if (regLink) {
-			const newJsx = (
+			newJsx = (
 				<Cta
-				size="max"
-				color="cex-red"
-				link={regLink}
+					size="max"
+					color="cex-red"
+					link={regLink}
 					bonusClass="control-col__reg-link"
 					key={"register to attend"}>
 					Register To Attend
@@ -70,6 +59,24 @@ const ExhibitorList = props => {
 			);
 			jsx = [...jsx, newJsx];
 		}
+		if (show === "CEX" && window.innerWidth > 768) {
+			newJsx = (
+				<div className="control-col__sponsor vertical-margin--10">
+					<a
+						href="https://linkprotect.cudasvc.com/url?a=https%3a%2f%2fcerionnano.com%2f%3futm_source%3devent%26utm_medium%3ddisplay-ad%26utm_campaign%3dts-ceramics-expo-2022%26utm_content%3dbanner-ad&c=E,1,BvpDEebN6SPBr9h0eHxEUNdPDpHP2KJKGTKfHthvDpm-U0hL0y67K2Mp9UCYeMeKnzhgwVBZPgdC0bJ3AlA9qdV8RCz2lJFKKHobJcitC9W6q-Vp&typo=1"
+						title="Cerion" target="_blank">
+						<img
+							style={{width: "100%"}}
+							src="./assets/resources/cex/web/images/misc/sponsor/Cerion-360x80.png"
+							className="img-fluid"
+							alt="Cerion"
+						/>
+					</a>
+				</div>
+			);
+			jsx = [...jsx, newJsx];
+		}
+
 		return jsx;
 	};
 
@@ -86,7 +93,7 @@ const ExhibitorList = props => {
 			return <Slide key={`slide--${id}--${index}`} payload={exhibitor} />;
 		});
 	};
-	
+
 	const handleReset = () => {
 		setQueries({
 			search: "",
@@ -107,17 +114,14 @@ const ExhibitorList = props => {
 	const handleSetExpo = expo => {
 		let newExpoQuery;
 		let hasExpo = expo === queries.expo.find(queryExpo => queryExpo.includes(expo));
-		console.log("QUERY EXPOS:  ", queries.expo)
+		console.log("QUERY EXPOS:  ", queries.expo);
 		console.log("INPUT EXPOS:  ", expo);
-		console.log("HAS EXPO:", hasExpo );
-		console.log("QUERY EXPO FIND:", expo === queries.expo.find(queryExpo => queryExpo.includes(expo)) );
-		
+		console.log("HAS EXPO:", hasExpo);
+		console.log("QUERY EXPO FIND:", expo === queries.expo.find(queryExpo => queryExpo.includes(expo)));
 
 		if (hasExpo) {
-			newExpoQuery = queries.expo.filter(
-				queryExpo => !queryExpo.includes(expo)
-			);
-		} else{
+			newExpoQuery = queries.expo.filter(queryExpo => !queryExpo.includes(expo));
+		} else {
 			newExpoQuery = [...queries.expo, expo];
 		}
 		setQueries({
@@ -126,7 +130,7 @@ const ExhibitorList = props => {
 			expo: newExpoQuery,
 		});
 	};
-	
+
 	const handleSetLetter = letter => {
 		setQueries({
 			search: queries.search,
@@ -145,7 +149,7 @@ const ExhibitorList = props => {
 					expo.includes(exhibitor.Expo__c) ||
 					cat.includes("Adhesives and Sealants") ||
 					cat.includes("Bonding Solutions / Technology Provider")
-					) {
+				) {
 					return true;
 				}
 			}
@@ -162,11 +166,7 @@ const ExhibitorList = props => {
 			const cats = exhibitor["exhibitor-cat"].toLowerCase();
 			const pagetitle = exhibitor.pagetitle.toLowerCase();
 			const content = exhibitor.content.toLowerCase();
-			if (
-				cats.includes(search) ||
-				pagetitle.includes(search) ||
-				content.includes(search)
-			) {
+			if (cats.includes(search) || pagetitle.includes(search) || content.includes(search)) {
 				return true;
 			} else {
 				return false;
@@ -195,10 +195,10 @@ const ExhibitorList = props => {
 			}
 		});
 	};
-	
+
 	const getMultiExpo = (options, expos) => {
 		const { ids, show, event, multiExpo } = options;
-	
+
 		if (!multiExpo) {
 			return null;
 		} else {
@@ -232,7 +232,7 @@ const ExhibitorList = props => {
 			return jsx;
 		}
 	};
-	
+
 	const filterExhibitors = (exhibitors, filters, queries, multiExpo) => {
 		exhibitors = [...exhibitors];
 		filters.forEach(filter => {
@@ -252,12 +252,7 @@ const ExhibitorList = props => {
 		return <Spinner></Spinner>;
 	} else {
 		const { multiExpo, filters, show } = options;
-		const filteredExhibitors = filterExhibitors(
-			exhibs,
-			filters,
-			queries,
-			multiExpo
-		);
+		const filteredExhibitors = filterExhibitors(exhibs, filters, queries, multiExpo);
 
 		return (
 			<section className={`exhibmanV2 exhibmanV2--${show} row`}>
@@ -290,19 +285,14 @@ const ExhibitorList = props => {
 				</nav>
 				<div className="col-md-8 viewport-col">
 					<div className="alphabet-filter">
-						<Alphabet
-							activeLetter={queries.letter}
-							handler={handleSetLetter}
-						/>
+						<Alphabet activeLetter={queries.letter} handler={handleSetLetter} />
 					</div>
 					<div className="row viewport__header">
 						<h3>
 							<strong>Exhibitors A-Z</strong>
 						</h3>
 					</div>
-					<div className="slide-list">
-						{getSlides(filteredExhibitors, options)}
-					</div>
+					<div className="slide-list">{getSlides(filteredExhibitors, options)}</div>
 				</div>
 			</section>
 		);

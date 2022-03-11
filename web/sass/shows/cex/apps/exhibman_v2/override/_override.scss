@@ -5,4 +5,11 @@
 			color: $cex-gold;
 		}
 	}
+	.control-col {
+		.nav-affix--fixed-top {
+			.control-col__sponsor {
+				display: none;
+			}
+		}
+	}
 }

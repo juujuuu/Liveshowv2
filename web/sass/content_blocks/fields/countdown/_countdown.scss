@@ -1,0 +1,28 @@
+.ss-countdown {
+	&__days,
+	&__hours,
+	&__minutes,
+	&__seconds {
+		text-align: center;
+		p {
+			text-transform: uppercase;
+		}
+	}
+}
+.ss-countdown--nzb-dark {
+	h1 {
+		color: #0ea64f;
+	}
+	p {
+		//font-colour
+	}
+}
+
+.ss-countdown--nzb-light {
+	h1 {
+		color: #0ea64f;
+	}
+	p {
+		color: #fff;
+	}
+}
