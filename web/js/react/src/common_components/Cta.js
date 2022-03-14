@@ -12,6 +12,7 @@ class Cta extends React.Component {
 		/* max, reg , micro*/
 		size: "reg",
 		curved: true,
+		target: "_self",
 		/*primary == override
 		ocs-blue==OCS
 		sat-blue==SAT
@@ -82,7 +83,7 @@ class Cta extends React.Component {
 		return;
 	};
 	render() {
-		const { size, curved, color, active, margin, bonusClass, link, download, children, payload, role } = this.props;
+		const { size, curved, color, active, margin, bonusClass, link, download, children, payload, role, target } = this.props;
 
 		switch (role) {
 			case "pop-form":
@@ -128,7 +129,7 @@ class Cta extends React.Component {
 						} ${margin} ${bonusClass}`}
 						onClick={this.handleClick}>
 						{link != false ? (
-							<a className="curved-cta__link" href={link} download={download} title={children}>
+							<a className="curved-cta__link" href={link} download={download} title={children} target={target}>
 								{children}
 							</a>
 						) : (

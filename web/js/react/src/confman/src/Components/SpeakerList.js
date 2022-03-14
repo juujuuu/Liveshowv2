@@ -24,6 +24,7 @@ import SearchInput from "../../../common_components/SearchInput";
 import Cta from "../../../common_components/Cta";
 import Body from "../../../common_components/Body";
 import SpeakerSlide from "./SpeakerSlide";
+import DesignSpeakerSlide from "./DesignSpeakerSlide";
 
 const SpeakerList = props => {
 	const {
@@ -47,17 +48,6 @@ const SpeakerList = props => {
 		conf,
 		show,
 		mode,
-		convincepdf,
-		downloadagenda,
-		reglink,
-		reginterest,
-		additionalfilters,
-		generalenquiry,
-		topNav,
-		daynameoverride,
-		ondemand,
-		continent,
-		parameters,
 	} = options;
 
 	useEffect(() => {
@@ -108,9 +98,15 @@ const SpeakerList = props => {
 
 	const getSpeakerSlides = speakers => {
 		if (speakers.length > 0) {
-			return speakers.map((speaker, index) => (
-				<SpeakerSlide id={speaker.Id} speaker={speaker} key={`speaker-${speaker.Id}`} modalHandler={()=>getModal({role:"speaker-modal", options, data:speaker})} />
-			));
+			if(mode === "speaker-list"){
+				return speakers.map((speaker, index) => (
+					<SpeakerSlide id={speaker.Id} speaker={speaker} key={`speaker-${speaker.Id}`} modalHandler={()=>getModal({role:"speaker-modal", options, data:speaker})} />
+				));
+			} else if(mode === "design-speaker-list"){
+				return speakers.map((speaker, index) => (
+					<DesignSpeakerSlide id={speaker.Id} speaker={speaker} key={`speaker-${speaker.Id}`} modalHandler={()=>getModal({role:"speaker-modal", options, data:speaker})} />
+				));
+			}
 		} else {
 			return <h2>No Speakers Found</h2>;
 		}

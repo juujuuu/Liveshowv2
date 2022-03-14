@@ -40,9 +40,9 @@ const App = props => {
 			return errorJSX;
 		} else if (options.mode === "full-agenda") {
 			return <FullAgenda />;
-		} else if (options.mode === "speaker-list") {
+		} else if (options.mode === "speaker-list" || options.mode === "design-speaker-list") {
 			return <SpeakerList />;
-		}
+		} 
 	} catch (error) {
 		return errorJSX;
 	}
