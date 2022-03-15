@@ -1,0 +1,72 @@
+$main-color: #0a3d52;
+$strong-color: #000000;
+$body: #000000;
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: rift, Helvetica, Arial;
+}
+p,
+a,
+li {
+	font-family: montserrat, Arial;
+	line-height: 26px;
+}
+h1 {
+	font-size: 55px;
+	font-weight: bold;
+	color: $main-color;
+}
+h2 {
+	font-size: 30px;
+	font-weight: bold;
+	color: $main-color;
+}
+h3 {
+	font-size: 24px;
+	font-weight: bold;
+	color: $strong-color;
+}
+h4 {
+	font-size: 18px;
+	font-weight: bold;
+	color: $strong-color;
+}
+p {
+	font-size: 16px;
+	color: $body;
+	margin-bottom: 10px;
+	font-weight: 400;
+	strong {
+		font-weight: 700;
+		//color: #333333;
+	}
+}
+li {
+	font-size: 16px;
+	font-weight: 400;
+	color: $body;
+}
+a {
+	color: $main-color;
+	text-decoration: none;
+	&:focus,
+	&:hover {
+		color: lighten($color: $main-color, $amount: 10%);
+		text-decoration: underline;
+	}
+}
+.row {
+	@media (max-width: $mobile-width) {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+@media (max-width: $mobile-width) {
+	p,
+	a {
+		overflow-wrap: break-word;
+	}
+}

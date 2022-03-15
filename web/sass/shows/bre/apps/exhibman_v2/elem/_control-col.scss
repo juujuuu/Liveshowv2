@@ -1,0 +1,78 @@
+.control-col {
+	.react__sticky-nav {
+		@media (max-width: $mobile-width) {
+			&.nav-affix {
+				&--affix {
+					top: 56px !important;
+					width: 100% !important;
+					background: #fff;
+					left: 0;
+					right: 0;
+					z-index: 1;
+					padding: 10px;
+					box-shadow: 0 4px 2px -2px gray;
+				}
+			}
+		}
+		&.nav-affix {
+			&--affix {
+				position: fixed;
+				top: 80px;
+			}
+		}
+	}
+	.curved-cta--max {
+		a {
+			font-size: 1rem;
+		}
+	}
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		padding-bottom: 5px;
+		border-bottom: 2px solid black;
+		h3 {
+			margin: 0;
+			line-height: inherit;
+		}
+		.control-col__reset {
+			padding: 5px;
+			margin: 0;
+		}
+	}
+	.control-col__download-list,
+	.control-col__reg-link,
+	.control-col__show-filter {
+		width: 100%;
+		margin: 10px 0px;
+	}
+	.control-col__show-filter {
+		a {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			span {
+				color: #000000;
+			}
+			img {
+				width: 20px;
+			}
+		}
+		$ids: ("a1x4V000001Yg1J", #ed6839, #fddecd), ("a1x3A000001FOPe", #26358c, #cfddef), ("a1x4V000001Q9aU", #ed6839, #fddecd),
+			("a1x3A000001FSz9", #4e8891, #d3dce0), ("a1x4V000001YVpe", #2d88bd, #cfddef);
+		@each $id in $ids {
+			&--#{nth($id, 1)} {
+				$background: nth($id, 3);
+				background-color: $background;
+				border-left: 10px solid nth($id, 2);
+				&:hover {
+					background-color: lighten($background, 5%) !important;
+				}
+			}
+		}
+
+		&:hover {
+			box-shadow: none;
+		}
+	}
+}

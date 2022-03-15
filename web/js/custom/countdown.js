@@ -3,16 +3,11 @@ $(function () {
 	$(document).ready(function () {
 		const targetTime = new Date($(".ss-countdown").attr("data-target-time"));//format ('mm/dd/yyyy/hh:mm')
 		
-		//TODO - ASSIGN VIA JQUERY
-		// ${".ss-countdown__hours"}.find("p").text(hours);
-		// ${".ss-countdown__minutes"}.find("p").text(minutes);
-		// ${".ss-countdown__seconds"}.find("p").text(seconds);
-		
 		setInterval(() => {
 			const nowTime = Date.now();
 			const differenceTimeSeconds = (targetTime - nowTime) / 1000;
 	
-			const days = Math.floor(differenceTimeSeconds/86400);//3,600 seconds in an hour 
+			const days = Math.floor(differenceTimeSeconds/86400);//86400 seconds in a day 
 			let remainder = differenceTimeSeconds % 86400;
 
 			const hours = Math.floor(remainder/3600);//3,600 seconds in an hour 
