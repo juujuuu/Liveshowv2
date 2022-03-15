@@ -197,7 +197,7 @@ const ExhibitorList = props => {
 	};
 
 	const getMultiExpo = (options, expos) => {
-		const { ids, show, event, multiExpo } = options;
+		const { ids, multiExpo } = options;
 
 		if (!multiExpo) {
 			return null;
