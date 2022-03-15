@@ -32,7 +32,7 @@ class PDFMake {
 				style: "tableheader",
 			},
 		]);
-		this.data.forEach((element) => {
+		this.data.forEach(element => {
 			//TODO may need to debug - make show name dependant on booth expo
 			switch (this.options.show) {
 				case "FMX":
@@ -40,6 +40,9 @@ class PDFMake {
 					break;
 				case "FME":
 					var showName = "Foam Expo Europe";
+					break;
+				case "ABE":
+					var showName = "Adhesives Bonding Expo Europe";
 					break;
 				case "ABX":
 					var showName = "Adhesives Bonding Expo";
@@ -86,6 +89,9 @@ class PDFMake {
 					var pdfColour = "#4E8891";
 					break;
 				case "FME":
+					var pdfColour = "#ed6839";
+					break;
+				case "ABE":
 					var pdfColour = "#ed6839";
 					break;
 				case "ABX":
@@ -139,7 +145,7 @@ class PDFMake {
 			content.push(table);
 			docDefinition.content = content;
 			docDefinition.styles = styles;
-			
+
 			docDefinition.defaultStyle = {
 				bold: false,
 			};

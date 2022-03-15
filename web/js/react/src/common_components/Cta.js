@@ -133,7 +133,7 @@ class Cta extends React.Component {
 								{children}
 							</a>
 						) : (
-							<span className="curved-cta__link" title={children}>
+							<span className="curved-cta__link">
 								{children}
 							</span>
 						)}
