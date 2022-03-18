@@ -5,25 +5,37 @@ $(function () {
 		setInterval(() => {
 			let nowTime = new Date(Date.now()).toLocaleString("en-US", { timeZone: getTimeZone() });
 			nowTime = new Date(nowTime);
+
 			const differenceTimeSeconds = (targetTime - nowTime) / 1000;
 
-			const days = Math.floor(differenceTimeSeconds / 86400); //86400 seconds in a day
-			let remainder = differenceTimeSeconds % 86400;
+			let days,
+				hours,
+				minutes,
+				seconds = 0;
 
-			const hours = Math.floor(remainder / 3600); //3,600 seconds in an hour
-			remainder = remainder % 3600;
+			if (differenceTimeSeconds <= 0) {
+				setTimes({ days, hours, minutes, seconds });
+			} else {
+				days = Math.floor(differenceTimeSeconds / 86400); //86400 seconds in a day
+				let remainder = differenceTimeSeconds % 86400;
 
-			const minutes = Math.floor(remainder / 60);
-			remainder = remainder % 60;
+				hours = Math.floor(remainder / 3600); //3,600 seconds in an hour
+				remainder = remainder % 3600;
 
-			const seconds = Math.floor(remainder);
+				minutes = Math.floor(remainder / 60);
+				remainder = remainder % 60;
 
-			$(".ss-countdown__days").find("h1").text(days);
-			$(".ss-countdown__hours").find("h1").text(hours);
-			$(".ss-countdown__minutes").find("h1").text(minutes);
-			$(".ss-countdown__seconds").find("h1").text(seconds);
+				seconds = Math.floor(remainder);
+				setTimes({ days, hours, minutes, seconds });
+			}
 		}, 1000);
 	});
+	const setTimes = ({ days, hours, minutes, seconds }) => {
+		$(".ss-countdown__days").find("h1").text(days);
+		$(".ss-countdown__hours").find("h1").text(hours);
+		$(".ss-countdown__minutes").find("h1").text(minutes);
+		$(".ss-countdown__seconds").find("h1").text(seconds);
+	};
 	const getTimeZone = () => {
 		const site = window.location.host;
 		switch (site) {
