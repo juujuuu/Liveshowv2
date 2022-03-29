@@ -74,7 +74,7 @@ const FullAgenda = props => {
 				setLoading(false);
 			});
 			if (ondemand) {
-				getModal({ role: "on-demand-modal",  odcode: getOnDemandCode(show)});
+				getModal({ role: "on-demand-modal", odcode: getOnDemandCode(show) });
 			}
 		}
 	}, []);
@@ -82,7 +82,7 @@ const FullAgenda = props => {
 		if (!dealtWithInitialParams && !loading) {
 			if (parameters.find(param => param[0] == "session-id")) {
 				const [name, sessionId] = parameters.find(param => param[0] == "session-id");
-				try {				
+				try {
 					setDealtWithInitialParams(true);
 					setOpenSlides(true);
 					setTimeout(() => {
@@ -104,7 +104,7 @@ const FullAgenda = props => {
 		for (index = 0; index < numberOfDays; index++) {
 			dayButtons.push(
 				<div className={`col-${colNum}`}>
-					<MainNavButton 
+					<MainNavButton
 						options={options}
 						key={`day-button-${index + 1}`}
 						active={filters.day.includes(index + 1)}
@@ -222,6 +222,7 @@ const FullAgenda = props => {
 	};
 
 	const filterBreaks = inputSessions => {
+		inputSessions = [...inputSessions];
 		//Stop break sessions from stacking up
 		for (let index = 0; index < inputSessions.length; index++) {
 			const session = inputSessions[index];
@@ -229,9 +230,10 @@ const FullAgenda = props => {
 				if (session.Type__c == "Break") {
 					if (
 						inputSessions[index + 1].Type__c == "Break" &&
-						inputSessions[index].Start_Time__c == inputSessions.Start_Time__c
+						inputSessions[index].Start_Time__c == inputSessions[index + 1].Start_Time__c
 					) {
-						inputSessions.splice(inputSessions.indexOf(inputSessions), 1);
+						inputSessions = inputSessions.filter((inputSession, _index) => _index !== index);
+						//inputSessions.splice(inputSessions.indexOf(inputSessions), 1);
 					}
 				}
 			}

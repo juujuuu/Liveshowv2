@@ -1,7 +1,7 @@
 {
 	"name": "v2-event-sites",
 	"version": "1.0.0",
-	"description": "All shows repositort",
+	"description": "All shows repository",
 	"main": "gulpfile.js",
 	"dependencies": {
 		"axios": "^0.25.0",

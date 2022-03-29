@@ -8,44 +8,42 @@ const fetchSpeakersReducer = (state = [], action) => {
 			//Merge multiple speakers into one newSpeaker
 			const referenceSpeakers = [...presentations];
 			let newSpeakers = [];
+
 			for (let i = 0; i < referenceSpeakers.length; i++) {
 				let newSpeaker = referenceSpeakers[i];
-				if (
-					undefined !=
-					newSpeakers.find(
-						speaker =>
-							newSpeaker.Speaker__r.Id == speaker.Speaker__r.Id
-					)
-				) {
+
+				if (undefined != newSpeakers.find(speaker => newSpeaker.Speaker__r.Id == speaker.Speaker__r.Id)) {
 					//array already contains this speaker
 					//Push session data to array
-					let currentSpeaker = newSpeakers.find(
-						speaker =>
-							newSpeaker.Speaker__r.Id == speaker.Speaker__r.Id
-					);
+					let currentSpeaker = newSpeakers.find(speaker => newSpeaker.Speaker__r.Id == speaker.Speaker__r.Id);
 					let index = newSpeakers.indexOf(currentSpeaker);
-					newSpeakers[index].sessions.push({
-						roll: newSpeaker.Roll__c,
-						id: referenceSpeakers[i].Session__r.Id,
-						day: referenceSpeakers[i].Session__r.Day__c,
-						name: referenceSpeakers[i].Session__r.Name,
-						start: referenceSpeakers[i].Session__r.Start_Time__c,
-						track: referenceSpeakers[i].Session__r.Track_Number__c,
-					});
+					if (referenceSpeakers[i].Session__r) {
+						newSpeakers[index].sessions.push({
+							roll: newSpeaker.Roll__c,
+							id: referenceSpeakers[i].Session__r.Id,
+							day: referenceSpeakers[i].Session__r.Day__c,
+							name: referenceSpeakers[i].Session__r.Name,
+							start: referenceSpeakers[i].Session__r.Start_Time__c,
+							track: referenceSpeakers[i].Session__r.Track_Number__c,
+						});
+					}
 				} else {
 					//array doesn't container this speaker__c
 					newSpeaker.sessions = [];
-					newSpeaker.sessions.push({
-						roll: newSpeaker.Roll__c,
-						id: referenceSpeakers[i].Session__r.Id,
-						day: referenceSpeakers[i].Session__r.Day__c,
-						name: referenceSpeakers[i].Session__r.Name,
-						start: referenceSpeakers[i].Session__r.Start_Time__c,
-						track: referenceSpeakers[i].Session__r.Track_Number__c,
-					});
+					if (referenceSpeakers[i].Session__r) {
+						newSpeaker.sessions.push({
+							roll: newSpeaker.Roll__c,
+							id: referenceSpeakers[i].Session__r.Id,
+							day: referenceSpeakers[i].Session__r.Day__c,
+							name: referenceSpeakers[i].Session__r.Name,
+							start: referenceSpeakers[i].Session__r.Start_Time__c,
+							track: referenceSpeakers[i].Session__r.Track_Number__c,
+						});
+					}
 					newSpeakers.push(newSpeaker);
 				}
 			}
+
 			//Alphabetize
 			newSpeakers = newSpeakers.sort((a, b) => {
 				if (a.Last_Name__c < b.Last_Name__c) {
@@ -56,6 +54,7 @@ const fetchSpeakersReducer = (state = [], action) => {
 				}
 				return 0;
 			});
+
 			//Switching 18bit id to 15
 			newSpeakers = newSpeakers.map(speaker => {
 				speaker.sessions = speaker.sessions.map(session => {

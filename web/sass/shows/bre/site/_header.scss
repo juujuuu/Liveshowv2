@@ -10,7 +10,7 @@ header {
 	@media screen and (min-width: 990px) {
 		&.header--desktop {
 			.header__covid-info {
-				top: 4px;
+				top: 2px;
 				position: absolute;
 			}
 		}
@@ -304,7 +304,7 @@ header {
 		&--date,
 		&--location {
 			display: inline-block;
-			font-size: 20px;
+			font-size: 24px;
 		}
 		&--date {
 			color: #333333;

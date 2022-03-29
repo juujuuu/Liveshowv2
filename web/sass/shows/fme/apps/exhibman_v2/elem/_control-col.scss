@@ -58,8 +58,8 @@
 				width: 20px;
 			}
 		}
-		$ids: ("a1x4V000001Yg1J", #ed6839, #fddecd), ("a1x3A000001FOPe", #26358c, #cfddef), ("a1x4V000001Q9aU", #ed6839, #fddecd),
-			("a1x3A000001FSz9", #4e8891, #d3dce0), ("a1x4V000001YVpe", #2d88bd, #cfddef);
+		$ids: ("a1x4V000001YVpy", #ed6839, #fddecd), ("a1x4V000000xCSR", #26358c, #cfddef);
+
 		@each $id in $ids {
 			&--#{nth($id, 1)} {
 				$background: nth($id, 3);

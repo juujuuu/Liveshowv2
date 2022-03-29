@@ -201,7 +201,7 @@ header {
 		.header__sub-menu__co-locate {
 			clear: both;
 			float: right;
-			margin-top: 5px;
+			margin-top: 10px;
 		}
 	}
 	.header__main-menu {
@@ -294,6 +294,7 @@ header {
 			display: flex;
 			justify-content: center;
 			height: 100%;
+			
 			img {
 				width: 100%;
 			}
@@ -304,7 +305,7 @@ header {
 		&--date,
 		&--location {
 			display: inline-block;
-			font-size: 20px;
+			font-size: 24px;
 		}
 		&--date {
 			color: #333333;

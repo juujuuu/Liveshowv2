@@ -15,7 +15,7 @@ const getSiteFromAcronym = show => {
 		case "bre":
 			return "https://www.spacetechexpo.eu/";
 		case "ocs":
-			return "https://onboardconnectivitysummit.com/";
+			return "https://www.onboardconnectivitysummit.com/";
 		case "sat":
 			return "https://www.satelliteconnectivitysummit.com/";
 		case "nzb":
