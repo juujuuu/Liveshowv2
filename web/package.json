@@ -49,6 +49,7 @@
 		"watchsrc:exhibs": "npx webpack --mode=development --node-env=development --config ./webpack_configs/webpack.config.exhibsv1.js --watch",
 		"watchsrc:drilldown": "npx webpack --mode=development --node-env=development --config ./webpack_configs/webpack.config.exhibsv1drilldown.js --watch",
 		"watchsrc:article": "npx webpack --mode=development --node-env=development --config ./webpack_configs/webpack.config.exhibsv1product.js --watch",
+		"watchsrc:custom": "npx webpack --mode=production --node-env=production --config ./webpack.config.custom.js --watch",
 		"serve:exhibsv2": "npx webpack serve --mode=development --node-env=development --config ./webpack_configs/webpack.config.serve.exhibmanv2.js",
 		"serve:confman": "npx webpack serve --mode=development --node-env=development --config ./webpack_configs/webpack.config.serve.confman.js"
 	},
