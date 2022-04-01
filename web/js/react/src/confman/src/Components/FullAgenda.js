@@ -110,9 +110,10 @@ const FullAgenda = props => {
 						active={filters.day.includes(index + 1)}
 						value={index + 1}
 						handler={setDay}>
-						{daynameoverride == undefined || window.innerWidth < 992
+						{/* {daynameoverride == undefined || window.innerWidth < 992
 							? `Day ${index + 1}`
-							: `Day ${index + 1} - ${daynameoverride[index]}`}
+							: `Day ${index + 1} - ${daynameoverride[index]}`} */}
+							{daynameoverride[index]}
 					</MainNavButton>
 				</div>
 			);

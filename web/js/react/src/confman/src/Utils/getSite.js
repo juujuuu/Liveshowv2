@@ -31,7 +31,11 @@ const getSiteFromId = conferenceId => {
 	switch (conferenceId) {
 		case "a3i4V000001pJMf":
 			return "FMX";
-		case "TODO":
+		case "a3i4V000001hXhE":
+			return "FMX";
+		case "a3i4V000001pJMf":
+			return "ABX";
+		case "a3i4V000001hXhE":
 			return "ABX";
 		case "a3i4V000001pPTc":
 			return "FME";

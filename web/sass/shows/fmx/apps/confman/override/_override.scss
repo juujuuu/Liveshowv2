@@ -32,11 +32,17 @@ $main-color: #4d8691;
 			.main-nav__days {
 				background-color: $main-color;
 				.main-nav__nav-button {
-					&.active,
+					background-color: darken($main-color, 20);
+					&.active{
+						background-color: lighten($main-color, 20);
+						&:hover{
+							background-color: darken($main-color, 20);
+						}
+					}
 					&:hover {
 						transition: background-color 0.25s ease-in;
 						-webkit-transition: background-color 0.25s ease-in;
-						background-color: #31447b;
+						background-color: lighten($main-color, 20);
 					}
 				}
 			}

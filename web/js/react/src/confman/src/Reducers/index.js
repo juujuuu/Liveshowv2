@@ -6,7 +6,8 @@ import filtersReducer from "./filtersReducer";
 import openSlidesReducer from "./openSidesReducer";
 import fetchConferenceReducer from "./fetchConferenceReducer";
 import fetchSpeakersReducer from "./fetchSpeakersReducer";
-import maxAttributesReducer from "./maxAttributesReducer";
+import maxDaysReducer from "./maxDaysReducer";
+import maxTracksReducer from "./maxTracksReducer";
 import initialParamsReducer from "./initialParamsReducer";
 
 export default combineReducers({
@@ -17,7 +18,7 @@ export default combineReducers({
 	openSlides: openSlidesReducer,
 	sessions: fetchConferenceReducer,
 	speakers: fetchSpeakersReducer,
-	maxDays: maxAttributesReducer,
-	maxTracks: maxAttributesReducer,
-	dealtWithInitialParams: initialParamsReducer
+	maxDays: maxDaysReducer,
+	maxTracks: maxTracksReducer,
+	dealtWithInitialParams: initialParamsReducer,
 });
