@@ -83,10 +83,14 @@ $main-color: #0ea64f;
 								& > h3 {
 									color: nth($tracks, $i);
 								}
+								.speaker__presentation-name {
+									color: nth($tracks, $i);
+								}
 								.speaker__info {
 									&__name {
 										color: nth($tracks, $i);
 									}
+
 									&__presentation {
 										color: nth($tracks, $i);
 									}

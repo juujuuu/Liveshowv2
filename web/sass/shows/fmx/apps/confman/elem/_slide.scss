@@ -38,6 +38,9 @@ $mobile-width: 992px;
 						padding-top: 1rem;
 						text-align: center;
 						h3 {
+							@media (max-width: $mobile-width) {
+								font-size: 17px;
+							}
 							color: #fff;
 						}
 					}

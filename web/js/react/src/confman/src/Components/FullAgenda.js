@@ -73,6 +73,11 @@ const FullAgenda = props => {
 			fetchConference(getSiteFromAcronym(show), conf).then(response => {
 				setLoading(false);
 			});
+			///if (null !== parameters) {
+			if (show === "SPC" || show === "NZB") {
+				setDay(0);
+			}
+			//}
 			if (ondemand) {
 				getModal({ role: "on-demand-modal", odcode: getOnDemandCode(show) });
 			}
@@ -82,7 +87,10 @@ const FullAgenda = props => {
 		if (!dealtWithInitialParams && !loading) {
 			if (parameters.find(param => param[0] == "session-id")) {
 				const [name, sessionId] = parameters.find(param => param[0] == "session-id");
+
 				try {
+					const sessionDay = sessions.find(_session => _session.Id === sessionId).Day__c;
+					setDay(sessionDay);
 					setDealtWithInitialParams(true);
 					setOpenSlides(true);
 					setTimeout(() => {
@@ -107,13 +115,13 @@ const FullAgenda = props => {
 					<MainNavButton
 						options={options}
 						key={`day-button-${index + 1}`}
-						active={filters.day.includes(index + 1)}
+						active={filters.day === index + 1}
 						value={index + 1}
 						handler={setDay}>
 						{/* {daynameoverride == undefined || window.innerWidth < 992
 							? `Day ${index + 1}`
 							: `Day ${index + 1} - ${daynameoverride[index]}`} */}
-							{daynameoverride[index]}
+						{daynameoverride[index]}
 					</MainNavButton>
 				</div>
 			);
@@ -169,9 +177,9 @@ const FullAgenda = props => {
 	};
 
 	const filterDays = inputSessions => {
-		const { day: excludeDays } = filters;
-		if (excludeDays.length > 0) {
-			return inputSessions.filter(session => !excludeDays.includes(session.Day__c));
+		const { day } = filters;
+		if (day !== 0) {
+			return inputSessions.filter(session => day === session.Day__c);
 		} else {
 			return inputSessions;
 		}
@@ -249,6 +257,70 @@ const FullAgenda = props => {
 		inputSessions = filterQuery(inputSessions);
 		inputSessions = filterBreaks(inputSessions);
 		return inputSessions;
+	};
+
+	const getUIThemes = (show, day) => {
+		let theme = [];
+		switch (show) {
+			case "FMX":
+				switch (day) {
+					case 1:
+						theme.push("Plenary Mega Trends / Supply Chain Strategy");
+						theme.push("Mega Trends");
+						break;
+					case 2:
+						theme.push("Application Development");
+						theme.push("Regulations and Sustainability");
+						break;
+					case 3:
+						theme.push("Material Selection and Interaction");
+						theme.push("Process Optimization");
+						break;
+				}
+				return (
+					<div>
+						<p style={{ fontSize: "16px" }}>
+							<strong>
+								<span style={{ color: "#d52c60" }}>Track 1 Theme</span> - {theme[0]}
+							</strong>
+						</p>
+						<p style={{ fontSize: "16px" }}>
+							<strong>
+								<span style={{ color: "#5bb7ce" }}>Track 2 Theme</span> - {theme[1]}
+							</strong>
+						</p>
+					</div>
+				);
+			case "ABX":
+				switch (day) {
+					case 1:
+						theme.push("Plenary Mega Trends / Supply Chain Strategy");
+						theme.push("Mega Trends");
+						break;
+					case 2:
+						theme.push("Application Development");
+						theme.push("Regulations and Sustainability");
+						break;
+					case 3:
+						theme.push("Material Selection and Interaction");
+						theme.push("Process Optimization");
+						break;
+				}
+				return (
+					<div>
+						<p style={{ fontSize: "16px" }}>
+							<strong>
+								<span style={{ color: "#d52c60" }}>Track 1 Theme</span> - {theme[0]}
+							</strong>
+						</p>
+						<p style={{ fontSize: "16px" }}>
+							<strong>
+								<span style={{ color: "#5bb7ce" }}>Track 2 Theme</span> - {theme[1]}
+							</strong>
+						</p>
+					</div>
+				);
+		}
 	};
 
 	if (loading) {
@@ -341,7 +413,10 @@ const FullAgenda = props => {
 					{window.innerWidth > 992 ? (
 						<div className="container">
 							<div className="row">
-								<div className="col-8">{getSlides(pipedSessions)}</div>
+								<div className="col-8">
+									{show === "FMX" || show === "ABX" ? getUIThemes(show, filters.day) : null}
+									{getSlides(pipedSessions)}
+								</div>
 								<div className="col-4">
 									<StickyNav role="conference-agenda-side-nav">
 										<div className="side-nav__search">
@@ -370,7 +445,7 @@ const FullAgenda = props => {
 										)}
 										{downloadagenda != undefined ? (
 											<>
-												{show == "OCS" || show == "SAT" ? (
+												{show == "OCS" || show == "SAT" || show == "NZB" ? (
 													<Cta
 														key="cta pdf agenda"
 														size="max"

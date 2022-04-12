@@ -2,6 +2,8 @@ $tracks: #d52c60, #5bb7ce, #144f74;
 $tracks-lighter: lighten(#d52c60, 20), lighten(#5bb7ce, 20), lighten(#144f74, 20);
 $main-color: #4d8691;
 
+$big-titles: 17px;
+
 .confman {
 	&.conference-agenda--FMX {
 		.curved-cta--primary {
@@ -32,23 +34,28 @@ $main-color: #4d8691;
 			.main-nav__days {
 				background-color: $main-color;
 				.main-nav__nav-button {
-					background-color: darken($main-color, 20);
+					background-color: $main-color;
 					&.active{
-						background-color: lighten($main-color, 20);
+						background-color: darken($main-color, 20);
 						&:hover{
-							background-color: darken($main-color, 20);
+							//background-color: darken($main-color, 20);
 						}
 					}
 					&:hover {
+						background-color: darken($main-color, 20);
 						transition: background-color 0.25s ease-in;
 						-webkit-transition: background-color 0.25s ease-in;
-						background-color: lighten($main-color, 20);
+						//background-color: lighten($main-color, 20);
 					}
 				}
 			}
 			.main-nav__tracks {
 				background-color: #e9e7f4;
 				.checkbox-filter {
+					.checkbox-filter__name{		
+						margin-top: 0;				
+						h3{color: #333333;}
+					}
 					$i: 1;
 					@each $track in $tracks {
 						&.checkbox-filter--track-#{$i} {
@@ -81,6 +88,9 @@ $main-color: #4d8691;
 								& > h3 {
 									color: nth($tracks, $i);
 								}
+								.speaker__presentation-name{
+									color: nth($tracks, $i);
+								}
 								.speaker__info {
 									&__name {
 										color: nth($tracks, $i);
@@ -97,7 +107,16 @@ $main-color: #4d8691;
 				.session__flag {
 				}
 				.session__content {
+					h3,h4{
+						font-size: $big-titles;
+					}
+					.session__body {
+
+					}
 					.session__title {
+						.session__name{
+							//font-size: $big-titles;
+						}
 						.accordion-button {
 							&::after {
 								/*Chevron*/
