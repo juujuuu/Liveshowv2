@@ -1,8 +1,15 @@
 .exhibmanV2--SPC {
-	$product-header-colour: #1079a0;
-	.product-header {
-		h2 a {
-			color: $product-header-colour;
-		}
-	}
+    $product-header-colour: #1079a0;
+    .product-header {
+        h2 a {
+            color: $product-header-colour;
+        }
+    }
+    .exhibitor-slide {
+        &.exhibitor-slide--SPC {
+            .exhibitor-slide__side-flag {
+                background: #167c9f;
+            }
+        }
+    }
 }

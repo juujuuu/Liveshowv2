@@ -63,8 +63,8 @@
       ("a1x4V000001Q9aU", #ed6839, #fddecd),
       ("a1x3A000001FSz9", #4e8891, #d3dce0),
       ("a1x4V000001YVpe", #2d88bd, #cfddef),
-      ("a1x4V000001V7dG", #ad2d20, lighten(#ad2d20, 40)),
-      ("a1x4V000001Yg1J", #b88e14, lighten(#b88e14, 40));
+      ("a1x4V000001V7dG", #ad2d20, #d8b29f),
+      ("a1x4V000001Yg1J", #b88e14, #e1d2b1);
     @each $id in $ids {
       &--#{nth($id, 1)} {
         $background: nth($id, 3);

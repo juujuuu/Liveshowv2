@@ -1,8 +1,25 @@
 .exhibmanV2--TME {
-  $product-header-colour: #ad2d20;
-  .product-header {
-    h2 a {
-      color: $product-header-colour;
+    $product-header-colour: #ad2d20;
+    .product-header {
+        h2 a {
+            color: $product-header-colour;
+        }
     }
-  }
+    .control-col {
+        .control-col__show-filter {
+            text-transform: uppercase;
+        }
+    }
+    .exhibitor-slide {
+        &.exhibitor-slide--TME {
+            .exhibitor-slide__side-flag {
+                background: #ad2d20;
+            }
+        }
+        &.exhibitor-slide--CEX {
+            .exhibitor-slide__side-flag {
+                background: #b88e14;
+            }
+        }
+    }
 }

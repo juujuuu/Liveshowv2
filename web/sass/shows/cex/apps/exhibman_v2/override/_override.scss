@@ -1,15 +1,30 @@
 .exhibmanV2--CEX {
-	$cex-gold: #b88e14;
-	.product-header {
-		h2 a {
-			color: $cex-gold;
-		}
-	}
-	.control-col {
-		.nav-affix--fixed-top {
-			.control-col__sponsor {
-				display: none;
-			}
-		}
-	}
+    $cex-gold: #b88e14;
+    .product-header {
+        h2 a {
+            color: $cex-gold;
+        }
+    }
+    .control-col {
+        .nav-affix--fixed-top {
+            .control-col__sponsor {
+                display: none;
+            }
+        }
+        .control-col__show-filter {
+            text-transform: uppercase;
+        }
+    }
+    .exhibitor-slide {
+        &.exhibitor-slide--TME {
+            .exhibitor-slide__side-flag {
+                background: #ad2d20;
+            }
+        }
+        &.exhibitor-slide--CEX {
+            .exhibitor-slide__side-flag {
+                background: #b88e14;
+            }
+        }
+    }
 }

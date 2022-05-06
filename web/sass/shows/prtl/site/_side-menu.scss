@@ -1,0 +1,51 @@
+@use "sass:color";
+.portal-nav {
+    border-right: 1px solid black;
+    #side-menu {
+        padding: 0 20px;
+        .side-menu__item {
+            .accordion-header {
+                .accordion-button {
+                    font-size: 20px;
+                    border: none;
+                    &:focus {
+                        box-shadow: none;
+                        border-color: unset;
+                    }
+                    &:not(.collapsed) {
+                        color: unset;
+                        background-color: unset;
+                        &::before {
+                            //background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+                            transform: rotate(180deg);
+                        }
+                    }
+                    &::after {
+                        display: none;
+                    }
+                    &::before {
+                        flex-shrink: 0;
+                        width: 20px;
+                        height: 20px;
+                        margin-right: 10px;
+                        content: "";
+                        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+                        background-repeat: no-repeat;
+                        background-size: 20px;
+                        transition: transform 0.2s ease-in-out;
+                    }
+                }
+            }
+            .accordion-collapse {
+                border: none;
+                .accordion-body {
+                    p {
+                        line-height: unset;
+                    }
+                    padding: 0;
+                    margin-left: 50px;
+                }
+            }
+        }
+    }
+}

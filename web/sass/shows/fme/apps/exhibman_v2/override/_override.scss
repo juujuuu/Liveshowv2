@@ -1,8 +1,20 @@
 .exhibmanV2--FME {
-	$product-header-colour: #ed6839;
-	.product-header {
-		h2 a {
-			color: $product-header-colour;
-		}
-	}
+    $product-header-colour: #ed6839;
+    .product-header {
+        h2 a {
+            color: $product-header-colour;
+        }
+    }
+    .exhibitor-slide {
+        &.exhibitor-slide--ABE {
+            .exhibitor-slide__side-flag {
+                background: #26358c;
+            }
+        }
+        &.exhibitor-slide--FME {
+            .exhibitor-slide__side-flag {
+                background: #ed6839;
+            }
+        }
+    }
 }

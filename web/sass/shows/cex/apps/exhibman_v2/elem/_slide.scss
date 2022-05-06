@@ -1,115 +1,122 @@
 .exhibmanV2 {
-	.exhibitor-slide {
-		position: relative;
-		border-top: 1px solid black;
-		height: 170px;
-		padding: 10px 0;
-		overflow: hidden;
-		@media (max-width: $mobile-width) {
-			height: auto;
-			min-height: 200px;
-		}
-		.router-link--profile-button {
-			@media (min-width: $mobile-width) {
-			}
-			@media (max-width: $mobile-width) {
-				height: fit-content;
-			}
-			position: absolute;
-			right: 0;
-			top: 0;
-			width: auto;
-			margin-top: -1px;
-			padding: 0 !important;
-			.exhibitor-slide__profile-button {
-				padding: 0;
-			}
-		}
-		&__profile-button {
-			&--Standard {
-				.curved-cta__text {
-					padding: 3px 10px 3px 10px;
-				}
-			}
-			&--Enhanced {
-				.curved-cta__text {
-					padding: 3px 5px 3px 10px;
-				}
-			}
-			&:hover {
-				background-color: #fff;
-				box-shadow: inset 0 0 0 1.5px #000;
-				//transition: box-shadow 0.2s linear !important;
-				.curved-cta__exhib-assets {
-					background-color: #fff !important;
-					box-shadow: inset 0 0 0 1.5px #000;
-					transition: background 0.2s linear !important;
-					//transition: box-shadow 0.2s linear !important;
-				}
-			}
-			.curved-cta__link {
-				display: block;
-				.curved-cta__text,
-				.curved-cta__exhib-assets {
-					display: inline-block;
-				}
-				.curved-cta__exhib-assets {
-					display: inline-block;
-					padding: 3px 5px 3px 5px;
-					background-color: #5a5a5a;
-					span {
-						padding: 3px;
-					}
-				}
-			}
-		}
-		&__logo,
-		&__body,
-		&__cats {
-			display: flex;
-			align-items: center;
-		}
-		&__logo {
-			justify-content: center;
-		}
-		&__body {
-			justify-content: flex-start;
-			& > div {
-				.exhibitor-name {
-					margin-bottom: 5px;
-				}
-				.exhibitor-booth {
-					margin-bottom: 0;
-				}
-			}
-		}
-		&__cats {
-			justify-content: flex-start;
-			@media (max-width: $mobile-width) {
-				justify-content: center;
-			}
-			p {
-				font-size: 12px;
-				color: #5c5c5c;
-			}
-		}
-		&.exhibitor-slide--Enhanced {
-			.exhibitor-slide__logo {
-				img {
-					cursor: pointer;
-					&:hover {
-						text-decoration: underline;
-					}
-				}
-			}
-			.exhibitor-slide__body {
-				.exhibitor-name {
-					cursor: pointer;
-					&:hover {
-						text-decoration: underline;
-					}
-				}
-			}
-		}
-	}
+    .exhibitor-slide {
+        position: relative;
+        border-top: 1px solid black;
+        height: 170px;
+        padding: 10px 0;
+        overflow: hidden;
+        @media (max-width: $mobile-width) {
+            height: auto;
+            min-height: 200px;
+        }
+        .router-link--profile-button {
+            @media (min-width: $mobile-width) {
+            }
+            @media (max-width: $mobile-width) {
+                height: fit-content;
+            }
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: auto;
+            margin-top: -1px;
+            padding: 0 !important;
+            .exhibitor-slide__profile-button {
+                padding: 0;
+            }
+        }
+        &__profile-button {
+            &--Standard {
+                .curved-cta__text {
+                    padding: 3px 10px 3px 10px;
+                }
+            }
+            &--Enhanced {
+                .curved-cta__text {
+                    padding: 3px 5px 3px 10px;
+                }
+            }
+            &:hover {
+                background-color: #fff;
+                box-shadow: inset 0 0 0 1.5px #000;
+                //transition: box-shadow 0.2s linear !important;
+                .curved-cta__exhib-assets {
+                    background-color: #fff !important;
+                    box-shadow: inset 0 0 0 1.5px #000;
+                    transition: background 0.2s linear !important;
+                    //transition: box-shadow 0.2s linear !important;
+                }
+            }
+            .curved-cta__link {
+                display: block;
+                .curved-cta__text,
+                .curved-cta__exhib-assets {
+                    display: inline-block;
+                }
+                .curved-cta__exhib-assets {
+                    display: inline-block;
+                    padding: 3px 5px 3px 5px;
+                    background-color: #5a5a5a;
+                    span {
+                        padding: 3px;
+                    }
+                }
+            }
+        }
+        &__side-flag {
+            position: absolute;
+            width: 10px;
+            background: gray;
+            height: 90%;
+            padding: 0;
+        }
+        &__logo,
+        &__body,
+        &__cats {
+            display: flex;
+            align-items: center;
+        }
+        &__logo {
+            justify-content: center;
+        }
+        &__body {
+            justify-content: flex-start;
+            & > div {
+                .exhibitor-name {
+                    margin-bottom: 5px;
+                }
+                .exhibitor-booth {
+                    margin-bottom: 0;
+                }
+            }
+        }
+        &__cats {
+            justify-content: flex-start;
+            @media (max-width: $mobile-width) {
+                justify-content: center;
+            }
+            p {
+                font-size: 12px;
+                color: #5c5c5c;
+            }
+        }
+        &.exhibitor-slide--Enhanced {
+            .exhibitor-slide__logo {
+                img {
+                    cursor: pointer;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+            .exhibitor-slide__body {
+                .exhibitor-name {
+                    cursor: pointer;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
 }
