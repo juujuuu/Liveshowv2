@@ -29,6 +29,7 @@ import {
 } from "../Actions";
 import getModal from "../Utils/getModal";
 import { getOnDemandCode } from "../Utils/getOnDemand";
+import getUIThemes from "../Utils/getUIThemes";
 
 const FullAgenda = (props) => {
     const {
@@ -66,7 +67,7 @@ const FullAgenda = (props) => {
         ondemand,
         continent,
         parameters,
-        extraClass,
+        extraMode,
     } = options;
 
     useEffect(() => {
@@ -247,67 +248,112 @@ const FullAgenda = (props) => {
         return inputSessions;
     };
 
-    const getUIThemes = (show, day) => {
-        let theme = [];
-        switch (show) {
-            case "FMX":
-                switch (day) {
-                    case 1:
-                        theme.push("Plenary Mega Trends / Supply Chain Strategy");
-                        theme.push("Mega Trends");
-                        break;
-                    case 2:
-                        theme.push("Application Development");
-                        theme.push("Regulations and Sustainability");
-                        break;
-                    case 3:
-                        theme.push("Material Selection and Interaction");
-                        theme.push("Process Optimization");
-                        break;
-                }
-                return (
-                    <div>
-                        <p style={{ fontSize: "16px" }}>
-                            <strong>
-                                <span style={{ color: "#d52c60" }}>Track 1 Theme</span> - {theme[0]}
-                            </strong>
-                        </p>
-                        <p style={{ fontSize: "16px" }}>
-                            <strong>
-                                <span style={{ color: "#5bb7ce" }}>Track 2 Theme</span> - {theme[1]}
-                            </strong>
-                        </p>
+    const getTracksNav = () => {
+        const cols = extraMode === "innovation-agenda" ? [6, 6] : [9, 3];
+        if (window.innerWidth > 992) {
+            return (
+                <div className="container">
+                    <div className="row">
+                        <div className={`col-${cols[0]} track-col`}>{getTrackButtons(maxTracks)}</div>
+                        <div className={`col-${cols[1]} control-col`}>
+                            <Cta
+                                key="cta expand"
+                                curved={false}
+                                active={openSlides}
+                                color="primary"
+                                bonusClass="confman-expand"
+                                handler={setOpenSlides}
+                                role="expand"
+                                value={true}
+                            >
+                                Expand all
+                            </Cta>
+                            <Cta
+                                key="cta collapse"
+                                curved={false}
+                                active={!openSlides}
+                                color="primary"
+                                bonusClass="confman-expand"
+                                handler={setOpenSlides}
+                                role="collapse"
+                                value={false}
+                            >
+                                Collapse all
+                            </Cta>
+                            {extraMode === "innovation-agenda" ? (
+                                <Cta key="cta main agenda link" curved={false} color="primary" link="https://www.foam-expo.com/conference/conference-agenda">
+                                    CONFERENCE AGENDA
+                                </Cta>
+                            ) : (
+                                <Cta key="cta innovation link" curved={false} color="primary" link="https://www.foam-expo.com/conference/conference-agenda">
+                                    SOLUTIONS INNOVATION STAGE
+                                </Cta>
+                            )}
+                        </div>
                     </div>
-                );
-            case "ABX":
-                switch (day) {
-                    case 1:
-                        theme.push("Plenary Mega Trends / Supply Chain Strategy");
-                        theme.push("Mega Trends");
-                        break;
-                    case 2:
-                        theme.push("Application Development");
-                        theme.push("Regulations and Sustainability");
-                        break;
-                    case 3:
-                        theme.push("Material Selection and Interaction");
-                        theme.push("Process Optimization");
-                        break;
-                }
-                return (
-                    <div>
-                        <p style={{ fontSize: "16px" }}>
-                            <strong>
-                                <span style={{ color: "#d52c60" }}>Track 1 Theme</span> - {theme[0]}
-                            </strong>
-                        </p>
-                        <p style={{ fontSize: "16px" }}>
-                            <strong>
-                                <span style={{ color: "#5bb7ce" }}>Track 2 Theme</span> - {theme[1]}
-                            </strong>
-                        </p>
+                </div>
+            );
+        } else {
+            return (
+                <>
+                    <div className="container-fluid tracks__mob-control">
+                        <div className="row">
+                            <div className="col-12 control-col">
+                                <Cta
+                                    key="cta expand"
+                                    curved={false}
+                                    active={openSlides}
+                                    color="primary"
+                                    bonusClass="confman-expand"
+                                    handler={setOpenSlides}
+                                    role="expand"
+                                    value={true}
+                                >
+                                    Expand all
+                                </Cta>
+                                <Cta
+                                    key="cta collapse"
+                                    curved={false}
+                                    active={!openSlides}
+                                    color="primary"
+                                    bonusClass="confman-expand"
+                                    handler={setOpenSlides}
+                                    role="collapse"
+                                    value={false}
+                                >
+                                    Collapse all
+                                </Cta>
+                            </div>
+                        </div>
                     </div>
-                );
+                    <div className="container-fluid tracks__mob-tracks">
+                        <div className="row ">
+                            <div className="col-12 track-col">
+                                {extraMode === "innovation-agenda" ? (
+                                    <Cta
+                                        key="cta main agenda link"
+                                        curved={false}
+                                        color="fmx-blue"
+                                        link="https://www.foam-expo.com/conference/conference-agenda"
+                                    >
+                                        CONFERENCE AGENDA
+                                    </Cta>
+                                ) : (
+                                    <Cta
+                                        key="cta innovation link"
+                                        curved={false}
+                                        color="solutions-blue"
+                                        link="https://www.foam-expo.com/conference/conference-agenda"
+                                    >
+                                        SOLUTIONS INNOVATION STAGE
+                                    </Cta>
+                                )}
+                                {getTrackButtons(maxTracks)}{" "}
+                            </div>
+                        </div>
+                    </div>
+                </>
+            );
         }
     };
 
@@ -320,7 +366,11 @@ const FullAgenda = (props) => {
     } else {
         const pipedSessions = runFilters(sessions);
         return (
-            <section className={`confman conference-agenda conference-agenda--${show} conference-agenda--${extraClass}`}>
+            <section
+                className={`confman conference-agenda conference-agenda--${show} ${
+                    extraMode === "innovation-agenda" ? `conference-agenda--innovation-stage` : ""
+                }`}
+            >
                 <MainNav desktop={window.innerWidth > 992}>
                     {topNav ? (
                         <div className="main-nav__days">
@@ -331,82 +381,14 @@ const FullAgenda = (props) => {
                     ) : (
                         ""
                     )}
-                    <div className="main-nav__tracks">
-                        {window.innerWidth > 992 ? (
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-9 track-col">{getTrackButtons(maxTracks)}</div>
-                                    <div className="col-3 control-col">
-                                        <Cta
-                                            key="cta expand"
-                                            curved={false}
-                                            active={openSlides}
-                                            color="primary"
-                                            handler={setOpenSlides}
-                                            role="expand"
-                                            value={true}
-                                        >
-                                            Expand all
-                                        </Cta>
-                                        <Cta
-                                            key="cta collapse"
-                                            curved={false}
-                                            active={!openSlides}
-                                            color="primary"
-                                            handler={setOpenSlides}
-                                            role="collapse"
-                                            value={false}
-                                        >
-                                            Collapse all
-                                        </Cta>
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <>
-                                <div className="container-fluid tracks__mob-control">
-                                    <div className="row">
-                                        <div className="col-12 control-col">
-                                            <Cta
-                                                key="cta expand"
-                                                curved={false}
-                                                active={openSlides}
-                                                color="primary"
-                                                handler={setOpenSlides}
-                                                role="expand"
-                                                value={true}
-                                            >
-                                                Expand all
-                                            </Cta>
-                                            <Cta
-                                                key="cta collapse"
-                                                curved={false}
-                                                active={!openSlides}
-                                                color="primary"
-                                                handler={setOpenSlides}
-                                                role="collapse"
-                                                value={false}
-                                            >
-                                                Collapse all
-                                            </Cta>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="container-fluid tracks__mob-tracks">
-                                    <div className="row ">
-                                        <div className="col-12 track-col">{getTrackButtons(maxTracks)}</div>
-                                    </div>
-                                </div>
-                            </>
-                        )}
-                    </div>
+                    <div className="main-nav__tracks">{getTracksNav()}</div>
                 </MainNav>
                 <Body>
                     {window.innerWidth > 992 ? (
                         <div className="container">
                             <div className="row">
                                 <div className="col-8">
-                                    {show === "FMX" || show === "ABX" ? getUIThemes(show, filters.day) : null}
+                                    {show === "FMX" || show === "ABX" ? getUIThemes(show, filters.day, extraMode) : null}
                                     {getSlides(pipedSessions)}
                                 </div>
                                 <div className="col-4">
@@ -432,7 +414,7 @@ const FullAgenda = (props) => {
                                                         DOWNLOAD PDF AGENDA
                                                     </Cta>
                                                 ) : (
-                                                    <Cta key="cta pdf agenda" size="max" color="primary" link={getConfPdfLink(show)} download={true}>
+                                                    <Cta key="cta pdf agenda" size="max" color="primary" link={getConfPdfLink(show, conf)} download={true}>
                                                         DOWNLOAD PDF AGENDA
                                                     </Cta>
                                                 )}

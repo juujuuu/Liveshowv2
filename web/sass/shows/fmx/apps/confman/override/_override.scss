@@ -1,10 +1,11 @@
-$tracks: #d52c60, #5bb7ce, #144f74;
-$tracks-lighter: lighten(#d52c60, 20), lighten(#5bb7ce, 20), lighten(#144f74, 20);
-$main-color: #4d8691;
-
-$big-titles: 17px;
+@import "./override-innovation-stage";
 
 .confman {
+    $tracks: #d52c60, #5bb7ce, #144f74;
+    $tracks-lighter: lighten(#d52c60, 20), lighten(#5bb7ce, 20), lighten(#144f74, 20);
+    $main-color: #4d8691;
+
+    $big-titles: 17px;
     &.conference-agenda--FMX {
         .curved-cta--primary {
             background-color: $main-color;

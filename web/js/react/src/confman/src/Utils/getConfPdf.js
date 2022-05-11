@@ -1,10 +1,13 @@
-const getConfPdfLink = show => {
-    const baseString =
-        "./assets/resources/shared/pdfs/conference/Conference Agenda ";
+const getConfPdfLink = (show, conf = false) => {
+    const baseString = "./assets/resources/shared/pdfs/conference/Conference Agenda ";
     /* || in switch case gets compiled out???? */
-    switch (show) {       
+    switch (show) {
         case "FMX":
-            return baseString + "FMX ABX" + ".pdf";
+            if (conf === "'a3i4V000001tXtn'") {
+                return baseString + "Solutions Innovations" + ".pdf";
+            } else {
+                return baseString + "FMX ABX" + ".pdf";
+            }
         case "ABX":
             return baseString + "FMX ABX" + ".pdf";
         case "FME":
