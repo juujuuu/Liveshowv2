@@ -3,8 +3,9 @@ const getConfPdfLink = (show, conf = false) => {
     /* || in switch case gets compiled out???? */
     switch (show) {
         case "FMX":
+        case "ABX":
             if (conf === "'a3i4V000001tXtn'") {
-                return baseString + "Solutions Innovations" + ".pdf";
+                return baseString + "Solutions Innovation" + ".pdf";
             } else {
                 return baseString + "FMX ABX" + ".pdf";
             }

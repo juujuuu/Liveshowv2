@@ -249,7 +249,7 @@ const FullAgenda = (props) => {
     };
 
     const getTracksNav = () => {
-        const cols = extraMode === "innovation-agenda" ? [6, 6] : [9, 3];
+        const cols = show === "FMX" || show === "ABX" ? [6, 6] : [9, 3];
         if (window.innerWidth > 992) {
             return (
                 <div className="container">
@@ -264,8 +264,7 @@ const FullAgenda = (props) => {
                                 bonusClass="confman-expand"
                                 handler={setOpenSlides}
                                 role="expand"
-                                value={true}
-                            >
+                                value={true}>
                                 Expand all
                             </Cta>
                             <Cta
@@ -276,19 +275,26 @@ const FullAgenda = (props) => {
                                 bonusClass="confman-expand"
                                 handler={setOpenSlides}
                                 role="collapse"
-                                value={false}
-                            >
+                                value={false}>
                                 Collapse all
                             </Cta>
-                            {extraMode === "innovation-agenda" ? (
-                                <Cta key="cta main agenda link" curved={false} color="primary" link="https://www.foam-expo.com/conference/conference-agenda">
-                                    CONFERENCE AGENDA
-                                </Cta>
-                            ) : (
-                                <Cta key="cta innovation link" curved={false} color="primary" link="https://www.foam-expo.com/conference/conference-agenda">
-                                    SOLUTIONS INNOVATION STAGE
-                                </Cta>
-                            )}
+                            {show === "FMX" || show === "ABX" ? (
+                                <>
+                                    {extraMode === "innovation-agenda" ? (
+                                        <Cta
+                                            key="cta main agenda link"
+                                            curved={false}
+                                            color={show === "FMX" ? "fmx-blue" : "abx-blue"}
+                                            link="../conference/conference-agenda">
+                                            CONFERENCE AGENDA
+                                        </Cta>
+                                    ) : (
+                                        <Cta key="cta innovation link" curved={false} color="solutions-blue" link="../conference/solutions-innovation-stage">
+                                            SOLUTIONS INNOVATION STAGE
+                                        </Cta>
+                                    )}
+                                </>
+                            ) : null}
                         </div>
                     </div>
                 </div>
@@ -307,8 +313,7 @@ const FullAgenda = (props) => {
                                     bonusClass="confman-expand"
                                     handler={setOpenSlides}
                                     role="expand"
-                                    value={true}
-                                >
+                                    value={true}>
                                     Expand all
                                 </Cta>
                                 <Cta
@@ -319,8 +324,7 @@ const FullAgenda = (props) => {
                                     bonusClass="confman-expand"
                                     handler={setOpenSlides}
                                     role="collapse"
-                                    value={false}
-                                >
+                                    value={false}>
                                     Collapse all
                                 </Cta>
                             </div>
@@ -329,25 +333,27 @@ const FullAgenda = (props) => {
                     <div className="container-fluid tracks__mob-tracks">
                         <div className="row ">
                             <div className="col-12 track-col">
-                                {extraMode === "innovation-agenda" ? (
-                                    <Cta
-                                        key="cta main agenda link"
-                                        curved={false}
-                                        color="fmx-blue"
-                                        link="https://www.foam-expo.com/conference/conference-agenda"
-                                    >
-                                        CONFERENCE AGENDA
-                                    </Cta>
-                                ) : (
-                                    <Cta
-                                        key="cta innovation link"
-                                        curved={false}
-                                        color="solutions-blue"
-                                        link="https://www.foam-expo.com/conference/conference-agenda"
-                                    >
-                                        SOLUTIONS INNOVATION STAGE
-                                    </Cta>
-                                )}
+                                {show === "FMX" || show === "ABX" ? (
+                                    <>
+                                        {extraMode === "innovation-agenda" ? (
+                                            <Cta
+                                                key="cta main agenda link"
+                                                curved={false}
+                                                color={show === "FMX" ? "fmx-blue" : "abx-blue"}
+                                                link="../conference/conference-agenda">
+                                                CONFERENCE AGENDA
+                                            </Cta>
+                                        ) : (
+                                            <Cta
+                                                key="cta innovation link"
+                                                curved={false}
+                                                color="solutions-blue"
+                                                link="../conference/solutions-innovation-stage">
+                                                SOLUTIONS INNOVATION STAGE
+                                            </Cta>
+                                        )}
+                                    </>
+                                ) : null}
                                 {getTrackButtons(maxTracks)}{" "}
                             </div>
                         </div>
@@ -369,8 +375,7 @@ const FullAgenda = (props) => {
             <section
                 className={`confman conference-agenda conference-agenda--${show} ${
                     extraMode === "innovation-agenda" ? `conference-agenda--innovation-stage` : ""
-                }`}
-            >
+                }`}>
                 <MainNav desktop={window.innerWidth > 992}>
                     {topNav ? (
                         <div className="main-nav__days">

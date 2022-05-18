@@ -1,9 +1,10 @@
 @import "./layout--video", "./layout--colour", "./layout--image-inner-hero", "./layout--image", "./layout-map-footer";
 .layout-full {
-	width: auto;
+    position: relative;
+    width: auto;
 }
 .layout-full--ignore-custom-height {
-	@media (max-width: $mobile-width) {
-		height: unset !important;
-	}
+    @media (max-width: $mobile-width) {
+        height: unset !important;
+    }
 }
