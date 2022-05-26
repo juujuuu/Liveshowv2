@@ -26,6 +26,7 @@ import {
     setQuery,
     resetFiltersAction,
     setError,
+    setLowestDay,
 } from "../Actions";
 import getModal from "../Utils/getModal";
 import { getOnDemandCode } from "../Utils/getOnDemand";
@@ -51,6 +52,7 @@ const FullAgenda = (props) => {
         filters,
         setError,
         resetFiltersAction,
+        lowestDay,
     } = props;
 
     const {
@@ -67,7 +69,9 @@ const FullAgenda = (props) => {
         ondemand,
         continent,
         parameters,
+        hideTrackButtons,
         extraMode,
+        hideDownloadLink,
     } = options;
 
     useEffect(() => {
@@ -75,11 +79,8 @@ const FullAgenda = (props) => {
             fetchConference(getSiteFromAcronym(show), conf).then((response) => {
                 setLoading(false);
             });
-            ///if (null !== parameters) {
-            if (show === "SPC" || show === "NZB") {
-                setDay(0);
-            }
-            //}
+            setDay(0);
+
             if (ondemand) {
                 getModal({ role: "on-demand-modal", odcode: getOnDemandCode(show) });
             }
@@ -92,12 +93,13 @@ const FullAgenda = (props) => {
                 const [name, sessionId] = parameters.find((param) => param[0] == "session-id");
 
                 try {
-                    const sessionDay = sessions.find((_session) => _session.Id === sessionId).Day__c;
+                    console.log(sessions, sessionId.toLowerCase());
+                    const sessionDay = sessions.find((_session) => _session.Id.toLowerCase() === sessionId.toLowerCase()).Day__c;
                     setDay(sessionDay);
                     setDealtWithInitialParams(true);
                     setOpenSlides(true);
                     setTimeout(() => {
-                        const el = document.querySelector(`#${sessionId} .session__anchor`);
+                        const el = document.querySelector(`#${sessionId.toLowerCase()} .session__anchor`);
                         el.scrollIntoView({ behavior: "smooth" });
                     }, 0);
                 } catch (error) {
@@ -105,45 +107,55 @@ const FullAgenda = (props) => {
                     setError(true);
                 }
             }
+        } else {
+            if (show !== "SPC" && show !== "NZB" && show !== "CEX" && show !== "TME") {
+                setDay(lowestDay);
+            }
         }
     }, [loading]);
 
-    const getDayButtons = (numberOfDays) => {
-        let colNum = 12 / numberOfDays;
+    const getDayButtons = (numberOfDays, lowestDay) => {
+        let colNum = 12 / (numberOfDays - (lowestDay - 1));
         let index = 0;
+        let otherIndex = 0;
         let dayButtons = [];
-        for (index = 0; index < numberOfDays; index++) {
+        for (index = lowestDay; index <= numberOfDays; index++) {
             dayButtons.push(
                 <div className={`col-${colNum}`}>
-                    <MainNavButton options={options} key={`day-button-${index + 1}`} active={filters.day === index + 1} value={index + 1} handler={setDay}>
+                    <MainNavButton options={options} key={`day-button-${index}`} active={filters.day === index} value={index} handler={setDay}>
                         {/* {daynameoverride == undefined || window.innerWidth < 992
 							? `Day ${index + 1}`
 							: `Day ${index + 1} - ${daynameoverride[index]}`} */}
-                        {daynameoverride[index]}
+                        {daynameoverride[otherIndex]}
                     </MainNavButton>
                 </div>
             );
+            otherIndex++;
         }
         return <>{dayButtons}</>;
     };
 
     const getTrackButtons = (numberOfTracks) => {
-        let i = 0;
-        let buttons = [];
-        for (i = 0; i < numberOfTracks; i++) {
-            let trackName = sessions.find((session) => session.Track_Number__c == i + 1).Track_Long_Title__c;
-            buttons.push(
-                <CheckBoxFilter
-                    name={trackName}
-                    inputClass={`track-${i + 1}`}
-                    handler={setTrack}
-                    value={i + 1}
-                    key={`checkboxfilter ${i + 1}`}
-                    checked={!filters.track.includes(i + 1)}
-                />
-            );
+        if (!hideTrackButtons) {
+            let i = 0;
+            let buttons = [];
+            for (i = 0; i < numberOfTracks; i++) {
+                let trackName = sessions.find((session) => session.Track_Number__c == i + 1).Track_Long_Title__c;
+                buttons.push(
+                    <CheckBoxFilter
+                        name={trackName}
+                        inputClass={`track-${i + 1}`}
+                        handler={setTrack}
+                        value={i + 1}
+                        key={`checkboxfilter ${i + 1}`}
+                        checked={!filters.track.includes(i + 1)}
+                    />
+                );
+            }
+            return <>{buttons}</>;
+        } else {
+            return null;
         }
-        return <>{buttons}</>;
     };
 
     const getSlides = (data) => {
@@ -168,7 +180,7 @@ const FullAgenda = (props) => {
 
     const resetFilters = () => {
         setOpenSlides(false);
-        resetFiltersAction();
+        resetFiltersAction({ track: [], day: lowestDay, query: "", letter: -1 });
         document.getElementById("confman__search").value = "";
     };
 
@@ -380,7 +392,7 @@ const FullAgenda = (props) => {
                     {topNav ? (
                         <div className="main-nav__days">
                             <div className={`container${window.innerWidth < 992 ? "-fluid" : ""}`}>
-                                <div className="row">{getDayButtons(maxDays)}</div>
+                                <div className="row">{getDayButtons(maxDays, lowestDay)}</div>
                             </div>
                         </div>
                     ) : (
@@ -412,7 +424,7 @@ const FullAgenda = (props) => {
                                         ) : (
                                             ""
                                         )}
-                                        {downloadagenda != undefined ? (
+                                        {downloadagenda != undefined && hideDownloadLink === false ? (
                                             <>
                                                 {show == "OCS" || show == "SAT" || show == "NZB" ? (
                                                     <Cta key="cta pdf agenda" size="max" color="primary" role="pop-form" link={generalenquiry} download={true}>
@@ -473,4 +485,5 @@ export default connect(mapStateToProps, {
     setDealtWithInitialParams,
     resetFiltersAction,
     setError,
+    setLowestDay,
 })(FullAgenda);

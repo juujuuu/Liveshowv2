@@ -34,14 +34,15 @@
                 background-color: $main-color;
                 .main-nav__nav-button {
                     background-color: $main-color;
+                    cursor: default !important;
                     &.active {
-                        background-color: #597394;
+                        background-color: $main-color;
                         &:hover {
                             //background-color: darken($main-color, 20);
                         }
                     }
                     &:hover {
-                        background-color: #597394;
+                        background-color: $main-color;
                         transition: background-color 0.25s ease-in;
                         -webkit-transition: background-color 0.25s ease-in;
                         //background-color: lighten($main-color, 20);

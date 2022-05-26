@@ -54,6 +54,11 @@ $mobile-width: 992px;
                                 background-color: unset;
                                 border: none;
                                 border-top: none;
+                                & > div {
+                                    @media (min-width: $mobile-width) {
+                                        min-width: 100%;
+                                    }
+                                }
                                 .session--sponsored {
                                     display: flex;
                                     min-width: 100%;

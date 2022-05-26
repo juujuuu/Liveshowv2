@@ -12,20 +12,22 @@ import setMaxDays from "./setMaxDays";
 import setMaxTracks from "./setMaxTracks";
 import setDealtWithInitialParams from "./setDealtWithInitialParams";
 import resetFiltersAction from "./resetFilters";
+import setLowestDay from "./setLowestDay";
 
 export {
-	setLetter,
-	setDay,
-	setTrack,
-	setQuery,
-	fetchConference,
-	fetchSpeakerList,
-	setOpenSlides,
-	setError,
-	setOptions,
-	setLoading,
-	setMaxDays,
-	setMaxTracks,
-	setDealtWithInitialParams,
-	resetFiltersAction
+    setLetter,
+    setDay,
+    setTrack,
+    setQuery,
+    fetchConference,
+    fetchSpeakerList,
+    setOpenSlides,
+    setError,
+    setOptions,
+    setLoading,
+    setMaxDays,
+    setMaxTracks,
+    setDealtWithInitialParams,
+    resetFiltersAction,
+    setLowestDay,
 };

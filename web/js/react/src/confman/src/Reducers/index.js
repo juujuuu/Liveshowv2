@@ -9,16 +9,18 @@ import fetchSpeakersReducer from "./fetchSpeakersReducer";
 import maxDaysReducer from "./maxDaysReducer";
 import maxTracksReducer from "./maxTracksReducer";
 import initialParamsReducer from "./initialParamsReducer";
+import lowestDayReducer from "./lowestDayReducer";
 
 export default combineReducers({
-	error: errorReducer,
-	loading: loadingReducer,
-	options: optionsReducer,
-	filters: filtersReducer,
-	openSlides: openSlidesReducer,
-	sessions: fetchConferenceReducer,
-	speakers: fetchSpeakersReducer,
-	maxDays: maxDaysReducer,
-	maxTracks: maxTracksReducer,
-	dealtWithInitialParams: initialParamsReducer,
+    error: errorReducer,
+    loading: loadingReducer,
+    options: optionsReducer,
+    filters: filtersReducer,
+    openSlides: openSlidesReducer,
+    sessions: fetchConferenceReducer,
+    speakers: fetchSpeakersReducer,
+    maxDays: maxDaysReducer,
+    maxTracks: maxTracksReducer,
+    dealtWithInitialParams: initialParamsReducer,
+    lowestDay: lowestDayReducer,
 });

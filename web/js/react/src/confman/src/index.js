@@ -8,11 +8,11 @@ import reducers from "./Reducers";
 
 import App from "./Components/App";
 
-var params = null;
+var parameters = null;
 if (window.location.href.includes("?")) {
-    params = window.location.href.split("?")[1];
-    params = params.split("&");
-    params = params.map((param) => {
+    parameters = window.location.href.split("?")[1];
+    parameters = parameters.split("&");
+    parameters = parameters.map((param) => {
         param = param.split("=");
         return param;
     });
@@ -32,6 +32,9 @@ var options = {
     reginterest: document.querySelector("#root").getAttribute("reginterest"),
     event: document.querySelector("#root").getAttribute("event"),
     topNav: document.querySelector("#root").getAttribute("topnav") == "true" ? true : false,
+    hideTrackButtons: document.querySelector("#root").getAttribute("hidetrackbuttons") == "true" ? true : false,
+    hideDownloadLink: document.querySelector("#root").getAttribute("hidedownloadlink") == "true" ? true : false,
+    hideTrackRibbon: document.querySelector("#root").getAttribute("hidetrackribbon") == "true" ? true : false,
     contactcampaign: document.querySelector("#root").getAttribute("contactcampaign"),
     continent: document.querySelector("#root").getAttribute("continent"),
     mode: document.querySelector("#root").getAttribute("mode"),
@@ -50,7 +53,7 @@ var options = {
         document.querySelector("#root").getAttribute("daynameoverride") != ""
             ? document.querySelector("#root").getAttribute("daynameoverride").split(" | ")
             : undefined,
-    parameters: params,
+    parameters,
 };
 
 //Fix for test sites

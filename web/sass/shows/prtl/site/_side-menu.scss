@@ -6,6 +6,7 @@
         padding: 0 20px;
         .side-menu__item {
             &.side-menu--current {
+                &p,
                 h2,
                 p,
                 a {

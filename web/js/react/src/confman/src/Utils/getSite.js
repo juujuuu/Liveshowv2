@@ -42,6 +42,7 @@ const getSiteFromId = (conferenceId) => {
         case "a3i4V000001pPTc":
             return "FME";
         case "a3i4V000001pJWy":
+        case "a3i4V000000bqIX":
             return "CEX";
         case "a3i4V000000bqIc":
             return "SPC";
@@ -53,7 +54,7 @@ const getSiteFromId = (conferenceId) => {
             return "SAT";
         case "a3i4V000001tXpE":
             return "NZB";
-        case "TODO":
+        case "a3i4V000000bqIr":
             return "TME";
         case "TODO":
             return "HPP";
