@@ -36,6 +36,7 @@
         "buildsrc:confman": "npx webpack --mode=development --node-env=development --config ./webpack_configs/webpack.config.confman.js",
         "builddist:exhibsv2": "npx webpack --mode=production --node-env=production --config ./webpack_configs/webpack.config.exhibmanv2.js",
         "builddist:confman": "npx webpack --mode=production --node-env=production --config ./webpack_configs/webpack.config.confman.js",
+        "builddist:checklist": "npx webpack --mode=production --node-env=production --config ./webpack_configs/webpack.config.checklist.js",
         "build:custom": "npx webpack --mode=production --node-env=production --config ./webpack.config.custom.js",
         "buildsrc:all": "npx webpack --mode=development --node-env=development --config ./webpack_configs/webpack.config.exhibmanv2.js && npx webpack --mode=development --node-env=development --config ./webpack_configs/webpack.config.confman.js && npx webpack --mode=production --node-env=production --config ./webpack_configs/webpack.config.custom.js && npx webpack serve --mode=development --node-env=development --config ./webpack_configs/webpack.config.serve.checklist.js",
         "builddist:all": "npx webpack --mode=production --node-env=production --config ./webpack_configs/webpack.config.exhibmanv2.js && npx webpack --mode=production --node-env=production --config ./webpack_configs/webpack.config.confman.js && npx webpack serve --mode=development --node-env=development --config ./webpack_configs/webpack.config.serve.checklist.js",

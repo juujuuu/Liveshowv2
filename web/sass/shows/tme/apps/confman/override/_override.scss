@@ -1,6 +1,6 @@
 .confman {
-    $tracks: #ad2d20, #ad2d20;
-    $tracks-lighter: lighten(#c2644c, 20), lighten(#c2644c, 20);
+    $tracks: #ad2d20, #c2644c;
+    $tracks-lighter: lighten(#ad2d20, 20), lighten(#c2644c, 20);
     $main-color: #ad2d20;
 
     $big-titles: 20px;

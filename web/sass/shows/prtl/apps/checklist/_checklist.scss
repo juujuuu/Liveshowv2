@@ -1,3 +1,65 @@
+@import "./elem/row";
+
 $mobile-width: 992px;
 .portal-checklist {
+    &__table {
+        width: 100%;
+    }
+    .potal-checklist__row {
+        border: none;
+        & + .potal-checklist__row {
+            border-top: 0.5px solid black;
+        }
+        .portal-checklist__instruction,
+        .portal-checklist__deadline,
+        .portal-checklist__checkbox {
+            height: 55px;
+            border: none;
+            div {
+                display: flex;
+                align-items: center;
+                height: 100%;
+                p {
+                    margin: 0;
+                }
+            }
+        }
+        .portal-checklist__instruction {
+            width: 60%;
+        }
+        .portal-checklist__deadline {
+            width: 30%;
+        }
+        .portal-checklist__checkbox {
+            width: 10%;
+            div {
+                text-align: center;
+                i {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}
+[data-context^="FMX"] {
+    $main-color: #4d8691;
+    .portal-checklist__completion {
+        text-align: center;
+        font-weight: normal;
+        strong {
+            color: #4d8691;
+        }
+    }
+    .potal-checklist__row {
+        & + .potal-checklist__row {
+            border-top: 0.5px solid $main-color;
+        }
+        .portal-checklist__row--automatic {
+            .portal-checklist__checkbox {
+                .bi-check-square {
+                    cursor: default;
+                }
+            }
+        }
+    }
 }
