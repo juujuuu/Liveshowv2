@@ -25,7 +25,7 @@
 
                 const fetch = window.fetch;
                 window.fetch = function () {
-                    return Promise.resolve(fetch.apply(window, arguments)).then(async (response) => {
+                    return Promise.resolve(fetch.apply(window, arguments)).then(async response => {
                         if (response.ok) {
                             try {
                                 const clone = response.clone();
@@ -676,20 +676,21 @@
 
                 <div
                     id="root"
-                    conf="'a3i4V000001tXtn'"
+                    conf="'a3i4V000001tXtn','a3i4V000001hXhE'"
                     generalenquiry=""
                     extramode="innovation-agenda"
                     topnav="false"
-                    fullagendalocation=""
+                    fullagendalocation="../conference/conference-agenda"
                     daynameoverride="Day 1 - June 28 | Day 2 - June 29 | Day 3 - June 30"
                     convincepdf=""
+                    speakeragendalinks="true"
                     downloadagenda=""
                     event="Foam Expo"
                     show="FMX"
                     reginterest=""
                     reglink="https://registration.gesevent.com/survey/20t8pkwcytqb8/register"
                     continent="USA"
-                    mode="full-agenda"
+                    mode="speaker-list"
                     ondemand="false"
                 ></div>
             </section>
