@@ -24,8 +24,9 @@ const getModal = ({ data = {}, options = {}, role = false, size = "lg", odcode =
             }
             sessionsHtml = `<p><a href="${link}" title="${session.name}">${session.name}</a></p>`;
         });
-        const { Head_Shot_URL__c, Last_Name__c, First_Name__c, Job_Title__c, Company__c, Logo_URL__c, Speaker__r } = data;
-        let modalBody = `<div class="container"><div class="row"><div class="col-12 col-md-2"><img src="${Head_Shot_URL__c}" class="img-fluid" alt="${First_Name__c} ${Last_Name__c}" /></div><div class="col-12 col-md-6"><p style="font-weight: bold;">${First_Name__c} ${Last_Name__c},</p><p>${Job_Title__c},</p><p style="font-weight: bold;">${Company__c}</p></div><div class="col-12 col-md-4"><img src="${Logo_URL__c}" class="img-fluid" alt="${Company__c}" /></div></div><div class="row"><div class="col-12"><h3 style="margin-top: 10px;">Speaker Bio</h3><p>${
+        const { Head_Shot_URL__c, Last_Name__c, First_Name__c, Job_Title__c, Company__c, Speaker__r } = data;
+        const { web_logo_url__c } = Speaker__r;
+        let modalBody = `<div class="container"><div class="row"><div class="col-12 col-md-2"><img src="${Head_Shot_URL__c}" class="img-fluid" alt="${First_Name__c} ${Last_Name__c}" /></div><div class="col-12 col-md-6"><p style="font-weight: bold;">${First_Name__c} ${Last_Name__c},</p><p>${Job_Title__c},</p><p style="font-weight: bold;">${Company__c}</p></div><div class="col-12 col-md-4"><img src="${web_logo_url__c}" class="img-fluid" alt="${Company__c}" /></div></div><div class="row"><div class="col-12"><h3 style="margin-top: 10px;">Speaker Bio</h3><p>${
             Speaker__r.Biography__c == null ? `<i>Coming soon</i>` : Speaker__r.Biography__c
         }</p>${speakerAgendaLinks ? `<h3>Speaking at:</h3><div class="sessions">${sessionsHtml}</div>` : ``}</div></div></div>`;
         $(modal).find(".modal-body").append(modalBody);

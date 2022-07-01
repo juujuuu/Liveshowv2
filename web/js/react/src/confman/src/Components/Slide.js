@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
 
-const Slide = (props) => {
+const Slide = props => {
     let [show, setShow] = useState(false);
     const bodyRef = useRef();
     const mainRef = useRef();
@@ -13,7 +13,7 @@ const Slide = (props) => {
     const { options, session, openSlides: open, windowwidth } = props;
     const { continent, ondemand } = options;
 
-    const handleClick = (event) => {
+    const handleClick = event => {
         //jquery solution (probably not ideal)
         $(bodyRef.current).collapse("toggle");
         if ($(bodyRef.current).prev().find(".accordion-button").hasClass("collapsed")) {
@@ -26,11 +26,11 @@ const Slide = (props) => {
             $(mainRef.current).addClass("session--collapsed");
         }
     };
-    const getHeadShot = (headshot) => (headshot ? headshot : "./assets/resources/shared/web/apps/confman/silhouette.png");
+    const getHeadShot = headshot => (headshot ? headshot : "./assets/resources/shared/web/apps/confman/silhouette.png");
 
-    const getCompany = (company) => (company ? company : "./assets/resources/shared/web/apps/confman/coming-soon.jpg");
+    const getCompany = company => (company ? company : "./assets/resources/shared/web/apps/confman/coming-soon.jpg");
 
-    const getTime = (timeObj) => {
+    const getTime = timeObj => {
         let hour = timeObj.hour;
         let minute = timeObj.minute;
         if (continent == "USA") {
@@ -59,7 +59,10 @@ const Slide = (props) => {
                 Presentation_Slides_PDF_link__c,
                 Logo_URL__c,
                 Head_Shot_URL__c,
+                Speaker__r,
             } = speaker;
+
+            const { web_logo_url__c } = Speaker__r;
 
             return (
                 <div key={`speaker-${index}`} className={`row speakers__speaker`} id={Id}>
@@ -90,7 +93,7 @@ const Slide = (props) => {
                     </div>
                     {windowwidth > 992 ? (
                         <div className="col-4 speaker__company">
-                            <img className="img-fluid" src={getCompany(Logo_URL__c)} alt={`${Company__c}`} />
+                            <img className="img-fluid" src={getCompany(web_logo_url__c)} alt={`${Company__c}`} />
                         </div>
                     ) : (
                         ""
@@ -102,10 +105,10 @@ const Slide = (props) => {
             return;
         }
         let presentations = [...session.presentations];
-        let hasModerator = undefined != presentations.find((speaker) => speaker.Roll__c == "Moderator");
+        let hasModerator = undefined != presentations.find(speaker => speaker.Roll__c == "Moderator");
         let moderator;
         if (hasModerator) {
-            moderator = presentations.find((speaker) => speaker.Roll__c === "Moderator");
+            moderator = presentations.find(speaker => speaker.Roll__c === "Moderator");
             presentations.splice(presentations.indexOf(moderator), 1);
             moderator = getSpeaker(moderator);
         }
