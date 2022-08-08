@@ -4,7 +4,19 @@ const fetchSpeakersReducer = (state = [], action) => {
     switch (type) {
         case "FETCH_SPEAKERLIST":
             let { presentation: presentations } = data;
-            console.log("Speaker List Reducer receiving: ", presentations);
+            console.log(
+                "Speaker List Reducer receiving: ",
+                presentations.sort((a, b) => {
+                    if (a.Last_Name__c < b.Last_Name__c) {
+                        return -1;
+                    }
+                    if (a.Last_Name__c > b.Last_Name__c) {
+                        return 1;
+                    }
+                    return 0;
+                })
+            );
+
             //Merge multiple speakers into one newSpeaker
             const referenceSpeakers = [...presentations];
             let newSpeakers = [];
@@ -54,13 +66,16 @@ const fetchSpeakersReducer = (state = [], action) => {
                 }
                 return 0;
             });
+            console.log("Speaker list reducer returning: ", newSpeakers);
 
             newSpeakers = newSpeakers.filter((speaker, index) => {
                 if (index + 1 < newSpeakers.length) {
                     const { First_Name__c: fName1, Last_Name__c: lName1, Company__c: company1 } = speaker;
                     const { First_Name__c: fName2, Last_Name__c: lName2, Company__c: company2 } = newSpeakers[index + 1];
+
                     return !(fName1 === fName2 && lName1 === lName2 && company1 === company2);
                 }
+                return true;
             });
 
             //Switching 18bit id to 15

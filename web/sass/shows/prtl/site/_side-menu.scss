@@ -32,10 +32,16 @@
                 }
             }
             .accordion-header {
+                display: flex;
+                align-items: center;
                 .accordion-button {
                     padding: 5px 0;
                     font-size: 20px;
+                    width: fit-content;
                     border: none;
+                    & + a {
+                        font-size: 20px;
+                    }
                     &:not(.collapsed) {
                         color: unset;
                         background-color: unset;

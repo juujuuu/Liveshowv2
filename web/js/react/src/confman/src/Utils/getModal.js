@@ -21,9 +21,15 @@ const getModal = ({ data = {}, options = {}, role = false, size = "lg", odcode =
                     options.show === "FMX"
                         ? `https://www.foam-expo.com/conference/solutions-innovation-stage?session-id=${session.id}&day=${session.day}`
                         : `https://www.adhesivesandbondingexpo.com/conference/solutions-innovation-stage?session-id=${session.id}&day=${session.day}`;
+            } else if (session.Conference__c === "What ever the sf id of the solutions innovation agenda ends up being") {
+                link =
+                    options.show === "FME"
+                        ? `https://www.foam-expo.com/conference/solutions-innovation-stage?session-id=${session.id}&day=${session.day}`
+                        : `https://www.adhesivesandbondingexpo.com/conference/solutions-innovation-stage?session-id=${session.id}&day=${session.day}`;
             }
             sessionsHtml = `<p><a href="${link}" title="${session.name}">${session.name}</a></p>`;
         });
+
         const { Head_Shot_URL__c, Last_Name__c, First_Name__c, Job_Title__c, Company__c, Speaker__r } = data;
         const { web_logo_url__c } = Speaker__r;
         let modalBody = `<div class="container"><div class="row"><div class="col-12 col-md-2"><img src="${Head_Shot_URL__c}" class="img-fluid" alt="${First_Name__c} ${Last_Name__c}" /></div><div class="col-12 col-md-6"><p style="font-weight: bold;">${First_Name__c} ${Last_Name__c},</p><p>${Job_Title__c},</p><p style="font-weight: bold;">${Company__c}</p></div><div class="col-12 col-md-4"><img src="${web_logo_url__c}" class="img-fluid" alt="${Company__c}" /></div></div><div class="row"><div class="col-12"><h3 style="margin-top: 10px;">Speaker Bio</h3><p>${

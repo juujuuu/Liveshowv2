@@ -1,7 +1,10 @@
+/**
+ * Going through all the various potential problems with youtube link formats
+ */
 class VideoSanitizer {
-	/* Return iframe source */
-	static getVideo = (link) => {
-        const getVideoType = (link) => {
+    /* Return iframe source */
+    static getVideo = link => {
+        const getVideoType = link => {
             if ((link.includes("youtube") || link.includes("/youtu.be")) && !link.includes("https://www.youtube.com/channel/")) {
                 return "YOUTUBE";
             } else if (link.includes("vimeo")) {
@@ -10,7 +13,7 @@ class VideoSanitizer {
                 return false;
             }
         };
-        const getVimeoLink = (link) => {
+        const getVimeoLink = link => {
             let id = link.split(".com/")[1];
             if (id.includes("&")) {
                 id = id.split("&")[1]; //split of on & if there are other parameters
@@ -22,7 +25,7 @@ class VideoSanitizer {
                 return false;
             }
         };
-        const getYoutubeLink = (link) => {
+        const getYoutubeLink = link => {
             let id;
             if (link.includes("https://youtu.be/") && !link.includes("&feature=youtu.be")) {
                 id = link.split(".be/")[1];
@@ -51,22 +54,21 @@ class VideoSanitizer {
             }
             return `https://youtube.com/embed/${id}?enablejsapi=1`;
         };
-        
-		try {
-			let type = getVideoType(link);
-			if (!type) {
-				return false;
-			}
-			if (type === "YOUTUBE") {
-				return getYoutubeLink(link);
-			} else if (type === "VIMEO") {
-				return getVimeoLink(link);
-			}
-		} catch (error) {
-			console.error("Video Source Invalid ", error);
-			return false;
-		}
 
-	};
+        try {
+            let type = getVideoType(link);
+            if (!type) {
+                return false;
+            }
+            if (type === "YOUTUBE") {
+                return getYoutubeLink(link);
+            } else if (type === "VIMEO") {
+                return getVimeoLink(link);
+            }
+        } catch (error) {
+            console.error("Video Source Invalid ", error);
+            return false;
+        }
+    };
 }
 export default VideoSanitizer;

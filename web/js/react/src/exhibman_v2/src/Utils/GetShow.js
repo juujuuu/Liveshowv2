@@ -1,4 +1,7 @@
-const getShowNameFromAcronym = (expo) => {
+/**
+ * Utility functions for swapping between show codes, sf ids, urls etc
+ */
+const getShowNameFromAcronym = expo => {
     switch (expo) {
         case "fmx":
             return "Foam Expo North America";
@@ -20,14 +23,14 @@ const getShowNameFromAcronym = (expo) => {
             return "Acronym not found";
     }
 };
-const getSiteFromAcronym = (expo) => {
+const getSiteFromAcronym = expo => {
     switch (expo) {
         case "fmx":
             return "https://www.foam-expo.com/";
         case "abx":
             return "https://www.adhesivesandbondingexpo.com/";
         case "fme":
-            return "https://www.foam-expo.eu/";
+            return "https://www.foam-expo-europe.com/";
         case "abe":
             return "https://www.adhesivesandbondingexpo.com/";
         case "cex":
@@ -35,14 +38,14 @@ const getSiteFromAcronym = (expo) => {
         case "spc":
             return "https://www.spacetechexpo.com/";
         case "bre":
-            return "https://www.spacetechexpo.eu/";
+            return "https://www.spacetechexpo-europe.com/";
         case "tme":
             return "https://www.thermalmanagementexpo.com/";
         default:
             return "Acronym not found";
     }
 };
-const getSiteFromId = (expo) => {
+const getSiteFromId = expo => {
     expo = expo.replaceAll("'", "");
     console.log("get site: ", expo);
     switch (expo) {
@@ -51,22 +54,22 @@ const getSiteFromId = (expo) => {
         case "a1x4V000001YVpe":
             return "https://www.adhesivesandbondingexpo.com/";
         case "a1x4V000001YVpy":
-            return "https://www.foam-expo.eu/";
+            return "https://www.foam-expo-europe.com/";
         case "a1x4V000000xCSR":
-            return "https://www.adhesivesandbondingexpo.eu/";
+            return "https://www.adhesivesandbondingexpo-europe.com/";
         case "a1x4V000001Yg1J":
             return "https://www.ceramicsexpousa.com/";
         case "a1x4V000001Ye1A":
             return "https://www.spacetechexpo.com/";
         case "a1x4V000001YePp":
-            return "https://www.spacetechexpo.eu/";
+            return "https://www.spacetechexpo-europe.com/";
         case "a1x4V000001V7dG":
             return "https://www.thermalmanagementexpo.com/";
         default:
             return "ID not found";
     }
 };
-const getShowNameFromId = (id) => {
+const getShowNameFromId = id => {
     id = id.replaceAll("'", "");
     switch (id) {
         case "a1x3A000001FSz9":
@@ -89,7 +92,7 @@ const getShowNameFromId = (id) => {
             return "ID not found";
     }
 };
-const getAcronymFromId = (id) => {
+const getAcronymFromId = id => {
     id = id.replaceAll("'", "");
     switch (id) {
         case "a1x3A000001FSz9":

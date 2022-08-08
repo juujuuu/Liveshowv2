@@ -1,11 +1,11 @@
-const getSiteFromAcronym = (show) => {
+const getSiteFromAcronym = show => {
     switch (show.toLowerCase()) {
         case "fmx":
             return "https://www.foam-expo.com/";
         case "abx":
             return "https://www.adhesivesandbondingexpo.com/";
         case "fme":
-            return "https://www.foam-expo.eu/";
+            return "https://www.foam-expo-europe.com/";
         case "abe":
             return "https://www.adhesivesandbondingexpo.com/";
         case "cex":
@@ -13,7 +13,7 @@ const getSiteFromAcronym = (show) => {
         case "spc":
             return "https://www.spacetechexpo.com/";
         case "bre":
-            return "https://www.spacetechexpo.eu/";
+            return "https://www.spacetechexpo-europe.com/";
         case "ocs":
             return "https://www.onboardconnectivitysummit.com/";
         case "sat":
@@ -27,10 +27,9 @@ const getSiteFromAcronym = (show) => {
     }
 };
 
-const getSiteFromId = (conferenceId) => {
+const getSiteFromId = conferenceId => {
     switch (conferenceId) {
         case "a3i4V000001pJMf":
-            return "FMX";
         case "a3i4V000001tXtn":
             return "FMX";
         case "a3i4V000001hXhE":
@@ -40,6 +39,7 @@ const getSiteFromId = (conferenceId) => {
         case "a3i4V000001hXhE":
             return "ABX";
         case "a3i4V000001pPTc":
+        case "What ever the sf id of the solutions innovation agenda ends up being":
             return "FME";
         case "a3i4V000001pJWy":
         case "a3i4V000000bqIX":
@@ -47,6 +47,8 @@ const getSiteFromId = (conferenceId) => {
         case "a3i4V000000bqIc":
             return "SPC";
         case "a3i4V000001pORm":
+        case "a3i4V000000bqIh":
+        case "a3i4V00000222PA":
             return "BRE";
         case "a3i4V000001pOUg":
             return "OCS";
@@ -58,23 +60,24 @@ const getSiteFromId = (conferenceId) => {
             return "TME";
         case "TODO":
             return "HPP";
-        case "TODO":
+        case "a3i4V000000bqIw":
+        case "What ever the sf id of the solutions innovation agenda ends up being":
             return "ABE";
         default:
             throw "Acrnym not found";
     }
 };
 
-const getShowNameFromAcronym = (show) => {
+const getShowNameFromAcronym = show => {
     switch (show) {
         case "fmx":
             return "https://www.foam-expo.com/";
         case "abx":
             return "https://www.adhesivesandbondingexpo.com/";
         case "fme":
-            return "https://www.foam-expo.eu/";
+            return "https://www.foam-expo-europe.com/";
         case "abe":
-            return "https://adhesivesandbondingexpo.eu/";
+            return "https://adhesivesandbondingexpo-europe.com/";
         case "cex":
             return "https://www.ceramicsexpousa.com/";
         case "hpp":
@@ -82,7 +85,7 @@ const getShowNameFromAcronym = (show) => {
         case "spc":
             return "https://www.spacetechexpo.com/";
         case "bre":
-            return "http://www.spacetechexpo.eu/";
+            return "http://www.spacetechexpo-europe.com/";
         case "ocs":
             return "https://www.onboardconnectivitysummit.com/";
         case "sat":

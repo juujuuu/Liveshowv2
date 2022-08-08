@@ -32,7 +32,11 @@ import getModal from "../Utils/getModal";
 import { getOnDemandCode } from "../Utils/getOnDemand";
 import getUIThemes from "../Utils/getUIThemes";
 
-const FullAgenda = (props) => {
+/**
+ * @param {object} props
+ * @returns The full agenda
+ */
+const FullAgenda = props => {
     const {
         loading,
         fetchConference,
@@ -74,27 +78,33 @@ const FullAgenda = (props) => {
         hideDownloadLink,
     } = options;
 
+    //Run after Component mount and first render
     useEffect(() => {
         if (loading) {
-            fetchConference(getSiteFromAcronym(show), conf).then((response) => {
+            //If loading run set conference action.  On complete set loading to false
+            fetchConference(getSiteFromAcronym(show), conf).then(response => {
                 setLoading(false);
             });
-            setDay(0);
+            setDay(0); //Day 0 is basically 'display all days' here
 
+            //Bring up the on demandmodal if we're in ondemand
             if (ondemand) {
                 getModal({ role: "on-demand-modal", odcode: getOnDemandCode(show) });
             }
         }
     }, []);
 
+    //Run when loading changes.
     useEffect(() => {
+        //The code for zapping to a session if the id is a url param.
         if (!dealtWithInitialParams && !loading) {
-            if (parameters.find((param) => param[0] == "session-id")) {
-                const [name, sessionId] = parameters.find((param) => param[0] == "session-id");
+            //If we can find a session id param.
+            if (parameters.find(param => param[0] == "session-id")) {
+                const [name, sessionId] = parameters.find(param => param[0] == "session-id"); //destructure param name and value
 
                 try {
                     console.log(sessions, sessionId.toLowerCase());
-                    const sessionDay = sessions.find((_session) => _session.Id.toLowerCase() === sessionId.toLowerCase()).Day__c;
+                    const sessionDay = sessions.find(_session => _session.Id.toLowerCase() === sessionId.toLowerCase()).Day__c;
                     setDay(sessionDay);
                     setDealtWithInitialParams(true);
                     setOpenSlides(true);
@@ -108,14 +118,22 @@ const FullAgenda = (props) => {
                 }
             }
         } else {
+            //No one can make their mind up about how logic on these should work so good luck lol
             if (show !== "SPC" && show !== "NZB" && show !== "CEX" && show !== "TME") {
+                //Default if there aren't any extra params.  Just set the day to the lowest one in the data
                 setDay(lowestDay);
             }
         }
     }, [loading]);
 
+    /**
+     *
+     * @param {Number} numberOfDays - How many days in the conference.
+     * @param {Number} lowestDay - Again, no one can make their minds up, some sf conferences start on day 2 etc.
+     * @returns numberOfDays number of day buttons.  Empty fragment if none.
+     */
     const getDayButtons = (numberOfDays, lowestDay) => {
-        let colNum = 12 / (numberOfDays - (lowestDay - 1));
+        let colNum = 12 / (numberOfDays - (lowestDay - 1)); //How many bootstrap columns should one of these buttons occupy.
         let index = 0;
         let otherIndex = 0;
         let dayButtons = [];
@@ -135,12 +153,17 @@ const FullAgenda = (props) => {
         return <>{dayButtons}</>;
     };
 
-    const getTrackButtons = (numberOfTracks) => {
+    /**
+     * Similar to the above.
+     * @param {Number} numberOfTracks - How many tracks in the conference.
+     * @returns An array of checkbox filters
+     */
+    const getTrackButtons = numberOfTracks => {
         if (!hideTrackButtons) {
             let i = 0;
             let buttons = [];
             for (i = 0; i < numberOfTracks; i++) {
-                let trackName = sessions.find((session) => session.Track_Number__c == i + 1).Track_Long_Title__c;
+                let trackName = sessions.find(session => session.Track_Number__c == i + 1).Track_Long_Title__c;
                 buttons.push(
                     <CheckBoxFilter
                         name={trackName}
@@ -158,7 +181,12 @@ const FullAgenda = (props) => {
         }
     };
 
-    const getSlides = (data) => {
+    /**
+     *
+     * @param {Array} data - Sessions array.
+     * @returns An array of data.length size containing Slide components.
+     */
+    const getSlides = data => {
         if (data == null) {
             return;
         }
@@ -184,31 +212,47 @@ const FullAgenda = (props) => {
         document.getElementById("confman__search").value = "";
     };
 
-    const filterDays = (inputSessions) => {
+    /**
+     *
+     * @param {Array} inputSessions
+     * @returns inputSessions with days not matching the current day removed.
+     */
+    const filterDays = inputSessions => {
         const { day } = filters;
         if (day !== 0) {
-            return inputSessions.filter((session) => day === session.Day__c);
+            return inputSessions.filter(session => day === session.Day__c);
         } else {
             return inputSessions;
         }
     };
 
-    const filterTracks = (inputSessions) => {
-        const { track: excludeTracks } = filters;
+    /**
+     *
+     * @param {Array} inputSessions
+     * @returns inputSessions with sessions with a Track_Number__c matching anything in the track filters array removed.
+     */
+    const filterTracks = inputSessions => {
+        const { track: excludeTracks } = filters; //Renaming track from filters to excludeTracks.
         if (excludeTracks.length > 0) {
-            return inputSessions.filter((session) => !excludeTracks.includes(session.Track_Number__c));
+            return inputSessions.filter(session => !excludeTracks.includes(session.Track_Number__c)); //if excludeTracks array isn't empty, remove sessions matching any track number in the array.
         } else {
             return inputSessions;
         }
     };
 
-    const filterQuery = (inputSessions) => {
+    /**
+     *
+     * @param {Array} inputSessions
+     * @returns inputSessions filtered by query.
+     */
+    const filterQuery = inputSessions => {
         let { query } = filters;
-        query = query.toLowerCase();
+        query = query.toLowerCase(); //change to lowercase
+        //Don't bother if query is empty
         if (query !== "") {
             //Check session
-            return inputSessions.filter((session) => {
-                let { Long_Name__c: sessionName, Synopsis__c: sessionSynopsis, presentations } = session;
+            return inputSessions.filter(session => {
+                let { Long_Name__c: sessionName, Synopsis__c: sessionSynopsis, presentations } = session; //Check these properties on the session with the query string
                 sessionName = sessionName.toLowerCase();
                 sessionSynopsis = sessionSynopsis.toLowerCase();
                 if (sessionName.includes(query) || sessionSynopsis.includes(query)) {
@@ -216,7 +260,7 @@ const FullAgenda = (props) => {
                 }
                 //Check Presentation
                 if (presentations.length > 0) {
-                    const found = presentations.find((presentation) => {
+                    const found = presentations.find(presentation => {
                         let { Company__c, First_Name__c, Last_Name__c } = presentation;
                         Company__c = Company__c.toLowerCase();
                         First_Name__c = First_Name__c.toLowerCase();
@@ -234,7 +278,12 @@ const FullAgenda = (props) => {
         }
     };
 
-    const filterBreaks = (inputSessions) => {
+    /**
+     *
+     * @param {Array} inputSessions
+     * @returns inputSessions where consecutive breaks are removed.
+     */
+    const filterBreaks = inputSessions => {
         inputSessions = [...inputSessions];
         //Stop break sessions from stacking up
         for (let index = 0; index < inputSessions.length; index++) {
@@ -243,7 +292,6 @@ const FullAgenda = (props) => {
                 if (session.Type__c == "Break") {
                     if (inputSessions[index + 1].Type__c == "Break" && inputSessions[index].Start_Time__c == inputSessions[index + 1].Start_Time__c) {
                         inputSessions = inputSessions.filter((inputSession, _index) => _index !== index);
-                        //inputSessions.splice(inputSessions.indexOf(inputSessions), 1);
                     }
                 }
             }
@@ -251,7 +299,7 @@ const FullAgenda = (props) => {
         return inputSessions;
     };
 
-    const runFilters = (inputSessions) => {
+    const runFilters = inputSessions => {
         inputSessions = [...inputSessions];
         inputSessions = filterDays(inputSessions);
         inputSessions = filterTracks(inputSessions);
@@ -260,8 +308,68 @@ const FullAgenda = (props) => {
         return inputSessions;
     };
 
+    const getAltConferenceButton = (show, extraMode) => {
+        switch (show) {
+            case "FMX":
+            case "ABX":
+                if (extraMode === "innovation-agenda") {
+                    return (
+                        <Cta key="cta main agenda link" curved={false} color={show === "FMX" ? "fmx-blue" : "abx-blue"} link="../conference/conference-agenda">
+                            CONFERENCE AGENDA
+                        </Cta>
+                    );
+                } else {
+                    return (
+                        <Cta key="cta innovation link" curved={false} color="solutions-blue" link="../conference/solutions-innovation-stage">
+                            SOLUTIONS INNOVATION STAGE
+                        </Cta>
+                    );
+                }
+            case "FME":
+            case "ABE":
+                if (extraMode === "innovation-agenda") {
+                    return (
+                        <Cta key="cta main agenda link" curved={false} color={show === "FMX" ? "fmx-blue" : "abx-blue"} link="../conference/conference-agenda">
+                            CONFERENCE AGENDA
+                        </Cta>
+                    );
+                } else {
+                    return (
+                        <Cta key="cta innovation link" curved={false} color="solutions-blue" link="../conference/solutions-innovation-stage">
+                            SOLUTIONS INNOVATION STAGE
+                        </Cta>
+                    );
+                }
+        }
+    };
+
+    const getAltConferenceString = (show, extraMode) => {
+        switch (key) {
+            case "FMX":
+            case "ABX":
+                if (extraMode === "innovation-agenda") {
+                    return "innovation-stage";
+                }
+                return false;
+            case "FME":
+            case "ABE":
+                if (extraMode === "innovation-agenda") {
+                    return "innovation-stage";
+                }
+                return false;
+            default:
+                throw ("getAltConferenceString error: ", extraMode, show);
+        }
+    };
+
+    /**
+     *
+     * @returns The tracks section (the bit with the checkboxes).
+     */
     const getTracksNav = () => {
+        //Very annoying button for extra conference on some in this bit
         const cols = show === "FMX" || show === "ABX" ? [6, 6] : [9, 3];
+        //Desktop or mobile?
         if (window.innerWidth > 992) {
             return (
                 <div className="container">
@@ -290,23 +398,7 @@ const FullAgenda = (props) => {
                                 value={false}>
                                 Collapse all
                             </Cta>
-                            {show === "FMX" || show === "ABX" ? (
-                                <>
-                                    {extraMode === "innovation-agenda" ? (
-                                        <Cta
-                                            key="cta main agenda link"
-                                            curved={false}
-                                            color={show === "FMX" ? "fmx-blue" : "abx-blue"}
-                                            link="../conference/conference-agenda">
-                                            CONFERENCE AGENDA
-                                        </Cta>
-                                    ) : (
-                                        <Cta key="cta innovation link" curved={false} color="solutions-blue" link="../conference/solutions-innovation-stage">
-                                            SOLUTIONS INNOVATION STAGE
-                                        </Cta>
-                                    )}
-                                </>
-                            ) : null}
+                            {show === "FMX" || show === "ABX" ? getAltConferenceButton(show, extraMode) : null}
                         </div>
                     </div>
                 </div>
@@ -345,27 +437,7 @@ const FullAgenda = (props) => {
                     <div className="container-fluid tracks__mob-tracks">
                         <div className="row ">
                             <div className="col-12 track-col">
-                                {show === "FMX" || show === "ABX" ? (
-                                    <>
-                                        {extraMode === "innovation-agenda" ? (
-                                            <Cta
-                                                key="cta main agenda link"
-                                                curved={false}
-                                                color={show === "FMX" ? "fmx-blue" : "abx-blue"}
-                                                link="../conference/conference-agenda">
-                                                CONFERENCE AGENDA
-                                            </Cta>
-                                        ) : (
-                                            <Cta
-                                                key="cta innovation link"
-                                                curved={false}
-                                                color="solutions-blue"
-                                                link="../conference/solutions-innovation-stage">
-                                                SOLUTIONS INNOVATION STAGE
-                                            </Cta>
-                                        )}
-                                    </>
-                                ) : null}
+                                {show === "FMX" || show === "ABX" ? getAltConferenceButton(show, extraMode) : null}
                                 {getTrackButtons(maxTracks)}{" "}
                             </div>
                         </div>
@@ -382,12 +454,10 @@ const FullAgenda = (props) => {
             </div>
         );
     } else {
-        const pipedSessions = runFilters(sessions);
+        const pipedSessions = runFilters(sessions); //Filter Sessions
         return (
             <section
-                className={`confman conference-agenda conference-agenda--${show} ${
-                    extraMode === "innovation-agenda" ? `conference-agenda--innovation-stage` : ""
-                }`}>
+                className={`confman conference-agenda conference-agenda--${show} ${!!extraMode ? `conference-agenda--${getAltConferenceString(show)}` : ""}`}>
                 <MainNav desktop={window.innerWidth > 992}>
                     {topNav ? (
                         <div className="main-nav__days">
@@ -405,7 +475,7 @@ const FullAgenda = (props) => {
                         <div className="container">
                             <div className="row">
                                 <div className="col-8">
-                                    {show === "FMX" || show === "ABX" ? getUIThemes(show, filters.day, extraMode) : null}
+                                    {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" ? getUIThemes(show, filters.day, extraMode) : null}
                                     {getSlides(pipedSessions)}
                                 </div>
                                 <div className="col-4">

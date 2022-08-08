@@ -30,6 +30,7 @@ const App = ({ initOptions }) => {
     }, []);
 
     const mapTasks = (tasks, completedTasks) => {
+        console.log("mapTasks input", tasks, completedTasks);
         const { Not_Applicable_Fields__c } = completedTasks;
         tasks = tasks.map(task => {
             const { task_status_field_name__c } = task;
@@ -45,9 +46,13 @@ const App = ({ initOptions }) => {
                 }
                 return task;
             }
+            return task;
         });
+        console.log("tasks after map1", tasks);
         tasks = tasks.filter(task => task !== undefined);
+        console.log("tasks after undefineds removed", tasks);
         tasks = tasks.filter(task => task.Update_Method__c === "automatic"); //temp automatics only
+        console.log("mapTasks output", tasks);
         return tasks;
     };
 

@@ -1,18 +1,22 @@
 import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
 
+/**
+ *
+ * @param {Object} props
+ * @returns Full agenda slide.  One per session.
+ */
 const Slide = props => {
     let [show, setShow] = useState(false);
     const bodyRef = useRef();
     const mainRef = useRef();
 
-    // static defaultProps = {
-    // 	open: false,
-    // };
-
     const { options, session, openSlides: open, windowwidth } = props;
     const { continent, ondemand } = options;
 
+    /**
+     * Crap for opening a slide.
+     */
     const handleClick = event => {
         //jquery solution (probably not ideal)
         $(bodyRef.current).collapse("toggle");
@@ -30,24 +34,32 @@ const Slide = props => {
 
     const getCompany = company => (company ? company : "./assets/resources/shared/web/apps/confman/coming-soon.jpg");
 
+    /**
+     *
+     * @param {Object} timeObj - object containing hour, minute, enum for am/pm.
+     * @returns The time format for the slide.
+     */
     const getTime = timeObj => {
-        let hour = timeObj.hour;
-        let minute = timeObj.minute;
+        let { minute, hour, ampm } = timeObj;
         if (continent == "USA") {
-            if (timeObj.ampm == "PM") {
+            if (ampm == "PM") {
                 if (hour != 12) {
                     hour = hour - 12;
                 }
             }
-            return `${hour}.${minute}${timeObj.ampm}`;
+            return `${hour}.${minute}${ampm}`;
         } else if (continent == "Germany") {
             return `${hour}:${minute}`;
         }
     };
 
+    /**
+     *
+     * @returns The speaker bit of the session.
+     */
     const getSpeakers = () => {
+        // function in a function
         let getSpeaker = (speaker, index = -1) => {
-            //quick converter function
             const {
                 Id,
                 First_Name__c,
@@ -105,14 +117,14 @@ const Slide = props => {
             return;
         }
         let presentations = [...session.presentations];
-        let hasModerator = undefined != presentations.find(speaker => speaker.Roll__c == "Moderator");
+        let hasModerator = !!presentations.find(speaker => speaker.Roll__c == "Moderator");
         let moderator;
         if (hasModerator) {
             moderator = presentations.find(speaker => speaker.Roll__c === "Moderator");
             presentations.splice(presentations.indexOf(moderator), 1);
             moderator = getSpeaker(moderator);
         }
-        let speakers = presentations.map((speaker, index) => getSpeaker(speaker, index));
+        let speakers = presentations.map((speaker, index) => getSpeaker(speaker, index)); //Use the above function to map a presentation to jsx.
 
         return (
             <>
@@ -188,7 +200,6 @@ const Slide = props => {
                                     <div className={Sponsor_URL__c ? "session--sponsored" : ""}>
                                         <div className="session__meta">
                                             <h3 className="session__name">{Long_Name__c}</h3>
-                                            {/*<p className="session__time">{this.getTime(session.normalTime)}</p>*/}
                                         </div>
                                         {Sponsor_URL__c ? (
                                             <div className="session__sponsor">

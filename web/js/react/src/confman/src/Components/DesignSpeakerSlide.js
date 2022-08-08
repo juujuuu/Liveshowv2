@@ -1,6 +1,10 @@
 import React from "react";
 import Cta from "../../../common_components/Cta";
-
+/**
+ *
+ * @param {object} params
+ * @returns Slides for the design version of the speaker list.
+ */
 const DesignSpeakerSlide = ({ id, speaker, modalHandler = false }) => {
     const { Head_Shot_URL__c, First_Name__c, Last_Name__c, Job_Title__c, Company__c } = speaker;
     const { original_headshot_url__c, print_headshot_url__c, Logo_URL__c } = speaker.Speaker__r;
@@ -11,8 +15,6 @@ const DesignSpeakerSlide = ({ id, speaker, modalHandler = false }) => {
         }
     };
     const getHeadShot = headshot => (headshot == null ? "./assets/resources/shared/web/apps/confman/silhouette.png" : headshot);
-
-    const getCompany = company => (company == null ? "./assets/resources/shared/web/apps/confman/coming-soon.jpg" : company);
 
     return (
         <div className="row confman__speaker-slide" id={id}>

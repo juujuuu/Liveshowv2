@@ -9,12 +9,13 @@ const getConfPdfLink = (show, conf = false) => {
             } else {
                 return baseString + "FMX ABX" + ".pdf";
             }
-        case "ABX":
-            return baseString + "FMX ABX" + ".pdf";
         case "FME":
-            return baseString + "FME ABE" + ".pdf";
         case "ABE":
-            return baseString + "FME ABE" + ".pdf";
+            if (conf === "'What ever the sf id of the solutions innovation agenda ends up being'") {
+                return baseString + "Solutions Innovation" + ".pdf";
+            } else {
+                return baseString + "FME ABE" + ".pdf";
+            }
         case "OCS":
             return baseString + "OCS SAT" + ".pdf";
         case "SAT":

@@ -1,11 +1,29 @@
 .image {
-	&--center {
-		text-align: center;
-	}
-	&--left {
-		text-align: left;
-	}
-	&--right {
-		text-align: right;
-	}
+    &--center {
+        text-align: center;
+    }
+    &--left {
+        text-align: left;
+    }
+    &--right {
+        text-align: right;
+    }
+    &__text-hover {
+        img:hover {
+            opacity: 0.5;
+            transition: opacity 0.2s linear;
+            z-index: 2;
+        }
+        p {
+            margin: 0;
+            width: 100%;
+            z-index: -1;
+            text-align: center;
+            padding: 0 10px;
+            position: absolute;
+            left: 0;
+            top: 45%;
+            font-weight: bold;
+        }
+    }
 }
