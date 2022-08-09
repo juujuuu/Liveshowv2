@@ -3,7 +3,7 @@ $mobile-width: 992px;
 	&.conference-agenda {
 		.confman__main-nav {
 			@media (min-width: $mobile-width) {
-				z-index: 99999;
+				z-index: 999;
 				position: relative;
 			}
 			.main-nav__tracks {
@@ -27,6 +27,9 @@ $mobile-width: 992px;
 				.track-col {
 					display: flex;
 					justify-content: flex-start;
+					@media (max-width: $mobile-width) {
+						justify-content: space-around;
+					}
 					flex-wrap: wrap;
 					.checkbox-filter {
 						min-height: 50px;
@@ -42,7 +45,7 @@ $mobile-width: 992px;
 						}
 						&__name {
 							h3 {
-								margin: 0;
+								//margin: 0;
 								margin-top: 10px;
 								font-size: 16px;
 							}
@@ -109,7 +112,7 @@ $mobile-width: 992px;
 					padding: 10px;
 				}
 			}
-			.confman__cta {
+			.react__cta {
 				min-height: 48px;
 				@media (max-width: 990px) {
 					margin: 10px 0;

@@ -48,7 +48,7 @@ const Slide = props => {
                 }
             }
             return `${hour}.${minute}${ampm}`;
-        } else if (continent == "Germany") {
+        } else {
             return `${hour}:${minute}`;
         }
     };
@@ -146,7 +146,6 @@ const Slide = props => {
     };
 
     const { Track_Number__c, Day__c, Type__c, Id, Sponsor_URL__c, normalTime, Long_Name__c, Vimeo_Video_Link__c, Synopsis__c } = session;
-
     return (
         <div
             className={`body__session accordion-item session--track-${Track_Number__c} session--day-${Day__c} session--type-${Type__c} session--${

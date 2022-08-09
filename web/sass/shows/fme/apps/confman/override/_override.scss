@@ -1,12 +1,12 @@
 @import "./override-innovation-stage";
 
 .confman {
-    $tracks: #d52c60, #5bb7ce, #144f74;
-    $tracks-lighter: lighten(#d52c60, 20), lighten(#5bb7ce, 20), lighten(#144f74, 20);
-    $main-color: #4d8691;
+    $tracks: #934694, #6fc5cb;
+    $tracks-lighter: #a96ba9, #8dcdd4;
+    $main-color: #cb452a;
 
     $big-titles: 17px;
-    &.conference-agenda--FMX {
+    &.conference-agenda--FME {
         .curved-cta--primary {
             background-color: $main-color;
             .curved-cta__link {

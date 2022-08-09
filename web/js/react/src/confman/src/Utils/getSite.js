@@ -7,7 +7,7 @@ const getSiteFromAcronym = show => {
         case "fme":
             return "https://www.foam-expo-europe.com/";
         case "abe":
-            return "https://www.adhesivesandbondingexpo.com/";
+            return "https://www.adhesivesandbondingexpo-europe.com/";
         case "cex":
             return "https://www.ceramicsexpousa.com/";
         case "spc":
@@ -31,11 +31,9 @@ const getSiteFromId = conferenceId => {
     switch (conferenceId) {
         case "a3i4V000001pJMf":
         case "a3i4V000001tXtn":
-            return "FMX";
         case "a3i4V000001hXhE":
             return "FMX";
         case "a3i4V000001pJMf":
-            return "ABX";
         case "a3i4V000001hXhE":
             return "ABX";
         case "a3i4V000001pPTc":
