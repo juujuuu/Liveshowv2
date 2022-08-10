@@ -1,3 +1,9 @@
+/**
+ *
+ * @param {string} show - The show acronym
+ * @param {*} conf - extra param for things like having 2 conferences in a show
+ * @returns A link to the conference pdf.
+ */
 const getConfPdfLink = (show, conf = false) => {
     const baseString = "./assets/resources/shared/pdfs/conference/Conference Agenda ";
     /* || in switch case gets compiled out???? */
@@ -17,7 +23,6 @@ const getConfPdfLink = (show, conf = false) => {
                 return baseString + "FME ABE" + ".pdf";
             }
         case "OCS":
-            return baseString + "OCS SAT" + ".pdf";
         case "SAT":
             return baseString + "OCS SAT" + ".pdf";
         default:

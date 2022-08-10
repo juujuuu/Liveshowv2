@@ -3,7 +3,7 @@ import Base64Images from "./Base64Store";
 
 /**
  * Super bastardised code for making exhibitor pdfs.
- * If somethings broken with the odfs, 99% chance it's something in a switch case around here.
+ * If somethings broken with the pdfs, 99% chance it's something in a switch case around here.
  */
 class PDFMake {
     constructor(options, data) {

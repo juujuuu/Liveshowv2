@@ -14,26 +14,36 @@ import { connect } from "react-redux";
 import { getSiteFromId, getShowNameFromId } from "../Utils/GetShow";
 import sanitizeIds from "../Utils/SanitizeIds";
 
+/**
+ *
+ * @param {Object} props
+ * @returns Main Exhibitor List.
+ */
 const ExhibitorList = props => {
     const { options, exhibs, queries, loading, setQueries, setLoading, fetchExhibs } = props;
 
+    //Do this after inital component render
     useEffect(() => {
         if (exhibs.length > 0) {
             setLoading(false);
         } else {
-            console.log("EXHIB PROPS:  ", props);
             const siteURL = getSiteFromId(options.ids instanceof Array ? options.ids[0] : options.ids);
             const expos = sanitizeIds(options.ids);
-            console.log("sanitizeIds:", expos);
+
             fetchExhibs(siteURL, expos).then(response => {
                 setLoading(false);
             });
         }
     }, []);
 
-    const getExtraNavButtons = (options, exhibs) => {
+    /**
+     *
+     * @param {Object} Options
+     * @returns Extra nav buttons for the side menu
+     */
+    const getExtraNavButtons = options => {
         const { regLink, show } = options;
-        let jsx = [];
+        let jsx = []; //Just make a a jsx array of components to return.
 
         let newJsx = (
             <Cta
@@ -46,6 +56,8 @@ const ExhibitorList = props => {
             </Cta>
         );
         jsx = [...jsx, newJsx];
+
+        //For Ipek
         if (show === "TME") {
             newJsx = (
                 <Cta
@@ -60,6 +72,7 @@ const ExhibitorList = props => {
             );
             jsx = [...jsx, newJsx];
         }
+
         if (regLink) {
             newJsx = (
                 <Cta size="max" color="cex-red" link={regLink} bonusClass="control-col__reg-link" key={"register to attend"}>
@@ -68,6 +81,8 @@ const ExhibitorList = props => {
             );
             jsx = [...jsx, newJsx];
         }
+
+        //Sponsor
         if (show === "CEX" && window.innerWidth > 768) {
             newJsx = (
                 <div className="control-col__sponsor vertical-margin--10">
@@ -90,7 +105,7 @@ const ExhibitorList = props => {
         return jsx;
     };
 
-    const getSlides = (exhibitors, options) => {
+    const getSlides = exhibitors => {
         if (exhibitors.length < 1) {
             return <h2 className="no-exhibs-message d-flex justify-content-center align-items-center">No exhibitors found</h2>;
         }
@@ -117,13 +132,21 @@ const ExhibitorList = props => {
         });
     };
 
+    const handleSetLetter = letter => {
+        setQueries({
+            search: queries.search,
+            letter: letter,
+            expo: queries.expo,
+        });
+    };
+
+    /**
+     * For multi expo lists.
+     * @param {String} expo - SF expo string.  Adds / removes the expo from the queries.expo array.
+     */
     const handleSetExpo = expo => {
         let newExpoQuery;
         let hasExpo = expo === queries.expo.find(queryExpo => queryExpo.includes(expo));
-        console.log("QUERY EXPOS:  ", queries.expo);
-        console.log("INPUT EXPOS:  ", expo);
-        console.log("HAS EXPO:", hasExpo);
-        console.log("QUERY EXPO FIND:", expo === queries.expo.find(queryExpo => queryExpo.includes(expo)));
 
         if (hasExpo) {
             newExpoQuery = queries.expo.filter(queryExpo => !queryExpo.includes(expo));
@@ -137,14 +160,11 @@ const ExhibitorList = props => {
         });
     };
 
-    const handleSetLetter = letter => {
-        setQueries({
-            search: queries.search,
-            letter: letter,
-            expo: queries.expo,
-        });
-    };
-
+    /**
+     *
+     * @param {Array} exhibitors
+     * @returns All exhibitors with Expo__c matching expo
+     */
     const expoFilter = exhibitors => {
         const expo = props.queries.expo.map(id => id.replaceAll("'", ""));
         return exhibitors.filter(exhibitor => {
@@ -159,6 +179,12 @@ const ExhibitorList = props => {
         });
     };
 
+    /**
+     *
+     * @param {Array} exhibitors
+     * @param {String} search - String to search each exhibitor for.
+     * @returns exhibitors matching containg the search query.
+     */
     const searchFilter = (exhibitors, search) => {
         if (search.trim() == "") {
             return exhibitors;
@@ -176,6 +202,12 @@ const ExhibitorList = props => {
         });
     };
 
+    /**
+     *
+     * @param {Array} exhibitors
+     * @param {String} letter - Letter to scan the exhib name for.
+     * @returns exhibitors with letter matching the title.
+     */
     const alphabetFilter = (exhibitors, letter) => {
         letter = letter.toLowerCase();
 
@@ -183,8 +215,7 @@ const ExhibitorList = props => {
             return exhibitors;
         }
 
-        return exhibitors.filter(exhibitor => {
-            const { pagetitle } = exhibitor;
+        return exhibitors.filter(({ pagetitle }) => {
             const name = pagetitle.toLowerCase();
 
             if (letter == "0-9") {
@@ -198,6 +229,12 @@ const ExhibitorList = props => {
         });
     };
 
+    /**
+     *
+     * @param {Object} options - Main options object
+     * @param {Array} expos - Array of expo SF ids.
+     * @returns Multi Expo buttons for the side menu.
+     */
     const getMultiExpo = (options, expos) => {
         const { ids, multiExpo } = options;
 
@@ -231,8 +268,16 @@ const ExhibitorList = props => {
         }
     };
 
+    /**
+     *
+     * @param {Array} exhibitors
+     * @param {Array} filters - String array of filter names to run.
+     * @param {Object} queries - Queries object.
+     * @param {Boolean} multiExpo - Id it a multi expo or not.
+     * @returns exhibitos that have passed through all filters.
+     */
     const filterExhibitors = (exhibitors, filters, queries, multiExpo) => {
-        exhibitors = [...exhibitors];
+        exhibitors = [...exhibitors]; //Chaning pointer in memory (probs not necessary here tbf).
         filters.forEach(filter => {
             if (filter == "SEARCH") {
                 exhibitors = searchFilter(exhibitors, queries.search);
@@ -247,7 +292,7 @@ const ExhibitorList = props => {
     };
 
     if (loading) {
-        return <Spinner></Spinner>;
+        return <Spinner />;
     } else {
         const { multiExpo, filters, show } = options;
         const filteredExhibitors = filterExhibitors(exhibs, filters, queries, multiExpo);
@@ -280,7 +325,7 @@ const ExhibitorList = props => {
                             <strong>Exhibitors A-Z</strong>
                         </h3>
                     </div>
-                    <div className="slide-list">{getSlides(filteredExhibitors, options)}</div>
+                    <div className="slide-list">{getSlides(filteredExhibitors)}</div>
                 </div>
             </section>
         );
@@ -288,7 +333,6 @@ const ExhibitorList = props => {
 };
 
 const mapStateToProps = (store, ownProps) => {
-    // console.log("EXHIB LIST MAP STATE", store);
     return store;
 };
 export default connect(mapStateToProps, {

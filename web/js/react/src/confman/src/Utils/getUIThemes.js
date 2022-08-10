@@ -48,27 +48,29 @@ const getUIThemes = (show, day, extraMode) => {
             } else {
                 switch (day) {
                     case 1:
-                        theme = [...theme, "Industry Megatrends and Environmental Sustainability", "Material Development and Selection"];
+                        theme = [" Industry Megatrends and Environmental Sustainability", " Material Development and Selection"];
                         break;
                     case 2:
-                        theme = [...theme, "Material Development and Selection", "Material Properties and Application Development"];
+                        theme = [" Material Properties and Application Development", " Regulation and Additives"];
                         break;
                     case 3:
-                        theme = [...theme, "Regulation and Additives", "Logistics and Manufacturing Efficacy"];
+                        theme = [" Logistics and Manufacturing Efficiency", "Logistics and Manufacturing Efficacy"];
                         break;
                 }
                 return (
                     <div>
                         <p style={{ fontSize: "16px" }}>
-                            <strong>
-                                <span style={{ color: "#934694" }}>Track 1 Theme</span> - {theme[0]}
-                            </strong>
+                            <strong style={{ color: "#934694" }}>Main Stage Theme: </strong>
+                            <span>{theme[0]}</span>
                         </p>
-                        <p style={{ fontSize: "16px" }}>
-                            <strong>
-                                <span style={{ color: "#6fc5cb" }}>Track 2 Theme</span> - {theme[1]}
-                            </strong>
-                        </p>
+                        {day !== 3 ? (
+                            <p style={{ fontSize: "16px" }}>
+                                <strong style={{ color: "#6fc5cb" }}>360 Stage Theme: </strong>
+                                <span>{theme[1]}</span>
+                            </p>
+                        ) : (
+                            <p>{""}</p>
+                        )}
                     </div>
                 );
             }

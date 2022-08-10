@@ -11,6 +11,9 @@ import maxTracksReducer from "./maxTracksReducer";
 import initialParamsReducer from "./initialParamsReducer";
 import lowestDayReducer from "./lowestDayReducer";
 
+/**
+ * Our redux store.  (Sometimes it's erroneously called state).
+ */
 export default combineReducers({
     error: errorReducer,
     loading: loadingReducer,

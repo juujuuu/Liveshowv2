@@ -4,18 +4,6 @@ const fetchSpeakersReducer = (state = [], action) => {
     switch (type) {
         case "FETCH_SPEAKERLIST":
             let { presentation: presentations } = data;
-            console.log(
-                "Speaker List Reducer receiving: ",
-                presentations.sort((a, b) => {
-                    if (a.Last_Name__c < b.Last_Name__c) {
-                        return -1;
-                    }
-                    if (a.Last_Name__c > b.Last_Name__c) {
-                        return 1;
-                    }
-                    return 0;
-                })
-            );
 
             //Merge multiple speakers into one newSpeaker
             const referenceSpeakers = [...presentations];

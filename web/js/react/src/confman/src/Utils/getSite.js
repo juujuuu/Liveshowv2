@@ -1,3 +1,8 @@
+/**
+ * Most helpful series of functions on earth
+ * @param {String} show - Show acronym.
+ * @returns The url of the site using that show acronym.
+ */
 const getSiteFromAcronym = show => {
     switch (show.toLowerCase()) {
         case "fmx":
@@ -27,6 +32,11 @@ const getSiteFromAcronym = show => {
     }
 };
 
+/**
+ *
+ * @param {String} conferenceId - Salesforce Id of the conference
+ * @returns The site Url of that conference.
+ */
 const getSiteFromId = conferenceId => {
     switch (conferenceId) {
         case "a3i4V000001pJMf":
@@ -66,34 +76,35 @@ const getSiteFromId = conferenceId => {
     }
 };
 
-const getShowNameFromAcronym = show => {
-    switch (show) {
+/**
+ *
+ * @param {String} acronym -The show acronym.
+ * @returns The full show name.
+ */
+const getShowNameFromAcronym = acronym => {
+    switch (acronym.toLowerCase()) {
         case "fmx":
-            return "https://www.foam-expo.com/";
+            return "Foam Expo North America";
         case "abx":
-            return "https://www.adhesivesandbondingexpo.com/";
+            return "Adhesives & Bonding Expo";
         case "fme":
-            return "https://www.foam-expo-europe.com/";
+            return "Foam Expo Europe";
         case "abe":
-            return "https://adhesivesandbondingexpo-europe.com/";
+            return "Adhesives & Bonding Expo Europe";
         case "cex":
-            return "https://www.ceramicsexpousa.com/";
-        case "hpp":
-            return "https://www.highperformanceplasticsexpo.com/";
+            return "Ceramics Expo";
         case "spc":
-            return "https://www.spacetechexpo.com/";
+            return "Space Tech Expo";
         case "bre":
-            return "http://www.spacetechexpo-europe.com/";
-        case "ocs":
-            return "https://www.onboardconnectivitysummit.com/";
-        case "sat":
-            return "https://www.satelliteconnectivitysummit.com/";
-        case "nzb":
-            return "https://www.netzerobuildsummit.com/";
+            return "Space Tech Expo Europe";
         case "tme":
-            return "https://www.thermalmanagementexpo.com/";
+            return "Thermal Management Expo";
+        case "ocs":
+            return "Onboard  Connectivity Summit";
+        case "sat":
+            return "Satellite Connectivity Summit";
         default:
-            throw "Acronym not found";
+            return "Acronym not found";
     }
 };
 
