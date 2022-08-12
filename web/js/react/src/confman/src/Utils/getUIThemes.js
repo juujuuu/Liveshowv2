@@ -74,6 +74,49 @@ const getUIThemes = (show, day, extraMode) => {
                     </div>
                 );
             }
+        case "BRE":
+            switch (day) {
+                case 1:
+                    theme = [
+                        "Securing and Strengthening European Space Prosperity",
+                        "Getting to LEO, and Beyond",
+                        "Making Maritime and Aviation Connectivity More Accessible",
+                    ];
+                    break;
+                case 2:
+                    theme = [
+                        "Exploring Developments of the Final Frontier",
+                        "Earth Observation: Shaping the New Paradigm for Space and Earth",
+                        "Combining Terrestrial and Non-Terrestrial Network Capabilities to Advance Mobility Connectivity",
+                    ];
+                    break;
+                case 3:
+                    theme = [
+                        "Developing a Circular Economy in Space",
+                        "Bolstering Smallsat Manufacturing Capabilities",
+                        "Securing Data Assets for Future Mobility",
+                    ];
+                    break;
+            }
+            return (
+                <div>
+                    <p style={{ fontSize: "16px" }}>
+                        <strong>
+                            <span style={{ color: "#146259" }}>Industry Conference: </span> - {theme[0]}
+                        </strong>
+                    </p>
+                    <p style={{ fontSize: "16px" }}>
+                        <strong>
+                            <span style={{ color: "#41b9eb" }}>Smallsats Conference: </span> - {theme[1]}
+                        </strong>
+                    </p>
+                    <p style={{ fontSize: "16px" }}>
+                        <strong>
+                            <span style={{ color: "#426ab3" }}>Mobility Connectivity Conference: </span> - {theme[2]}
+                        </strong>
+                    </p>
+                </div>
+            );
     }
 };
 export default getUIThemes;

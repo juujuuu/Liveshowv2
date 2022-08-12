@@ -8,6 +8,9 @@ import reducers from "./Reducers";
 
 import App from "./Components/App";
 
+let hideTrackButtons = document.querySelector("#root").getAttribute("hidetrackribbon") === "true";
+const show = document.querySelector("#root").getAttribute("show");
+
 let parameters = null;
 
 //Get url parameters
@@ -15,6 +18,9 @@ if (window.location.href.includes("?")) {
     parameters = window.location.href.split("?")[1];
     parameters = parameters.split("&");
     parameters = parameters.map(param => param.split("="));
+    if (parameters.find(([name, value]) => name === "track" && show === "BRE")) {
+        hideTrackButtons = true;
+    }
 }
 
 const speakerAgendaLinks = document.querySelector("#root").getAttribute("speakeragendalinks") === "true";
@@ -29,7 +35,7 @@ const options = {
     reginterest: document.querySelector("#root").getAttribute("reginterest"),
     event: document.querySelector("#root").getAttribute("event"),
     topNav: document.querySelector("#root").getAttribute("topnav") === "true",
-    hideTrackButtons: document.querySelector("#root").getAttribute("hidetrackbuttons") === "true",
+    hideTrackButtons,
     hideDownloadLink: document.querySelector("#root").getAttribute("hidedownloadlink") === "true",
     hideTrackRibbon: document.querySelector("#root").getAttribute("hidetrackribbon") === "true",
     contactcampaign: document.querySelector("#root").getAttribute("contactcampaign"),

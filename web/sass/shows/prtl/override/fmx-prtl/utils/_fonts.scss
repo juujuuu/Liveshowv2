@@ -1,0 +1,73 @@
+[data-context^="FMX-PRTL"] {
+    $main-color: #518a94;
+    $strong-color: #333333;
+    $body: #333333;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        font-family: Montserrat, Helvetica, Arial;
+    }
+    p,
+    a,
+    li {
+        font-family: Montserrat, Helvetica, Arial;
+        line-height: 26px;
+    }
+    h1 {
+        font-size: 55px;
+        font-weight: 1000;
+        color: $main-color;
+    }
+    h2 {
+        font-size: 30px;
+        font-weight: 1000;
+    }
+    h3 {
+        font-size: 24px;
+        font-weight: 1000;
+        color: $main-color;
+    }
+    h4 {
+        font-size: 18px;
+        font-weight: 1000;
+        color: $strong-color;
+    }
+    p {
+        font-size: 16px;
+        color: $body;
+        margin-bottom: 10px;
+        font-weight: normal;
+        strong {
+            font-weight: 1000;
+            //color: #333333;
+        }
+    }
+    li {
+        font-size: 16px;
+        font-weight: normal;
+        color: $body;
+    }
+    a {
+        color: $strong-color;
+        text-decoration: none;
+        &:focus,
+        &:hover {
+            color: lighten($color: $strong-color, $amount: 10%);
+            text-decoration: underline;
+        }
+    }
+    .row {
+        @media (max-width: $mobile-width) {
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+    @media (max-width: $mobile-width) {
+        p,
+        a {
+            overflow-wrap: break-word;
+        }
+    }
+}

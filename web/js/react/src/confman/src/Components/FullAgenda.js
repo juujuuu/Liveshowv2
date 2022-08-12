@@ -116,6 +116,32 @@ const FullAgenda = props => {
                     console.error("Problem trying to load session param", error);
                     setError(true);
                 }
+            } else if (parameters.find(([name, value]) => name == "track")) {
+                const [name, value] = parameters.find(([name, value]) => name === "track"); //destructure param name and value
+
+                try {
+                    const track = parseInt(value);
+                    switch (track) {
+                        case 1:
+                            setTrack([2, 3]);
+                            break;
+                        case 2:
+                            setTrack([1, 3]);
+                            break;
+                        case 3:
+                            setTrack([1, 2]);
+                            break;
+                        default:
+                            break;
+                    }
+                    if (show === "BRE") {
+                        setDay(lowestDay);
+                    }
+                    setDealtWithInitialParams(true);
+                } catch (error) {
+                    console.error("Problem trying to load track", error);
+                    setError(true);
+                }
             }
         } else {
             //No one can make their mind up about how logic on these should work so good luck lol
@@ -344,7 +370,7 @@ const FullAgenda = props => {
     };
 
     const getAltConferenceString = (show, extraMode) => {
-        switch (key) {
+        switch (show) {
             case "FMX":
             case "ABX":
                 if (extraMode === "innovation-agenda") {
@@ -475,7 +501,9 @@ const FullAgenda = props => {
                         <div className="container">
                             <div className="row">
                                 <div className="col-8">
-                                    {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" ? getUIThemes(show, filters.day, extraMode) : null}
+                                    {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "BRE"
+                                        ? getUIThemes(show, filters.day, extraMode)
+                                        : null}
                                     {getSlides(pipedSessions)}
                                 </div>
                                 <div className="col-4">

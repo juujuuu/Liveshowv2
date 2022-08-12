@@ -1,8 +1,8 @@
-const setTrack = (track) =>{
+const setTrack = track => {
     return {
         type: "SET_TRACK",
-        payload: track
+        payload: track,
     };
-}
+};
 
 export default setTrack;

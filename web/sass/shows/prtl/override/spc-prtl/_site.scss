@@ -1,0 +1,13 @@
+@import "./utils/fonts", "./header", "./footer", "./side-menu";
+[data-context^="SPC-PRTL"] {
+    main {
+        & > .row {
+            & > .col-md-3,
+            .col-md-9 {
+                @media (min-width: 992px) {
+                    min-height: 100vh;
+                }
+            }
+        }
+    }
+}

@@ -1,2 +1,109 @@
 [data-context^="FMX-PRTL"] {
+    footer {
+        background-color: #262626;
+        padding-bottom: 20px;
+        a {
+            &:hover {
+                text-decoration: underline !important;
+            }
+        }
+        & > .container {
+            padding-top: 20px;
+        }
+        .footer__sitemap {
+            a {
+                color: #fff;
+                text-transform: capitalize;
+                font-weight: 200;
+                text-decoration: none;
+                font-size: 12px;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+            .sitemap__column {
+                .sitemap__column__top {
+                    & > a {
+                        font-size: 18px;
+                        padding-bottom: 3px;
+                    }
+                }
+            }
+        }
+        .footer__all-shows {
+            @media (max-width: 768px) {
+                display: none;
+            }
+            padding-top: 10px;
+            .all-shows__message {
+                small {
+                    color: #fff;
+                }
+            }
+            .all-shows__show-logo {
+                height: 70px;
+                line-height: 62px;
+                text-align: center;
+                padding: 0 5px;
+                img {
+                    -webkit-filter: grayscale(100%);
+                    -webkit-transition: filter 0.3s linear;
+                    display: inline-block;
+                    max-height: 50px;
+                    height: auto;
+                    max-width: 100%;
+                    &:hover {
+                        -webkit-filter: none;
+                    }
+                }
+            }
+        }
+        .footer__disclaimers {
+            padding-top: 20px;
+            @media (max-width: 768px) {
+                & > div {
+                    padding: 10px;
+                }
+            }
+            & > div {
+                text-align: center;
+                img {
+                    margin: auto;
+                    display: block;
+                    max-width: 100%;
+                    height: auto;
+                }
+            }
+            small,
+            a {
+                color: #fff;
+            }
+            a {
+                text-decoration: none;
+            }
+        }
+        .footer__terms {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding: 0 6%;
+            @media (max-width: 992px) {
+                padding: 0;
+                text-align: center;
+                div {
+                    margin: auto;
+                }
+            }
+            div {
+                width: auto;
+            }
+            small,
+            a {
+                color: #fff;
+            }
+            a {
+                text-decoration: none;
+            }
+        }
+    }
 }
