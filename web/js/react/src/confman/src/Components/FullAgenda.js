@@ -502,7 +502,7 @@ const FullAgenda = props => {
                             <div className="row">
                                 <div className="col-8">
                                     {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "BRE"
-                                        ? getUIThemes(show, filters.day, extraMode)
+                                        ? getUIThemes(show, filters.day, filters.track, extraMode)
                                         : null}
                                     {getSlides(pipedSessions)}
                                 </div>

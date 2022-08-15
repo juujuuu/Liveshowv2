@@ -76,6 +76,20 @@
         }
     }
 }
+//HACK FOR EXHIB PRTL
+body[data-context="FMX-PRTL"],
+body[data-context="SPC-PRTL"] {
+    .layout-side-right {
+        .col-xs-12.col-sm-12.col-md-4 {
+            .curved-cta {
+                &--reg {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
 body[data-context="CEX"] {
     .curved-cta {
         padding: 3px 10px 2px 10px;

@@ -12,12 +12,13 @@ const fetchConference = (site, conferenceId) => async dispatch => {
     const api = createAPI(site);
     let response = await api.get(`/confman.php?call[]=presentation&call[]=session&confId=${conferenceId}`);
     const { data } = response;
+    const { session } = data;
 
     //Dispatch these actions.
     dispatch({ type: "FETCH_CONFERENCE", payload: data });
-    dispatch(setMaxDays(data.session));
-    dispatch(setLowestDay(data.session));
-    dispatch(setMaxTracks(data.session));
+    dispatch(setMaxDays(session));
+    dispatch(setLowestDay(session));
+    dispatch(setMaxTracks(session));
 };
 
 export default fetchConference;

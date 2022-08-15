@@ -7,7 +7,7 @@ import React from "react";
  * @param {String} extraMode - stuff like the innovation agenda.
  * @returns Theme for that day to show.
  */
-const getUIThemes = (show, day, extraMode) => {
+const getUIThemes = (show, day, track = [], extraMode) => {
     let theme = [];
     switch (show) {
         case "FMX":
@@ -100,21 +100,27 @@ const getUIThemes = (show, day, extraMode) => {
             }
             return (
                 <div>
-                    <p style={{ fontSize: "16px" }}>
-                        <strong>
-                            <span style={{ color: "#146259" }}>Industry Conference: </span> - {theme[0]}
-                        </strong>
-                    </p>
-                    <p style={{ fontSize: "16px" }}>
-                        <strong>
-                            <span style={{ color: "#41b9eb" }}>Smallsats Conference: </span> - {theme[1]}
-                        </strong>
-                    </p>
-                    <p style={{ fontSize: "16px" }}>
-                        <strong>
-                            <span style={{ color: "#426ab3" }}>Mobility Connectivity Conference: </span> - {theme[2]}
-                        </strong>
-                    </p>
+                    {!track.includes(1) ? (
+                        <p style={{ fontSize: "16px" }}>
+                            <strong>
+                                <span style={{ color: "#146259" }}>Industry Conference: </span> - {theme[0]}
+                            </strong>
+                        </p>
+                    ) : null}
+                    {!track.includes(2) ? (
+                        <p style={{ fontSize: "16px" }}>
+                            <strong>
+                                <span style={{ color: "#41b9eb" }}>Smallsats Conference: </span> - {theme[1]}
+                            </strong>
+                        </p>
+                    ) : null}
+                    {!track.includes(3) ? (
+                        <p style={{ fontSize: "16px" }}>
+                            <strong>
+                                <span style={{ color: "#426ab3" }}>Mobility Connectivity Conference: </span> - {theme[2]}
+                            </strong>
+                        </p>
+                    ) : null}
                 </div>
             );
     }

@@ -20,7 +20,7 @@ import MetaCol from "./MetaCol";
  * @returns Products / articles pages.
  */
 const Product = props => {
-    const { exhibitor, loading, options, fetchExhib, profileId, productId, setMode, setLoading, setProfile } = props;
+    const { exhibitor, loading, options, fetchExhib, profileId, setLoading, productId } = props;
 
     useEffect(() => {
         const { ids } = options;
@@ -48,7 +48,7 @@ const Product = props => {
     } else {
         const { pagetitle, id } = exhibitor;
         const { show, contactcampaign, debug, local } = options;
-        const product = exhibitor.Exhibitor_Assets__r.find(asset => props.productId === asset.Id);
+        const product = exhibitor.Exhibitor_Assets__r.find(asset => productId === asset.Id);
         const { Body__c, Link__c, Title__c, Asset_Type__c } = product;
 
         return (
