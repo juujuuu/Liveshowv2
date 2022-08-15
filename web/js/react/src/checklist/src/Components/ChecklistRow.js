@@ -1,7 +1,11 @@
 import React from "react";
+import { useRef } from "react";
+import { pushTaskStatus } from "../Utils/pushTaskStatus";
 
 const ChecklistRow = ({ payload, inputOptions }) => {
-    const { Instructions__c, Id, Deadline__c, Update_Method__c, status } = payload;
+    const { Instructions__c, Id, Deadline__c, Update_Method__c, status, booth, task_status_field_name__c } = payload;
+
+    let ref = useRef();
 
     const getDeadline = ([day, month]) => {
         switch (month) {
@@ -44,6 +48,7 @@ const ChecklistRow = ({ payload, inputOptions }) => {
         }
         return `${day} ${month}`;
     };
+
     let deadline;
     if (Deadline__c) {
         deadline = new Date(Deadline__c.split("-")[0], Deadline__c.split("-")[1] - 1, Deadline__c.split("-")[2]);
@@ -51,6 +56,14 @@ const ChecklistRow = ({ payload, inputOptions }) => {
     } else {
         deadline = "ASAP";
     }
+    const handleClick = event => {
+        console.log("trying to update booth");
+        if (Update_Method__c === "automatic") {
+            return;
+        } else {
+            pushTaskStatus(payload);
+        }
+    };
 
     return (
         <tr id={Id} className={`potal-checklist__row portal-checklist__row--${status} portal-checklist__row--${Update_Method__c}`}>
@@ -72,12 +85,12 @@ const ChecklistRow = ({ payload, inputOptions }) => {
                 <div>
                     {status === "COMPLETED" ? (
                         <>
-                            <i className="bi bi-check-square"></i>
+                            <i ref={ref} onClick={() => handleClick()} className="bi bi-check-square"></i>
                             <input type="checkbox" name={Id} checked hidden />
                         </>
                     ) : (
                         <>
-                            <i className="bi bi-square"></i>
+                            <i ref={ref} onClick={() => handleClick()} className="bi bi-square"></i>
                             <input type="checkbox" name={Id} hidden />
                         </>
                     )}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { fetchExpoTasks } from "../Utils/fetchExpoTaks";
+import { fetchExpoTasks } from "../Utils/fetchExpoTasks";
 import _ from "lodash";
 
 import ChecklistRow from "./ChecklistRow";
@@ -51,17 +51,32 @@ const App = ({ initOptions }) => {
         console.log("tasks after map1", tasks);
         tasks = tasks.filter(task => task !== undefined);
         console.log("tasks after undefineds removed", tasks);
-        tasks = tasks.filter(task => task.Update_Method__c === "automatic"); //temp automatics only
-        console.log("mapTasks output", tasks);
+        // tasks = tasks.filter(task => task.Update_Method__c === "automatic"); //temp automatics only
+        // console.log("mapTasks output", tasks);
         return tasks;
     };
 
-    const getTable = tasks => {
-        tasks = tasks.map(task => <ChecklistRow payload={task} inputOptions={initOptions} key={`checklist row ${task.Id}`} />);
+    const getAutomaticTable = tasks => {
+        tasks = tasks.map(task => <ChecklistRow payload={{ ...task, booth }} inputOptions={initOptions} key={`checklist row ${task.Id}`} />);
         return (
-            <table className="table portal-checklist__table">
-                <tbody>{tasks}</tbody>
-            </table>
+            <>
+                <h3>Automatic Tasks</h3>
+                <table className="table portal-checklist__table">
+                    <tbody>{tasks}</tbody>
+                </table>
+            </>
+        );
+    };
+
+    const getManualTable = tasks => {
+        tasks = tasks.map(task => <ChecklistRow payload={{ ...task, booth }} nputOptions={initOptions} key={`checklist row ${task.Id}`} />);
+        return (
+            <>
+                <h3>Manual Tasks</h3>
+                <table className="table portal-checklist__table">
+                    <tbody>{tasks}</tbody>
+                </table>
+            </>
         );
     };
 
@@ -86,7 +101,8 @@ const App = ({ initOptions }) => {
                 <h2 className="portal-checklist__completion">
                     <strong>CHECKLIST -</strong> <i>{getPercentage(tasks)}%</i> COMPLETE
                 </h2>
-                {getTable(tasks)}
+                {getAutomaticTable(tasks.filter(task => task.Update_Method__c === "automatic"))}
+                {getManualTable(tasks.filter(task => task.Update_Method__c !== "automatic"))}
             </div>
         );
     }
