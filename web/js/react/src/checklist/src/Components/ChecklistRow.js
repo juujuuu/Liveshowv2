@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { pushTaskStatus } from "../Utils/pushTaskStatus";
 
 const ChecklistRow = ({ payload, inputOptions }) => {
-    const { Instructions__c, Id, Deadline__c, Update_Method__c, status, booth, task_status_field_name__c } = payload;
+    const { Instructions__c, Id, Deadline__c, Update_Method__c, status, booth, task_status_field_name__c, Link__c } = payload;
 
     let ref = useRef();
 
@@ -56,6 +56,7 @@ const ChecklistRow = ({ payload, inputOptions }) => {
     } else {
         deadline = "ASAP";
     }
+
     const handleClick = event => {
         console.log("trying to update booth");
         if (Update_Method__c === "automatic") {
@@ -65,12 +66,28 @@ const ChecklistRow = ({ payload, inputOptions }) => {
         }
     };
 
+    const getLink = link => {
+        switch (link) {
+            case "[[ep.showguide-link]]":
+                return "https://foam-adhesives.exhibitorportal-smartershows.com/exhibitor-resources/listingform";
+            case "[[ep.standform-link]]":
+                return "https://foam-adhesives.exhibitorportal-smartershows.com/booth-design-build/booth-information-form";
+            case "/n200":
+                return "https://foam-adhesives.exhibitorportal-smartershows.com/exhibitor-resources/exhibitor-name-badges";
+            default:
+                return link;
+        }
+    };
+    const link = getLink(Link__c);
+
     return (
         <tr id={Id} className={`potal-checklist__row portal-checklist__row--${status} portal-checklist__row--${Update_Method__c}`}>
             <td className={`portal-checklist__instruction`} colspan="2">
                 <div>
                     <p>
-                        <strong>{Instructions__c}</strong>
+                        <a href={link} title={Instructions__c} target="_blank">
+                            <strong>{Instructions__c}</strong>
+                        </a>
                     </p>
                 </div>
             </td>

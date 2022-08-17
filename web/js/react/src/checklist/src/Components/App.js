@@ -51,8 +51,11 @@ const App = ({ initOptions }) => {
         console.log("tasks after map1", tasks);
         tasks = tasks.filter(task => task !== undefined);
         console.log("tasks after undefineds removed", tasks);
-        // tasks = tasks.filter(task => task.Update_Method__c === "automatic"); //temp automatics only
-        // console.log("mapTasks output", tasks);
+        tasks = tasks.sort((a, b) => {
+            const { Order__c: aOrder } = a;
+            const { Order__c: bOrder } = b;
+            return aOrder - bOrder;
+        });
         return tasks;
     };
 
@@ -69,7 +72,7 @@ const App = ({ initOptions }) => {
     };
 
     const getManualTable = tasks => {
-        tasks = tasks.map(task => <ChecklistRow payload={{ ...task, booth }} nputOptions={initOptions} key={`checklist row ${task.Id}`} />);
+        tasks = tasks.map(task => <ChecklistRow payload={{ ...task, booth }} inputOptions={initOptions} key={`checklist row ${task.Id}`} />);
         return (
             <>
                 <h3>Manual Tasks</h3>
