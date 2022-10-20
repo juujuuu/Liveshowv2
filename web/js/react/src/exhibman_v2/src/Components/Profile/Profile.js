@@ -85,33 +85,51 @@ const Profile = props => {
         });
     };
 
-    /**
-     *
-     * @param {Array} assets Exhibitor Assets Array
-     * @param {String} type Type of assets to output
-     */
-    const getAssets = (assets, type, exhibId = false) => {
-        assets = assets.filter(({ Asset_Type__c }) => Asset_Type__c == type); //get only type type assets.
-        return assets.map(({ pagetitle, Id }) => {
-            switch (type) {
-                case "Product":
-                    return <ProfileProduct key={`asset-${Id}`} asset={asset} />;
-                case "News":
-                    return <ProfileProduct key={`asset-${Id}`} asset={asset} />;
-                case "Video":
-                    return <Video key={`asset-${Id}`} asset={asset} />;
-                case "Downloadable Resource":
-                    return <Downloadable key={`asset-${Id}`} asset={asset} pagetitle={pagetitle} />;
-                default:
-                    break;
-            }
-        });
-    };
 
-    const handleListSwitch = () => {
+    
+	/**
+	 *
+	 * @param {Array} assets Exhibitor Assets Array
+	 * @param {String} type Type of assets to output
+	 */
+	const getAssets = (assets, type, exhibId = false) => {
+    		assets = assets.filter(asset => asset.Asset_Type__c == type);
+    		return assets.map(asset => {
+			const { pagetitle } = exhibitor;
+    			switch (type) {
+    				case "Product":
+    					return (
+    						<ProfileProduct
+    							key={`asset-${asset.Id}`}
+    							asset={asset}
+    						/>
+    					);
+    				case "News":
+    					return (
+    						<ProfileProduct
+    							key={`asset-${asset.Id}`}
+    							asset={asset}
+    						/>
+    					);
+    				case "Video":
+    					return <Video key={`asset-${asset.Id}`} asset={asset} />;
+    				case "Downloadable Resource":
+    					return (
+    						<Downloadable
+    							key={`asset-${asset.Id}`}
+    							asset={asset}
+    							pagetitle={pagetitle}
+    						/>
+    					);
+    				default:
+    					break;
+    			}
+    		});
+    	};
+        const handleListSwitch = () => {
         setLoading(true);
         setMode("LIST");
-        pushPageView();
+        pushPageView(); 
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     };
 
