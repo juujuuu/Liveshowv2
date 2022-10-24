@@ -30,6 +30,7 @@ export default function fireModal(payload = false, role = false, size = "md") {
         console.error("Modal role not set");
         return;
     }
+
     let modalHTML = $.parseHTML(
         `<div class="modal fade" id="modal" role="dialog" tabindex="-1" aria-hidden="true" ${getBackdrop(
             role
@@ -38,6 +39,9 @@ export default function fireModal(payload = false, role = false, size = "md") {
             payload[0]
         )}</div><div class="modal-body"></div></div></div></div>`
     );
+    function test(){
+        alert ('hi')
+    }
     let myModal, sessionsHtml, modalBody;
     switch (role) {
         case "speaker-modal":
@@ -55,10 +59,10 @@ export default function fireModal(payload = false, role = false, size = "md") {
                 Biography__c == null ? `<i>Coming soon</i>` : Biography__c
             }</p><h3>Speaking at:</h3><div class="sessions">${sessionsHtml}</div></div></div></div>`;
             $(modalHTML).find(".modal-body").append(modalBody);
-            $("body").append(modalHTML);
+            $("body").append(modalHTML);exhibitor
             myModal = new bootstrap.Modal(document.getElementById("modal"));
             break;
-        case "contact-exhibitor":
+        case "contact-exhibitor": 
             //payload [0] = exhibitor data, payload [1] campaign id
             const { pagetitle, id, Expo__c } = payload[0];
             console.log(payload);
@@ -68,12 +72,36 @@ export default function fireModal(payload = false, role = false, size = "md") {
                 Expo__c
             )} and solicitation or off topic messages will not be forwarded.  </p>  <div class="lead-capture">   <form class="Enquiry" name="sfform" method="POST" data-url="" data-boothid="${id}">    <input id="Campaign_ID" name="Campaign_ID" value="${
                 payload[1]
+                //booth Contact Exhibitor form
             }" type="hidden" />    <div class="form-group">  <div class="inputWrapper mb-3">   <input    id="first_name"    type="text"    name="first_name"    value=""    placeholder="First Name"    title="First Name"    required=""    class="required form-control"   />  </div>  <div class="inputWrapper mb-3">   <input    id="last_name"    type="text"    name="last_name"    value=""    placeholder="Last Name"    title="Last Name"    required=""    class="required form-control"   />  </div>  <div class="inputWrapper mb-3">   <input    id="email"    type="email"    name="email"    value=""    placeholder="Email"    title="Email"    required=""    class="required form-control"   />  </div>  <div class="inputWrapper mb-3">   <input    id="company"    type="text"    name="company"    value=""    placeholder="Company"    required=""    title="Company"    class="required form-control"   />  </div>  <div class="inputWrapper mb-3">   <input    id="title"    type="text"    name="title"    value=""    placeholder="Job Title"    required=""    title="Job Title"    class="required form-control"   />  </div>  <div class="inputWrapper mb-3">   <input    id="phone"    type="phone"    name="phone"    value=""    placeholder="Phone Number"    title="Phone number"    class="form-control"   />  </div>  <div class="inputWrapper mb-3">   <textarea    id="Inquiry_Notes__c"    type="text"    name="Inquiry_Notes__c"    value=""    placeholder="Details of Inquiry"    title="Details of inquiry"    required=""    class="required form-control"   ></textarea>  </div>    <input type="hidden" id="00N3A00000Crbmu" class="GACLIENTID" name="00N3A00000Crbmu" value="clientID" />  <input type="hidden" id="00N3A00000Crbmz" class="GAUSERID" name="00N3A00000Crbmz" value="userID" />  <input type="hidden" id="00N3A00000Crbn4" class="GATRACKID" name="00N3A00000Crbn4" value="trackingID" />    </div>    <input type="hidden" name="00N30000004mdGe" id="00N30000004mdGe" value="${getShowNameFromId(
                 Expo__c
-            )}" />    <button type="submit" name="submit" class="curved-cta curved-cta--micro curved-cta--cex-red mb-3">  <a class="curved-cta__link">Submit</a>    </button>   </form>   <p class="lead-capture__disclaimer" style="font-size: 12px">    <i>  View our <a style="font-weight: bold" href="site/privacy-policy" target="_blank">privacy policy</a> to understand how we  collect, protect and manage your personal information    </i>   </p>  </div> </div>   </div>  </div>  `;
-            $(modalHTML).find(".modal-body").append(modalBody);
+            )}" />    <button id="contact_exhibitor_submit"  type="submit" name="submit" class="curved-cta curved-cta--micro curved-cta--cex-red mb-3">  <a class="curved-cta__link">Submit</a>    </button>   </form>   <p class="lead-capture__disclaimer" style="font-size: 12px">    <i>  View our <a style="font-weight: bold" href="site/privacy-policy" target="_blank">privacy policy</a> to understand how we  collect, protect and manage your personal information    </i>   </p>  </div> </div>   </div>  </div>  `;
+          $(modalHTML).find(".modal-body").append(modalBody);
             $("body").append(modalHTML);
             myModal = new bootstrap.Modal(document.getElementById("modal"));
+
+            //Append message before sending the form info
+            const firstName=document.getElementById("first_name")
+            const lastName=document.getElementById("last_name")
+            const email=document.getElementById("email")
+            const company=document.getElementById("company")
+            const title=document.getElementById("title")  
+            const inquiry=document.getElementById("Inquiry_Notes__c")
+            const  message=`WOULD LIKE TO CONTACT:\n${pagetitle}  `
+            document.getElementById("contact_exhibitor_submit").addEventListener("click",()=>{
+               if(
+               firstName.value.trim() 
+               != "" && lastName.value.trim() 
+               != "" && email.value.trim()  
+               != "" && company.value.trim() 
+               != "" && title.value.trim() 
+               != "" && inquiry.value.trim() != "" ){
+            inquiry.value= message+ inquiry.value
+               
+               }else{
+                 null
+               }
+            })
             break;
         case "on-demand-modal":
             //payload ondemandcode
@@ -86,4 +114,5 @@ export default function fireModal(payload = false, role = false, size = "md") {
             break;
     }
     myModal.show();
+    
 }
