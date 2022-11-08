@@ -14,10 +14,14 @@ $(function () {
                     $("#header--desktop__filler").height(height);
                     $("header").addClass("fixed-top");
                     $("header").removeClass("header--default");
+                     //TEE ONLY
+                    $(".reg-link-button").hide();
                 } else {
                     $("header").removeClass("fixed-top");
                     $("header").addClass("header--default");
                     $("#header--desktop__filler").hide();
+                    //TEE ONLY
+                    $(".reg-link-button").show();
                 }
             });
         }
