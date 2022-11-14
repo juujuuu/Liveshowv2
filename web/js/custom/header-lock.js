@@ -14,12 +14,20 @@ $(function () {
                     $("#header--desktop__filler").height(height);
                     $("header").addClass("fixed-top");
                     $("header").removeClass("header--default");
+                    
+                    //SPONSOR LEFT FADING
+                    $(".control-col__sponsor").fadeIn()
+
                      //TEE ONLY
                     $(".reg-link-button").hide();
                 } else {
                     $("header").removeClass("fixed-top");
                     $("header").addClass("header--default");
                     $("#header--desktop__filler").hide();
+                   
+                    //SPONSOR LEFT FADING
+                    $(".control-col__sponsor").fadeOut()
+                    
                     //TEE ONLY
                     $(".reg-link-button").show();
                 }
