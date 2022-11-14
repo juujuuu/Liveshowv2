@@ -18,9 +18,14 @@
 			&--affix {
 				position: fixed;
 				top: 80px;
+			
 			}
 		}
 	}
+		.control-col__sponsor.vertical-margin--10{
+		  
+		   display:none;
+		        	}
 	.curved-cta--max {
 		a {
 			font-size: 1rem;
@@ -59,7 +64,7 @@
 			}
 		}
 		$ids: ("a1x4V000001Yg1J", #ed6839, #fddecd), ("a1x3A000001FOPe", #26358c, #cfddef), ("a1x4V000001Q9aU", #ed6839, #fddecd),
-			("a1x3A000001FSz9", #4e8891, #d3dce0), ("a1x4V000001YVpe", #2d88bd, #cfddef);
+			("a1x4V00000117tV", #4e8891, #d3dce0), ("a1x4V00000117ta", #2d88bd, #cfddef);
 		@each $id in $ids {
 			&--#{nth($id, 1)} {
 				$background: nth($id, 3);

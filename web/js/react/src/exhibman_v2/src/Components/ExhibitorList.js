@@ -13,6 +13,7 @@ import PDFMake from "../Utils/PDFMake/PDFMake";
 import { connect } from "react-redux";
 import { getSiteFromId, getShowNameFromId } from "../Utils/GetShow";
 import sanitizeIds from "../Utils/SanitizeIds";
+import { BannerTop } from "./BannerTop";
 
 /**
  *
@@ -83,26 +84,56 @@ const ExhibitorList = props => {
         }
 
         //Sponsor
-        if (show === "CEX" && window.innerWidth > 768) {
+        // if (show === "CEX" && window.innerWidth > 768) {
+        //     newJsx = (
+        //         <div className="control-col__sponsor vertical-margin--10">
+        //             <a
+        //                 href="https://linkprotect.cudasvc.com/url?a=https%3a%2f%2fcerionnano.com%2f%3futm_source%3devent%26utm_medium%3ddisplay-ad%26utm_campaign%3dts-ceramics-expo-2022%26utm_content%3dbanner-ad&c=E,1,BvpDEebN6SPBr9h0eHxEUNdPDpHP2KJKGTKfHthvDpm-U0hL0y67K2Mp9UCYeMeKnzhgwVBZPgdC0bJ3AlA9qdV8RCz2lJFKKHobJcitC9W6q-Vp&typo=1"
+        //                 title="Cerion"
+        //                 target="_blank">
+        //                 <img
+        //                     style={{ width: "100%" }}
+        //                     src="./assets/resources/cex/web/images/misc/sponsor/Cerion-360x80.png"
+        //                     className="img-fluid"
+        //                     alt="Cerion"
+        //                 />
+        //             </a>
+        //         </div>
+        //     );
+        //     jsx = [...jsx, newJsx];
+        // }
+         if (show === "BRE" && window.innerWidth > 768) {
             newJsx = (
                 <div className="control-col__sponsor vertical-margin--10">
-                    <a
-                        href="https://linkprotect.cudasvc.com/url?a=https%3a%2f%2fcerionnano.com%2f%3futm_source%3devent%26utm_medium%3ddisplay-ad%26utm_campaign%3dts-ceramics-expo-2022%26utm_content%3dbanner-ad&c=E,1,BvpDEebN6SPBr9h0eHxEUNdPDpHP2KJKGTKfHthvDpm-U0hL0y67K2Mp9UCYeMeKnzhgwVBZPgdC0bJ3AlA9qdV8RCz2lJFKKHobJcitC9W6q-Vp&typo=1"
-                        title="Cerion"
-                        target="_blank">
+                     <a
+                        href="https://www.ice.it/en/ "
+                        title="Italy at space Tech Expo Europe"
+                        target="_blank"> 
                         <img
                             style={{ width: "100%" }}
-                            src="./assets/resources/cex/web/images/misc/sponsor/Cerion-360x80.png"
+                            src="./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Side_Banner.jpg"
+                              //use an image in the same folder to najes it show otherwise it will error 
+                            // src="./small.jpg"
                             className="img-fluid"
-                            alt="Cerion"
+                            alt="Italy at space Tech Expo Europe"
                         />
-                    </a>
+                     </a> 
                 </div>
             );
             jsx = [...jsx, newJsx];
         }
-
         return jsx;
+    };
+
+   
+    const getExtra = options => {
+        const { regLink, show } = options;
+        let jsx = []; //Just make a a jsx array of components to return.
+
+
+    
+       
+      
     };
 
     const getSlides = exhibitors => {
@@ -302,6 +333,7 @@ const ExhibitorList = props => {
                 <nav className="col-12 col-md-4 control-col">
                     <StickyNav>
                         <div className="control-col__header">
+                       
                             <h3>
                                 <strong>Refine Results</strong>
                             </h3>
@@ -317,10 +349,12 @@ const ExhibitorList = props => {
                     </StickyNav>
                 </nav>
                 <div className="col-md-8 viewport-col">
+                <BannerTop show={options}/>
                     <div className="alphabet-filter">
                         <Alphabet activeLetter={queries.letter} handler={handleSetLetter} />
                     </div>
                     <div className="row viewport__header">
+                   
                         <h3>
                             <strong>Exhibitors A-Z</strong>
                         </h3>
