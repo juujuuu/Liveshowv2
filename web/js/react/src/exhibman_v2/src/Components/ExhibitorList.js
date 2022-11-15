@@ -13,7 +13,7 @@ import PDFMake from "../Utils/PDFMake/PDFMake";
 import { connect } from "react-redux";
 import { getSiteFromId, getShowNameFromId } from "../Utils/GetShow";
 import sanitizeIds from "../Utils/SanitizeIds";
-import { BannerTop } from "./BannerTop";
+import { Sponsors } from "./Sponsors";
 
 /**
  *
@@ -102,26 +102,29 @@ const ExhibitorList = props => {
         //     );
         //     jsx = [...jsx, newJsx];
         // }
-         if (show === "BRE" && window.innerWidth > 768) {
-            newJsx = (
-                <div className="control-col__sponsor vertical-margin--10">
-                     <a
-                        href="https://www.ice.it/en/ "
-                        title="Italy at space Tech Expo Europe"
-                        target="_blank"> 
-                        <img
-                            style={{ width: "100%" }}
-                            src="./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Side_Banner.jpg"
-                              //use an image in the same folder to najes it show otherwise it will error 
-                            // src="./small.jpg"
-                            className="img-fluid"
-                            alt="Italy at space Tech Expo Europe"
-                        />
-                     </a> 
-                </div>
-            );
-            jsx = [...jsx, newJsx];
-        }
+
+        //moved this in Banner Component
+        //  if (show === "BRE" && window.innerWidth > 768) {
+        //     newJsx = (
+        //         <div className="control-col__sponsor vertical-margin--10">
+        //              <a
+        //                 href="https://www.ice.it/en/ "
+        //                 title="Italy at space Tech Expo Europe"
+        //                 target="_blank"> 
+        //                 <img
+        //                     style={{ width: "100%" }}
+        //                     // src="./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Side_Banner.jpg"
+        //                       //use an image in the same folder to najes it show otherwise it will error 
+        //                     src="./small.jpg"
+        //                     className="img-fluid"
+        //                     alt="Italy at space Tech Expo Europe"
+        //                 />
+        //              </a> 
+        //         </div>
+        //     );
+        //     jsx = [...jsx, newJsx];
+          
+        // }
         return jsx;
     };
 
@@ -346,10 +349,30 @@ const ExhibitorList = props => {
                             {getMultiExpo(options, queries.expo)}
                         </div>
                         {getExtraNavButtons(options, exhibs)}
+            
+                        <Sponsors
+                        show={options}
+                        href={"https://www.ice.it/en/"}
+                        title={"Italy at space Tech Expo Europe"}
+                        src={"./small.jpg"}
+                        alt={"Italy at space Tech Expo Europe"}
+                        position={"-left"}
+                        displayBanner={""}
+                    />
+                        
                     </StickyNav>
                 </nav>
                 <div className="col-md-8 viewport-col">
-                <BannerTop show={options}/>
+                    <Sponsors
+                        show={options}
+                        href={"https://www.ice.it/en/"}
+                        title={"Italy at space Tech Expo Europe"}
+                        src={"./large.jpg"}
+                        alt={"Italy at space Tech Expo Europe"}
+                        position={"-top"}
+                        displayBanner={"d-none d-md-block"}
+                        
+                    />
                     <div className="alphabet-filter">
                         <Alphabet activeLetter={queries.letter} handler={handleSetLetter} />
                     </div>
