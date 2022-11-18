@@ -354,7 +354,8 @@ const ExhibitorList = props => {
                         show={options}
                         href={"https://www.ice.it/en/"}
                         title={"Italy at space Tech Expo Europe"}
-                        src={"./small.jpg"}
+                        src={"./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Side_Banner.jpg"}
+                        // src={"./small.jpg"}
                         alt={"Italy at space Tech Expo Europe"}
                         position={"-left"}
                         displayBanner={""}
@@ -367,10 +368,11 @@ const ExhibitorList = props => {
                         show={options}
                         href={"https://www.ice.it/en/"}
                         title={"Italy at space Tech Expo Europe"}
-                        src={"./large.jpg"}
+                        src={"./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Top__Banner.jpg"}
+                        // src={"./large.jpg"}
                         alt={"Italy at space Tech Expo Europe"}
                         position={"-top"}
-                        displayBanner={"d-none d-md-block"}
+                        displayBanner={""}
                         
                     />
                     <div className="alphabet-filter">
