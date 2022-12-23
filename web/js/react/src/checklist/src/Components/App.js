@@ -29,19 +29,40 @@ const App = ({ initOptions }) => {
         }
     }, []);
 
+    const updateList = (_id, _status) =>{
+        console.log("old tasks: ", tasks);
+        let task = tasks.find(({Id})=>_id === Id);
+        
+        task.status = task.status === "COMPLETED" ? "NOT STARTED" : "COMPLETED";
+        const index = tasks.findIndex(({Id})=>_id === Id);
+
+        let newTasks = [...tasks];
+        newTasks[index] = task;
+        console.log("new tasks: ", newTasks);
+        setTasks(newTasks);
+    };
+
     const mapTasks = (tasks, completedTasks) => {
         console.log("mapTasks input", tasks, completedTasks);
         const { Not_Applicable_Fields__c } = completedTasks;
         tasks = tasks.map(task => {
+        
             const { task_status_field_name__c } = task;
             if (_.has(completedTasks, task_status_field_name__c)) {
                 //Does at least have something to map to
                 const status = completedTasks[task_status_field_name__c];
+            
                 if (Not_Applicable_Fields__c !== null && Not_Applicable_Fields__c.includes(task_status_field_name__c)) {
                     task.status = "NOT APPLICABLE";
-                } else if (status !== null) {
+                }else if(status == false )  {
+                   
+                        task.status = "NOT STARTED";
+                }
+                 else if (status !== null || status ===true) {
                     task.status = "COMPLETED";
-                } else {
+                   
+                }
+                else {
                     task.status = "NOT STARTED";
                 }
                 return task;
@@ -60,10 +81,11 @@ const App = ({ initOptions }) => {
     };
 
     const getAutomaticTable = tasks => {
-        tasks = tasks.map(task => <ChecklistRow payload={{ ...task, booth }} inputOptions={initOptions} key={`checklist row ${task.Id}`} />);
+        tasks = tasks.map(task => <ChecklistRow payload={{ ...task, booth }} updateList={updateList} inputOptions={initOptions} key={`checklist row ${task.Id}`} />);
         return (
             <>
                 <h3>Automatic Tasks</h3>
+                <p>(These tasks will complete automatically once submitted)</p>
                 <table className="table portal-checklist__table">
                     <tbody>{tasks}</tbody>
                 </table>
@@ -72,10 +94,11 @@ const App = ({ initOptions }) => {
     };
 
     const getManualTable = tasks => {
-        tasks = tasks.map(task => <ChecklistRow payload={{ ...task, booth }} inputOptions={initOptions} key={`checklist row ${task.Id}`} />);
+        tasks = tasks.map(task => <ChecklistRow payload={{ ...task, booth }} updateList={updateList} inputOptions={initOptions} key={`checklist row ${task.Id}`} />);
         return (
             <>
                 <h3>Manual Tasks</h3>
+                <p>(Manual tasks will take a couple of seconds to refresh)</p>
                 <table className="table portal-checklist__table">
                     <tbody>{tasks}</tbody>
                 </table>

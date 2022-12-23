@@ -2,7 +2,7 @@ import React from "react";
 import { useRef } from "react";
 import { pushTaskStatus } from "../Utils/pushTaskStatus";
 
-const ChecklistRow = ({ payload, inputOptions }) => {
+const ChecklistRow = ({ payload, inputOptions, updateList }) => {
     const { Instructions__c, Id, Deadline__c, Update_Method__c, status, booth, task_status_field_name__c, Link__c } = payload;
 
     let ref = useRef();
@@ -62,20 +62,30 @@ const ChecklistRow = ({ payload, inputOptions }) => {
         if (Update_Method__c === "automatic") {
             return;
         } else {
-            pushTaskStatus(payload);
+            pushTaskStatus(payload).then(response => {
+                if (response === "null") {
+                    updateList(Id, status);//success
+                } else {
+                    console.error("Update Failed: ", response);
+                }
+            });
         }
     };
 
     const getLink = link => {
         switch (link) {
             case "[[ep.showguide-link]]":
-                return "https://foam-adhesives.exhibitorportal-smartershows.com/exhibitor-resources/listingform";
+                // return "https://foam-adhesives.exhibitorportal-smartershows.com/exhibitor-resources/listingform";
+                return window.location.href+"/exhibitor-resources/listingform";
             case "[[ep.standform-link]]":
-                return "https://foam-adhesives.exhibitorportal-smartershows.com/booth-design-build/booth-information-form";
+                // return "https://foam-adhesives.exhibitorportal-smartershows.com/booth-design-build/booth-information-form";
+                return window.location.href+"/booth-design-build/booth-information-form";
             case "/n200":
-                return "https://foam-adhesives.exhibitorportal-smartershows.com/exhibitor-resources/exhibitor-name-badges";
+                // return "https://foam-adhesives.exhibitorportal-smartershows.com/exhibitor-resources/exhibitor-name-badges";
+                return window.location.href+"/exhibitor-resources/exhibitor-name-badges";
             default:
                 return link;
+                
         }
     };
     const link = getLink(Link__c);
@@ -102,12 +112,12 @@ const ChecklistRow = ({ payload, inputOptions }) => {
                 <div>
                     {status === "COMPLETED" ? (
                         <>
-                            <i ref={ref} onClick={() => handleClick()} className="bi bi-check-square"></i>
-                            <input type="checkbox" name={Id} checked hidden />
+                            <i ref={ref} onClick={() => handleClick()} className="bi bi-check-square" style={{ cursor: "pointer" }}></i>
+                            <input type="checkbox" name={Id} defaultChecked hidden />
                         </>
                     ) : (
                         <>
-                            <i ref={ref} onClick={() => handleClick()} className="bi bi-square"></i>
+                            <i ref={ref} onClick={() => handleClick()} className="bi bi-square" style={{ cursor: "pointer" }}></i>
                             <input type="checkbox" name={Id} hidden />
                         </>
                     )}
