@@ -57,6 +57,9 @@ class PDFMake {
                 case "TME":
                     var showName = "Thermal Management Expo";
                     break;
+                    // case "TEE":
+                    // var showName = "Thermal Management Expo Europe";
+                    // break;
                 case "SPC":
                     var showName = "Space Tech Expo";
                     break;
@@ -110,6 +113,9 @@ class PDFMake {
                 case "TME":
                     var pdfColour = "#2c3364";
                     break;
+                    // case "TEE":
+                    // var pdfColour = "#0f52ab";
+                    // break;
                 case "SPC":
                     var pdfColour = "#0C3353";
                     break;
@@ -146,6 +152,7 @@ class PDFMake {
             //IMAGE.IMAGE ==...
             image.image = new Base64Images(this.options.show).getImage();
             console.log(image.image);
+            console.log("image.image");
             content.push(image);
             let table = {};
             table.table = {

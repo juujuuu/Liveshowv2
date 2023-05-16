@@ -15,7 +15,8 @@ const filtersReducer = (state = { track: [], day: 1, query: "", letter: -1 }, ac
         case "SET_QUERY":
             return { ...state, query: payload };
         case "RESET_FILTERS":
-            return { track: [], day: 1, query: "", letter: -1 };
+            return { ...state,track: [], day: 1, query: "", letter: -1 };
+            
         case "SET_DAY":
             return { ...state, day: payload };
         default:

@@ -52,7 +52,7 @@ const getSiteFromId = conferenceId => {
         case "a3i4V000001pJWy":
         case "a3i4V000000bqIX":
             return "CEX";
-        case "a3i4V000000bqIc":
+        case "a3i4V00000222YG":
             return "SPC";
         case "a3i4V000001pORm":
         case "a3i4V000000bqIh":

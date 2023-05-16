@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        
         <script async="" src="https://www.clarity.ms/eus-f/s/0.6.34/clarity.js"></script>
         <script async="" src="https://www.clarity.ms/tag/uet/11004520"></script>
         <script src="//bat.bing.com/bat.js" async=""></script>
@@ -64,7 +65,9 @@
             })();
         </script>
         <title>TapeCase | Home</title>
-        <base href="http://context1.ceramicsexpo.co/" />
+        <!-- CHANGE HERE -->
+        <base href="http://context1.ceramicsexpo.co/" /> 
+        
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="" />
@@ -86,8 +89,11 @@
         <!--azo sans web-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet" />
         <!--Montserrat-->
-        <link rel="stylesheet" type="text/css" href="./assets/web/stylesheets/content_blocks/main.css" />
-        <link rel="stylesheet" type="text/css" href="./assets/web/stylesheets/shows/prtl/main.css" />
+        <link rel="stylesheet" type="text/css" href="./assets/web/stylesheets/content_blocks/main.css" /> 
+         <link rel="stylesheet" type="text/css" href="./assets/web/stylesheets/shows/prtl/main.css" /> 
+         <!-- CHANGE DOWN HERE  and add a main.css generated from sass  TO SEE the changes -->
+        <!-- <link rel="stylesheet" type="text/css" href="main.css"> -->
+        <link rel="stylesheet" type="text/css" href="./assets/web/stylesheets/shows/prtl/main.css" /> 
         <!-------------END STYLESHEETS----------->
 
         <!---------------SCRIPTS------------------->
@@ -125,6 +131,7 @@
         <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
         <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
         <script src="./assets/web/js/js-cookie.min.js"></script>
+   
         <script>
             window.addEventListener("load", function () {
                 if (Cookies.get("allowOrDeny") != "0" && Cookies.get("allowOrDeny") != undefined) {
@@ -260,7 +267,9 @@
         ></script>
         <script src="https://bat.bing.com/p/action/11004520.js" type="text/javascript" async="" data-ueto="ueto_10c9a0a249"></script>
     </head>
+    <!-- CHANGE HERE -->
     <body data-context="FMX-PRTL" data-site="US" data-aos-easing="ease" data-aos-duration="400" data-aos-delay="0">
+        
         <div
             role="dialog"
             aria-live="polite"
@@ -406,6 +415,7 @@
             AOS.init({ offset: 200 });
         </script>
 
+
         <main>
             <div class="row">
                 <div class="col-md-3 portal-nav">
@@ -415,7 +425,7 @@
                         <!--rowTpl-->
                         <div class="accordion-item side-menu__item side-menu--row side-menu--first side-menu--level-1 active side-menu--current">
                             <h2 class="accordion-header">
-                                <button
+                                <button 
                                     class="accordion-button"
                                     type="button"
                                     aria-expanded="false"
@@ -427,6 +437,7 @@
                             </h2>
                         </div>
                         <!--parentRowTpl-->
+                        <h1></h1>
                         <div class="accordion-item side-menu__item side-menu--row side-menu--level-1 side-menu--parent">
                             <h2 class="accordion-header">
                                 <button
@@ -434,14 +445,15 @@
                                     type="button"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#wf-1168"
-                                    aria-expanded="false"
+                                    aria-expanded="true"
                                     aria-controls="flush-collapse1168"
                                     style="text-transform: uppercase"
                                 >
                                     Top Level #1
                                 </button>
                             </h2>
-                            <div id="wf-1168" class="accordion-collapse collapse show">
+                            <div id="wf-1168" class="accordion-collapse collapse  show">
+                             
                                 <!--innerTpl-->
                                 <div class="accordion-body">
                                     <!--innerRowTpl-->
@@ -459,6 +471,7 @@
                         <div class="accordion-item side-menu__item side-menu--row side-menu--level-1 side-menu--parent">
                             <h2 class="accordion-header">
                                 <button
+                                   
                                     class="accordion-button"
                                     type="button"
                                     data-bs-toggle="collapse"
@@ -488,6 +501,7 @@
                         <div class="accordion-item side-menu__item side-menu--row side-menu--level-1 side-menu--parent">
                             <h2 class="accordion-header">
                                 <button
+                                
                                     class="accordion-button"
                                     type="button"
                                     data-bs-toggle="collapse"
@@ -517,6 +531,7 @@
                         <div class="accordion-item side-menu__item side-menu--row side-menu--level-1 side-menu--parent">
                             <h2 class="accordion-header">
                                 <button
+                               
                                     class="accordion-button"
                                     type="button"
                                     data-bs-toggle="collapse"
@@ -546,6 +561,7 @@
                         <div class="accordion-item side-menu__item side-menu--row side-menu--level-1 side-menu--parent">
                             <h2 class="accordion-header">
                                 <button
+                               
                                     class="accordion-button"
                                     type="button"
                                     data-bs-toggle="collapse"
@@ -670,8 +686,8 @@
 
                                     <div class="spacer vertical-margin--10">spacer</div>
 
-                                    <script type="module" src="http://localhost:8080/bundle.js"></script>
-                                    <section id="checklist-root" data-expo="a1x3A000001FLZm" data-booth="a3R4V0000019M5nUAE" data-context="FMX-PRTL"></section>
+                                    <script type="module" src="http://localhost:8081/bundle.js"></script>
+                                    <section id="checklist-root" data-expo="a1x4V00000117tV" data-booth="a3R4V000001838kUAA" data-context="FMX-PRTL"></section>
 
                                     <div class="spacer vertical-margin--10">spacer</div>
                                 </div>
@@ -912,5 +928,5 @@
                 src="https://bat.bing.com/action/0?ti=11004520&amp;Ver=2&amp;mid=916916fa-1001-4c53-bc39-7239597d9625&amp;sid=e3b63290012411edadd1b177652ed8f5&amp;vid=6a3e38d0d1cf11ec8239fb470f3d9200&amp;vids=0&amp;pi=918639831&amp;lg=en-GB&amp;sw=2560&amp;sh=1440&amp;sc=24&amp;tl=TapeCase%20%7C%20Home&amp;p=http%3A%2F%2Fcontext1.ceramicsexpo.co%2F&amp;r=&amp;lt=1784&amp;evt=pageLoad&amp;msclkid=N&amp;sv=1&amp;rn=458400"
             />
         </div>
-    </body>
+     </body>
 </html>

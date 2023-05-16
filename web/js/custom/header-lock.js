@@ -60,6 +60,8 @@
 
                      //TEE ONLY
                     $(".reg-link-button").hide();
+                     //TME landing page co-located header
+                     $(".header__sub-menu__co-locate-landing-page").hide()
                 } else {
                     $("header").removeClass("fixed-top");
                     $("header").addClass("header--default");
@@ -72,6 +74,9 @@
 
                     //TEE ONLY
                     $(".reg-link-button").show();
+
+                     //TME landing page co-located header
+                     $(".header__sub-menu__co-locate-landing-page").show()
                 }
             });
         }

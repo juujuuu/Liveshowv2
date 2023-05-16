@@ -98,7 +98,7 @@ const App = ({ initOptions }) => {
         return (
             <>
                 <h3>Manual Tasks</h3>
-                <p>(Manual tasks will take a couple of seconds to refresh)</p>
+                <p>(Manually tick tasks once completed. Tasks will take a few seconds to refresh)</p>
                 <table className="table portal-checklist__table">
                     <tbody>{tasks}</tbody>
                 </table>

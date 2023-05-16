@@ -110,5 +110,6 @@ ReactDOM.render(
             <App initOptions={options} />
         </BrowserRouter>
     </Provider>,
+    
     document.querySelector("#root")
 );

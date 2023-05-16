@@ -92,7 +92,7 @@ const ChecklistRow = ({ payload, inputOptions, updateList }) => {
 
     return (
         <tr id={Id} className={`potal-checklist__row portal-checklist__row--${status} portal-checklist__row--${Update_Method__c}`}>
-            <td className={`portal-checklist__instruction`} colspan="2">
+            <td className={`portal-checklist__instruction`} colSpan="2">
                 <div>
                     <p>
                         <a href={link} title={Instructions__c} target="_blank">

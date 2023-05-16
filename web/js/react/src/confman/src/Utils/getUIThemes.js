@@ -17,13 +17,13 @@ const getUIThemes = (show, day, track = [], extraMode) => {
             } else {
                 switch (day) {
                     case 1:
-                        theme = [...theme, "Plenary Mega Trends / Supply Chain Strategy", "Mega Trends"];
+                        theme = [...theme, "Supply Chain and Workforce / Application Comfort Optimization", "Application Safety & Security"];
                         break;
                     case 2:
-                        theme = [...theme, "Application Development", "Regulations and Sustainability"];
+                        theme = [...theme, "Sustainability / Carbon Reduction", "Recycling"];
                         break;
                     case 3:
-                        theme = [...theme, "Material Selection and Interaction", "Process Optimization"];
+                        theme = [...theme, "Data and Industry 4.0", "Manufacturing and Production"];
                         break;
                 }
                 return (

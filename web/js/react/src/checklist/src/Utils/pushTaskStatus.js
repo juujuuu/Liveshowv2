@@ -11,6 +11,7 @@ const pushTaskStatus = async ({ Instructions__c, Id, Deadline__c, Update_Method_
         status: statusTimestamp,
     };
     console.log("Sending", postData);
+    // For testing change the fetch to the foam 
     // let response = await fetch("https://foam-adhesives.exhibitorportal-smartershows.com/rest/setExhibTask.php", {
     let response = await fetch( "/rest/setExhibTask.php", {
         method: "POST",

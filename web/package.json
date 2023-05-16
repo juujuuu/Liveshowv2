@@ -5,10 +5,23 @@
     "main": "gulpfile.js",
     "dependencies": {
         "axios": "^0.25.0",
-        "react": "^18.1.0",
+        "bootstrap": "^5.2.3",
+        "gulp": "^4.0.2",
+        "gulp-babel": "^8.0.0",
+        "gulp-postcss": "^9.0.1",
+        "gulp-sass": "^5.1.0",
+        "gulp-sourcemaps": "^3.0.0",
+        "gulp-uglify": "^3.0.2",
+        "react": "^17.0.2",
+        "react-bootstrap": "^2.7.4",
         "react-dom": "^17.0.2",
+        "react-ga": "^3.3.1",
+        "react-gtm-module": "^2.0.11",
+        "react-redux": "^8.0.5",
+        "react-router-dom": "^6.8.1",
         "react-scripts": "^4.0.3",
-        "redux": "^4.1.2"
+        "redux": "^4.1.2",
+        "redux-thunk": "^2.4.2"
     },
     "devDependencies": {
         "@babel/core": "^7.16.0",
@@ -27,7 +40,7 @@
         "sass-loader": "^12.3.0",
         "style-loader": "^3.3.1",
         "webpack": "^5.64.2",
-        "webpack-cli": "^4.9.1",
+        "webpack-cli": "^4.10.0",
         "webpack-dev-server": "^4.5.0"
     },
     "scripts": {
