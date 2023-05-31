@@ -245,7 +245,7 @@ const MetaCol = ({order}) => {
 
     const exhibitor2=useSelector(state=>state.exhibitor)
     
-console.log(order,"orderrrrrrrrrrrrrrrrrrrrrrr")
+
     // const {
         // Expo__c,
         // url,
@@ -262,11 +262,11 @@ console.log(order,"orderrrrrrrrrrrrrrrrrrrrrrr")
     // } = exhibitor;
   
     
-    console.log("Company_Address__c2",Company_Address__c)
+
     
     // const boothnum = exhibitor["exhibitor-booth"];
     
-console.log(boothnum,"boothnum")
+
     /**
      *
      * @param {String} url

@@ -138,6 +138,7 @@ import PopUp from "../../../common_components/PopUp";
 import { getProfilePath } from "../Utils/GetPath";
 import { pushPageView } from "../Utils/pushPageView";
 import { getAcronymFromId } from "../Utils/GetShow";
+import {dualLanguage} from "../Utils/dualLanguagefunction";
 
 // class Slide extends Component {
 //     constructor(props) {
@@ -197,10 +198,11 @@ const mode=useSelector(state=>state.mode)
             web_logo,
             corporateMember,
             logo,
+    
         // } = this.props.payload;
     } = props.payload;
 
-        const { debug, local } = options;
+        const { debug, local, show } = options;
 
         const smallLogo = web_logo;
         const bigLogo = logo;
@@ -304,7 +306,7 @@ const mode=useSelector(state=>state.mode)
                         role="exhib-assets"
                         payload={payload}
                     >
-                        {enhanced ? "Enhanced Listing" : "View Profile"}
+                         {enhanced ? dualLanguage(show,"Enhanced Listing","Enhanced Listing / Erweiterte auflistung") : dualLanguage(show,"View Profile","View Profile / Profil ansehen")}
                     </Cta>
                 </Link>
                 <div className="col-6 col-md-3 exhibitor-slide__logo">
@@ -322,7 +324,7 @@ const mode=useSelector(state=>state.mode)
                             </Link>
                         </h4>
 
-                        <p className="exhibitor-booth">Booth Number: {booth}</p>
+                        <p className="exhibitor-booth">{dualLanguage(show,"Booth Number","Booth Number / Standnummer")}: {booth}</p>
                         {window.innerWidth < 768 ? (
                             <>
                                 {cats != false ? (

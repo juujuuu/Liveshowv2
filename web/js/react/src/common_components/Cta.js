@@ -186,8 +186,8 @@ const Cta = ({
 	margin = "vertical-margin--10",
 	bonusClass = "",
 	payload = false,
+	dualLanguageStylesCTA
 }) => {
-
 	const dispatch = useDispatch()
 	const lowestDay = useSelector(state => state.lowestDay)
 	const getExhibAssetsList = (exhibitor) => {
@@ -297,6 +297,7 @@ const Cta = ({
 			const enhanced = Exhibitor_listing_type__c != "Standard"; //no assets if standard
 			return (
 				<button
+				
 					className={`react__cta curved-cta curved-cta--${size} ${!curved ? "curved-cta--hard" : ""} curved-cta--${color} ${active ? "active" : ""
 						} ${margin} ${bonusClass}`}
 					onClick={handleClick}>
@@ -316,6 +317,7 @@ const Cta = ({
 		default:
 			return (
 				<button
+				    style={dualLanguageStylesCTA}
 					className={`react__cta curved-cta curved-cta--${size} ${!curved ? "curved-cta--hard" : ""} curved-cta--${color} ${active ? "active" : ""
 						} ${margin} ${bonusClass} `}
 					onClick={handleClick}>

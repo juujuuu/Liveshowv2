@@ -426,7 +426,11 @@ import { fetchExhibs, setQueries, setLoading } from "../Actions";
 import PDFMake from "../Utils/PDFMake/PDFMake";
 import { connect,useDispatch, useSelector } from "react-redux";
 import { getSiteFromId, getShowNameFromId,getSiteFromAcronym } from "../Utils/GetShow";
+import {dualLanguage,dualLanguageStyle  }from "../Utils/dualLanguagefunction";
+//import  dualLanguageStyle from "../Utils/dualLanguagefunction";
 import sanitizeIds from "../Utils/SanitizeIds";
+
+
 import { Sponsors } from "./Sponsors";
 
 
@@ -476,6 +480,9 @@ const mode=useSelector(state=>state.mode)
         const { regLink, show } = options;
         if(mode !== "LEAD-RETRIEVAL"){
         let jsx = []; //Just make a a jsx array of components to return.
+        
+        let message
+        { if(show=="FME" || show=="ABE" || show=="BRE"){ message= "German"} else{message="Download Full List PDF " }}
         let newJsx = (
             <Cta
                 size="max"
@@ -484,7 +491,8 @@ const mode=useSelector(state=>state.mode)
                 key={"download list"}
                 role="exhibDownloadPDF"
                 bonusClass="control-col__download-list">
-                Download Full List PDF
+                {dualLanguage(show,"Download Full List PDF","Download Full List PDF / Gesamte Liste als PDF herunterladen")}
+              
             </Cta>
         );
         jsx = [...jsx, newJsx];
@@ -518,7 +526,7 @@ const mode=useSelector(state=>state.mode)
             
             newJsx = (
                 <Cta size="max" color="cex-red" link={regLink} bonusClass="control-col__reg-link" key={"register to attend"}>
-                    Register To Attend
+                 {dualLanguage(show,"Register To Attend","Register To Attend / Registrieren sie sich, um teilzunehmen")}  
                 </Cta>
             );
             jsx = [...jsx, newJsx];
@@ -571,12 +579,12 @@ const mode=useSelector(state=>state.mode)
     }
 };
 
-   
+  
     const getExtra = options => {
         const { regLink, show } = options;
         let jsx = []; //Just make a a jsx array of components to return.
 
-
+       
     
        
       
@@ -657,7 +665,7 @@ const mode=useSelector(state=>state.mode)
             return expo.includes(exhibitor.Expo__c);
         });
     };
-
+    
     /**
      *
      * @param {Array} exhibitors
@@ -778,17 +786,20 @@ const mode=useSelector(state=>state.mode)
     } else {
         const { multiExpo, filters, show } = options;
         const filteredExhibitors = filterExhibitors(exhibs, filters, queries, multiExpo);
-
+        const dualLanguageStyles=dualLanguageStyle(show)
+     
+      
         return (
             <section className={`exhibmanV2 exhibmanV2--${show} row`}>
                 <nav className="col-12 col-md-4 control-col">
                     <StickyNav>
-                        <div className="control-col__header">
-                       
-                            <h3>
-                                <strong>Refine Results</strong>
+                    
+                        {/* <div className="control-col__header" style={{dualLanguageDisplay}}> */}
+                      <div className="control-col__header" style={dualLanguageStyles.display}> 
+                            <h3 style={dualLanguageStyles.h3Style}>
+                                <strong>{dualLanguage(show,"Refine Results","Refine Results / Ergebnisse verfeinern")}</strong>
                             </h3>
-                            <Cta bonusClass="control-col__reset" handler={handleReset} role="exhib-reset" size="micro" color="black" margin="vertical-margin--0">
+                            <Cta dualLanguageStylesCTA={dualLanguageStyles.CTAStyle} bonusClass="control-col__reset" handler={handleReset} role="exhib-reset" size="micro" color="black" margin="vertical-margin--0">
                                 Clear Filters
                             </Cta>
                         </div>
@@ -829,7 +840,7 @@ const mode=useSelector(state=>state.mode)
                     <div className="row viewport__header">
                    
                         <h3>
-                            <strong>Exhibitors A-Z</strong>
+                            <strong>{dualLanguage(show,"Exhibitors A-Z","Exhibitors A-Z / Aussteller von A bis Z")} </strong>
                         </h3>
                     </div>
                     <div className="slide-list">{getSlides(filteredExhibitors)}</div>
