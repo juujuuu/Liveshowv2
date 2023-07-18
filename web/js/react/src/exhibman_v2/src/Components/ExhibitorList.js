@@ -471,6 +471,47 @@ const mode=useSelector(state=>state.mode)
         }
     }, []);
 
+
+    const setPageTitle=(show,pageTitle)=>{
+          
+           
+        switch (show) {
+            
+            case "FMX":
+                var showName = "Foam Expo " + pageTitle ;
+                break;
+            case "FME":
+                var showName = "Foam Expo Europe " + pageTitle;
+                break;
+            case "ABE":
+                var showName = "Adhesives Bonding Expo Europe "+ pageTitle;
+                break;
+            case "ABX":
+              var   showName = "Adhesives Bonding Expo " + pageTitle;
+                break;
+            case "CEX":
+               var  showName = "Ceramics Expo " + pageTitle;
+                break;
+            case "TME":
+                var showName = "Thermal Management Expo " + pageTitle;
+                break;
+                case "TEE":
+              var   showName = "Thermal Management Expo Europe " + pageTitle;
+                break;
+            case "SPC":
+              var   showName = "Space Tech Expo " + pageTitle;
+                break;
+            case "BRE":
+               var  showName = "Space Tech Expo Europe " + pageTitle;
+                break;
+            case "SAT":
+             var    showName = "Satellite Connectivity Expo " + pageTitle;
+                break;
+        }
+        document.title= showName
+        
+    }
+
     /**
      *
      * @param {Object} Options
@@ -788,7 +829,7 @@ const mode=useSelector(state=>state.mode)
         const filteredExhibitors = filterExhibitors(exhibs, filters, queries, multiExpo);
         const dualLanguageStyles=dualLanguageStyle(show)
      
-      
+        setPageTitle(show, "Exhibitor List")
         return (
             <section className={`exhibmanV2 exhibmanV2--${show} row`}>
                 <nav className="col-12 col-md-4 control-col">
