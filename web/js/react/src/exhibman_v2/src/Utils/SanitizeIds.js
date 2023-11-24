@@ -4,6 +4,7 @@
  * @returns comma delimited string
  */
 const sanitizeIds = ids => {
+	// console.log(ids,"idssss")
 	if (!(ids instanceof Array)) {
 		return ids;
 	} else {

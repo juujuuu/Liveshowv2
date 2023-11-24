@@ -349,7 +349,7 @@ const MetaCol = ({order}) => {
         <nav className={`col-12 col-md-3 ${order} meta-info-col`}>
             <StickyNav endAffix={1800} disable={window.innerWidth < 992}>
                 {window.innerWidth < 992 ? (
-                    <Link className="router-link" to={getExhibListPath(options.debug, options.local)} onClick={() => handleListSwitch()}>
+                    <Link className="router-link" to={getExhibListPath(options.debug, options.local,options.postshow)} onClick={() => handleListSwitch()}>
                         <Cta size="reg" curved={false} bonusClass={`profile-back-to-list left`} key={`Mob back to Exhibitor List`} color="black">
                             Back to Exhibitor List
                         </Cta>

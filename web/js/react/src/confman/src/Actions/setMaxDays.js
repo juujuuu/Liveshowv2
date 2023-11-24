@@ -4,7 +4,7 @@ const setMaxDays = sessions => {
 		const { Day__c } = session;
 		maxNumber = Day__c > maxNumber ? Day__c : maxNumber;
 	});
-	console.log("MAX---", maxNumber);
+	//console.log("MAX---", maxNumber);
 	return {
 		type: "SET_MAX_DAYS",
 		payload: maxNumber,

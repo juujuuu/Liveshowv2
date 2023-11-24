@@ -25,9 +25,9 @@ class Base64Images {
       case "ABE":
         this.image = fme;
         break;
-        // case "TEE":
-        //   this.image = fme;
-        //   break;
+        case "TEE":
+          this.image = fme;
+          break;
       case "CEX":
         this.image = cex;
         break;

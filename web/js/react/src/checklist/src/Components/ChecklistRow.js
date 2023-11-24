@@ -58,7 +58,7 @@ const ChecklistRow = ({ payload, inputOptions, updateList }) => {
     }
 
     const handleClick = event => {
-        console.log("trying to update booth");
+       // console.log("trying to update booth");
         if (Update_Method__c === "automatic") {
             return;
         } else {
@@ -66,7 +66,7 @@ const ChecklistRow = ({ payload, inputOptions, updateList }) => {
                 if (response === "null") {
                     updateList(Id, status);//success
                 } else {
-                    console.error("Update Failed: ", response);
+                  //  console.error("Update Failed: ", response);
                 }
             });
         }

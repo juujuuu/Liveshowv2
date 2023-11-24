@@ -6,12 +6,120 @@
 import _formMarkup from "./FormMarkup";
 
 $(document).ready(function () {
+    let formsList = []
+    var id
+    let count = 0
+    function captchaForm() {
+    
+        function generateCaptcha(length, chars) {
+            var result = '';
+            for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+            return result;
+        }
+
+        //hide Deafult
+       
+        //show on click
+        $('.inputWrapper').on('click', function (e) {
+            count++
+            const grabForm = e.target.closest("form", "form")
+
+            id = grabForm.getAttribute('id')
+            // console.log(id)
+            document.querySelector("#" + id + ' .captcha-form-group').style.display = 'block';
+          
+            if (!formsList.includes(id)) {
+                count = 0
+                formsList.push(id, count)
+                document.querySelector("#" + id + ' .dynamic-code').innerHTML = generateCaptcha(5, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+                addEventListener(id)
+            }
+           
+            
+
+
+
+        })
+
+
+        $('.captcha-reload').on('click', function () {
+            $('.dynamic-code').text(generateCaptcha(5, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'));
+        });
+
+
+        function addEventListener(id) {
+        
+
+                document.querySelector("#" + id + ' #captcha-input').addEventListener("change", (e) => {
+                   const dynCode= document.querySelector("#" + id + ' .dynamic-code').textContent
+                   const errCaptcha=document.querySelector("#" + id + ' #errCaptcha')
+                    // console.log(dynCode)
+                    // console.log(e.target.value)
+                    if(dynCode !=e.target.value){
+                        errCaptcha.innerHTML='<span  class="bg-warning text-white rounded px-3 "><i class="ion-close"></i>Captcha not matching!</span>'
+                        document.querySelector("#" + id + ' #captcha-input').value=""   
+                    }
+                    else{
+                        errCaptcha.innerHTML='<span  class="bg-success text-white rounded px-3 "><i class="ion-close"></i>Captcha matched!</span>'
+                    }
+                 
+                })
+            
+
+        }
+        //prevent text to be copied 
+
+        $('.dynamic-code').bind('cut, copy', function (e) {
+            e.preventDefault();
+        });
+
+    }
+
+    function captchaPopUp() {
+        // generate captcha
+        function generateCaptcha(length, chars) {
+            var result = '';
+            for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+            return result;
+        }
+
+        //hide Deafult
+        $('.captcha-form-group').hide()
+        //show on click
+        $('.inputWrapper').on('click', function () {
+            $('.modal  .captcha-form-group').show(500)
+        })
+        //default captcha
+
+        $('.modal  .dynamic-code').text(generateCaptcha(5, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'));
+
+        $('.modal  .captcha-reload').on('click', function () {
+            $('.dynamic-code').text(generateCaptcha(5, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'));
+        });
+
+        //check captcha
+        $('.modal  #captcha-input').on('change', function () {
+            if ($(this).val() != $('.modal .dynamic-code').text()) {
+                $('.modal  #errCaptcha').html('<span  class="bg-warning text-white rounded px-3 "><i class="ion-close"></i> Captcha not matched!</span>');
+                $(this).val('');
+            } else {
+                $('.modal  #errCaptcha').html('<span  class="bg-success text-white rounded px-3 "><i class="ion-close"></i> Captcha matched!</span>');
+            }
+        });
+
+        //prevent text to be copied 
+
+        $('.dynamic-code').bind('cut, copy', function (e) {
+            e.preventDefault();
+        });
+
+    }
     /**
      * Destroy modals on exit.
      * Creates a listener for modal hide events, then runs a bootstrap callback to remove them from the DOM.
      */
     $("body").on("hidden.bs.modal", "#modal", function (event) {
-        console.log("Leaving modal");
+        // console.log("Leaving modal!");
         let modal = bootstrap.Modal.getInstance(document.getElementById("modal"));
         modal.dispose();
         $("#modal").remove();
@@ -34,6 +142,10 @@ $(document).ready(function () {
             $("body").append(modal); //Add the html string to the DOM.
             let myModal = new bootstrap.Modal(document.getElementById("modal")); //Convert to boostrap modal object, then show.
             myModal.show();
+
+            captchaPopUp()
+
+
         });
     });
 
@@ -151,4 +263,5 @@ $(document).ready(function () {
             },
         });
     });
+    captchaForm()
 });

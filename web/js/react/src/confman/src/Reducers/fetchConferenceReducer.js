@@ -4,6 +4,7 @@ const fetchConferenceReducer = (state = [], action) => {
 	switch (type) {
 		case "FETCH_CONFERENCE":
 			let { session: sessions, presentation: presentations } = data;
+			// console.log(data,"dataaaa")
 			//Assign presentations to session
 			sessions = sessions.map(session => {
 				//check if any presentations match the session id

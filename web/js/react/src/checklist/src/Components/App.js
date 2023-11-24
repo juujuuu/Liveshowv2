@@ -23,14 +23,15 @@ const App = ({ initOptions }) => {
                     });
                 })
                 .catch(error => {
-                    console.error("Fetch error", error);
+                    //console.error("Fetch error", error);
                     setError(true);
                 });
         }
     }, []);
 
     const updateList = (_id, _status) =>{
-        console.log("old tasks: ", tasks);
+        
+       // console.log("old tasks: ", tasks);
         let task = tasks.find(({Id})=>_id === Id);
         
         task.status = task.status === "COMPLETED" ? "NOT STARTED" : "COMPLETED";
@@ -38,20 +39,23 @@ const App = ({ initOptions }) => {
 
         let newTasks = [...tasks];
         newTasks[index] = task;
-        console.log("new tasks: ", newTasks);
+       // console.log("new tasks: ", newTasks);
         setTasks(newTasks);
     };
 
     const mapTasks = (tasks, completedTasks) => {
-        console.log("mapTasks input", tasks, completedTasks);
+        // console.log("mapTasks input", tasks, completedTasks);
         const { Not_Applicable_Fields__c } = completedTasks;
+       
         tasks = tasks.map(task => {
         
             const { task_status_field_name__c } = task;
+            //fix task_status_field_name__c  for insureance cover  mismatching between lower case and uppercase 
+            // const task_status_field_name__c_TOLOWERCASE=task_status_field_name__c.toLowerCase()
             if (_.has(completedTasks, task_status_field_name__c)) {
                 //Does at least have something to map to
                 const status = completedTasks[task_status_field_name__c];
-            
+               
                 if (Not_Applicable_Fields__c !== null && Not_Applicable_Fields__c.includes(task_status_field_name__c)) {
                     task.status = "NOT APPLICABLE";
                 }else if(status == false )  {
@@ -67,11 +71,12 @@ const App = ({ initOptions }) => {
                 }
                 return task;
             }
+
             return task;
         });
-        console.log("tasks after map1", tasks);
+        //console.log("tasks after map1", tasks);
         tasks = tasks.filter(task => task !== undefined);
-        console.log("tasks after undefineds removed", tasks);
+       // console.log("tasks after undefineds removed", tasks);
         tasks = tasks.sort((a, b) => {
             const { Order__c: aOrder } = a;
             const { Order__c: bOrder } = b;

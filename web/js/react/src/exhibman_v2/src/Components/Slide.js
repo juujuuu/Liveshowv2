@@ -202,14 +202,14 @@ const mode=useSelector(state=>state.mode)
         // } = this.props.payload;
     } = props.payload;
 
-        const { debug, local, show } = options;
+        const { debug, local, show ,postshow} = options;
 
         const smallLogo = web_logo;
         const bigLogo = logo;
         const booth = payload["exhibitor-booth"];
         const featured = payload["exhibitor-featured"];
         const enhanced = Exhibitor_listing_type__c != "Standard";
-
+// console.log(payload,"payloaddddsddddddddddddddddddd")
         let cats;
         if (payload["exhibitor-cat"].length > 0) {
             // cats = this.getCats(payload["exhibitor-cat"].split("||"));
@@ -293,10 +293,13 @@ const mode=useSelector(state=>state.mode)
                 <div className="exhibitor-slide__side-flag"></div>
                 <Link
                     className="router-link router-link--profile-button"
-                    to={getProfilePath(debug, local, id)}
+                    //this one
+                    to={getProfilePath(debug, local, id, postshow)}
+                    
                     // onClick={() => this.handleSwitchMode("PROFILE", id)}
                     onClick={() => handleSwitchMode("PROFILE", id)}
                 >
+                  
                     <Cta
                         color="black"
                         size="reg"
@@ -311,7 +314,7 @@ const mode=useSelector(state=>state.mode)
                 </Link>
                 <div className="col-6 col-md-3 exhibitor-slide__logo">
                     {/* <Link className="router-link" to={getProfilePath(debug, local, id)} onClick={() => this.handleSwitchMode("PROFILE", id)}> */}
-                    <Link className="router-link" to={getProfilePath(debug, local, id)} onClick={() => handleSwitchMode("PROFILE", id)}>
+                    <Link className="router-link" to={getProfilePath(debug, local, id,postshow)} onClick={() => handleSwitchMode("PROFILE", id)}>
                         <img className="img-fluid" src={web_logo !== "" ? smallLogo : bigLogo} alt={pagetitle} />
                     </Link>
                 </div>
@@ -319,7 +322,7 @@ const mode=useSelector(state=>state.mode)
                     <div>
                         <h4 className="exhibitor-name">
                             {/* <Link className="router-link" to={getProfilePath(debug, local, id)} onClick={() => this.handleSwitchMode("PROFILE", id)}> */}
-                            <Link className="router-link" to={getProfilePath(debug, local, id)} onClick={() =>handleSwitchMode("PROFILE", id)}>
+                            <Link className="router-link" to={getProfilePath(debug, local, id,postshow)} onClick={() =>handleSwitchMode("PROFILE", id)}>
                                 {pagetitle}
                             </Link>
                         </h4>

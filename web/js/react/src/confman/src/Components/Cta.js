@@ -22,7 +22,7 @@ class Cta extends React.Component {
         margin: "vertical-margin--10",
     };
     handleClick = () => {
-        console.log("active")
+       // console.log("active")
         if (this.props.handler != false) {
             if (this.props.role == false) {
                 this.props.handler();

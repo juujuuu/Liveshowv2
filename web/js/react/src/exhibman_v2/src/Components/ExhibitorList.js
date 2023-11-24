@@ -507,6 +507,9 @@ const mode=useSelector(state=>state.mode)
             case "SAT":
              var    showName = "Satellite Connectivity Expo " + pageTitle;
                 break;
+                case "FMC":
+             var    showName = "Foam Expo China " + pageTitle;
+                break;
         }
         document.title= showName
         
@@ -632,6 +635,7 @@ const mode=useSelector(state=>state.mode)
     };
 
     const getSlides = exhibitors => {
+        
         if (exhibitors.length < 1) {
             return <h2 className="no-exhibs-message d-flex justify-content-center align-items-center">No exhibitors found</h2>;
         }
@@ -721,6 +725,7 @@ const mode=useSelector(state=>state.mode)
         return exhibitors.filter(exhibitor => {
             const cats = exhibitor["exhibitor-cat"].toLowerCase();
             const pagetitle = exhibitor.pagetitle.toLowerCase();
+            
             const content = exhibitor.content.toLowerCase();
             if (cats.includes(search) || pagetitle.includes(search) || content.includes(search)) {
                 return true;
@@ -808,8 +813,17 @@ const mode=useSelector(state=>state.mode)
     const filterExhibitors = (exhibitors, filters,
         //  queries,
           multiExpo) => {
+           
+        
+            // console.log(filters,"filters")
+            // console.log(queries,"queries")
+            // console.log(multiExpo,"multyy")
+          
+           
         exhibitors = [...exhibitors]; //Chaning pointer in memory (probs not necessary here tbf).
+       
         filters.forEach(filter => {
+            //hereeee
             if (filter == "SEARCH") {
                 exhibitors = searchFilter(exhibitors, queries.search);
             } else if (filter == "ALPHABET") {
@@ -818,7 +832,9 @@ const mode=useSelector(state=>state.mode)
         });
         if (multiExpo) {
             exhibitors = expoFilter(exhibitors);
+            // console.log(multiExpo,"multyyyyy expo")
         }
+        
         return exhibitors;
     };
 
@@ -827,11 +843,18 @@ const mode=useSelector(state=>state.mode)
     } else {
         const { multiExpo, filters, show } = options;
         const filteredExhibitors = filterExhibitors(exhibs, filters, queries, multiExpo);
+        // console.log(exhibs,"exxxxxxx")
+        // console.log(filters,"filters")
+        // console.log(queries,"queries")
+        // console.log(multiExpo,"multyy")
+        // console.log(show,"show")
+        // console.log(filteredExhibitors, "filtered")
         const dualLanguageStyles=dualLanguageStyle(show)
      
         setPageTitle(show, "Exhibitor List")
         return (
             <section className={`exhibmanV2 exhibmanV2--${show} row`}>
+               
                 <nav className="col-12 col-md-4 control-col">
                     <StickyNav>
                     
@@ -850,31 +873,31 @@ const mode=useSelector(state=>state.mode)
                         </div>
                         {getExtraNavButtons(options, exhibs)}
             
-                        {/* <Sponsors
+                        <Sponsors
                         show={options}
-                        href={"https://www.ice.it/en/"}
-                        title={"Italy at space Tech Expo Europe"}
-                        src={"./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Side_Banner.jpg"}
+                        // href={"https://www.ice.it/en/"}
+                        // title={"Italy at space Tech Expo Europe"}
+                        // src={"./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Side_Banner.jpg"}
                         // src={"./small.jpg"}
-                        alt={"Italy at space Tech Expo Europe"}
+                        // alt={"Italy at space Tech Expo Europe"}
                         position={"-left"}
                         displayBanner={""}
-                    /> */}
+                    />
                         
                     </StickyNav>
                 </nav>
                 <div className="col-md-8 viewport-col">
-                    {/* <Sponsors
+                    <Sponsors
                         show={options}
-                        href={"https://www.ice.it/en/"}
-                        title={"Italy at space Tech Expo Europe"}
-                        src={"./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Top__Banner.jpg"}
+                        // href={"https://www.ice.it/en/"}
+                        // title={"Italy at space Tech Expo Europe"}
+                        // src={"./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Top__Banner.jpg"}
                         // src={"./large.jpg"}
-                        alt={"Italy at space Tech Expo Europe"}
+                        // alt={"Italy at space Tech Expo Europe"}
                         position={"-top"}
                         displayBanner={""}
                         
-                    /> */}
+                    />
                     <div className="alphabet-filter">
                         <Alphabet activeLetter={queries.letter} handler={handleSetLetter} />
                     </div>

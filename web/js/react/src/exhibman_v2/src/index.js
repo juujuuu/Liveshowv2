@@ -94,9 +94,10 @@ const options = {
     extraParams, //extra arguments in the url, null if none
     debug: document.querySelector("#root").getAttribute("debug") == "true" ? true : false,
     local: document.querySelector("#root").getAttribute("local") == "true" ? true : false,
+    postshow: document.querySelector("#root").getAttribute("postshow") == "true" ? true : false,
 };
 
-console.log("OPTIONS: ", options);
+//console.log("OPTIONS: ", options);
 
 TagManager.initialize({
     gtmId: document.querySelector("#root").getAttribute("gtm"),

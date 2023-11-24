@@ -27,6 +27,8 @@ const getSiteFromAcronym = show => {
             return "https://www.netzerobuildsummit.com/";
         case "tme":
             return "https://www.thermalmanagementexpo.com/";
+         case "tee":
+             return "https://www.thermalmanagementexpo-europe.com/";
         default:
             throw "Acrnym not found";
     }
@@ -42,10 +44,12 @@ const getSiteFromId = conferenceId => {
         case "a3i4V000001pJMf":
         case "a3i4V000001tXtn":
         case "a3i4V000001hXhE":
+        case "a3i4V0000016NNJ":
             return "FMX";
         case "a3i4V000001pJMf":
         case "a3i4V000001hXhE":
-            return "ABX";
+        case "a3i4V0000016NNJ":
+             return "ABX";
         case "a3i4V000001pPTc":
         case "What ever the sf id of the solutions innovation agenda ends up being":
             return "FME";
@@ -57,6 +61,7 @@ const getSiteFromId = conferenceId => {
         case "a3i4V000001pORm":
         case "a3i4V000000bqIh":
         case "a3i4V00000222PA":
+        case "a3i4V000000nXcp":
             return "BRE";
         case "a3i4V000001pOUg":
             return "OCS";
@@ -71,6 +76,9 @@ const getSiteFromId = conferenceId => {
         case "a3i4V000000bqIw":
         case "What ever the sf id of the solutions innovation agenda ends up being":
             return "ABE";
+            case "a3i4V000000nXh9":
+            case "What ever the sf id of the solutions innovation agenda ends up being":
+        return "TEE";
         default:
             throw "Acrnym not found";
     }
@@ -103,6 +111,8 @@ const getShowNameFromAcronym = acronym => {
             return "Onboard  Connectivity Summit";
         case "sat":
             return "Satellite Connectivity Summit";
+            case "tee":
+        return "Thermal Management Expo Europe ";
         default:
             return "Acronym not found";
     }

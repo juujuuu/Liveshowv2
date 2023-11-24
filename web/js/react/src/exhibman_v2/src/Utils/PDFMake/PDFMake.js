@@ -6,15 +6,20 @@ import Base64Images from "./Base64Store";
  * If somethings broken with the pdfs, 99% chance it's something in a switch case around here.
  */
 class PDFMake {
+    
     constructor(options, data) {
         this.data = data;
         this.options = options;
+        this.ids=this.options.ids
         //this.options.show = "CEX"; //debug
-        console.log(this.data);
-        console.log(this.options);
+        //console.log(this.data);
+        //console.log(this.options);
         this.printPDF();
+       
     }
+
     printPDF = () => {
+        console.log(this.ids,"idsssssssssssssss make pds")
         let docDefinition = {};
         let content = [];
         let body = [];
@@ -36,39 +41,80 @@ class PDFMake {
                 style: "tableheader",
             },
         ]);
+// commenting it out as it s targeting the by show names and is showing the only the main show name in multy shows instead of show based on ids
+        // this.data.forEach(element => {
+        //     //TODO may need to debug - make show name dependant on booth expo
+        //     switch (this.options.show) {
+        //         case "FMX":
+        //             var showName = "Foam Expo";
+        //             break;
+        //         case "FME":
+        //             var showName = "Foam Expo Europe";
+        //             break;
+        //         case "ABE":
+        //             var showName = "Adhesives Bonding Expo Europe";
+        //             break;
+        //         case "ABX":
+        //             var showName = "Adhesives Bonding Expo";
+        //             break;
+        //         case "CEX":
+        //             var showName = "Ceramics Expo";
+        //             break;
+        //         case "TME":
+        //             var showName = "Thermal Management Expo";
+        //             break;
+        //             case "TEE":
+        //             var showName = "Thermal Management Expo Europe";
+        //             break;
+        //         case "SPC":
+        //             var showName = "Space Tech Expo";
+        //             break;
+        //         case "BRE":
+        //             var showName = "Space Tech Expo Europe";
+        //             break;
+        //         case "SAT":
+        //             var showName = "Satellite Connectivity Expo";
+        //             break;
+        //     }
+
         this.data.forEach(element => {
             //TODO may need to debug - make show name dependant on booth expo
-            switch (this.options.show) {
-                case "FMX":
+          
+            switch (element.Expo__c) {
+               
+                case "a1x4V000001mqRx":
                     var showName = "Foam Expo";
                     break;
-                case "FME":
+                case "a1x4V00000117tk":
                     var showName = "Foam Expo Europe";
+                     console.log(showName)
                     break;
-                case "ABE":
+                case "a1x4V00000117tf":
                     var showName = "Adhesives Bonding Expo Europe";
+                    console.log(showName)
                     break;
-                case "ABX":
+                case "a1x4V000001mqS2":
                     var showName = "Adhesives Bonding Expo";
                     break;
-                case "CEX":
+                case "a1x4V000001mqRm":
                     var showName = "Ceramics Expo";
                     break;
-                case "TME":
+                case "a1x4V000001mqRh":
                     var showName = "Thermal Management Expo";
                     break;
-                    // case "TEE":
-                    // var showName = "Thermal Management Expo Europe";
-                    // break;
-                case "SPC":
+                    case "a1x4V000001j7vk":
+                    var showName = "Thermal Management Expo Europe";
+                    break;
+                case "a1x4V000001mqQP":
                     var showName = "Space Tech Expo";
                     break;
-                case "BRE":
+                case "a1x4V000000xD23":
                     var showName = "Space Tech Expo Europe";
                     break;
                 case "SAT":
                     var showName = "Satellite Connectivity Expo";
                     break;
+                    
             }
             let title = element.pagetitle;
             let booth = element["exhibitor-booth"];
@@ -92,8 +138,9 @@ class PDFMake {
                 },
             ]);
         });
-
+console.log(body,"body array")
         if (body != []) {
+            
             switch (this.options.show) {
                 case "FMX":
                     var pdfColour = "#4E8891";
@@ -113,9 +160,9 @@ class PDFMake {
                 case "TME":
                     var pdfColour = "#2c3364";
                     break;
-                    // case "TEE":
-                    // var pdfColour = "#0f52ab";
-                    // break;
+                    case "TEE":
+                    var pdfColour = "#0f52ab";
+                    break;
                 case "SPC":
                     var pdfColour = "#0C3353";
                     break;
@@ -126,6 +173,46 @@ class PDFMake {
                     var pdfColour = "#0c3353";
                     break;
             }
+
+// var pdfColour
+//         if (body != []) {
+//                     this.data.forEach(element => {
+//             switch (element.Expo__c) {
+//                 case "a1x4V000001mqRx":
+//                      pdfColour = "#4E8891";
+//                     break;
+//                 case "a1x4V00000117tk":
+//                      pdfColour = "#ed6839";
+//                     break;
+//                 case "a1x4V00000117tf":
+//                      pdfColour = "#ed6839";
+//                     break;
+//                 case "a1x4V000001mqS2":
+//                      pdfColour = "#4E8891";
+//                     break;
+//                 case "a1x4V000001mqRm":
+//                      pdfColour = "#2c3364";
+//                     break;
+//                 case "a1x4V000001mqRh":
+//                      pdfColour = "#2c3364";
+//                     break;
+//                 case "a1x4V000001j7vk":
+//                      pdfColour = "#0f52ab";
+//                     break;
+//                 case "a1x4V000001mqQP":
+//                      pdfColour = "#0C3353";
+//                     break;
+//                 case "a1x4V000000xD23":
+//                      pdfColour = "#0c3353";
+//                     break;
+//                 case "SAT":
+//                      pdfColour = "#0c3353";
+//                     break;
+                   
+//             }
+//          return pdfColour
+//         } )
+
             var styles = {
                 header: {
                     margin: [0, 0, 0, 20],
@@ -142,7 +229,7 @@ class PDFMake {
                     color: pdfColour,
                 },
             };
-
+console.log(styles, "stylesss")
             let image = {
                 image: "",
                 width: 500,
@@ -151,8 +238,8 @@ class PDFMake {
 
             //IMAGE.IMAGE ==...
             image.image = new Base64Images(this.options.show).getImage();
-            console.log(image.image);
-            console.log("image.image");
+           // console.log(image.image);
+            //console.log("image.image");
             content.push(image);
             let table = {};
             table.table = {
@@ -170,6 +257,7 @@ class PDFMake {
             let pdfTitle = "Exhibitor List.pdf";
             pdfMake.createPdf(docDefinition).download(pdfTitle);
         }
+        
     };
 }
 

@@ -157,12 +157,13 @@ const App =(props)=>{
     // console.log("option",options)
     // console.log("props1")
     // console.log(props)
+
     useEffect(()=>{
         // const { setMode, setLoading, setQueries, setOptions, queries, initOptions, setProduct, setProfile } = props;
         const {   initOptions} = props;
             const { ids, profileId, articleId, mode } = initOptions;
-            console.log("initOptions")
-            console.log(initOptions.ids)
+           // console.log("initOptions")
+           // console.log(initOptions.ids)
             dispatch(setOptions(initOptions));
             dispatch(setProduct(articleId));
             dispatch(setProfile(profileId));
@@ -185,11 +186,11 @@ const App =(props)=>{
 
     // render() {
         // console.log("Render Store: ", this.props);
-        console.log("Render Store: ", props);
+        //console.log("Render Store: ", props);
 
         // const { loading, error, exhibs, exhibitor, mode, options, queries } = this.props;
         const { loading, error, exhibs, exhibitor } = props;
-        console.log("oprionssss,option",options)
+        //console.log("oprionssss,option",options)
         const errorMessage = (
             <h1 className="d-flex justify-content-center align-items-center" style={{ minHeight: "500px", textAlign: "center" }}>
                 Sorry, an unexpected error has occurred
@@ -229,10 +230,11 @@ const App =(props)=>{
                 )
                }else{
                 return (
+                    
                     <Routes>
-                        <Route path={getExhibListPath(options.debug,options.local)} element={<ExhibitorList />}></Route>
-                        <Route path={getProfilePath(options.debug, options.local)} element={<Profile />}></Route>
-                        <Route path={getProductPath(options.debug, options.local)} element={<Product />}></Route>
+                        <Route path={getExhibListPath(options.debug,options.local,options.postshow)} element={<ExhibitorList />}></Route>
+                        <Route path={getProfilePath(options.debug, options.local,"",options.postshow)} element={<Profile />}></Route>
+                        <Route path={getProductPath(options.debug, options.local,"",options.postshow)} element={<Product />}></Route>
                     </Routes>
                 );}
 
@@ -241,8 +243,10 @@ const App =(props)=>{
             console.error("Full error:  ", error);
             return errorMessage;
         }
+        
     }
 // }
+
 export default App;
 // const mapStateToProps = (store) => {
 //     return { ...store };

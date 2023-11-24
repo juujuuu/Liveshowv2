@@ -52,7 +52,11 @@ const CheckBoxFilter = ({ name = "Filter Name",
     value = -1 }) => {
     const dispatch = useDispatch()
     const setTrackSelector = useSelector(state => state.filters.track)
+   
       const state=useSelector(state=>state)
+      const{options}=state
+      const {show,extraMode}=options
+    //   console.log(options,"Srate")
 const [check, setcheck] = useState(false)
 
     const handleClick = event => {
@@ -64,27 +68,38 @@ const [check, setcheck] = useState(false)
             dispatch(setTrack(value));
         }
     };
-console.log("checked",checked)
-console.log("state",state)
-    return (
-        <div className={`checkbox-filter checkbox-filter--${inputClass}`}>
-            <div className="checkbox-filter__checkbox">
-                {checked ? (
-                    <>
-                        <i onClick={handleClick} className="bi bi-check-square-fill" style={{ cursor: "pointer" }}></i>
-                        {/* <input type="checkbox" name={inputClass} checked hidden /> */}
-                    </>
-                ) : (
-                    <>
-                        <i onClick={handleClick} className="bi bi-square" style={{ cursor: "pointer" }}></i>
-                        {/* <input type="checkbox" name={inputClass} hidden /> */}
-                    </>
-                )}
+//console.log("checked",checked)
+//console.log("state",state)c
+       let exa
+if(extraMode === "innovation-agenda" && (show == "FME" || show == "TEE"|| show == "ABE" )){
+    
+       return( "" )
+    }else{
+        return (      
+
+            <div className={`checkbox-filter checkbox-filter--${inputClass}`}>
+                {exa}
+                <div className="checkbox-filter__checkbox">
+                    {checked ? (
+                        <>
+                            <i onClick={handleClick} className="bi bi-check-square-fill" style={{ cursor: "pointer" }}></i>
+                            {/* <input type="checkbox" name={inputClass} checked hidden /> */}
+                        </>
+                    ) : (
+                        <>
+                            <i onClick={handleClick} className="bi bi-square" style={{ cursor: "pointer" }}></i>
+                            {/* <input type="checkbox" name={inputClass} hidden /> */}
+                        </>
+                    )}
+                </div>
+                <div className="checkbox-filter__name">
+                    <h3>{name}</h3>
+                </div>
             </div>
-            <div className="checkbox-filter__name">
-                <h3>{name}</h3>
-            </div>
-        </div>
-    );
+        );
+    }
+    
+
+   
 };
 export default CheckBoxFilter;

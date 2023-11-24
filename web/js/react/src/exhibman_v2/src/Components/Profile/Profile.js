@@ -255,19 +255,19 @@ const exhibitor = useSelector(state=>state.exhibitor)
 const options = useSelector(state=>state.options)
 const profileId= useSelector(state=>state.profileId)
 
-    const { show, ids, mode, debug } = options;
+    const { show, ids, mode, debug,postshow } = options;
     const { pagetitle, content, Company_Bio_Enhanced__c, logo, Expo__c, Exhibitor_Assets__r, id, Exhibitor_listing_type__c } = exhibitor;
 
     const enhanced = Exhibitor_listing_type__c != "Standard";
     const cats = exhibitor["exhibitor-cat"];
-
+    const expoID=useSelector(state=>state.queries.expo[0])
     useEffect(() => {
      
         if (Object.keys(exhibitor).length > 0 && id === profileId) {
             dispatch(setLoading(false));
         } else {
             const siteURL = getSiteFromId(ids instanceof Array ? ids[0] : ids);
-            dispatch(fetchExhib(siteURL, profileId)).then(response => {
+            dispatch(fetchExhib(siteURL, profileId,expoID)).then(response => {
                 dispatch(setLoading(false));
             });
         }
@@ -422,7 +422,7 @@ const profileId= useSelector(state=>state.profileId)
             <section className={`exhibmanV2 exhibmanV2--${show} exhibman-profile exhibman-profile--${Exhibitor_listing_type__c} row`}>
                 <div className="col-12 col-md-9 order-2 order-md-1 profile">
                     {window.innerWidth > 992 ? (
-                        <Link className="router-link" to={getExhibListPath(options.debug, options.local)} onClick={async () => await handleListSwitch()}>
+                        <Link className="router-link" to={getExhibListPath(options.debug, options.local,options.postshow)} onClick={async () => await handleListSwitch()}>
                             <Cta size="reg" curved={false} bonusClass={`profile-back-to-list left`} key={`Desk Back to Exhibitor List`} color="black">
                                 Back to Exhibitor List
                             </Cta>

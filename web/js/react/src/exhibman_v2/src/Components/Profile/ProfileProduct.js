@@ -119,7 +119,7 @@ function ProfileProduct(props) {
 	const dispatch=useDispatch()
 	const { Id: assetId, Thumbnail_Link__c, Title__c, Intro__c, Asset_Type__c } = asset;
 	const { id: exhibId } = exhibitor;
-	const { debug, local, ids } = options;
+	const { debug, local, ids,postshow } = options;
 
 	const handleListSwitch = () => {
 		dispatch(setLoading(true));
@@ -149,7 +149,7 @@ function ProfileProduct(props) {
 				<h5>
 					<Link
 						className="router-link"
-						to={getProductPath(debug, local, [exhibId, assetId])}
+						to={getProductPath(debug, local,[exhibId, assetId],postshow)}
 						onClick={() => handleProductSwitch(exhibId, assetId)}>
 						{Title__c}
 					</Link>
@@ -159,7 +159,7 @@ function ProfileProduct(props) {
 					{"  "}
 					<Link
 						className=""
-						to={getProductPath(debug, local, [exhibId, assetId])}
+						to={getProductPath(debug, local, [exhibId, assetId],postshow)}
 						onClick={() => handleProductSwitch(exhibId, assetId)}>
 						Read more...
 					</Link>

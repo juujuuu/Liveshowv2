@@ -65,7 +65,7 @@ export default function fireModal(payload = false, role = false, size = "md") {
         case "contact-exhibitor": 
             //payload [0] = exhibitor data, payload [1] campaign id
             const { pagetitle, id, Expo__c } = payload[0];
-            console.log(payload);
+           // console.log(payload);
             modalBody = `<div id="od-modal" class="container">   <div class="row"> <div class="col-12">  <p class="mb-1" style="padding: 8px">   Please complete the below form giving as much detail as you can to your request. ${getShowNameFromId(
                 Expo__c
             )} will relay this on to the exhibitor on your behalf.  </p>  <p class="mb-1" style="color: red; padding: 8px">   The purpose of this form is to request further information on the exhibitor’s goods, capabilities or services. Messages will be reviewed by ${getShowNameFromId(

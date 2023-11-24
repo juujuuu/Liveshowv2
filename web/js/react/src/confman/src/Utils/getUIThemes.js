@@ -43,34 +43,37 @@ const getUIThemes = (show, day, track = [], extraMode) => {
             }
         case "FME":
         case "ABE":
+        case "TEE":
+         
             if (extraMode === "innovation-agenda") {
                 return null;
             } else {
+                
                 switch (day) {
                     case 1:
-                        theme = [" Industry Megatrends and Environmental Sustainability", " Material Development and Selection"];
+                        theme = ["Materials & Supply Chain Collaboration", "Automotive & Aerospace"];
                         break;
                     case 2:
-                        theme = [" Material Properties and Application Development", " Regulation and Additives"];
+                        theme = ["Sustainability", "Electronics"];
                         break;
                     case 3:
-                        theme = [" Logistics and Manufacturing Efficiency", "Logistics and Manufacturing Efficacy"];
+                        theme = ["Product Development & Manufacturing", "Thermal Management & Adhesives"];
                         break;
                 }
                 return (
                     <div>
                         <p style={{ fontSize: "16px" }}>
-                            <strong style={{ color: "#934694" }}>Main Stage Theme: </strong>
+                            <strong style={{ color: "#934694" }}>Stage 1 Theme: </strong>
                             <span>{theme[0]}</span>
                         </p>
-                        {day !== 3 ? (
+                        {/* {day !== 3 ? ( */}
                             <p style={{ fontSize: "16px" }}>
-                                <strong style={{ color: "#6fc5cb" }}>360 Stage Theme: </strong>
+                                <strong style={{ color: "#6fc5cb" }}>Stage 2 Theme: </strong>
                                 <span>{theme[1]}</span>
                             </p>
-                        ) : (
-                            <p>{""}</p>
-                        )}
+                        {/* ) : ( */}
+                            {/* <p>{""}</p>
+                        )} */}
                     </div>
                 );
             }
@@ -78,23 +81,26 @@ const getUIThemes = (show, day, track = [], extraMode) => {
             switch (day) {
                 case 1:
                     theme = [
-                        "Securing and Strengthening European Space Prosperity",
-                        "Getting to LEO, and Beyond",
-                        "Making Maritime and Aviation Connectivity More Accessible",
+                        "Europe’s Sovereignty in Space",
+                        "Scaling up Smallsats",
+                        "Secure and Autonomous SATCOM",
+                        "Products and Services Presentations",
                     ];
                     break;
                 case 2:
                     theme = [
-                        "Exploring Developments of the Final Frontier",
-                        "Earth Observation: Shaping the New Paradigm for Space and Earth",
-                        "Combining Terrestrial and Non-Terrestrial Network Capabilities to Advance Mobility Connectivity",
+                        "Space Sustainability",
+                        "Space for Earth",
+                        "Ground Segments and Mega Trends",
+                        "Products and Services Presentations"
                     ];
                     break;
                 case 3:
                     theme = [
-                        "Developing a Circular Economy in Space",
-                        "Bolstering Smallsat Manufacturing Capabilities",
-                        "Securing Data Assets for Future Mobility",
+                        "Software, Digitisation and Security",
+                        "Security and Software Innovation",
+                        "Security and Software Innovation",
+                        "Products and Services Presentations"
                     ];
                     break;
             }
@@ -103,21 +109,28 @@ const getUIThemes = (show, day, track = [], extraMode) => {
                     {!track.includes(1) ? (
                         <p style={{ fontSize: "16px" }}>
                             <strong>
-                                <span style={{ color: "#146259" }}>Industry Conference: </span> - {theme[0]}
+                                <span style={{ color: "#146259" }}>Industry Conference: </span>  {theme[0]}
                             </strong>
                         </p>
                     ) : null}
                     {!track.includes(2) ? (
                         <p style={{ fontSize: "16px" }}>
                             <strong>
-                                <span style={{ color: "#41b9eb" }}>Smallsats Conference: </span> - {theme[1]}
+                                <span style={{ color: "#41b9eb" }}>Smallsats Conference: </span>  {theme[1]}
                             </strong>
                         </p>
                     ) : null}
                     {!track.includes(3) ? (
                         <p style={{ fontSize: "16px" }}>
                             <strong>
-                                <span style={{ color: "#426ab3" }}>Mobility Connectivity Conference: </span> - {theme[2]}
+                                <span style={{ color: "#426ab3" }}>Mobility Connectivity Conference: </span>  {theme[2]}
+                            </strong>
+                        </p>
+                    ) : null}
+                        {!track.includes(4) ? (
+                        <p style={{ fontSize: "16px" }}>
+                            <strong>
+                                <span style={{ color: "#f09d00" }}>Exhibitor Technology Forum: </span>  {theme[3]}
                             </strong>
                         </p>
                     ) : null}

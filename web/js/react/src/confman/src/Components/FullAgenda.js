@@ -1368,7 +1368,7 @@ const FullAgenda = props => {
                 const [name, sessionId] = parameters.find(param => param[0] == "session-id"); //destructure param name and value
 
                 try {
-                    console.log(sessions, sessionId.toLowerCase());
+                   // console.log(sessions, sessionId.toLowerCase());
                     const sessionDay = sessions.find(_session => _session.Id.toLowerCase() === sessionId.toLowerCase()).Day__c;
                     dispatch(setDay(sessionDay));
                     setDealtWithInitialParams(true);
@@ -1430,7 +1430,7 @@ const FullAgenda = props => {
         let dayButtons = [];
         for (index = lowestDay; index <= numberOfDays; index++) {
             dayButtons.push(
-                <div className={`col-${colNum}`}>
+                <div key = {index} className={`col-${colNum}`}>
                     <MainNavButton options={options} key={`day-button-${index}`} active={filters.day === index} value={index} handler={setDay}>
                         {/* {daynameoverride == undefined || window.innerWidth < 992
 							? `Day ${index + 1}`
@@ -1621,15 +1621,19 @@ const FullAgenda = props => {
                 }
             case "FME":
             case "ABE":
+            case "TEE":
                 if (extraMode === "innovation-agenda") {
+                    let color
+                    
+                    if(show === "FME"){ color="fme-orange"}else if(show === "ABE"){color="abe-dark-blue"}else{color="tee-blue"}
                     return (
-                        <Cta key="cta main agenda link" curved={false} color={show === "FMX" ? "fmx-blue" : "abx-blue"} link="../conference/conference-agenda">
+                        <Cta key="cta main agenda link" curved={false} color={color} link="../conference/conference-agenda">
                             CONFERENCE AGENDA
                         </Cta>
                     );
                 } else {
                     return (
-                        <Cta key="cta innovation link" curved={false} color="solutions-blue" link="../conference/solutions-innovation-stage">
+                        <Cta key="cta innovation link" curved={false} color="solutions-blue-FME-ABE-TEE" link="../conference/solutions-innovation-stage">
                             SOLUTIONS INNOVATION STAGE
                         </Cta>
                     );
@@ -1638,15 +1642,25 @@ const FullAgenda = props => {
     };
 
     const getAltConferenceString = (show, extraMode) => {
+        let string
         switch (show) {
             case "FMX":
             case "ABX":
-                if (extraMode === "innovation-agenda") {
-                    return "innovation-stage";
+                if (extraMode == "innovation-agenda") {
+                    string="innovation-stage";
+                    
+                    
+                }else{
+                    string="ooo";
+
+                   
+
                 }
-                return false;
+               return string;
+                
             case "FME":
             case "ABE":
+            case "TEE":
                 if (extraMode === "innovation-agenda") {
                     return "innovation-stage";
                 }
@@ -1660,9 +1674,10 @@ const FullAgenda = props => {
      *
      * @returns The tracks section (the bit with the checkboxes).
      */
+    
     const getTracksNav = () => {
         //Very annoying button for extra conference on some in this bit
-        const cols = show === "FMX" || show === "ABX" ? [6, 6] : [9, 3];
+        const cols = show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? [6, 6] : [9, 3];
         //Desktop or mobile?
         if (window.innerWidth > 992) {
             return (
@@ -1692,7 +1707,7 @@ const FullAgenda = props => {
                                 value={false}>
                                 Collapse all
                             </Cta>
-                            {show === "FMX" || show === "ABX" ? getAltConferenceButton(show, extraMode) : null}
+                            {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? getAltConferenceButton(show, extraMode) : null}
                         </div>
                     </div>
                 </div>
@@ -1751,7 +1766,8 @@ const FullAgenda = props => {
         const pipedSessions = runFilters(sessions); //Filter Sessions
         return (
             <section
-                className={`confman conference-agenda conference-agenda--${show} ${!!extraMode ? `conference-agenda--${getAltConferenceString(show)}` : ""}`}>
+                className={`confman conference-agenda conference-agenda--${show} ${!!extraMode ? `conference-agenda--${getAltConferenceString(show,extraMode)}` : ""}`}>
+                   
                 <MainNav desktop={window.innerWidth > 992}>
                     {topNav ? (
                         <div className="main-nav__days">
@@ -1769,7 +1785,7 @@ const FullAgenda = props => {
                         <div className="container">
                             <div className="row">
                                 <div className="col-8">
-                                    {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "BRE"
+                                    {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "BRE" || show === "TEE"
                                         ? getUIThemes(show, filters.day, filters.track, extraMode)
                                         : null}
                                     {getSlides(pipedSessions)}

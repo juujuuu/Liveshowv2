@@ -13,7 +13,8 @@ const fetchConference = (site, conferenceId) => async dispatch => {
     let response = await api.get(`/confman.php?call[]=presentation&call[]=session&confId=${conferenceId}`);
     const { data } = response;
     const { session } = data;
-
+// console.log(response,"data fetch")
+// console.log(data, "data")
     //Dispatch these actions.
     dispatch({ type: "FETCH_CONFERENCE", payload: data });
     dispatch(setMaxDays(session));

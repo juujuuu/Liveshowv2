@@ -19,6 +19,10 @@ const getShowNameFromAcronym = expo => {
             return "Space Tech Expo Europe";
         case "tme":
             return "Thermal Management Expo";
+        case "fmc":
+            return "chinaExhibitorList";
+        case "TEE":
+            return "Thermal Management Expo Europe";
         default:
             return "Acronym not found";
     }
@@ -41,30 +45,38 @@ const getSiteFromAcronym = expo => {
             return "https://www.spacetechexpo-europe.com/";
         case "tme":
             return "https://www.thermalmanagementexpo.com/";
+        case "fmc":
+            return "https://www.foam-expo-china.com/";
+        case "tee":
+            return "https://www.thermalmanagementexpo-europe.com/";
         default:
             return "Acronym not found";
     }
 };
 const getSiteFromId = expo => {
     expo = expo.replaceAll("'", "");
-    console.log("get site: ", expo);
+   // console.log("get site: ", expo);
     switch (expo) {
-        case "a1x4V00000117tV":
+        case "a1x4V000001mqRx":
             return "https://www.foam-expo.com/";
-        case "a1x4V00000117ta":
+        case "a1x4V000001mqS2":
             return "https://www.adhesivesandbondingexpo.com/";
         case "a1x4V00000117tf":
             return "https://www.foam-expo-europe.com/";
         case "a1x4V00000117tk":
             return "https://www.adhesivesandbondingexpo-europe.com/";
-        case "a1x4V00000118Gz":
+        case "a1x4V000001mqRm":
             return "https://www.ceramicsexpousa.com/";
-        case "a1x4V000000xD1y":
+        case "a1x4V000001mqQP":
             return "https://www.spacetechexpo.com/";
         case "a1x4V000000xD23":
             return "https://www.spacetechexpo-europe.com/";
-        case "a1x4V000001j7Oz":
+        case "a1x4V000001mqRh":
             return "https://www.thermalmanagementexpo.com/";
+        case "chinaExhibitorList":
+            return "https://www.foam-expo-china.com/";
+            case "a1x4V000001j7vk":
+            return "https://www.thermalmanagementexpo-europe.com/";
         default:
             return "ID not found";
     }
@@ -72,45 +84,55 @@ const getSiteFromId = expo => {
 const getShowNameFromId = id => {
     id = id.replaceAll("'", "");
     switch (id) {
-        case "a1x4V00000117tV":
+        case "a1x4V000001mqRx":
             return "Foam Expo North America";
-        case "a1x4V00000117ta":
+        case "a1x4V000001mqS2":
             return "Adhesives & Bonding Expo";
         case "a1x4V00000117tf":
             return "Foam Expo Europe";
         case "a1x4V00000117tk":
             return "Adhesives & Bonding Expo Europe";
-        case "a1x4V00000118Gz":
+        case "a1x4V000001mqRm":
             return "Ceramics Expo";
-        case "a1x4V000000xD1y":
+        case "a1x4V000001mqQP":
             return "Space Tech Expo";
         case "a1x4V000000xD23":
             return "Space Tech Expo Europe";
-        case "a1x4V000001j7Oz":
+        case "a1x4V000001mqRh":
             return "Thermal Management Expo";
+        case "chinaExhibitorList":
+            return "Foam Expo China";
+        case "a1x4V000001j7vk":
+            return "Thermal Management Expo Europe";
         default:
             return "ID not found";
     }
 };
 const getAcronymFromId = id => {
+    ///hereeeee
     id = id.replaceAll("'", "");
     switch (id) {
-        case "a1x4V00000117tV":
+        case "a1x4V000001mqRx":
             return "FMX";
-        case "a1x4V00000117ta":
+        case "a1x4V000001mqS2":
             return "ABX";
         case "a1x4V00000117tf":
             return "FME";
         case "a1x4V00000117tk":
             return "ABE";
-        case "a1x4V00000118Gz":
+        case "a1x4V000001mqRm":
             return "CEX";
-        case "a1x4V000000xD1y":
+        case "a1x4V000001mqQP":
             return "SPC";
         case "a1x4V000000xD23":
             return "BRE";
-        case "a1x4V000001j7Oz":
+        case "a1x4V000001mqRh":
             return "TME";
+        case "chinaExhibitorList":
+            return "FMC";
+        case "a1x4V000001j7vk":
+            return "TEE";
+            
         default:
             return "ID not found";
     }

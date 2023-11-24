@@ -43,7 +43,7 @@ class VideoSanitizer {
                 if (id.length < 2) {
                     //still won't split?  dodgy link
                     this.setState({ valid: false });
-                    console.log(link);
+                    //console.log(link);
                     return null;
                 }
                 if (id.includes("&")) {

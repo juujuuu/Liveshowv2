@@ -3,7 +3,7 @@
  */
 $(function () {
     var url = window.location.href;
-    console.log("current url is " + url);
+    // console.log("current url is " + url);
 
     //For each matched element
     $(".header--desktop .header__sub-menu__list li a").each(function () {

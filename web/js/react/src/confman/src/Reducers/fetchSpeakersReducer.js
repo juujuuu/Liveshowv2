@@ -54,7 +54,7 @@ const fetchSpeakersReducer = (state = [], action) => {
                 }
                 return 0;
             });
-            console.log("Speaker list reducer returning: ", newSpeakers);
+           // console.log("Speaker list reducer returning: ", newSpeakers);
 
             newSpeakers = newSpeakers.filter((speaker, index) => {
                 if (index + 1 < newSpeakers.length) {

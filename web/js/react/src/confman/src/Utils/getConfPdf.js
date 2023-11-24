@@ -10,17 +10,19 @@ const getConfPdfLink = (show, conf = false) => {
     switch (show) {
         case "FMX":
         case "ABX":
-            if (conf === "'a3i4V000001tXtn'") {
+            if (conf === "'a3i4V0000016NNJ'") {
                 return baseString + "Solutions Innovation" + ".pdf";
             } else {
                 return baseString + "FMX ABX" + ".pdf";
             }
         case "FME":
         case "ABE":
+        case "TEE":
+            
             if (conf === "'What ever the sf id of the solutions innovation agenda ends up being'") {
                 return baseString + "Solutions Innovation" + ".pdf";
             } else {
-                return baseString + "FME ABE" + ".pdf";
+                return baseString + "FME ABE TEE" + ".pdf";
             }
         case "OCS":
         case "SAT":

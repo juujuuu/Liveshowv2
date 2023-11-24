@@ -135,6 +135,7 @@ const profileId=useSelector(state=>state.profileId)
 const productId=useSelector(state=>state.productId)
 
 
+
 const dispatch=useDispatch()
     useEffect(() => {
         const { ids } = options;
@@ -166,7 +167,7 @@ const dispatch=useDispatch()
         return <Spinner></Spinner>;
     } else {
         const { pagetitle, id } = exhibitor;
-        const { show, contactcampaign, debug, local } = options;
+        const { show, contactcampaign, debug, local,postshow } = options;
         const product = exhibitor.Exhibitor_Assets__r.find(asset => productId === asset.Id);
         const { Body__c, Link__c, Title__c, Asset_Type__c } = product;
 
@@ -175,7 +176,7 @@ const dispatch=useDispatch()
                 <div className="col-12 col-md-9 order-1 meta-info-col">
                     <div className="product-header">
                         <h2>
-                            <Link className="router-link" to={getProfilePath(debug, local, id)} onClick={() => handleSwitchMode("PROFILE", id)}>
+                            <Link className="router-link" to={getProfilePath(debug, local, id,postshow)} onClick={() => handleSwitchMode("PROFILE", id)}>
                                 {pagetitle}
                             </Link>
                         </h2>

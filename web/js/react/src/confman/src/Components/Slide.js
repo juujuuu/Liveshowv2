@@ -250,7 +250,7 @@
 
 import React, { useState, useRef } from "react";
 import { connect,useSelector } from "react-redux";
-
+// import GetShowLogos from "../Utils/getShowLogos";
 /**
  *
  * @param {Object} props
@@ -264,7 +264,7 @@ const Slide = props => {
     const state=useSelector(state=>state)
     const open=useSelector(state=>state.openSlides)
     // const session=useSelector(state=>state.session)
-    console.log("state",state)
+    //console.log("state",state)
     const {  
         session,
         //  openSlides:open, 
@@ -280,7 +280,7 @@ const Slide = props => {
         // console.log("session",session)
         // console.log("session2",session2)
        
-         console.log("state",state)
+        // console.log("state",state)
         //jquery solution (probably not ideal)
         $(bodyRef.current).collapse("toggle");
         if ($(bodyRef.current).prev().find(".accordion-button").hasClass("collapsed")) {
@@ -427,6 +427,7 @@ const Slide = props => {
                           }
                         : { marginTop: "-150px", height: "150px" }
                 }></div>
+                
             <div className="row">
                 <div className={`col-${windowwidth > 992 ? "2" : "3"} session__flag`}>
                     <h3>{getTime(normalTime)}</h3>
@@ -437,7 +438,10 @@ const Slide = props => {
                             <div className="accordion-header session__title">
                                 <button className={`accordion-button`} type="button">
                                     <div className={Sponsor_URL__c ? "session--sponsored" : ""}>
+                                        
                                         <div className="session__meta">
+                                    
+                                        {/* if (Long_Name__c.search("Adhesive")!== -1){<img src="https://www.adhesivesandbondingexpo-europe.com/assets/resources/shared/images/logos/adhesives-and-management-expo-europe.png" className="session__img img-fluid"/>} */}
                                             <h3 className="session__name">{Long_Name__c}</h3>
                                             {/*<p className="session__time">{this.getTime(session.normalTime)}</p>*/}
                                         </div>
@@ -461,6 +465,8 @@ const Slide = props => {
                                 <button className={`accordion-button ${!open ? "collapsed" : ""}`} type="button">
                                     <div className={Sponsor_URL__c ? "session--sponsored" : ""}>
                                         <div className="session__meta">
+                                        {/* { Long_Name__c.search("Adhesive")  !== -1 ?( <img src="https://www.adhesivesandbondingexpo-europe.com/assets/resources/shared/images/logos/adhesives-and-management-expo-europe.png" className="session__img img-fluid"/>) :( "")} */}
+                                        
                                             <h3 className="session__name">{Long_Name__c}</h3>
                                         </div>
                                         {Sponsor_URL__c ? (
@@ -478,6 +484,8 @@ const Slide = props => {
                             </div>
                             <div ref={bodyRef} className={`accordion-collapse collapse session__body ${open ? "show" : "collapsed"}`}>
                                 <div className="accordion-body">
+                                {/* <GetShowLogos text={Synopsis__c}/> */}
+                                {/* { Synopsis__c.search("PLENARY")  !== -1 ?( <img src="https://www.adhesivesandbondingexpo-europe.com/assets/resources/shared/images/logos/adhesives-and-management-expo-europe.png" className="session__img img-fluid"/>) :( "noooo")} */}
                                     {ondemand && Vimeo_Video_Link__c ? (
                                         <div className="body__video">
                                             <iframe
