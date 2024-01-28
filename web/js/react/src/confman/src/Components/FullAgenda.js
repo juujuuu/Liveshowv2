@@ -1262,6 +1262,7 @@ import CheckBoxFilter from "./CheckBoxFilter";
 
 import getConfPdfLink from "../Utils/getConfPdf";
 import { getSiteFromAcronym } from "../Utils/getSite";
+import { getShowNameFromAcronym } from "../Utils/getSite";
 
 import {
     fetchConference,
@@ -1275,6 +1276,8 @@ import {
     resetFiltersAction,
     setError,
     setLowestDay,
+    setShow,
+    setFirstLoad
 } from "../Actions";
 import getModal from "../Utils/getModal";
 import { getOnDemandCode } from "../Utils/getOnDemand";
@@ -1321,9 +1324,13 @@ const FullAgenda = props => {
         const dealtWithInitialParams=useSelector(state=>state.dealtWithInitialParams)
         const loading= useSelector(state=>state.loading)
         const maxTracks=useSelector(state=>state.maxTracks)
+        const maxShows=useSelector(state=>state.maxShows)
+        const setShowNames=useSelector(state=>state.filters.show)
+        const state=useSelector(state=>state)
+        const firstLoadShows=useSelector(state=>state.filters.firstLoad)
     //     const valueQuery=useSelector(state=>state.filters.query)
     //     // const state=useSelector(state=>state)
-
+    // const [shows, setShows] = useState()
     const {
         conf,
         show,
@@ -1349,9 +1356,14 @@ const FullAgenda = props => {
             //If loading run set conference action.  On complete set loading to false
             dispatch(fetchConference(getSiteFromAcronym(show), conf)).then(response => {
                 dispatch(setLoading(false));
+                //set first time the shows types are loaded and set it to false 
+                // dispatch(setFirstLoad(false));
+               
             });
             dispatch(setDay(0)); //Day 0 is basically 'display all days' here
-
+            // console.log(maxShows,"maxshowwww")
+            // dispatch(setShow(3));
+            
             //Bring up the on demandmodal if we're in ondemand
             if (ondemand) {
                 getModal({ role: "on-demand-modal", odcode: getOnDemandCode(show) });
@@ -1363,7 +1375,9 @@ const FullAgenda = props => {
     useEffect(() => {
         //The code for zapping to a session if the id is a url param.
         if (!dealtWithInitialParams && !loading) {
+            
             //If we can find a session id param.
+            // dispatch(setShow("34"));
             if (parameters.find(param => param[0] == "session-id")) {
                 const [name, sessionId] = parameters.find(param => param[0] == "session-id"); //destructure param name and value
 
@@ -1373,6 +1387,8 @@ const FullAgenda = props => {
                     dispatch(setDay(sessionDay));
                     setDealtWithInitialParams(true);
                     dispatch(setOpenSlides(true));
+                    
+                    
                     setTimeout(() => {
                         const el = document.querySelector(`#${sessionId.toLowerCase()} .session__anchor`);
                         el.scrollIntoView({ behavior: "smooth" });
@@ -1383,6 +1399,7 @@ const FullAgenda = props => {
                 }
             } else if (parameters.find(([name, value]) => name == "track")) {
                 const [name, value] = parameters.find(([name, value]) => name === "track"); //destructure param name and value
+                    
 
                 try {
                     const track = parseInt(value);
@@ -1413,6 +1430,7 @@ const FullAgenda = props => {
             if (show !== "SPC" && show !== "NZB" && show !== "CEX" && show !== "TME") {
                 //Default if there aren't any extra params.  Just set the day to the lowest one in the data
                 dispatch(setDay(lowestDay));
+               
             }
         }
     }, [loading]);
@@ -1449,7 +1467,10 @@ const FullAgenda = props => {
      * @param {Number} numberOfTracks - How many tracks in the conference.
      * @returns An array of checkbox filters
      */
+    // console.log("yes",maxShows)
+   
     const getTrackButtons = numberOfTracks => {
+     
         if (!hideTrackButtons) {
             let i = 0;
             let buttons = [];
@@ -1466,11 +1487,56 @@ const FullAgenda = props => {
                     />
                 );
             }
+         
             return <>{buttons}</>;
         } else {
             return null;
         }
     };
+ /**
+     * Similar to the above.
+     * @param {Number} showName for multy expo .
+     * @returns An array of checkbox filters
+     */
+// console.log(showName,"showName,showName")
+// console.log(state.filters,"filters 2")
+console.log(state.maxShows,"state")
+console.log(state.filters.setInitialShows,"filters.setinitial show")
+console.log(state.filters.show,"filters.show")
+
+// console.log(maxShows, "thisssssssss")
+// dispatch(setShow(maxShows));
+    const getShowButtons = showVariants=> {
+         
+        if (!hideTrackButtons) {
+            let i = 0;
+            let buttons = [];
+          
+            // console.log(showVariants,"numwerof track.........................")
+            for (i = 0; i < showVariants.length; i++) {
+                //  let trackName = sessions.find(session => session.showName== i + 1);
+                let showName =sessions[i].Categories__c;
+                // console.log(sessions[i].showName,"sessions.")
+                // console.log(showVariants,"1")
+                // 
+                buttons.push(
+                    <CheckBoxFilter
+                        name={getShowNameFromAcronym(showVariants[i])}
+                       inputClass={showVariants[i]}
+                       handler={setShow}
+                       value={showVariants[i]}
+                       key={`checkboxfilter ${i + 1}`}
+                     checked={filters.show.includes(showVariants[i])}
+                     
+                    />
+                );
+            }
+            return <>{buttons}</>;
+        } else {
+            return null;
+        }
+    };
+
 
     /**
      *
@@ -1515,6 +1581,7 @@ const FullAgenda = props => {
         const { day } = filters;
         if (day !== 0) {
             return inputSessions.filter(session => day === session.Day__c);
+          
         } else {
             return inputSessions;
         }
@@ -1533,6 +1600,78 @@ const FullAgenda = props => {
             return inputSessions;
         }
     };
+        /**
+     *
+     * @param {Array} inputSessions
+     * @returns inputSessions with sessions with a Track_Number__c matching anything in the track filters array removed.
+     */
+        const filtershows = inputSessions => {
+            const { show: excludeShows } = filters; //Renaming show from filters to excludeShows.
+          
+            if ( excludeShows.length > 0) {
+             
+             console.log(firstLoadShows," coming from agenda")
+                if(firstLoadShows){
+                   
+              
+                //chamgin this to 
+                // return inputSessions.filter(session =>{
+                //    var news=session.Categories__c.split("-")
+                //     for(let i=0;  i<news.length;i++) {
+                //         // console.log(news[i])
+                //         // console.log(excludeShows.includes(news[i]),"excludeShows")
+                //        const  newArr=[...excludeShows]
+                //      return   excludeShows.includes(news[i])
+                //     // return excludeShows[i]==news[i]
+                //     } });
+                //to this
+                  return inputSessions.filter(session =>{
+                    // console.log(excludeShows==session.Categories__c, "result new one")
+                    // console.log(excludeShows, "result new exclude repo")
+                    // console.log(session.Categories__c, "result new session")
+                     return   excludeShows.includes(session.Categories__c)
+                     // return excludeShows[i]==news[i]
+                     } );
+                    }
+                    else{
+
+                          return inputSessions.filter(session =>{
+                   var news=session.Categories__c.split("-")
+                    for(let i=0;  i<news.length;i++) {
+                        // console.log(news[i])
+                        // console.log(excludeShows.includes(news[i]),"excludeShows")
+                       const  newArr=[...excludeShows]
+                     return   excludeShows.includes(news[i])
+                    // return excludeShows[i]==news[i]
+                    } });
+                        console.log(firstLoadShows," set to false")
+                    }
+                  // const neswIn=inputSessions.map(session =>  session.showName.split(" ") )
+
+                // const neswIn1= inputSessions.filter(session => showName.split(" ").forEach(el=> excludeShows.includes(el)));
+
+                // sessionForShowName.showName.split(" ") 
+            // console.log(neswIn, "super test")
+            // return inputSessions.forEach(session => {
+            //     const res= session.showName.split('-')
+            //     console.log(res, "splittate")
+            //  return  res.forEach(element => {
+            //   console.log(  inputSessions.filter(session => excludeShows.includes(element )),",what we get")
+            //     //  console.log(element )
+            //     console.log(  inputSessions.filter(session => excludeShows.includes(element )),",what we get")
+                //   return excludeShows.includes(element.toString())
+            // }
+            //     ); //if excludeTracks array isn't empty, remove sessions matching any track number in the array.
+        //    });
+        
+        } 
+            
+            // else {
+            //     return inputSessions;
+            // }
+            // // alert("hey")
+            // return inputSessions;
+        };
 
     /**
      *
@@ -1599,6 +1738,9 @@ const FullAgenda = props => {
         inputSessions = filterTracks(inputSessions);
         inputSessions = filterQuery(inputSessions);
         inputSessions = filterBreaks(inputSessions);
+        // if (show == "ABE" || show == "FME" || show == "TEE") {
+        // inputSessions= filtershows(inputSessions)
+        // }
         return inputSessions;
     };
 
@@ -1684,6 +1826,14 @@ const FullAgenda = props => {
                 <div className="container">
                     <div className="row">
                         <div className={`col-${cols[0]} track-col`}>{getTrackButtons(maxTracks)}</div>
+                       {/* extra buttons for filtering ABE FME TEE*/} 
+                        {(show == "FME" ||
+                         show == "TEE"|| 
+                         show == "ABE" ) 
+                         ?
+                         <div className={`col-12 track-col`}>{getShowButtons(maxShows)}</div> 
+                         : null}
+                        
                         <div className={`col-${cols[1]} control-col`}>
                             <Cta
                                 key="cta expand"
@@ -1746,9 +1896,16 @@ const FullAgenda = props => {
                     <div className="container-fluid tracks__mob-tracks">
                         <div className="row ">
                             <div className="col-12 track-col">
-                                {show === "FMX" || show === "ABX" ? getAltConferenceButton(show, extraMode) : null}
+                                {show === "FMX" || show === "ABX" || show === "ABE" || show === "FME"|| show === "TEE" ? getAltConferenceButton(show, extraMode) : null}
                                 {getTrackButtons(maxTracks)}{" "}
                             </div>
+                        {/* extra buttons for filtering ABE FME TEE*/} 
+                        {(show == "FME" ||
+                         show == "TEE"|| 
+                         show == "ABE" ) 
+                         ?
+                         <div className={`col-12 track-col`}>{getShowButtons(maxShows)}</div> 
+                         : null}
                         </div>
                     </div>
                 </>

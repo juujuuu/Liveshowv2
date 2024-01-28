@@ -1,0 +1,71 @@
+<!-- 
+ * Simple Captcha System
+ * @package Code Snippets
+ * @link http://rhythmshahriar.com/codes/
+ * @author Rhythm Shahriar <rhy@rhythmshahriar.com>
+ * @link http://rhythmshahriar.com
+ * @copyright Copyright © 2017, Rhythm Shahriar
+-->
+
+<!doctype html>
+<html>
+
+<head>
+ 
+
+    <!-- Latest compiled and minified CSS -->
+ 
+   
+
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="form.js"></script>
+</head>
+
+<body>
+
+
+        <div class="title">
+            <h2>Simple Captcha by <a href="http://rhythmshahriar.com">Rhythm Shahriar</a></h2>
+        </div><!-- ./title -->
+
+        <!-- default form layout -->
+      
+        
+
+            <div class="form-group" id="captcha-form-group">
+                <label for="pwd">Captcha:</label>
+
+                <!-- input captcha -->
+                <div class="captcha-code">
+                    <div class="code">
+                        <div class="dynamic-code"></div>
+                    </div>
+                    <div class="captcha-reload">
+                        <i class="ion-ios-loop-strong"></i>
+                    </div>
+                </div>
+                <div class="captcha-input">
+                    <input type="text" class="form-control border-0" id="captcha-input"  required autocomplete="off"  placeholder="Enter captcha code ...">
+                    <span id="errCaptcha"></span>
+                </div>
+
+            </div>
+
+
+            <button type="submit" class="btn btn-default">Submit</button>
+             <button type="reset" class="btn btn-default">Reset</button>
+        </form>
+
+        <center></center>
+
+
+
+    <!-- advanced captcha script -->
+    <!-- <script src="captcha.js"></script> -->
+
+</body>
+
+</html>

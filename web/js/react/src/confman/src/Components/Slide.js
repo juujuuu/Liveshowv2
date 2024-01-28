@@ -408,7 +408,7 @@ const Slide = props => {
         );
     };
 
-    const { Track_Number__c, Day__c, Type__c, Id, Sponsor_URL__c, normalTime, Long_Name__c, Vimeo_Video_Link__c, Synopsis__c } = session;
+    const { Track_Number__c, Day__c, Type__c, Id, Sponsor_URL__c, normalTime, Long_Name__c, Vimeo_Video_Link__c, Synopsis__c,Categories__c } = session;
     return (
         <div
             className={`body__session accordion-item session--track-${Track_Number__c} session--day-${Day__c} session--type-${Type__c} session--${
@@ -438,9 +438,9 @@ const Slide = props => {
                             <div className="accordion-header session__title">
                                 <button className={`accordion-button`} type="button">
                                     <div className={Sponsor_URL__c ? "session--sponsored" : ""}>
-                                        
+                                    {Categories__c}
                                         <div className="session__meta">
-                                    
+                                   
                                         {/* if (Long_Name__c.search("Adhesive")!== -1){<img src="https://www.adhesivesandbondingexpo-europe.com/assets/resources/shared/images/logos/adhesives-and-management-expo-europe.png" className="session__img img-fluid"/>} */}
                                             <h3 className="session__name">{Long_Name__c}</h3>
                                             {/*<p className="session__time">{this.getTime(session.normalTime)}</p>*/}
@@ -465,6 +465,7 @@ const Slide = props => {
                                 <button className={`accordion-button ${!open ? "collapsed" : ""}`} type="button">
                                     <div className={Sponsor_URL__c ? "session--sponsored" : ""}>
                                         <div className="session__meta">
+                                        {Categories__c}
                                         {/* { Long_Name__c.search("Adhesive")  !== -1 ?( <img src="https://www.adhesivesandbondingexpo-europe.com/assets/resources/shared/images/logos/adhesives-and-management-expo-europe.png" className="session__img img-fluid"/>) :( "")} */}
                                         
                                             <h3 className="session__name">{Long_Name__c}</h3>

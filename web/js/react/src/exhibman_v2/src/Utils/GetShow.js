@@ -69,7 +69,7 @@ const getSiteFromId = expo => {
             return "https://www.ceramicsexpousa.com/";
         case "a1x4V000001mqQP":
             return "https://www.spacetechexpo.com/";
-        case "a1x4V000000xD23":
+        case "a1x4V000001mqS7":
             return "https://www.spacetechexpo-europe.com/";
         case "a1x4V000001mqRh":
             return "https://www.thermalmanagementexpo.com/";
@@ -96,7 +96,7 @@ const getShowNameFromId = id => {
             return "Ceramics Expo";
         case "a1x4V000001mqQP":
             return "Space Tech Expo";
-        case "a1x4V000000xD23":
+        case "a1x4V000001mqS7":
             return "Space Tech Expo Europe";
         case "a1x4V000001mqRh":
             return "Thermal Management Expo";
@@ -124,7 +124,7 @@ const getAcronymFromId = id => {
             return "CEX";
         case "a1x4V000001mqQP":
             return "SPC";
-        case "a1x4V000000xD23":
+        case "a1x4V000001mqS7":
             return "BRE";
         case "a1x4V000001mqRh":
             return "TME";

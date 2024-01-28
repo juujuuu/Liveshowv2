@@ -4,7 +4,7 @@ const setMaxTracks = sessions => {
 		const { Track_Number__c } = session;		
 		maxNumber = Track_Number__c > maxNumber ? Track_Number__c : maxNumber;
 	});
-
+console.log(maxNumber,"maxNumber")
 	return {
 		type: "SET_MAX_TRACKS",
 		payload: maxNumber,

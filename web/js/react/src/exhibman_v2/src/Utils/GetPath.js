@@ -14,6 +14,6 @@ const getProfilePath = (debug = false, local = false, id = false, postshow=false
         ids ? `?boothid=${ids[0]}&assetid=${ids[1]}` : ""
     }`;
 
-export { getExhibListPath, getProfilePath, getProductPath,getLeadRetPath  };
+export {getExhibListPath, getProfilePath, getProductPath,getLeadRetPath};
 
 

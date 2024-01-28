@@ -86,11 +86,11 @@ class PDFMake {
                     var showName = "Foam Expo";
                     break;
                 case "a1x4V00000117tk":
-                    var showName = "Foam Expo Europe";
+                    var showName = "Adhesives Bonding Expo Europe";
                      console.log(showName)
                     break;
                 case "a1x4V00000117tf":
-                    var showName = "Adhesives Bonding Expo Europe";
+                    var showName = "Foam Expo Europe";
                     console.log(showName)
                     break;
                 case "a1x4V000001mqS2":
@@ -108,7 +108,7 @@ class PDFMake {
                 case "a1x4V000001mqQP":
                     var showName = "Space Tech Expo";
                     break;
-                case "a1x4V000000xD23":
+                case "a1x4V000001mqS7":
                     var showName = "Space Tech Expo Europe";
                     break;
                 case "SAT":
@@ -202,7 +202,7 @@ console.log(body,"body array")
 //                 case "a1x4V000001mqQP":
 //                      pdfColour = "#0C3353";
 //                     break;
-//                 case "a1x4V000000xD23":
+//                 case "a1x4V000001mqS7":
 //                      pdfColour = "#0c3353";
 //                     break;
 //                 case "SAT":

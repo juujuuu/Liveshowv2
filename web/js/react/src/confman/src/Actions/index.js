@@ -1,5 +1,6 @@
 import setLetter from "./setLetter";
 import setDay from "./setDay";
+import setShow from "./setShow";
 import setTrack from "./setTrack";
 import setQuery from "./setQuery";
 import fetchConference from "./fetchConference";
@@ -10,9 +11,12 @@ import setOptions from "./setOptions";
 import setLoading from "./setLoading";
 import setMaxDays from "./setMaxDays";
 import setMaxTracks from "./setMaxTracks";
+import setMaxShows from "./setMaxShows";
 import setDealtWithInitialParams from "./setDealtWithInitialParams";
 import resetFiltersAction from "./resetFilters";
 import setLowestDay from "./setLowestDay";
+import setInitialShowsFilters from "./setInitialShowsFilters";
+import setFirstLoad from "./setFistLoad";
 
 export {
     setLetter,
@@ -30,4 +34,8 @@ export {
     setDealtWithInitialParams,
     resetFiltersAction,
     setLowestDay,
+    setShow,
+    setMaxShows,
+    setInitialShowsFilters,
+    setFirstLoad
 };

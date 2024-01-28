@@ -1,0 +1,1241 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Foam Expo Exhibit | North  America 2024 Conference Convention & Exhibition </title>
+   >
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="" />
+    <link rel="icon" type="image/png" href="./assets/resources/fmx/web/images/favicon/favicon.png">
+
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+    <!---------------SCHEMA------------------>
+    <!-- "image": "https://www.foam-expo.com/assets/resources/images/fmx/Logos/FMX-logo.jpg",-->
+    
+    <!-------------END SCHEMA---------------->
+    
+    <!---------------STYLE SHEETS------------>
+    <!--Bootstrap-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta2/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <!--Animations-->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!--Custom-->
+    <link rel="stylesheet" href="https://use.typekit.net/ris2grj.css"> <!--azo sans web-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet"> <!--Montserrat-->
+    <link rel="stylesheet" type="text/css" href="../../../../stylesheets/content_blocks/main.css"" />
+    <link rel="stylesheet" type="text/css" href="../../../../stylesheets/shows/fmx/main.css" />
+    
+    <!-------------END STYLESHEETS----------->
+    <script type="module" src="../../../bundle.js"></script>
+    <!-- <script type="module" src="./form.js"></script> -->
+    <!---------------SCRIPTS------------------->
+   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- <script src="./assets/web/js/bundle.js"></script> -->
+    <!-- <script src="../../../bundle.js"></script> -->
+  
+    <!-- <script src="../.../../../../custom/form.js"></script> -->
+    <!-------------END SCRIPTS----------------->
+    
+    <!-------------TAG MANAGER----------------->
+  
+    
+    <!---------MISC SCRIPTS--------->
+    <!--Cookie Consent-->
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<style>
+.captcha-form-group{
+    display:none;
+    opacity: 0;
+     transition: all 10s ease-in; 
+
+}
+
+</style>
+
+<script>
+    $(document).ready(function (e) {
+        if (Cookies.get("allowOrDeny") == "0") {
+            $("#cookieSelector").prepend(
+                "<button id='1' class='btn btn-lg btn-default'>ON</button><button id='0' class='btn btn-lg btn-primary active'>OFF</button>"
+                );
+        } else {
+            $("#cookieSelector").prepend(
+                "<button id='1' class='btn btn-lg btn-primary active'>ON</button><button id='0' class='btn btn-lg btn-default'>OFF</button>"
+                );
+        }
+
+
+        $("#cookieSelector #1").click(function (e) {
+            dataLayer.push({
+                'event': 'Cookie Setting Change'
+            });
+            Cookies.set('cookieconsent_status', 'dismiss');
+            Cookies.set('allowOrDeny', "1");
+            $("#1").removeClass("btn-default");
+            $("#1").addClass("btn-primary active");
+            $("#0").removeClass("btn-primary active");
+            $("#0").addClass("btn-default");
+            $(".cookieChangeMsg").remove();
+            $("#cookieSelector").after(
+                "<p class='cookieChangeMsg' style='color: green; float: right;'>Your preferences have been updated!</p>"
+                );
+        });
+        $("#cookieSelector #0").click(function (e) {
+            dataLayer.push({
+                'event': 'Cookie Setting Change'
+            });
+            Cookies.removeAll()
+            Cookies.set('cookieconsent_status', 'deny');
+            Cookies.set("allowOrDeny", "0");
+            $("#0").removeClass("btn-default");
+            $("#0").addClass("btn-primary active");
+            $("#1").removeClass("btn-primary active");
+            $("#1").addClass("btn-default");
+            $(".cookieChangeMsg").remove();
+            $("#cookieSelector").after(
+                "<p class='cookieChangeMsg' style='color: green; float: right;'>Your preferences have been updated!</p>"
+                );
+        });
+    });
+</script>
+    <!--Search IQ-->
+    <script type="text/javascript">
+        (function () {
+            window.siqConfig = {
+                engineKey: "2782bdf432c61ba8853ae922f99a07ce"
+            };
+            window.siqConfig.baseUrl = "//pub.searchiq.co/";
+            var script = document.createElement("SCRIPT");
+            script.src = window.siqConfig.baseUrl + '/js/container/siq-container-2.js?cb=' + (Math.floor(Math.random()*999999)) + '&engineKey=' + siqConfig.engineKey;
+            script.id = "siq-container";
+            document.getElementsByTagName("HEAD")[0].appendChild(script);
+        })();
+    </script>
+    <!-------END MISC SCRIPTS------->
+</head>
+<body data-context="FMX" data-site="US">
+    <!-------------GTM ADDITIONAL--------------->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WVJCT2"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-----------END GTM ADDITIONAL------------->
+    <!--For search iq-->    
+    <subtitle style="display: none;">Exhibit</subtitle>
+    <!---------------NAV DESKTOP---------------->
+    <header class="d-none d-lg-block d-xl-block d-xxl-block header--default header--desktop">
+        <!--<a class="header__covid-info" href="plan-your-visit/covid-safety" target="_blank">
+            <img src="./assets/resources/shared/web/images/misc/Covid19-update-button.jpg" alt="Covid-19 Info"/>
+        </a>-->
+        <div class="container">
+            <div class="row header__sub-menu">
+                <div class="col-lg-12 col-xl-12">
+                    <div style="position: relative;">
+                         
+ 
+ 
+
+
+
+
+ <ul class="header__sub-menu__list">
+<!-- <li>
+        <a href="conference/speaker-list" title="Speaker list">Speaker list</a>
+    </li> -->
+<li>
+		<a href="industry-insights" title="Industry insights">Industry insights</a>
+	</li>
+	
+	<!-- <li>
+	    <a href="https://abxfoamexpousa23.mapyourshow.com/8_0/exhview/index.cfm" title="Floor Plan">Floor plan</a>
+	</li> -->
+	
+	<!--<li>
+		<a href="plan-your-visit/event-app" title="Event App">Event App</a>
+	</li>-->
+		<li>
+		<a href="conference/advisory-board" title="Advisory Board ">Advisory board </a>
+	</li>
+
+	<li>
+		<a href="whatson/supporters" title="Supporters">Supporters</a>
+	</li>
+		<li>
+		<a href="whatson/sponsors" title="Sponsors">Sponsors</a>
+	</li>
+	
+<!--     <li>
+    <a href="plan-your-visit/exhibitor-faqs" title="Exhibitor FAQs">Exhibitor FAQs</a>
+</li> -->
+	<li>
+		<a href="whatson/about-us" title="About Us">About us</a>
+	</li>
+<!--     <li>
+    <a href="plan-your-visit/book-a-hotel" title="Book a hotel">Book a hotel</a>
+</li> -->
+	<li>
+		<a href="plan-your-visit/contact-us" title="Contact us">Contact us</a>
+	</li>
+<!--     <li class="d-none d-xl-block d-xxl-block">
+    <div class="header__search">
+        <form id="siq_searchForm">
+            <div>
+                <img src="./assets/resources/shared/web/images/misc/search-icon.jpg" alt="search" />
+                <input style="" type="search" placeholder="Type here to search..." value="" name="s" />
+                <img src="./assets/resources/shared/web/images/misc/x.jpg" alt="search" />
+            </div>
+        </form>
+    </div>
+</li> -->
+</ul> 
+
+
+
+
+
+
+
+
+
+
+                        <div class="header__sub-menu__co-locate">
+               <!--   <div>
+                     <a>
+                         <img class="img-fluid" src="./assets/resources/fmx/web/images/logos/aeo-fmx.png"/>
+                     </a>
+                 </div> --> 
+                            <div>
+                                <a href="https://www.adhesivesandbondingexpo.com/" target="_blank" title="Adhesives & Bonding Expo">
+                                 
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row header__main-menu">
+                <div class="col-lg-3 col-xl-3">
+                    <div class="header__main-logo">
+                        <a href="./home" title="Home" >
+                           
+                        </a>
+                    </div>
+                    <div class="header__locked-logo">
+                        <a href="./home" title="Home" >
+                           
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-xl-9">
+                    <div class="header__info">
+                        <h2 class="header__info--date">JUNE 25 – 27, 2024</h2>
+                        <h2 class="header__info--location">SUBURBAN COLLECTION SHOWPLACE, NOVI, MICHIGAN, USA</h2>
+                    </div>
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <div class="container-fluid">
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                              <ul class="navbar-nav">
+                                <li class="nav-item">
+                                  <a class="nav-link" aria-current="page" href="https://www.foam-expo.com/" title="Home">HOME</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" aria-current="page" href="whatson/" title="WHAT'S ON">WHAT'S ON</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" aria-current="page" href="exhibit/" title="Exhibit">EXHIBIT</a>
+                                </li> 
+                                <li class="nav-item">
+                                  <a class="nav-link" aria-current="page" href="exhibitor-list/" title="Exhibitor List">EXHIBITOR LIST</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" aria-current="page" href="conference" title="Conference">CONFERENCE</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" aria-current="page" href="plan-your-visit" title="Sectors">PLAN YOUR VISIT</a>
+                                </li>
+                                <!--<li class="nav-item">
+                                  <a class="nav-link" aria-current="page" href="https://www.highperformanceplasticsexpo.com/information" title="Information">CONFERENCE</a>
+                                </li>-->
+                                <!--<li class="nav-item  nav-item--reg-link">
+                                  <a class="nav-link" aria-current="page" href="https://registration.gesevent.com/survey/20t8pkwcytqb8/register" title="Register Free" target="_blank">REGISTER FREE</a>
+                                </li>-->
+                                <li class="nav-item  nav-item--reg-link">
+                                  <a class="nav-link" aria-current="page" href="fmx24-register-your-interest" title="Register your interest">REGISTER YOUR INTEREST</a>
+                                </li>
+                              </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="header--desktop__filler" style="display:none;"></div>
+    <!-------------END NAV DESKTOP-------------->
+    
+    <!----------------NAV MOBILE---------------->
+    <header class="d-md-block d-sm-block d-xs-block d-lg-none d-xl-none d-xxl-none header--mob">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+              <div class="container-fluid">
+                <div class="navbar-brand" href="#">
+                    <!--<a href="https://twitter.com/CeramicsExpo" target="_blank"><i class="bi-twitter"></i></a>-->
+                    <a href="https://www.linkedin.com/company/foam-expo/" target="_blank"><i class="bi-linkedin"></i></a>
+                    <a href="https://www.facebook.com/foamexpo/" target="_blank"><i class="bi-facebook"></i></a>
+                    <a href="https://www.youtube.com/channel/UC1C21aCu2BqpMaABdIy3j6w" target="_blank"><i class="bi-youtube"></i></a>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              </div>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                          <a class="nav-link" href="https://www.foam-expo.com/">HOME</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="whatson/">WHAT'S ON</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="exhibit/">EXHIBIT</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="exhibitor-list/">EXHIBITOR LIST</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="conference">CONFERENCE</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="plan-your-visit">PLAN YOUR VISIT</a>
+                        </li>
+                        <li class="nav-item nav-item--reg--link">
+                          <a class="nav-link" href="fmx24-register-your-interest">REGISTER YOUR INTEREST</a>
+                        </li>
+                         
+ 
+ 
+
+
+
+
+ 
+<li class="nav-item dropdown nav-item--secondary-menu">
+	<ul class="dropdown-menu show" aria-labelledby="navbarDropdown">
+	
+<!--     <li>
+    <a class="dropdown-item" href="conference/speaker-list" title="Speaker list">Speaker list</a>
+</li> -->
+	<li>
+		<a class="dropdown-item" href="industry-insights" title="Industry insights">Industry insights</a>
+	</li>
+	
+<!--     <li>
+    <a class="dropdown-item" href="https://abxfoamexpousa23.mapyourshow.com/8_0/exhview/index.cfm" title="Floor Plan">Floor plan</a>
+</li> -->
+	
+	<!--<li>
+		<a href="plan-your-visit/event-app" title="Event App">Event App</a>
+	</li>-->
+	
+			<li>
+		<a  class="dropdown-item"  href="conference/advisory-board" title="Advisory Board ">Advisory board </a>
+	</li>
+
+
+	<li>
+		<a class="dropdown-item" href="whatson/supporters" title="Supporters">Supporters</a>
+	</li>
+		<li>
+		<a class="dropdown-item" href="whatson/sponsors" title="Sponsors">Sponsors</a>
+	</li>
+	
+<!--     <li>
+    <a href="plan-your-visit/exhibitor-faqs" title="Exhibitor FAQs">Exhibitor FAQs</a>
+</li> -->
+	<li>
+		<a class="dropdown-item" href="whatson/about-us" title="About Us">About us</a>
+	</li>
+	<!-- <li>
+	    <a class="dropdown-item" href="plan-your-visit/book-a-hotel" title="Book a hotel">Book a hotel</a>
+	</li> -->
+	<li>
+		<a class="dropdown-item" href="plan-your-visit/contact-us" title="Contact us">Contact us</a>
+	</li>
+	
+	</ul>
+</li>
+ 
+
+
+
+
+
+
+
+
+
+
+                        <!--<li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                          </a>
+                          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                          </ul>
+                        </li>-->
+                  </ul>
+                </div>
+            </nav>
+            <div class="header__details">
+                <div class="header__main-logo">
+                    <a href="https://www.foam-expo.com/" title="Home">
+                        
+                    </a>
+                </div>
+                <div class="header__info">
+                    <h2 class="header__info--location">SUBURBAN COLLECTION SHOWPLACE, NOVI, MICHIGAN, USA</h2>
+                    <h2 class="header__info--date">JUNE 25 – 27, 2024</h2>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-------------END NAV MOBILE--------------->
+    
+    <!--animations initialiser-->
+    <script>
+        AOS.init({offset: 200});
+    </script>
+    
+<main>
+    <section ; height: 201px;" class="layout-full layout--image      layout--colour-none " >
+    <div id="" style="position: absolute; top: -200px;"></div>
+    
+        <div class="container">
+            <div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <h1 style="text-align: center;"><span style="color: #ffffff;">EXHIBIT</span></h1>
+</div>
+        </div>
+    
+</section>
+
+<section style=" " class="layout-full layout--image       " >
+    <div id="" style="position: absolute; top: -200px;"></div>
+    
+        <div class="container">
+            <div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <h2 style="text-align: center;"><span style="color: #347587;">Join us and take advantage of being able to...</span></h2>
+</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p style="text-align: center;"><strong>Present your products</strong> to 5,000+ technical foam buyers to <strong>generate new business</strong> opportunities.</p>
+<p style="text-align: center;"><strong>Expose your brand</strong> to experts across the entire supply chain and be the first choice for <strong>supplier shortlisting</strong>.</p>
+<p style="text-align: center;">Engage your <strong>target market</strong>, build your <strong>pipeline </strong>and find <strong>qualified leads</strong> in an environment which actively boosts industry trade.</p>
+<p style="text-align: center;"><strong>Fast-track your sales cycle</strong> by illustrating the clear benefits of your products and services <strong>face-to-face</strong>.</p>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<button class="curved-cta curved-cta--form-modal curved-cta--cex-red  center curved-cta--reg vertical-margin--0" ><a class="curved-cta__link" href="exhibitor-enquiry">Exhibition inquiry</a></button>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<hr style="height: 1px; opacity: 1; color: #D3D3D3;" class="vertical-margin--0" />
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p style="text-align: center;"><span style="color: #2c4c51;"><em>"We&rsquo;ve had a wonderful experience this year, the best experience we have had in the 6 years we have been doing the show and it&rsquo;s been busy at our booth. It&rsquo;s like a family reunion. We have met a lot of new customers and potential customers which have opened up new opportunities in each one of our divisions. We will be back next year.</em><em>"</em></span></p>
+<p style="text-align: center;">Joe Mihelich, Sales Manager, <strong>JSP</strong></p>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+        </div>
+    
+</section>
+
+<section style=" " class="layout-full layout--image   layout--colour   layout--colour-fmx-light-blue " >
+    <div id="" style="position: absolute; top: -200px;"></div>
+    
+        <div class="container">
+            <div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p><a href="floor-plan" target="_blank" rel="noopener"></a></p>
+</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p style="text-align: center;"><span style="color: #2c4c51;"><em>"Foam Expo is important to the industry to get everyone together, exchange information and see how the industry is doing. I would recommend exhibiting, we have been here since the first show, and we have signed up for next year so I can highly recommend it.</em><em>"</em></span></p>
+<p style="text-align: center;">Uwe Scharfy, CEO, <strong>Baumer</strong></p>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+        </div>
+    
+</section>
+
+<section  class="layout-full layout--image      layout--colour-none " >
+    <div id="" style="position: absolute; top: -200px;"></div>
+    
+        <div class="container">
+            <div class="spacer vertical-margin--0 ">spacer</div>
+
+<section class="layout-side-right layout--hide-mob">
+    <div id="" style="position: absolute; top: -200px;"></div>
+    <!--If nested don't bother with the container-->
+    <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8">
+                <div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <h2><span style="color: #ffffff;">&nbsp;Exhibition inquiry</span></h2>
+</div>
+
+<div style="width:50%; display:inline;" class="lead-capture lead-capture--white-font lead-capture--align-center  ">
+    <!--Link to Sales force.-->
+    <form class="EXHIBITION-ENQUIRY"  name="sfform" method="POST" id="one" data-url="">
+        <!--The campaign ID for the form-->
+        <input id="Campaign_ID" name="Campaign_ID" value="7014V000002YoLSQA0" type="hidden">
+        <!--Form fields-->
+        <div class="form-group">
+            <div class="inputWrapper mb-3">
+                <input id="first_name" type="text" name="first_name" value placeholder="First Name" title="First Name" required class="required form-control" />
+            </div>
+            <div class="inputWrapper mb-3">
+                <input id="last_name" type="text" name="last_name" value placeholder="Last Name" title="Last Name" required class="required form-control" />
+            </div>
+            <div class="inputWrapper mb-3">
+                <input id="email"  type="email" name="email" value placeholder="Email" title="Email" required class="required form-control"/>
+            </div>
+            <div class="inputWrapper mb-3">
+                <input id="company" type="text"  name="company" value placeholder="Company" required title="Company" class="required form-control"/>
+            </div>
+            <div class="inputWrapper mb-3">
+                <input id="title" type="text" name="title" value placeholder="Job Title" required title="Job Title" class="required form-control" />
+            </div>
+            <div class="inputWrapper mb-3">
+                <input id="phone" type="phone" name="phone" value placeholder="Phone Number" title="Phone number" class="form-control" />
+            </div>
+            
+                <div class="inputWrapper mb-3">
+                    <textarea id="Inquiry_Notes__c" type="text" name="Inquiry_Notes__c" value placeholder="Details of Inquiry" title="Details of inquiry" required class="required form-control"></textarea>
+                </div>
+            
+            <input type="hidden" id="00N3A00000Crbmu" class="GACLIENTID" name="00N3A00000Crbmu" value="clientID">
+            <input type="hidden" id="00N3A00000Crbmz" class="GAUSERID" name="00N3A00000Crbmz" value="userID">
+            <input type="hidden" id="00N3A00000Crbn4" class="GATRACKID" name="00N3A00000Crbn4" value="trackingID">
+            <input type="hidden" id="00N3A00000Crbn4" class="00N4V00000DOflx" name="00N4V00000DOflx" value="https://www.foam-expo.com/exhibit/">
+        </div>
+        <input type=hidden name="00N30000004mdGe" id="00N30000004mdGe" value="Foam Expo"/>
+    
+
+        <div class="form-group captcha-form-group" id="">
+            
+
+            <!-- input captcha -->
+            <div class="captcha-code my-2">
+                <div class="code">
+                    <div class="d-inline dynamic-code bg-secondary d-inline px-3 py-1 text-white rounded" style="letter-spacing:6px; font-size: 20px; font-family:Shadows Into Light, cursive;"></div>
+                   
+                </div>
+                <label class="py-2 text-secondary" " for="pwd">Type  the charatchers above:</label>
+                <div class="captcha-reload">
+               
+                    <i class="ion-ios-loop-strong"></i>
+                </div>
+                <div id="errCaptcha" class="d-inline mt-3"></div>
+            </div>
+            <div class="captcha-input ">
+                <input type="text" class="form-control" id="captcha-input"  required autocomplete="off"  placeholder="Enter captcha code ...">
+                
+            </div>
+
+        </div>
+
+
+        
+        <button type="submit" name="submit" class="curved-cta curved-cta--micro curved-cta--cex-red my-3"><a class="curved-cta__link">Submit</a></button>
+    
+       
+    </form>
+    <p class="lead-capture__disclaimer" style="font-size: 12px;"><i>View our <a style="font-weight: bold;" href="site/privacy-policy" target="_blank">privacy policy</a> to understand how we collect, protect and manage your personal information</i></p>
+</div>
+<div style="width:50%; display:inline;" class="lead-capture lead-capture--white-font lead-capture--align-center  ">
+    <!--Link to Sales force.-->
+    <form class="EXHIBITION-ENQUIRY"  name="sfform" method="POST" data-url="" id="two">
+        <!--The campaign ID for the form-->
+        <input id="Campaign_ID" name="Campaign_ID" value="7014V000002YoLSQA0" type="hidden">
+        <!--Form fields-->
+        <div class="form-group">
+            <div class="inputWrapper mb-3">
+                <input id="first_name" type="text" name="first_name" value placeholder="First Name" title="First Name" required class="required form-control" />
+            </div>
+            <div class="inputWrapper mb-3">
+                <input id="last_name" type="text" name="last_name" value placeholder="Last Name" title="Last Name" required class="required form-control" />
+            </div>
+            <div class="inputWrapper mb-3">
+                <input id="email"  type="email" name="email" value placeholder="Email" title="Email" required class="required form-control"/>
+            </div>
+            <div class="inputWrapper mb-3">
+                <input id="company" type="text"  name="company" value placeholder="Company" required title="Company" class="required form-control"/>
+            </div>
+            <div class="inputWrapper mb-3">
+                <input id="title" type="text" name="title" value placeholder="Job Title" required title="Job Title" class="required form-control" />
+            </div>
+            <div class="inputWrapper mb-3">
+                <input id="phone" type="phone" name="phone" value placeholder="Phone Number" title="Phone number" class="form-control" />
+            </div>
+            
+                <div class="inputWrapper mb-3">
+                    <textarea id="Inquiry_Notes__c" type="text" name="Inquiry_Notes__c" value placeholder="Details of Inquiry" title="Details of inquiry" required class="required form-control"></textarea>
+                </div>
+            
+            <input type="hidden" id="00N3A00000Crbmu" class="GACLIENTID" name="00N3A00000Crbmu" value="clientID">
+            <input type="hidden" id="00N3A00000Crbmz" class="GAUSERID" name="00N3A00000Crbmz" value="userID">
+            <input type="hidden" id="00N3A00000Crbn4" class="GATRACKID" name="00N3A00000Crbn4" value="trackingID">
+            <input type="hidden" id="00N3A00000Crbn4" class="00N4V00000DOflx" name="00N4V00000DOflx" value="https://www.foam-expo.com/exhibit/">
+        </div>
+        <input type=hidden name="00N30000004mdGe" id="00N30000004mdGe" value="Foam Expo"/>
+    
+
+        <div class="form-group captcha-form-group" id="">
+            
+
+            <!-- input captcha -->
+            <div class="captcha-code my-2">
+                <div class="code">
+                    <div class="d-inline dynamic-code bg-secondary d-inline px-3 py-1 text-white rounded" style="letter-spacing:6px; font-size: 20px; font-family:Shadows Into Light, cursive;"></div>
+                   
+                </div>
+                <label class="py-2 text-secondary" " for="pwd">Type  the charatchers above:</label>
+                <div class="captcha-reload">
+               
+                    <i class="ion-ios-loop-strong"></i>
+                </div>
+                <div id="errCaptcha" class="d-inline mt-3"></div>
+            </div>
+            <div class="captcha-input ">
+                <input type="text" class="form-control" id="captcha-input"  required autocomplete="off"  placeholder="Enter captcha code ...">
+                
+            </div>
+
+        </div>
+
+
+        
+        <button type="submit" name="submit" class="curved-cta curved-cta--micro curved-cta--cex-red my-3"><a class="curved-cta__link">Submit</a></button>
+    
+       
+    </form>
+    <p class="lead-capture__disclaimer" style="font-size: 12px;"><i>View our <a style="font-weight: bold;" href="site/privacy-policy" target="_blank">privacy policy</a> to understand how we collect, protect and manage your personal information</i></p>
+</div>
+
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4">
+                <div class="spacer vertical-margin--20 ">spacer</div>
+
+<div class="image image--form-modal vertical-margin--5" >
+    <a href="" title="">
+
+        </a>
+</div>
+            </div>
+        </div>
+</section>
+
+<section style=" " class="layout-full layout--image layout--hide-desk     layout--colour-none " >
+    <div id="" style="position: absolute; top: -200px;"></div>
+    <div class="image image--form-modal vertical-margin--5" >
+    <a href="" title="">
+           
+        </a>
+</div>
+</section>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+        </div>
+    
+</section>
+
+<section style=" " class="layout-full layout--image      layout--colour-none " >
+    <div id="" style="position: absolute; top: -200px;"></div>
+    
+        <div class="container">
+            <div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <h2 style="text-align: center;"><span style="color: #347587;">Don't get left behind, join other industry leaders</span></h2>
+</div>
+
+<div class="image vertical-margin--5 image--center" >
+    <a href="https://www.foam-expo.com/exhibitor-list/" target="_self" title="">
+            <img class="img-fluid" src="assets/resources/fmx/images/onpage/fmx23-exhibitor-logos-(1).gif" alt="">
+        </a>
+</div>
+
+<button class="curved-cta curved-cta--fmx-blue  center curved-cta--reg vertical-margin--0" ><a class="curved-cta__link" href="https://www.foam-expo.com/exhibitor-list/" target="_self">View exhibitor list</a></button>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p style="text-align: center;"><span style="color: #2c4c51;"><em>"We find the quality of visitors to be excellent as they are decision-makers and people who are looking for new technologies and they know they're going to find something new here. Foam Expo is always on our calendar as a 'for sure' thing that we're going to be doing."</em></span></p>
+<p style="text-align: center;">Rick Seely, Executive Vice President Sales &amp; Customer Relations, <strong>Edge-Sweets Company&nbsp;</strong></p>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+        </div>
+    
+</section>
+
+<section   class="layout-full layout--image layout--hide-mob     layout--colour-none " >
+    <div id="" style="position: absolute; top: -200px;"></div>
+    
+        <div class="container">
+            <div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <h2 style="text-align: center;"><span style="color: #ffffff;">Learn more from our PDFs</span></h2>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<section class="layout-tri-col   layout--colour-none">
+    <div id="PSR" style="position: absolute; top: -200px;"></div>
+    <!--If nested don't bother with the container-->
+    <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-4 layout--colour-none">
+                <div class="image image--form-modal vertical-margin--5" >
+    <a href="https://www.foam-expo.com/post-show-report-download" title="">
+            
+        </a>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <h3><span style="color: #ffffff;">Post Show Report 2023</span></h3>
+</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p><span style="color: #ffffff;">Discover the complete show analysis inside </span><span style="color: #ffffff;">and see why you should be involved.</span></p>
+<p><span style="color: #ffffff;">&nbsp; &nbsp;&bull;&nbsp; Key show statistics<br />&nbsp; &nbsp;&bull;&nbsp; FULL visitor profile<br />&nbsp; &nbsp;&bull;&nbsp; Conference breakdown<br />&nbsp; &nbsp;&bull;&nbsp; Important dates<br />&nbsp; &nbsp;&bull;&nbsp; Competitor opinions<br /><br /></span></p>
+</div>
+
+<button class="curved-cta curved-cta--form-modal curved-cta--fmx-blue  left curved-cta--reg vertical-margin--0" ><a class="curved-cta__link" href="">Download</a></button>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 layout--colour-none">
+                <div class="image image--form-modal vertical-margin--5" >
+    <a href="" title="">
+           
+        </a>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <h3><span style="color: #ffffff;">Sponsorship opportunities</span></h3>
+</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p><span style="color: #ffffff;">Align your brand with our well-established, reputable Expo through sponsorship.</span></p>
+<p><span style="color: #ffffff;">&nbsp; &nbsp;&bull;&nbsp; Standard packages<br />&nbsp; &nbsp;&bull; &nbsp;Brand awareness<br />&nbsp; &nbsp;&bull; &nbsp;Thought leadership<br />&nbsp; &nbsp;&bull;&nbsp; Digital and social bundles<br />&nbsp; &nbsp;&bull; &nbsp;Networking<br /><br /></span></p>
+</div>
+
+<button class="curved-cta curved-cta--form-modal curved-cta--fmx-blue  left curved-cta--reg vertical-margin--0" ><a class="curved-cta__link" href="#">Download</a></button>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 layout--colour-none">
+                <div class="image image--form-modal vertical-margin--5" >
+    <a href="" title="">
+            
+        </a>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <h3><span style="color: #ffffff;">Solutions Innovation Stage</span></h3>
+</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p><span style="color: #ffffff;">Do you have something game-changing to present? Then this is the package for you.</span></p>
+<p><span style="color: #ffffff;">&nbsp; &nbsp;&bull;&nbsp; Full benefits listed<br />&nbsp; &nbsp;&bull; &nbsp;Specific package details<br />&nbsp; &nbsp;&bull; &nbsp;Session format<br />&nbsp; &nbsp;&bull; &nbsp;Expected attendees<br />&nbsp; &nbsp;&bull; &nbsp;Advice from us<br /><br /></span></p>
+</div>
+
+<button class="curved-cta curved-cta--form-modal curved-cta--fmx-blue  left curved-cta--reg vertical-margin--0" ><a class="curved-cta__link" href="">Download</a></button>
+            </div>
+        </div>
+</section>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+        </div>
+    
+</section>
+
+<section  class="layout-full layout--image layout--hide-desk     layout--colour-none " >
+    <div id="PSR" style="position: absolute; top: -200px;"></div>
+    
+        <div class="container">
+            <div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <h2 style="text-align: center;"><span style="color: #ffffff;">Learn more from our PDFs</span></h2>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <h3 style="text-align: center;"><span style="color: #ffffff;">Post Show Report 2023</span></h3>
+</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p style="text-align: center;"><span style="color: #ffffff;">Discover the complete show analysis inside </span><span style="color: #ffffff;">and see why you should be involved this year.</span></p>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<div class="image image--form-modal vertical-margin--5" >
+    <a href="https://www.foam-expo.com/post-show-report-download" title="">
+           
+        </a>
+</div>
+
+<div class="spacer vertical-margin--5 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <h3 style="text-align: center;"><span style="color: #ffffff;">Sponsorship opportunities</span></h3>
+</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p style="text-align: center;"><span style="color: #ffffff;">Align your brand with our well-established, reputable Expo through sponsorship.</span></p>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<div class="image image--form-modal vertical-margin--5" >
+    <a href="https://www.foam-expo.com/sponsorship-opportunities" title="">
+         
+        </a>
+</div>
+
+<div class="spacer vertical-margin--5 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <h3 style="text-align: center;"><span style="color: #ffffff;">Solutions Innovation Stage</span></h3>
+</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p style="text-align: center;"><span style="color: #ffffff;">Do you have something game-changing to present? Then this is the package for you.</span></p>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<div class="image image--form-modal vertical-margin--5" >
+    <a href="https://www.foam-expo.com/solutions-innovation-stage" title="">
+            
+        </a>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+        </div>
+    
+</section>
+
+<section style=" " class="layout-full layout--image      layout--colour-none " >
+    <div id="" style="position: absolute; top: -200px;"></div>
+    
+        <div class="container">
+            <div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <h2 style="text-align: center;"><span style="color: #518a94;">Exhibition successes</span></h2>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<section class="layout-tri-col   layout--colour-none">
+    <div id="" style="position: absolute; top: -200px;"></div>
+    <!--If nested don't bother with the container-->
+    <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-4 layout--colour-none">
+                <div class="cb-video vertical-margin--5
+ cb-video--center cb-video--w-100">
+    <iframe src="https://www.youtube.com/embed/haOKaDamEpg" frameborder="0"></iframe>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p style="text-align: center;"><strong>Baumer of America Inc.</strong></p>
+</div>
+
+<ul><li>Chose Foam Expo to launch their new machine </li><li>Sold their first machine on day one </li><li>Learn why Detroit is the perfect business hub </li></ul>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 layout--colour-none">
+                <div class="cb-video vertical-margin--5
+ cb-video--center cb-video--w-100">
+    <iframe src="https://www.youtube.com/embed/TwAWCfAIEXU" frameborder="0"></iframe>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p style="text-align: center;"><strong>Acme-Hardesty Company</strong></p>
+</div>
+
+<ul><li>Packed booth on day one, even at 9:30am </li><li>They scanned 200+ leads on day one alone </li><li>Foam Expo exceeded their expectations </li></ul>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 layout--colour-none">
+                <div class="cb-video vertical-margin--5
+ cb-video--center cb-video--w-100">
+    <iframe src="https://www.youtube.com/embed/FcXvLo5Xu-w " frameborder="0"></iframe>
+</div>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p style="text-align: center;"><strong>Grand Rapids Foam Technologies</strong></p>
+</div>
+
+<ul><li>Exhibited since our very first show </li><li>Why it is particularly great for collaboration </li><li>Find out what industry challenges they faced </li></ul>
+            </div>
+        </div>
+</section>
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+
+<hr style="height: 1px; opacity: 1; color: #D3D3D3;" class="vertical-margin--0" />
+
+<div class="spacer vertical-margin--0 ">spacer</div>
+        </div>
+    
+</section>
+
+<section style=" " class="layout-full layout--image      layout--colour-none " >
+    <div id="" style="position: absolute; top: -200px;"></div>
+    
+        <div class="container">
+            <div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <h2 style="text-align: center;"><span style="color: #518a94;">Contact the team</span></h2>
+</div>
+
+<section class="layout-quad-col  ">
+    <div id="" style="position: absolute; top: -200px;"></div>
+    <!--If nested don't bother with the container-->
+    <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p style="text-align: center;"><span style="color: #333333;"><strong><span style="color: #518a94;"></span></strong></span></p>
+<p style="text-align: center;"><span style="color: #333333;"><strong><span style="color: #518a94;">Benjamin Jordan</span><br />Sales Manager<br /></strong></span><br /><span style="color: #347587; font-size: 10pt;"><a style="color: #347587;" href="/cdn-cgi/l/email-protection#a3c1c6cdc9c2cecacd8dc9ccd1c7c2cde3d0cec2d1d7c6d1d0cbccd4d08dc0ccce" target="_blank" rel="noopener"><span class="__cf_email__" data-cfemail="94f6f1fafef5f9fdfabafefbe6f0f5fad4e7f9f5e6e0f1e6e7fcfbe3e7baf7fbf9">[email&#160;protected]</span></a></span><br /><span style="color: #333333; font-size: 10pt;">+44 (0) 1273 916 316</span></p>
+</div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p style="text-align: center;"><span style="color: #333333;"><strong><span style="color: #518a94;"></span></strong></span></p>
+<p style="text-align: center;"><span style="color: #333333;"><strong><span style="color: #518a94;">Tom Rhodes<br /></span>Portfolio Director<br />Foam &amp; Adhesives</strong></span><br /><span style="color: #347587; font-size: 10pt;"><a style="color: #347587;" href="/cdn-cgi/l/email-protection#02766d6f2c706a6d66677142716f6370766770716a6d75712c616d6f" target="_blank" rel="noopener"><span class="__cf_email__" data-cfemail="aadec5c784d8c2c5cecfd9ead9c7cbd8decfd8d9c2c5ddd984c9c5c7">[email&#160;protected]</span></a></span><br /><span style="color: #333333; font-size: 10pt;">+44 (0) 1273 916 301</span></p>
+</div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p></p>
+<p style="text-align: center;"><span style="color: #333333;"><strong><span style="color: #518a94;">James Mackintosh<br /></span>Exhibition Director<br /><br /></strong><span style="font-size: 10pt;"><a href="/cdn-cgi/l/email-protection#1278737f77613c7f7371797b7c667d617a52617f7360667760617a7d65613c717d7f" target="_blank" rel="noopener"><span style="color: #518a94;"><span class="__cf_email__" data-cfemail="c3a9a2aea6b0edaea2a0a8aaadb7acb0ab83b0aea2b1b7a6b1b0abacb4b0eda0acae">[email&#160;protected]</span></span><strong><br /></strong></a>+44 (0) 1273 916 312</span></span></p>
+</div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <div  class="rich-text text-start vertical-margin--5 layout--colour-none"  >
+    <p style="text-align: center;"><span style="color: #333333;"><strong><span style="color: #518a94;"></span></strong></span></p>
+<p style="text-align: center;"><span style="color: #333333;"><strong><span style="color: #518a94;">Callum Gibson</span><br />Sales Manager<br /></strong></span><br /><span style="color: #347587; font-size: 10pt;"><a style="color: #347587;" href="/cdn-cgi/l/email-protection#6003010c0c150d4e070902130f0e20130d011214051213080f17134e030f0d" target="_blank" rel="noopener"><span class="__cf_email__" data-cfemail="fe9d9f92928b93d099979c8d9190be8d939f8c8a9b8c8d9691898dd09d9193">[email&#160;protected]</span></a></span><br /><span style="color: #333333; font-size: 10pt;">+44 (0) 1273 916 302</span></p>
+</div>
+            </div>
+        </div>
+</section>
+
+<div class="spacer vertical-margin--10 ">spacer</div>
+        </div>
+    
+</section>
+</main>
+<section class="layout-map-footer" style="background-color: black; height:auto;">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12 col-xs-12 col-md-5 layout-map-footer__left d-flex align-items-center">
+				<div class="container">
+					<h2 style="color: #518a94; text-align: left" class="heading vertical-margin--20">Venue Address</h2>
+<div class="rich-text text-start vertical-margin--0">
+	<p>
+		<span style="color: #ffffff">Suburban Collection Showplace,</span></span>
+		<br />
+		<span style="color: #ffffff">46100 Grand River Ave</span>
+		<span style="color: #ffffff">Novi,</span>
+		<span style="color: #ffffff">MI 48374, USA</span>
+		<br />
+		<!--<span style="color: #ffffff">Phone: 216-928-1600</span>-->
+	</p>
+</div>
+
+<h2 style="color: #518a94; text-align: left" class="heading vertical-margin--20">Contact Us</h2>
+
+<div class="rich-text text-start vertical-margin--0">
+	<p>
+		<span style="color: #ffffff">Email: <a style="color: #fff;" href="/cdn-cgi/l/email-protection#b1d8dfd7def1d7ded0dc9cd4c9c1de9fd2dedc"><span class="__cf_email__" data-cfemail="c0a9aea6af80a6afa1adeda5b8b0afeea3afad">[email&#160;protected]</span></a></span>
+		<br />
+		<span style="color: #ffffff">Phone (Europe): +44 1273 916 301</span>
+		<br />
+		<span style="color: #ffffff">Phone (US &amp; Canada): +1 855 436 8683</span>
+	</p>
+</div>
+<h2 style="color: #4d8691; text-align: left; margin-bottom: 10px;" class="heading vertical-margin--20">Follow Us</h2>
+<div style="margin-bottom: 10px">
+    <a style="margin-right: 10px; color: #fff; font-size: 25px;" href="https://www.linkedin.com/company/foam-expo/" target="_blank"><i class="bi-linkedin"></i></a>
+    <a style="margin-right: 10px; color: #fff; font-size: 25px;" href="https://www.facebook.com/foamexpo/" target="_blank"><i class="bi-facebook"></i></a>
+    <a style="margin-right: 10px; color: #fff; font-size: 25px;" href="https://twitter.com/FoamExpo" target="_blank"><i class="bi-twitter"></i></a>
+    <a style="margin-right: 10px; color: #fff; font-size: 25px;" href="https://www.youtube.com/channel/UC1C21aCu2BqpMaABdIy3j6w" target="_blank"><i class="bi-youtube"></i></a>
+</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-xs-12 col-md-7 layout-map-footer__right d-flex align-items-center">
+		
+			</div>
+		</div>
+	</div>
+</section>
+
+<!--------ADDITIONAL SCRIPTS--------->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="../assets/web/js/custom/External/bootstrap5-beta-2.js"></script>
+<!--------ENDADDITIONAL SCRIPTS--------->
+
+<footer>
+    <div class="container">
+        <div class="row footer__sitemap">
+            <!--footerOuterTpl-->
+<!-- footerInnerTpl -->
+<div class="col-md-2 sitemap__column">
+    <div class="sitemap__column__top">
+        <a class="first" href="https://www.foam-expo.com/" title="Home" >Home</a>
+        
+    </div>
+</div>
+
+<!-- footerInnerTpl -->
+<div class="col-md-2 sitemap__column">
+    <div class="sitemap__column__top">
+        <a class="" href="register" title="Register" >Register</a>
+        
+    </div>
+</div>
+
+<!-- footerInnerTpl -->
+<div class="col-md-2 sitemap__column">
+    <div class="sitemap__column__top">
+        <a class="" href="whatson/" title="What's On" >What's On</a>
+        <!--footerSubTpl-->
+<ul class="list-unstyled sitemap__level-2">
+    <!--footerSubInnerTpl-->
+<li  class="first">
+    <a href="whatson/about-us" title="About Us" >About Us</a>
+</li>
+
+</ul>
+
+    </div>
+</div>
+
+<!-- footerInnerTpl -->
+<div class="col-md-2 sitemap__column">
+    <div class="sitemap__column__top">
+        <a class="active" href="exhibit/" title="Exhibit" >Exhibit</a>
+        <!--footerSubTpl-->
+<ul class="list-unstyled sitemap__level-2">
+    <!--footerSubInnerTpl-->
+<li  class="first">
+    <a href="floor-plan" title="Floor Plan" >Floor Plan</a>
+</li>
+
+</ul>
+
+    </div>
+</div>
+
+<!-- footerInnerTpl -->
+<div class="col-md-2 sitemap__column">
+    <div class="sitemap__column__top">
+        <a class="" href="exhibitor-list/" title="Exhibitor List" >Exhibitor List</a>
+        
+    </div>
+</div>
+
+<!-- footerInnerTpl -->
+<div class="col-md-2 sitemap__column">
+    <div class="sitemap__column__top">
+        <a class="" href="conference" title="Conference" >conference</a>
+        <!--footerSubTpl-->
+<ul class="list-unstyled sitemap__level-2">
+    <!--footerSubInnerTpl-->
+<li  class="first">
+    <a href="conference/advisory-board" title="Advisory Board" >Advisory board</a>
+</li>
+
+</ul>
+
+    </div>
+</div>
+
+<!-- footerInnerTpl -->
+<div class="col-md-2 sitemap__column">
+    <div class="sitemap__column__top">
+        <a class="last" href="plan-your-visit" title="Plan your visit" >Plan your visit</a>
+        <!--footerSubTpl-->
+<ul class="list-unstyled sitemap__level-2">
+    <!--footerSubInnerTpl-->
+<li  class="first">
+    <a href="plan-your-visit/exhibitor-faqs" title="Exhibitor FAQs" >Exhibitor FAQs</a>
+</li>
+<!--footerSubInnerTpl-->
+<li >
+    <a href="plan-your-visit/book-a-hotel" title="Book a hotel" >Book a hotel</a>
+</li>
+<!--footerSubInnerTpl-->
+<li  class="last">
+    <a href="plan-your-visit/contact-us" title="Contact us" >Contact us</a>
+</li>
+
+</ul>
+
+    </div>
+</div>
+
+
+        </div>
+        <div class="row footer__all-shows">
+            <div class="all-shows__message">
+    <small>Smarter Shows are proud organizers of: </small>
+</div>
+<div class="col-md-3">
+    <div class="all-shows__show-logo">
+        <a href="https://foam-expo.com" title="Foam Expo" target="_blank">
+            
+        </a>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="all-shows__show-logo">
+        <a href="https://spacetechexpo.com" title="Space Tech Expo" target="_blank">
+            
+        </a>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="all-shows__show-logo">
+        <a href="https://spacetechexpo-europe.com" title="Space Tech Expo Europe" target="_blank">
+           
+        </a>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="all-shows__show-logo">
+        <a href="https://www.foam-expo-europe.com/" title="Foam Expo Europe" target="_blank">
+          
+        </a>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="all-shows__show-logo">
+        <a href="https://www.ceramicsexpousa.com/" title="Ceramics Expo" target="_blank">
+           
+        </a>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="all-shows__show-logo">
+        <a href="http://www.adhesivesandbondingexpo.com/" title="Adhesives & Bonding Expo" target="_blank">
+            
+        </a>
+    </div>
+</div>
+<!--<div class="col-md-3">
+    <div class="all-shows__show-logo">
+        <a href="https://www.netzerobuildsummit.com/" title="Net Zero Build Summit" target="_blank">
+            <img src="./assets/resources/shared/web/images/footer/show_logos/NZB-footer-logo-cutout.png" alt="Net Zero Build Summit"/>
+        </a>
+    </div>
+</div>-->
+<div class="col-md-3">
+    <div class="all-shows__show-logo">
+        <a href="https://www.foam-expo-china.com/" title="Foam Expo China" target="_blank">
+           
+        </a>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="all-shows__show-logo">
+        <a href="https://www.adhesivesandbondingexpo-europe.com/" title="Adhesives & Bonding Expo Europe" target="_blank">
+            
+        </a>
+    </div>
+</div>
+<!--<div class="col-md-3">
+    <div class="all-shows__show-logo">
+        <a href="https://onboardconnectivitysummit.com/" title="Onboard Connectivity Summit" target="_blank">
+            <img src="./assets/resources/shared/web/images/footer/show_logos/onboard-logo-cutout-footer.png" alt="Onboard Connectivity Summit"/>
+        </a>
+    </div>
+</div>
+<div class="col-md-3">
+     <div class="all-shows__show-logo">
+        <a href="https://satelliteconnectivitysummit.com/" title="Satellite Connectivity Summit" target="_blank">
+            <img src="./assets/resources/shared/web/images/footer/show_logos/satellite-logo-cutout-footer.png" alt="Satellite Connectivity Summit"/>
+        </a>
+    </div>
+</div>-->
+<div class="col-md-3 offset-md-3">
+     <div class="all-shows__show-logo">
+        <a href="https://www.thermalmanagementexpo.com/" title="Thermal Management Expo" target="_blank">
+           
+        </a>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="all-shows__show-logo">
+    <a href="https://www.thermalmanagementexpo-europe.com/" title="Thermal Management Expo Europe" target="_blank">
+       
+    </a>
+</div>
+</div>
+
+        </div>
+        <div class="row footer__disclaimers">
+            <div class="col-xs-6 col-sm-6 col-md-3 disclaimers__ss">
+    <a href="https://www.smartershows.com/" title="Smarter Shows" target="_blank">
+       
+    </a>
+</div>
+<div class="col-xs-6 col-sm-6 col-md-3 disclaimers__tarsus">
+    
+</div>
+<div class="col-xs-6 col-sm-6 col-md-3 disclaimers__siso">
+   
+</div>
+<div class="col-xs-6 col-sm-6 col-md-3 disclaimers__aeo">
+    
+</div>
+        </div>
+        <div class="row footer__terms">
+            <div>
+                <a href="./site/privacy-policy" title="Privacy Policy"><small>Privacy policy</small></a>
+                <a href="./site/terms-and-conditions" title="Terms & Conditions"><small>Terms & Conditions</small></a>
+            </div>
+            <div><small>Copyright © Smarter Shows (Tarsus) Ltd 2023. All rights reserved.</small></div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

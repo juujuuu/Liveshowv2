@@ -43,4 +43,6 @@ gulp.task("sass", () => {
 		.pipe(postcss([autoprefixer()]))
 		.pipe(sourcemaps.write("."))
 		.pipe(gulp.dest("./stylesheets"));
+		// inject remotely for testing  and change location based on the app 
+		// .pipe(gulp.dest("../web/js/react/src/exhibman_v2/public"));
 });
