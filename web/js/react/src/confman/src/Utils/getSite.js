@@ -27,8 +27,8 @@ const getSiteFromAcronym = show => {
             return "https://www.netzerobuildsummit.com/";
         case "tme":
             return "https://www.thermalmanagementexpo.com/";
-         case "tee":
-             return "https://www.thermalmanagementexpo-europe.com/";
+        case "tee":
+            return "https://www.thermalmanagementexpo-europe.com/";
         default:
             throw "Acrnym not found";
     }
@@ -49,7 +49,7 @@ const getSiteFromId = conferenceId => {
         case "a3i4V000001pJMf":
         case "a3i4V000001hXhE":
         case "a3i4V0000016NNJ":
-             return "ABX";
+            return "ABX";
         case "a3i4V000001pPTc":
         case "What ever the sf id of the solutions innovation agenda ends up being":
             return "FME";
@@ -76,9 +76,9 @@ const getSiteFromId = conferenceId => {
         case "a3i4V000000bqIw":
         case "What ever the sf id of the solutions innovation agenda ends up being":
             return "ABE";
-            case "a3i4V000000nXh9":
-            case "What ever the sf id of the solutions innovation agenda ends up being":
-        return "TEE";
+        case "a3i4V000000nXh9":
+        case "What ever the sf id of the solutions innovation agenda ends up being":
+            return "TEE";
         default:
             throw "Acrnym not found";
     }
@@ -111,11 +111,33 @@ const getShowNameFromAcronym = acronym => {
             return "Onboard  Connectivity Summit";
         case "sat":
             return "Satellite Connectivity Summit";
-            case "tee":
-        return "Thermal Management Expo Europe ";
+        case "tee":
+            return "Thermal Management Expo Europe ";
         default:
             return "Acronym not found";
     }
 };
+const getShowNameFromAcronymMultyExpoSlide = acronym => {
+    switch (acronym.toLowerCase()) {
+        case "fme":
+            return "Foam";
+        case "abe":
+            return "Adhesives & Bonding";
+        case "tee":
+            return "Thermal Management";
+        case "abe-fme":
+            return "Adhesives & Bonding - Foam";
+        case "fme-tee":
+            return "Foam - Thermal Management";
+        case "abe-tee":
+            return "Adhesives & Bonding - Thermal Management";
+        case "abe-fme-tee":
+            return "Adhesives & Bonding - Foam - Thermal Management";
+            case null:
+                return "Adhesives & Bonding - Foam - Thermal Management";
+        default:
+            return "";
+    }
+};
 
-export { getSiteFromId, getSiteFromAcronym, getShowNameFromAcronym };
+export { getSiteFromId, getSiteFromAcronym, getShowNameFromAcronym, getShowNameFromAcronymMultyExpoSlide };

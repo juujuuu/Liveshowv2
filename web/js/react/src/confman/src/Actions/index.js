@@ -15,7 +15,7 @@ import setMaxShows from "./setMaxShows";
 import setDealtWithInitialParams from "./setDealtWithInitialParams";
 import resetFiltersAction from "./resetFilters";
 import setLowestDay from "./setLowestDay";
-import setInitialShowsFilters from "./setInitialShowsFilters";
+import setInitialShows from "./setInitialShows";
 import setFirstLoad from "./setFistLoad";
 
 export {
@@ -36,6 +36,6 @@ export {
     setLowestDay,
     setShow,
     setMaxShows,
-    setInitialShowsFilters,
+    setInitialShows,
     setFirstLoad
 };

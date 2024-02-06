@@ -40,7 +40,7 @@ import React,{useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setTrack } from "../Actions";
 import { setShow,setFirstLoad } from "../Actions";
-import { setInitialShowsFilters } from "../Actions";
+
 
 /**
  *
@@ -62,10 +62,7 @@ const CheckBoxFilter = ({ name = "Filter Name",
       const state=useSelector(state=>state)
       const{options}=state
       const {show,extraMode}=options
-    //   const {showName}=state.session
-    //   console.log(state)
-    //   console.log(state.session,"sate")
-    //   console.log(options,"Srate")
+  
 const [check, setcheck] = useState(false)
 // console.log(name,"checbox")
     const handleClick = event => {
@@ -81,6 +78,9 @@ const [check, setcheck] = useState(false)
             
         }
       
+        /*  MULTYEXPO OPTION  PART DOWN HERE
+        -THIS SET THE VALUE OF TE SHOW BY THE CLICKED ONE  */ 
+        
         if (setShowSelector != undefined && handler().type=="SET_SHOW") {
             
             // dispatch(setFirstLoad(false));
