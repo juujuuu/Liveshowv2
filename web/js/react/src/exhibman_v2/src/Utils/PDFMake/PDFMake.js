@@ -85,11 +85,11 @@ class PDFMake {
                 case "a1x4V000001mqRx":
                     var showName = "Foam Expo";
                     break;
-                case "a1x4V00000117tk":
+                case "a1x4V000001mqSM":
                     var showName = "Adhesives Bonding Expo Europe";
                      console.log(showName)
                     break;
-                case "a1x4V00000117tf":
+                case "a1x4V000001mqSH":
                     var showName = "Foam Expo Europe";
                     console.log(showName)
                     break;
@@ -99,12 +99,13 @@ class PDFMake {
                 case "a1x4V000001mqRm":
                     var showName = "Ceramics Expo";
                     break;
+                 case "a1x4V000001mqSR":
+                        var showName = "Thermal Management Expo Europe";
+                        break;
                 case "a1x4V000001mqRh":
                     var showName = "Thermal Management Expo";
                     break;
-                    case "a1x4V000001j7vk":
-                    var showName = "Thermal Management Expo Europe";
-                    break;
+                  
                 case "a1x4V000001mqQP":
                     var showName = "Space Tech Expo";
                     break;
@@ -181,10 +182,10 @@ console.log(body,"body array")
 //                 case "a1x4V000001mqRx":
 //                      pdfColour = "#4E8891";
 //                     break;
-//                 case "a1x4V00000117tk":
+//                 case "a1x4V000001mqSM ":
 //                      pdfColour = "#ed6839";
 //                     break;
-//                 case "a1x4V00000117tf":
+//                 case "a1x4V000001mqSH":
 //                      pdfColour = "#ed6839";
 //                     break;
 //                 case "a1x4V000001mqS2":
@@ -196,7 +197,7 @@ console.log(body,"body array")
 //                 case "a1x4V000001mqRh":
 //                      pdfColour = "#2c3364";
 //                     break;
-//                 case "a1x4V000001j7vk":
+//                 case "a1x4V000001mqSR":
 //                      pdfColour = "#0f52ab";
 //                     break;
 //                 case "a1x4V000001mqQP":

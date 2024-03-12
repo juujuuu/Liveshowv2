@@ -61,9 +61,9 @@ const getSiteFromId = expo => {
             return "https://www.foam-expo.com/";
         case "a1x4V000001mqS2":
             return "https://www.adhesivesandbondingexpo.com/";
-        case "a1x4V00000117tf":
+        case "a1x4V000001mqSH":
             return "https://www.foam-expo-europe.com/";
-        case "a1x4V00000117tk":
+        case "a1x4V000001mqSM":
             return "https://www.adhesivesandbondingexpo-europe.com/";
         case "a1x4V000001mqRm":
             return "https://www.ceramicsexpousa.com/";
@@ -75,7 +75,7 @@ const getSiteFromId = expo => {
             return "https://www.thermalmanagementexpo.com/";
         case "chinaExhibitorList":
             return "https://www.foam-expo-china.com/";
-            case "a1x4V000001j7vk":
+            case "a1x4V000001mqSR":
             return "https://www.thermalmanagementexpo-europe.com/";
         default:
             return "ID not found";
@@ -88,9 +88,9 @@ const getShowNameFromId = id => {
             return "Foam Expo North America";
         case "a1x4V000001mqS2":
             return "Adhesives & Bonding Expo";
-        case "a1x4V00000117tf":
+        case "a1x4V000001mqSH":
             return "Foam Expo Europe";
-        case "a1x4V00000117tk":
+        case "a1x4V000001mqSM":
             return "Adhesives & Bonding Expo Europe";
         case "a1x4V000001mqRm":
             return "Ceramics Expo";
@@ -102,7 +102,7 @@ const getShowNameFromId = id => {
             return "Thermal Management Expo";
         case "chinaExhibitorList":
             return "Foam Expo China";
-        case "a1x4V000001j7vk":
+        case "a1x4V000001mqSR":
             return "Thermal Management Expo Europe";
         default:
             return "ID not found";
@@ -116,9 +116,9 @@ const getAcronymFromId = id => {
             return "FMX";
         case "a1x4V000001mqS2":
             return "ABX";
-        case "a1x4V00000117tf":
+        case "a1x4V000001mqSH":
             return "FME";
-        case "a1x4V00000117tk":
+        case "a1x4V000001mqSM":
             return "ABE";
         case "a1x4V000001mqRm":
             return "CEX";
@@ -130,7 +130,7 @@ const getAcronymFromId = id => {
             return "TME";
         case "chinaExhibitorList":
             return "FMC";
-        case "a1x4V000001j7vk":
+        case "a1x4V000001mqSR":
             return "TEE";
             
         default:
