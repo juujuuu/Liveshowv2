@@ -6,6 +6,7 @@ import setMaxShows from "./setMaxShows";
 import setShow from "./setShow";
 import setInitialShowsFilters from "./setInitialShows";
 import setLoading from "./setLoading";
+// import FullAgenda from "../Components/FullAgenda";
 
 
 
@@ -26,8 +27,10 @@ const fetchConference = (site, conferenceId) => async dispatch => {
 
 // //test add show name to session
 // session[0].Categories__c="TEE-ABE"
-// session[1].Categories__c="FME-ABE"
-// session[2].Categories__c="TEE-FME"
+// session[0].Categories__c="ABX-FMX"
+// session[1].Categories__c="FMX-ABX"
+// session[2].Categories__c="FMX"
+// session[3].Categories__c="ABX"
 // // session[5].Categories__c="FME" break
 // session[6].Categories__c="FME-TEE"
 // session[7].Categories__c="FME-ABE"
@@ -71,15 +74,16 @@ const fetchConference = (site, conferenceId) => async dispatch => {
 // session[45].Categories__c="TEE"
 
 
-
+console.log(data)
     //**MULTY EXPOS OPTION**/
+    const extraMode= document.querySelector("#root").getAttribute("extramode")  
     //Split and order Categories__c aphabetically direclty on the session TEE-ABE ->ABE-TEE
     // NOT SURE IT S NEEDED AS THERE WILL BE SET IN OTDER ON SF
     session.map(el => {
         if (el.Categories__c) {
             return el.Categories__c = el.Categories__c.split("-").sort().join("-")
         }})
- 
+//  console.log(data)
     // **MULTY EXPOS OPTION**
     // **LOGIC TO CREATE THE BUTTONS BASED ON THE SHOWS
     // I create new array and i order it again (not sure if needed to be ordered again)
@@ -91,7 +95,6 @@ const fetchConference = (site, conferenceId) => async dispatch => {
          if(Categories__c){ maxShowsOrdered= Categories__c.split("-").sort().join("-")}
         showArray.push(maxShowsOrdered);
       }});
-
 //**MULTY EXPOS OPTION**/
 //**Split all the shows variants in a dup arrays
 const showsNamesSanitised =showArray.join(" ").split(" ").join("-").split("-")
@@ -100,36 +103,39 @@ const showsNamesSanitised =showArray.join(" ").split(" ").join("-").split("-")
 const showsNumbersFiltered=showsNamesSanitised.filter((el,index)=>{
 return  showsNamesSanitised.indexOf(el)===index
   }).sort().filter(n=>n)
-  console.log(showsNumbersFiltered,"showsNumbersFiltered")
 
 
 
+// console.log(response)
 
 
     //**Dispatch these actions.
     dispatch({ type: "FETCH_CONFERENCE", payload: data });
-    dispatch(setMaxShows(session));
+   
     dispatch(setMaxDays(session));
     dispatch(setLowestDay(session));
     dispatch(setMaxTracks(session));
-    dispatch(setMaxShows(session));
-    dispatch(setMaxShows(showsNumbersFiltered));
-    
+   
+   
 
+// if((extraMode =="" || !extraMode)){
+  
+// if((extraMode !=="innovation-agenda")){
 
+  dispatch(setMaxShows(session));
+  dispatch(setMaxShows(session));
+  dispatch(setMaxShows(showsNumbersFiltered));
    //**MULTY EXPOS OPTION**/
   //**filtering values to removed null  in Categories__c 
   //**if a value has not been filled up on sF it won't show for FME ABE TEE
   let showArrayFilterNull=[...showArray].filter(e=>e)
   // order the show alphabetically
     showArrayFilterNull= [...new Set(showArrayFilterNull)]
-   console.log( showArrayFilterNull,"showArrayFilterNull") 
-   console.log(   showsNumbersFiltered,"  showsNumbersFiltered") 
     dispatch(setShow([["firstLoad"],  showArrayFilterNull]));
     // **THIS KEEPS TRACK OF THE INITIAL SHOWS ON THE FIRST LOAD AND STORED THEM   
     //USED FOR RESETTING THE SESSION TO THE INITIAL VALUE ONCE PRESSED CLEAR FILTERS
     dispatch(setInitialShowsFilters ( showArrayFilterNull));
 
-};
-
+// }
+}
 export default fetchConference;

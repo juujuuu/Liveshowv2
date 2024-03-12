@@ -67,30 +67,36 @@ const filtersReducer = (state = { track: [], day: 1, query: "", letter: -1, firs
               
                 if (!newShowArray.includes("ABE") && !newShowArray.includes("FME")) {
                     newShowArray = newShowArray.filter(el => !el.includes("ABE-FME"))
+                   
                     // I STRUGGLED TO FIND A WAY TO KEEP  ABE-FME-TEE FROM BEING REMOVED SO I AM PUSHING IT BACK IN
                     newShowArray.push("ABE-FME-TEE")
-                    console.log(newShowArray, "removed ABE-FME")
-                    //ALERT("removed ABE-FME")
+                    
                 }
                 if (!newShowArray.includes("ABE") && !newShowArray.includes("TEE")) {
+                   
                     newShowArray = newShowArray.filter(el => !el.includes("ABE-TEE"))
-                    console.log(newShowArray, "removed ABE-TEE-")
-                    //ALERT("removed ABE-TEE-")
+                   
                 }
                 if (!newShowArray.includes("FME") && !newShowArray.includes("TEE")) {
+                   
                     newShowArray = newShowArray.filter(el => !el.includes("FME-TEE"))
                     // find a solution incase the write TEE-FME instad of FME-TEE 
+                   
                     newShowArray.push("ABE-FME-TEE")
-                    console.log(newShowArray, "removed FME-TEE")
-                    //ALERT("removed FME-TEE")
+                 
                 }
                 if (!newShowArray.includes("ABE") && !newShowArray.includes("FME") && !newShowArray.includes("TEE")) {
+                  
                     newShowArray = newShowArray.filter(el => !el.includes("ABE-FME-TEE"))
-                    console.log(newShowArray, "removed ABE-FME-TEE")
-                    //ALERT("removed ABE-FME-TEE")
+                  
                 }
 
-
+                if (!newShowArray.includes("ABX") && !newShowArray.includes("FMX")) {
+                    newShowArray = newShowArray.filter(el => !el.includes("ABX-FMX"))
+                   
+                   
+                    
+                }
 
                 return { ...state, show: newShowArray };
             }
@@ -99,23 +105,21 @@ const filtersReducer = (state = { track: [], day: 1, query: "", letter: -1, firs
                 state.show.unshift(payload)
                 let newShowArray = state.show
              //**THIS IS THE TRICK TO GET THE SHOW-VARIANTS BACK 
+             //ABE-FME-TEE
                 if ((newShowArray.includes("ABE") || newShowArray.includes("FME")) && !newShowArray.includes("ABE-FME")) {
 
                     newShowArray.unshift("ABE-FME")
 
-                    console.log(newShowArray, "add ABE-FME")
                 }
                 if ((newShowArray.includes("ABE") || newShowArray.includes("TEE")) && !newShowArray.includes("ABE-TEE")) {
 
                     newShowArray.unshift("ABE-TEE")
 
-                    console.log(newShowArray, "add ABE-TEE")
                 }
                 if ((newShowArray.includes("FME") || newShowArray.includes("TEE")) && !newShowArray.includes("FME-TEE")) {
 
                     newShowArray.unshift("FME-TEE")
 
-                    console.log(newShowArray, "add FME-TEE")
                 }
                 if ((newShowArray.includes("ABE") || newShowArray.includes("FME") || newShowArray.includes("TEE")) && !newShowArray.includes("ABE-FME-TEE")) {
 
@@ -123,10 +127,13 @@ const filtersReducer = (state = { track: [], day: 1, query: "", letter: -1, firs
 
                     newShowArray.unshift("ABE-FME-TEE")
 
-                    console.log(newShowArray, "add FME-TEE")
                 }
 
-                console.log(newShowArray, "newShowArraytttttttttttttttt")
+                if ((newShowArray.includes("ABX") || newShowArray.includes("FMX")) && !newShowArray.includes("ABX-FMX")) {
+
+                    newShowArray.unshift("ABX-FMX")
+
+                }
 
 
             }

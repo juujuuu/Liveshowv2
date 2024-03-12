@@ -79,6 +79,7 @@ import Spinner from "../../../common_components/Spinner";
 
 import FullAgenda from "./FullAgenda";
 import SpeakerList from "./SpeakerList";
+import CocktailExpo from "./CocktailExpo"
 
 import { setDealtWithInitialParams,  setOptions } from "../Actions";
 
@@ -141,6 +142,11 @@ const options=useSelector(state=>state.options)
         } else if (options.mode === "speaker-list" || options.mode === "design-speaker-list") {
             return <SpeakerList />;
         }
+        else if (options.mode === "cocktail-expo") {
+            return <CocktailExpo />;
+        }
+        
+        
     } catch (error) {
         return errorJSX;
     }

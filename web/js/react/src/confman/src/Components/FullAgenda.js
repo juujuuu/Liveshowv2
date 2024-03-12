@@ -106,6 +106,7 @@ const FullAgenda = props => {
         hideTrackButtons,
         extraMode,
         hideDownloadLink,
+        mode
     } = options;
 
     //Run after Component mount and first render
@@ -130,7 +131,7 @@ const FullAgenda = props => {
 
     //Run when loading changes.
     useEffect(() => {
-        console.log(state, "stateeeeeeeeeee!!")
+
         //The code for zapping to a session if the id is a url param.
         if (!dealtWithInitialParams && !loading) {
 
@@ -184,8 +185,13 @@ const FullAgenda = props => {
                 }
             }
         } else {
-            //No one can make their mind up about how logic on these should work so good luck lol
-            if (show !== "SPC" && show !== "NZB" && show !== "CEX" && show !== "TME") {
+           /*No one can make their mind up about how logic on these should work so good luck lol !!! ngula a mammt!!!!
+
+            This logic will not set the lowest day , so those show undrneath won't have the active day on load and will show
+            all the sessions. THEREFORE, THE TOP BAR WITH DAYS WILL not SHOW THE active FIRST DATE on load ,
+            guessing, it s designed for one long list with just the check button (or filtering by tracks or by date), when this happens
+            hide the tot date bar*/
+            if (show !== "SPC" && show !== "NZB") {
                 //Default if there aren't any extra params.  Just set the day to the lowest one in the data
                 dispatch(setDay(lowestDay));
 
@@ -204,9 +210,11 @@ const FullAgenda = props => {
         let index = 0;
         let otherIndex = 0;
         let dayButtons = [];
+        // console.log(state)
         for (index = lowestDay; index <= numberOfDays; index++) {
             dayButtons.push(
-                <div key={index} className={`col-${colNum}`}>
+                <div key={index} className={` col-${colNum}`}>
+                   {/* { console.log(index,"index",filters.day)} */}
                     <MainNavButton options={options} key={`day-button-${index}`} active={filters.day === index} value={index} handler={setDay}>
                         {/* {daynameoverride == undefined || window.innerWidth < 992
 							? `Day ${index + 1}`
@@ -257,9 +265,6 @@ const FullAgenda = props => {
         * @returns An array of checkbox filters
         */
 
-    // console.log(state.maxShows, "state")
-    // console.log(state.filters.setInitialShows, "filters.setinitial show")
-    // console.log(state.filters.show, "filters.show")
 
 
 
@@ -267,8 +272,7 @@ const FullAgenda = props => {
     * looping through maxShows (the simplified array to create single button-filters for the shows)  */
     const getShowButtons = showVariants => {
 
-        console.log(showVariants, "showVariantssssss")
-        console.log(state, "showVariantssssss")
+
         //hideTrack is not actually set ... 
         if (!hideTrackButtons) {
             let i = 0;
@@ -307,6 +311,7 @@ const FullAgenda = props => {
     const getSlides = data => {
 
         if (data == null || data < 1) {
+
             return (
                 <div className="conference-agenda__sessions sessions--error-message">
 
@@ -422,11 +427,11 @@ const FullAgenda = props => {
                 inputSessions.forEach(element => {
 
                     excludeShows.forEach(el2 => {
-                        // alert(el2)
+
                         if (element.Categories__c === el2) {
-                            // console.log(el2 === element.Categories__c, "el22222222222")
+
                             newInputSession.push(element)
-                            // console.log(element.Categories__c, "aaaaaaaaaaaaaaaaaaaaa", newInputSession.length)
+
                         }
 
                     })
@@ -510,7 +515,9 @@ const FullAgenda = props => {
         inputSessions = filterQuery(inputSessions);
         inputSessions = filterBreaks(inputSessions);
         //**MULTY-EXPO OPTION - ONLY RUN IF THE SHOW IS ONE OF THOSE  */
-        if (show == "ABE" || show == "FME" || show == "TEE") {
+
+        // if ((show == "ABE" || show == "FME" || show == "TEE") &&  extraMode!=="innovation-agenda" ) {
+        if (show == "ABE" || show == "FME" || show == "TEE" ) {
             inputSessions = filtershows(inputSessions)
         }
         return inputSessions;
@@ -522,13 +529,21 @@ const FullAgenda = props => {
             case "ABX":
                 if (extraMode === "innovation-agenda") {
                     return (
-                        <Cta key="cta main agenda link" curved={false} color={show === "FMX" ? "fmx-blue" : "abx-blue"} link="../conference/conference-agenda">
+                        <Cta key="cta main agenda link" 
+                        curved={false} 
+                        color={show === "FMX" ? "fmx-blue" : "abx-blue"} 
+                        link="../conference/conference-agenda"
+                        bonusClass="rounded">
                             CONFERENCE AGENDA
                         </Cta>
                     );
                 } else {
                     return (
-                        <Cta key="cta innovation link" curved={false} color="solutions-blue" link="../conference/solutions-innovation-stage">
+                        <Cta key="cta innovation link"
+                         curved={false} 
+                         color="solutions-blue" 
+                         link="../conference/solutions-innovation-stage"
+                         bonusClass="rounded">
                             SOLUTIONS INNOVATION STAGE
                         </Cta>
                     );
@@ -541,13 +556,21 @@ const FullAgenda = props => {
 
                     if (show === "FME") { color = "fme-orange" } else if (show === "ABE") { color = "abe-dark-blue" } else { color = "tee-blue" }
                     return (
-                        <Cta key="cta main agenda link" curved={false} color={color} link="../conference/conference-agenda">
+                        <Cta key="cta main agenda link"
+                         curved={false}
+                          color={color} 
+                          link="../conference/conference-agenda"
+                          bonusClass="rounded">
                             CONFERENCE AGENDA
                         </Cta>
                     );
                 } else {
                     return (
-                        <Cta key="cta innovation link" curved={false} color="solutions-blue-FME-ABE-TEE" link="../conference/solutions-innovation-stage">
+                        <Cta key="cta innovation link"
+                         curved={false}
+                        color="solutions-blue-FME-ABE-TEE"
+                        link="../conference/solutions-innovation-stage"
+                        bonusClass="rounded">
                             SOLUTIONS INNOVATION STAGE
                         </Cta>
                     );
@@ -588,7 +611,7 @@ const FullAgenda = props => {
      *
      * @returns The tracks section (the bit with the checkboxes).
      */
-
+// console.log(state)
     const getTracksNav = () => {
         //Very annoying button for extra conference on some in this bit
         const cols = show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? [6, 6] : [9, 3];
@@ -598,13 +621,7 @@ const FullAgenda = props => {
                 <div className="container">
                     <div className="row">
                         <div className={`col-${cols[0]} track-col`}>{getTrackButtons(maxTracks)}</div>
-                        {/* extra buttons for filtering ABE FME TEE*/}
-                        {(show == "FME" ||
-                            show == "TEE" ||
-                            show == "ABE")
-                            ?
-                            <div className={`col-12 track-col sm`}>{getShowButtons(maxShows)}</div>
-                            : null}
+
 
                         <div className={`col-${cols[1]} control-col`}>
                             <Cta
@@ -612,7 +629,7 @@ const FullAgenda = props => {
                                 curved={false}
                                 active={openSlides}
                                 color="primary"
-                                bonusClass="confman-expand"
+                                bonusClass="confman-expand rounded"
                                 handler={setOpenSlides}
                                 role="expand"
                                 value={true}>
@@ -623,7 +640,7 @@ const FullAgenda = props => {
                                 curved={false}
                                 active={!openSlides}
                                 color="primary"
-                                bonusClass="confman-expand"
+                                bonusClass="confman-expand rounded"
                                 handler={setOpenSlides}
                                 role="collapse"
                                 value={false}>
@@ -631,6 +648,13 @@ const FullAgenda = props => {
                             </Cta>
                             {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? getAltConferenceButton(show, extraMode) : null}
                         </div>
+                        {/* extra buttons for filtering ABE FME TEE*/}
+                        {(show == "FME" ||
+                            show == "TEE" ||
+                            show == "ABE")
+                            ?
+                            <div className={`col-12 track-col border-top border-light`}>{getShowButtons(maxShows)}</div>
+                            : null}
                     </div>
                 </div>
             );
@@ -639,14 +663,14 @@ const FullAgenda = props => {
                 <>
                     <div className="container-fluid tracks__mob-control">
                         <div className="row">
-                            
+
                             <div className="col-12 control-col">
                                 <Cta
                                     key="cta expand"
                                     curved={false}
                                     active={openSlides}
                                     color="primary"
-                                    bonusClass="confman-expand"
+                                    bonusClass="confman-expand rounded"
                                     handler={setOpenSlides}
                                     role="expand"
                                     value={true}>
@@ -657,7 +681,7 @@ const FullAgenda = props => {
                                     curved={false}
                                     active={!openSlides}
                                     color="primary"
-                                    bonusClass="confman-expand"
+                                    bonusClass="confman-expand rounded"
                                     handler={setOpenSlides}
                                     role="collapse"
                                     value={false}>
@@ -673,11 +697,11 @@ const FullAgenda = props => {
                                 {getTrackButtons(maxTracks)}{" "}
                             </div>
                             {/*MULTYEXPO - extra buttons for filtering ABE FME TEE*/}
-                            {(  show == "FME" || show == "TEE" ||  show == "ABE")
+                            {(show == "FME" || show == "TEE" || show == "ABE")
                                 ?
                                 <div className={`col-12 track-col justify-content-start`}>{getShowButtons(maxShows)}</div>
                                 : null
-                             }
+                            }
                         </div>
                     </div>
                 </>
@@ -723,14 +747,27 @@ const FullAgenda = props => {
                                     <StickyNav role="conference-agenda-side-nav">
                                         <div className="side-nav__search">
                                             <h3>Search</h3>
-                                            <Cta key="cta reset" size="micro" color="black" role="clearFiltersConf" curved={false} margin="vertical-margin--0" handler={resetFilters}>
+                                            <Cta key="cta reset"
+                                                size="micro" color="black"
+                                                role="clearFiltersConf"
+                                                curved={false}
+                                                margin="vertical-margin--0"
+                                                bonusClass="rounded"
+                                                handler={resetFilters}>
+
                                                 CLEAR FILTERS
+
                                             </Cta>
                                         </div>
                                         <SearchInput handler={setQuery} role="conference-search" key={`search-conference`} />
                                         {convincepdf != undefined && convincepdf != "" ? (
-                                            <Cta key="cta convince your boss" size="max" color="primary">
+                                            <Cta key="cta convince your boss"
+                                                size="max"
+                                                bonusClass="rounded"
+                                                color="primary">
+
                                                 CONVINCE YOUR BOSS
+
                                             </Cta>
                                         ) : (
                                             ""
@@ -738,7 +775,12 @@ const FullAgenda = props => {
                                         {downloadagenda != undefined && hideDownloadLink === false ? (
                                             <>
                                                 {show == "OCS" || show == "SAT" || show == "NZB" ? (
-                                                    <Cta key="cta pdf agenda" size="max" color="primary" role="pop-form" link={generalenquiry} download={true}>
+                                                    <Cta key="cta pdf agenda"
+                                                        size="max"
+                                                        color="primary"
+                                                        role="pop-form"
+                                                        link={generalenquiry}
+                                                        download={true}>
                                                         DOWNLOAD PDF AGENDA
                                                     </Cta>
                                                 ) : (

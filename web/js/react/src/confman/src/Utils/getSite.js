@@ -55,8 +55,11 @@ const getSiteFromId = conferenceId => {
             return "FME";
         case "a3i4V000001pJWy":
         case "a3i4V000000bqIX":
+        case "a3i4V00000222Y6":
+            
             return "CEX";
         case "a3i4V00000222YG":
+        case "a3iUK00000001s9":
             return "SPC";
         case "a3i4V000001pORm":
         case "a3i4V000000bqIh":

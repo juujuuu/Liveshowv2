@@ -79,7 +79,7 @@ const [check, setcheck] = useState(false)
         }
       
         /*  MULTYEXPO OPTION  PART DOWN HERE
-        -THIS SET THE VALUE OF TE SHOW BY THE CLICKED ONE  */ 
+        -THIS SET THE VALUE OF TE SHOW BY THE CLICKED ONE */ 
         
         if (setShowSelector != undefined && handler().type=="SET_SHOW") {
             
@@ -91,13 +91,15 @@ const [check, setcheck] = useState(false)
     };
 
        let exa
-if(extraMode === "innovation-agenda" && (show == "FME" || show == "TEE"|| show == "ABE" )){
+
+       //*****Removing this as we are using the multi expo on the innovation agenda too
+// if(extraMode === "innovation-agenda" && (show == "FME" || show == "TEE"|| show == "ABE" )){
     
-       return( "" )
+//        return( "" )
      
-    }
-    else{
-      if (show == "FME" || show == "TEE"|| show == "ABE" ){
+//     }
+    // else{
+      if (show == "FME" || show == "TEE"|| show == "ABE"  ){
       
         return (      
 
@@ -147,7 +149,7 @@ if(extraMode === "innovation-agenda" && (show == "FME" || show == "TEE"|| show =
             
         );
                     }
-    }
+    // }
     
 
    
