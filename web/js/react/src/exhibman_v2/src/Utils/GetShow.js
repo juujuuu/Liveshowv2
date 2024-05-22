@@ -67,7 +67,7 @@ const getSiteFromId = expo => {
             return "https://www.adhesivesandbondingexpo-europe.com/";
         case "a1x4V000001mqRm":
             return "https://www.ceramicsexpousa.com/";
-        case "a1x4V000001mqQP":
+        case "a1xUK000000Y2aT":
             return "https://www.spacetechexpo.com/";
         case "a1x4V000001mqS7":
             return "https://www.spacetechexpo-europe.com/";
@@ -94,7 +94,7 @@ const getShowNameFromId = id => {
             return "Adhesives & Bonding Expo Europe";
         case "a1x4V000001mqRm":
             return "Ceramics Expo";
-        case "a1x4V000001mqQP":
+        case "a1xUK000000Y2aT":
             return "Space Tech Expo";
         case "a1x4V000001mqS7":
             return "Space Tech Expo Europe";
@@ -122,7 +122,7 @@ const getAcronymFromId = id => {
             return "ABE";
         case "a1x4V000001mqRm":
             return "CEX";
-        case "a1x4V000001mqQP":
+        case "a1xUK000000Y2aT":
             return "SPC";
         case "a1x4V000001mqS7":
             return "BRE";

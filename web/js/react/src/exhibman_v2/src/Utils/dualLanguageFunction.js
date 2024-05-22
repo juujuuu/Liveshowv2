@@ -7,7 +7,7 @@ import React from 'react'
 import Button from 'react-bootstrap/esm/Button';
 const dualLanguage = (show,englishtext,germanText)=> {
     let message;
-    { if(show=="FME" || show=="ABE" || show=="TEE"){ message= germanText} else{message=englishtext }}
+    { if(show=="" || show=="" || show==""){ message= germanText} else{message=englishtext }}
     
     return message
 };

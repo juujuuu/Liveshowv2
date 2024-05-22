@@ -106,7 +106,7 @@ class PDFMake {
                     var showName = "Thermal Management Expo";
                     break;
                   
-                case "a1x4V000001mqQP":
+                case "a1xUK000000Y2aT":
                     var showName = "Space Tech Expo";
                     break;
                 case "a1x4V000001mqS7":
@@ -200,7 +200,7 @@ console.log(body,"body array")
 //                 case "a1x4V000001mqSR":
 //                      pdfColour = "#0f52ab";
 //                     break;
-//                 case "a1x4V000001mqQP":
+//                 case "a1xUK000000Y2aT":
 //                      pdfColour = "#0C3353";
 //                     break;
 //                 case "a1x4V000001mqS7":

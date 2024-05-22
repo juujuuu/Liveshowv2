@@ -178,20 +178,20 @@ const mode=useSelector(state=>state.mode)
                         size="reg"
                         margin="vertical-margin--0"
                         curved={false}
-                        bonusClass={`exhibitor-slide__profile-button exhibitor-slide__profile-button--${Exhibitor_listing_type__c}`}
+                        bonusClass={` rounded exhibitor-slide__profile-button exhibitor-slide__profile-button--${Exhibitor_listing_type__c} mt-2 mt-md-0`}
                         role="exhib-assets"
                         payload={payload}
                     >
                          {enhanced ? dualLanguage(show,"Enhanced Listing","Enhanced Listing / Erweiterte auflistung") : dualLanguage(show,"View Profile","View Profile / Profil ansehen")}
                     </Cta>
                 </Link>
-                <div className="col-6 col-md-3 exhibitor-slide__logo">
+                <div className="col-12 col-md-3 exhibitor-slide__logo mb-2 mb-md-0 mt-5 mt-md-0">
                     {/* <Link className="router-link" to={getProfilePath(debug, local, id)} onClick={() => this.handleSwitchMode("PROFILE", id)}> */}
                     <Link className="router-link" to={getProfilePath(debug, local, id,postshow)} onClick={() => handleSwitchMode("PROFILE", id)}>
                         <img className="img-fluid" src={web_logo !== "" ? smallLogo : bigLogo} alt={pagetitle} />
                     </Link>
                 </div>
-                <div className="col-6 col-md-5 exhibitor-slide__body">
+                <div className="col-12 col-md-5 exhibitor-slide__body">
                     <div>
                         <h4 className="exhibitor-name">
                             {/* <Link className="router-link" to={getProfilePath(debug, local, id)} onClick={() => this.handleSwitchMode("PROFILE", id)}> */}

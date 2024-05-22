@@ -784,7 +784,7 @@ const mode=useSelector(state=>state.mode)
                         size="max"
                         curved={false}
                         active={expos.includes(showId)}
-                        bonusClass={`control-col__show-filter control-col__show-filter--${sanitisedShowId}`}
+                        bonusClass={`rounded control-col__show-filter control-col__show-filter--${sanitisedShowId}`}
                         key={`show-filter-${showId}`}
                         handler={handleSetExpo}
                         role="expo-query"
@@ -886,7 +886,9 @@ const mode=useSelector(state=>state.mode)
                         
                     </StickyNav>
                 </nav>
-                <div className="col-md-8 viewport-col">
+                <div className="col-md-8 viewport-col ">
+                    {/*HIDE THE SECOND BANNER ON MOBILE AND SHOW JUST ONE YO */}
+                {window.innerWidth > 768 ?
                     <Sponsors
                         show={options}
                         // href={"https://www.ice.it/en/"}
@@ -897,7 +899,7 @@ const mode=useSelector(state=>state.mode)
                         position={"-top"}
                         displayBanner={""}
                         
-                    />
+                    /> : ""}
                     <div className="alphabet-filter">
                         <Alphabet activeLetter={queries.letter} handler={handleSetLetter} />
                     </div>
