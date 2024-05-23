@@ -1,26 +1,43 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 
 import Spinner from "../../../common_components/Spinner";
 
-import { getSiteFromAcronym } from "../Utils/getSite";
+import { getSiteFromAcronym,getShowNameFromAcronym } from "../Utils/getSite";
 
 
 
 
 
 import {
-    fetchSpeakerList,
+  
     setLoading,
     // setOpenSlides,
     // setDay,
     // setTrack,
-    setLetter,
+   
     // setDealtWithInitialParams,
-    setQuery,
+   
     // resetFiltersAction,
+    fetchConference,
     // setError,
+
+   
+  setTags,
+    setOpenSlides,
+    setDay,
+    setTrack,
+    setLetter,
+    setDealtWithInitialParams,
+    setQuery,
+    resetFiltersAction,
+    setError,
+    setLowestDay,
+    setShow,
+    setFirstLoad,
+    setCocktailMinTagSelection
+
 } from "../Actions";
 import getModal from "../Utils/getModal";
 import Letter from "./Letter";
@@ -37,6 +54,7 @@ import CocktailStep from "./CocktailStep";
 import CocktailButton from "./CocktailsButton";
 import CocktailSlide from "./CocktailSlide";
 // import logo from '../../../confman/public/capture.PNG'; // with import
+
 
 
 
@@ -58,76 +76,189 @@ const CocktailExpo = props => {
         // setError,
         // resetFiltersAction,
     } = props;
-    console.log(props)
-    const dispatch = useDispatch()
+    // console.log(props)
+    // const dispatch = useDispatch()
     // const resetFilterselector=useSelector(state=>state.filters)
     const loading = useSelector(state => state.loading)
     const speakers = useSelector(state => state.speakers)
     const filters = useSelector(state => state.filters)
     const { query, letter: letterReducer } = filters;
     const options = useSelector(state => state.options)
+    const state = useSelector(state => state)
+    const dispatch = useDispatch()
+    // const options = useSelector(state => state.options)
+    const sessions = useSelector(state => state.sessions)
+    const maxDays = useSelector(state => state.maxDays)
+    const lowestDay = useSelector(state => state.lowestDay)
+    // const filters = useSelector(state => state.filters)
+    const openSlides = useSelector(state => state.openSlides)
+    const dealtWithInitialParams = useSelector(state => state.dealtWithInitialParams)
+    // const loading = useSelector(state => state.loading)
+    const maxTracks = useSelector(state => state.maxTracks)
+    const maxShows = useSelector(state => state.maxShows)
+    const setShowNames = useSelector(state => state.filters.show)
+    // const state = useSelector(state => state)
+    const firstLoadShows = useSelector(state => state.filters.firstLoad)
+    const stepNumberTitle = useSelector(state => state.cocktailReducer.totalStepN)
+    // const focus=useSelector(state =>state.cocktailReducer.tags.Focus)
+    // const industry=useSelector(state =>state.cocktailReducer.tags.Industry)
+    const tags=useSelector(state =>state.cocktailReducer.tags)
+    const cocktailSessions=useSelector(state =>state.cocktailReducer.cocktailSessions)
+    const [heightSet, setHeight] = useState(false);
+    const heightContainer = useRef(null);
 
-    const { conf, show, mode } = options;
+    const { conf, show, mode ,continent,cocktailMinTagSelection} = options;
+    const [countSteps, setCountSteps] = useState(1)
+  
+    let [buttonsStatus, setButtonStatus] = useState("")
 
-    //Run on start.
-    useEffect(() => {
-
-        if (loading) {
-            dispatch(fetchSpeakerList(getSiteFromAcronym(show), conf)).then(response => {
-                dispatch(setLoading(false));
-            });
+    /**THIS IS USED TO GET THE NUMBER OF TAGS IN THE CHECKBOX LIST 
+    AND CALCULATE THE HEIGHT OF THE CONTAINER BASED OF ON THEM */
+    const getHeightHandler=(el)=>{
+        //this trigger the function getHeightHandler in Cocltail Expo
+      //here
+        let heightContainer
+        const rows=el
+     
+      
+        if(rows){
+            console.log(el,"el")
+         
+           if (buttonsStatus =="START THE MIX") {
+                heightContainer=''
+                
+            }
+            else if(rows.length<=3 ){
+                heightContainer =200+"px"
+                console.log("pass")
+            }
+            else if (rows.length>3 && rows.length<=6 ){
+                heightContainer = 300+"px"
+                console.log("pass")
+            }
+            else if (rows.length>6 && rows.length<=9  ){
+                heightContainer = 400+"px"
+                console.log("pass")
+            }
+            else if (rows.length>9 && rows.length<=12  ){
+                heightContainer = 500+"px"
+                console.log("pass")
+            }
+            else if (rows.length>12 && rows.length<=15  ){
+                heightContainer = 650+"px"
+                console.log("pass")
+            }
+           
+      
+           
         }
-    }, []);
+        console.log(heightContainer,"heightContainer")
+         return heightContainer
+    
+    
+    }
+    //Run on start.
+   //Run after Component mount and first render
+   useEffect(() => {
+    if (loading) {
+        //If loading run set conference action.  On complete set loading to false
+        dispatch(fetchConference(getSiteFromAcronym(show), conf)).then(response => {
+            dispatch(setLoading(false));
+          
+           getHeightHandler();
+     
+            //set first time the shows types are loaded and set it to false 
+            // dispatch(setFirstLoad(false));
+
+        });
+        dispatch(setDay(0)); //Day 0 is basically 'display all days' here
+
+       
+    
+  
+
+       
+    }
+}, []);
+
+//Run when loading changes.
+useEffect(() => {
+   
+    //The code for zapping to a session if the id is a url param.
+    if (!dealtWithInitialParams && !loading) {
+ getHeightHandler()
+        //If we can find a session id param.
+        // dispatch(setShow("34"));
+      
+        if (parameters.find(param => param[0] == "session-id")) {
+            const [name, sessionId] = parameters.find(param => param[0] == "session-id"); //destructure param name and value
+
+            try {
+
+                const sessionDay = sessions.find(_session => _session.Id.toLowerCase() === sessionId.toLowerCase()).Day__c;
+                dispatch(setDay(sessionDay));
+                setDealtWithInitialParams(true);
+                dispatch(setOpenSlides(true));
+
+
+                setTimeout(() => {
+                    const el = document.querySelector(`#${sessionId.toLowerCase()} .session__anchor`);
+                    el.scrollIntoView({ behavior: "smooth" });
+                }, 0);
+            } catch (error) {
+                console.error("Problem trying to load session param", error);
+                dispatch(setError(true));
+            }
+        } else if (parameters.find(([name, value]) => name == "track")) {
+            const [name, value] = parameters.find(([name, value]) => name === "track"); //destructure param name and value
+
+
+            try {
+                const track = parseInt(value);
+                switch (track) {
+                    case 1:
+                        dispatch(setTrack([2, 3]));
+                        break;
+                    case 2:
+                        dispatch(setTrack([1, 3]));
+                        break;
+                    case 3:
+                        dispatch(setTrack([1, 2]));
+                        break;
+                    default:
+                        break;
+                }
+                if (show === "BRE") {
+                    dispatch(setDay(lowestDay));
+                }
+                dispatch(setDealtWithInitialParams(true));
+            } catch (error) {
+                console.error("Problem trying to load track", error);
+                dispatch(setError(true));
+            }
+        }
+    } else {
+       /*No one can make their mind up about how logic on these should work so good luck lol !!! ngula a mammt!!!!
+
+        This logic will not set the lowest day , so those show undrneath won't have the active day on load and will show
+        all the sessions. THEREFORE, THE TOP BAR WITH DAYS WILL not SHOW THE active FIRST DATE on load ,
+        guessing, it s designed for one long list with just the check button (or filtering by tracks or by date), when this happens
+        hide the tot date bar*/
+        if (show !== "SPC" && show !== "NZB") {
+            //Default if there aren't any extra params.  Just set the day to the lowest one in the data
+            dispatch(setDay(lowestDay));
+
+        }
+    }
+}, [loading]);
 
     /**
      *
      * @returns An array of Letter components for the alphabet filter
      */
-    const getLetters = () => {
-        let alphabet = "View All|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z".split("|");
-        alphabet = alphabet.map((letter, index) => {
-            if (letter == "View All") {
-                return (
-                    <Letter handler={letterReducer} value="-1" key={`letter-view-all`}>
-                        {letter}
-                    </Letter>
-                );
-            } else {
-                return (
-                    <Letter handler={letterReducer} value={letter} key={`letter-${letter}`}>
-                        {letter}
-                    </Letter>
-                );
-            }
-        });
-        return <ul>{alphabet}</ul>;
-    };
+  
 
-    const getSpeakerSlides = speakers => {
-        if (speakers.length > 0) {
-            if (mode === "speaker-list") {
-                return speakers.map((speaker, index) => (
-                    <SpeakerSlide
-                        id={speaker.Id}
-                        speaker={speaker}
-                        key={`speaker-${speaker.Id}`}
-                        modalHandler={() => getModal({ role: "speaker-modal", options, data: speaker })}
-                    />
-                ));
-            } else if (mode === "design-speaker-list") {
-                return speakers.map((speaker, index) => (
-                    <DesignSpeakerSlide
-                        id={speaker.Id}
-                        speaker={speaker}
-                        key={`speaker-${speaker.Id}`}
-                        modalHandler={() => getModal({ role: "speaker-modal", options, data: speaker })}
-                    />
-                ));
-            }
-        } else {
-            return <h2>No Speakers Found</h2>;
-        }
-    };
+  
 
     /**
      *
@@ -163,24 +294,14 @@ const CocktailExpo = props => {
 
 
     //COCTAIL
+    const selectedTags=useSelector(state =>state.cocktailReducer.selectedTags)
+    const sessionsNumber=useSelector(state =>state.sessions)
 
-    const industryArr = ["industry-1", "industry-2", "industry-3", "industry-4", "industry-5"]
-    
-    const sectorsArr = ["SECTOR-1", "SECTOR-2", "SECTOR-3", "SECTOR-4", "SECTOR-5"]
-    const daysArr = ["day-1", "day-2", "day-3", "day-4", "day-5"]
-    const sessionTypeArr = ["sessionType-1", "sessionType-2", "sessionType-3", "sessionType-4", "sessionType-5"]
-    const stepsNames=[industryArr,sectorsArr,daysArr,sessionTypeArr ]
-    const stepNames = ["INDUSTRIES", "SECTORS", "DAYS", "SESSION TYPE"]
 
-    const [countSteps, setCountSteps] = useState(1)
-    const [step, setStep] = useState(stepNames[countSteps])
-    // const [countStepName, setCountStepName] = useState(1)
-    let [buttonsStatus, setButtonStatus] = useState("")
-    console.log(buttonsStatus)
-    // const onClickHandler = () => {
-    //     setStep("Sectors")
-    // }
+ 
 
+  
+  
     const pipeSpeakers = speakers => {
         speakers = filterQuery(speakers);
         speakers = filterAlphabet(speakers);
@@ -195,15 +316,16 @@ const CocktailExpo = props => {
     } else {
         const pipedSpeakers = pipeSpeakers(speakers);
         return (
-            <section className={`confman speaker-list speaker-list--${show}`}>
-
+         
+            <section className={`cocktail--${show}`}>
+  
                 <MainNav desktop={window.innerWidth > 992}>
                     <div className="container">
                         <div className="row">
-                            <div className="col-7">
-                                <h1 className="text-dark">THE PERFECT CONFERENCE COCKTAIL</h1>
+                            <div className="col-6">
+                                <h1 className="text-dark lh-1"><b>THE PERFECT CONFERENCE COCKTAIL</b></h1>
                                 <p className="text-dark pb-2">Sit back and let us design your perfect conference sessions for our
-                                    extensive program at XXX. WIth over XXX sessions, XXX top tier speakers
+                                    extensive program at <b>{getShowNameFromAcronym(show)}</b>. WIth over <b>{sessionsNumber.length}</b> sessions, XXX top tier speakers
                                     and X stages... we have all the ingredients we need to serve you a
                                     flawless slice of conference learning this May.</p>
                                 <p><b>Simply select from the options below and within a few
@@ -211,9 +333,9 @@ const CocktailExpo = props => {
                             </div>
 
 
-                            <div className="col-5">
+                            <div className="col-6 d-flex justify-content-center">
 
-                                <img src={'../../../confman/public/capture.PNG'} />
+                                <img src={'https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/cocktail-image.png'} />
                             </div>
 
                         </div>
@@ -226,19 +348,35 @@ const CocktailExpo = props => {
 
 
                 </MainNav>
-                <div className="container mb-5">
-                    <div className="row border-5 border-dark border-top   pb-1  pb-md-3  mb-md-1">
-                        
-
-                        {
+                {getHeightHandler(tags[stepNumberTitle[countSteps - 1]].length)}
+                <div ref={heightContainer} className="container mb-5 position-relative"  style={{height:window.innerWidth > 992? getHeightHandler(tags[stepNumberTitle[countSteps - 1]]):""}}>
+              
+                   {
                             buttonsStatus !== "START THE MIX"
                                 ?
-                                <h3 className="text-dark"><b>STEP {countSteps}:</b>{stepNames[countSteps - 1]}</h3>
+                                <div style={{backgroundImage: `URL(https://oda0cs26.modx.dev//assets/resources/shared/images/testcocktaisls/a-1.png)`, backgroundSize:"cover", background:"rgb(237, 243, 269)"}} className="heade rounded tertiary-color-background"> 
+                                <h3 style={{backgrosund:"#285185"}} className="text-dark tertiary-color rounded ps-3  mb-0 ">STEP {countSteps}: <span style={{color: "rgb(255, 0, 255)"}} className="secondary-color">{ stepNumberTitle[countSteps - 1].toUpperCase()}</span> </h3>
+                                <div class="loader"></div> 
+                                </div>
                                 : <span><h3 className="text-dark">YOUR PERFECT MIX</h3>
                                     <p><b>Look below to see what we have served up!</b></p></span>
                         }
+                                         
+                    {/* <div className="row border-5 border-dark border-top   pt-4 mt-4  pb-md-3  mb-md-1"> */}
+ 
+                   
+                    <div className="row border-5 pt-4 mt-4  pb-md-3  mb-md-1 d-flex align-items-center" >       
+                                    
+             {/* {console.log(state.cocktailReducer.CMaxTagSelectionTracking2,"tracking")} */}
+             {console.log(state,"state")}
+                  
 
-                        {buttonsStatus!=="START THE MIX" ?stepsNames[countSteps-1].map(el => (<CocktailStep el={el} key={el} />)): <CocktailSlide  days={daysArr.length} sessions={sessionTypeArr.length} sectors={sectorsArr}/>}
+                       
+                        {buttonsStatus!=="START THE MIX" ?tags[stepNumberTitle[countSteps - 1]].map(el => (
+                     
+                      <CocktailStep stepNumberTitle={stepNumberTitle[countSteps - 1]} stepNumber={countSteps} listcheckedElement={selectedTags} el={el} key={el} />))
+                        : 
+                        <CocktailSlide  sessions={cocktailSessions}/>}
 
 
 
@@ -246,13 +384,28 @@ const CocktailExpo = props => {
                  */}
                       
 
-
+                      
                     </div>
-                    <div className="row border-5 border-dark border-bottom pb-3 ">
-                            <CocktailButton countStepName={stepNames[countSteps - 1]} countStep={countSteps} onClickHandler={count => setCountSteps(count)} onClickHandlerBack={count => setCountSteps(count)} onClickHandlerMix={count => setButtonStatus(count)} buttonsStatus={buttonsStatus} />
-                        </div>
+                    {/* <div className="row border-5 border-dark border-bottom pb-3 "> */}
+                    
+                    <div className={`floating-thing ${window.innerWidth > 992 ?"position-absolute bottom-0 start-0 end-0": ""} `}>
+                    <div className="floating-thing container" style={{height:0}}>
+                    <div className="row border-5">
+                            <CocktailButton countStepName={ stepNumberTitle[countSteps ]} countStep={countSteps}
+                             onClickHandler={count => setCountSteps(count)} getHeight={()=>getHeightHandler()} onClickHandlerBack={count => setCountSteps(count)} 
+                             onClickHandlerMix={count => setButtonStatus(count)} buttonsStatus={buttonsStatus} />
+                        </div> 
+                        
+                   
                 </div>
-
+                 </div>
+               
+                 </div>
+                 <div className="container d-flex justify-content-center mb-3">
+                 <div className=" row rounded p-1" style={{background:"rgb(237, 243, 255)", minHeight:""}} >
+                         {selectedTags.map(el=>{return<span key={el} className="badge col-auto bg-dark m-1">{el}</span>})} </div>
+                         </div>
+                       
             </section>
 
         );

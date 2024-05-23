@@ -14,8 +14,10 @@ const SpeakerSlide = ({ id, speaker, modalHandler = false }) => {
     const getCompany = company => (company == null ? "./assets/resources/shared/web/apps/confman/coming-soon.jpg" : company);
 
     return (
+
         <div className="row confman__speaker-slide" id={id}>
-            <div className="col-3 speaker-headshot">
+            <div className="col-3 speaker-headshot"> 
+               {console.log(speaker.length)}
                 <img src={getHeadShot(Head_Shot_URL__c)} className="img-fluid" alt={`${First_Name__c} ${Last_Name__c}`} onClick={runModalHandler} />
             </div>
             <div className="col-7 speaker-details">

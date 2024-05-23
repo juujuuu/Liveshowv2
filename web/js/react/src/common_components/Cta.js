@@ -193,7 +193,7 @@ const Cta = ({
 	const getExhibAssetsList = (exhibitor) => {
 		const { Assets_Downloadable_Resource_Count__c, Assets_News_Count__c, Assets_Product_Count__c, Assets_Video_Count__c } = exhibitor;
 		return (
-			<span className="curved-cta__exhib-assets">
+			<span className="curved-cta__exhib-assets rounded">
 				<span>
 					<i className="bi bi-envelope-fill"></i>
 				</span>

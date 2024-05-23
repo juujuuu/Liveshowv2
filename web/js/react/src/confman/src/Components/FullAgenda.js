@@ -132,11 +132,64 @@ const FullAgenda = props => {
     //Run when loading changes.
     useEffect(() => {
 
-        //The code for zapping to a session if the id is a url param.
+
+
+        //!The code for zapping to a session if the id is a url param.
+        let setId, elementParent, elementChild, cleanedId, cleanedDayChunk, getDashPosition
+
+        // Split the pathname by '/' to get an array of parts
+        const hash = window.location.hash;
+
+        if (hash) {
+            // Remove the '#' symbol
+            const idFromHash = hash.slice(1);
+
+            // Remove the '/' symbol
+            const slicedURL = idFromHash.replace(/\//g, '');
+            // Get position on - to slice the day
+            getDashPosition = slicedURL.lastIndexOf("-");
+
+            //  this triggers only if a day has been passed in the 
+            if (getDashPosition !== -1) {
+
+                // slice the day with -1
+                const dayChunk = slicedURL.slice(getDashPosition);
+
+                // slice the day 1 without -
+                cleanedDayChunk = dayChunk.slice(1)
+
+                //get the cleaned id with no day
+                cleanedId = slicedURL.slice(0, getDashPosition)
+            }
+
+            setId = cleanedId;
+
+            const scrollToElement = () => {
+                // Get the element by ID
+
+                if (hash) {
+                    elementParent = document.getElementById(setId);
+                    elementChild = document.querySelector(`#${setId} .accordion-button`)
+                }  
+                 // Scroll to the element and click if it exists
+                if (elementParent && elementChild) {
+                    elementChild.click()
+                    elementChild.scrollIntoView({ behavior: "smooth" });
+                }
+            };
+
+          scrollToElement();
+
+ }
+
+
+
+
+        
         if (!dealtWithInitialParams && !loading) {
 
             //If we can find a session id param.
-            // dispatch(setShow("34"));
+            
             if (parameters.find(param => param[0] == "session-id")) {
                 const [name, sessionId] = parameters.find(param => param[0] == "session-id"); //destructure param name and value
 
@@ -147,11 +200,14 @@ const FullAgenda = props => {
                     setDealtWithInitialParams(true);
                     dispatch(setOpenSlides(true));
 
+                    // !NOT SURE WHAT THIS IS FOR 
+                    // setTimeout(() => {
+                    //     const el = document.querySelector(`#${sessionId.toLowerCase()} .session__anchor`);
+                    //     console.log(el,"el")
+                    //     el.scrollIntoView({ behavior: "smooth" });
+                    // }, 0);
 
-                    setTimeout(() => {
-                        const el = document.querySelector(`#${sessionId.toLowerCase()} .session__anchor`);
-                        el.scrollIntoView({ behavior: "smooth" });
-                    }, 0);
+
                 } catch (error) {
                     console.error("Problem trying to load session param", error);
                     dispatch(setError(true));
@@ -185,15 +241,26 @@ const FullAgenda = props => {
                 }
             }
         } else {
-           /*No one can make their mind up about how logic on these should work so good luck lol !!! ngula a mammt!!!!
-
-            This logic will not set the lowest day , so those show undrneath won't have the active day on load and will show
-            all the sessions. THEREFORE, THE TOP BAR WITH DAYS WILL not SHOW THE active FIRST DATE on load ,
-            guessing, it s designed for one long list with just the check button (or filtering by tracks or by date), when this happens
-            hide the tot date bar*/
+            /*No one can make their mind up about how logic on these should work so good luck lol !!! ngula a mammt!!!!
+ 
+             This logic will not set the lowest day , so those show undrneath won't have the active day on load and will show
+             all the sessions. THEREFORE, THE TOP BAR WITH DAYS WILL not SHOW THE active FIRST DATE on load ,
+             guessing, it s designed for one long list with just the check button (or filtering by tracks or by date), when this happens
+             hide the tot date bar*/
             if (show !== "SPC" && show !== "NZB") {
+
                 //Default if there aren't any extra params.  Just set the day to the lowest one in the data
-                dispatch(setDay(lowestDay));
+                if (getDashPosition == -1 || !hash) {
+
+                    dispatch(setDay(lowestDay));
+                }
+                else {
+
+                    dispatch(setDay(parseInt(cleanedDayChunk)));
+                }
+
+
+
 
             }
         }
@@ -210,11 +277,11 @@ const FullAgenda = props => {
         let index = 0;
         let otherIndex = 0;
         let dayButtons = [];
-        // console.log(state)
+        console.log(state)
         for (index = lowestDay; index <= numberOfDays; index++) {
             dayButtons.push(
                 <div key={index} className={` col-${colNum}`}>
-                   {/* { console.log(index,"index",filters.day)} */}
+                    {/* { console.log(index,"index",filters.day)} */}
                     <MainNavButton options={options} key={`day-button-${index}`} active={filters.day === index} value={index} handler={setDay}>
                         {/* {daynameoverride == undefined || window.innerWidth < 992
 							? `Day ${index + 1}`
@@ -517,7 +584,7 @@ const FullAgenda = props => {
         //**MULTY-EXPO OPTION - ONLY RUN IF THE SHOW IS ONE OF THOSE  */
 
         // if ((show == "ABE" || show == "FME" || show == "TEE") &&  extraMode!=="innovation-agenda" ) {
-        if (show == "ABE" || show == "FME" || show == "TEE" ) {
+        if (show == "ABE" || show == "FME" || show == "TEE" || show == "FMX" || show == "ABX") {
             inputSessions = filtershows(inputSessions)
         }
         return inputSessions;
@@ -529,21 +596,21 @@ const FullAgenda = props => {
             case "ABX":
                 if (extraMode === "innovation-agenda") {
                     return (
-                        <Cta key="cta main agenda link" 
-                        curved={false} 
-                        color={show === "FMX" ? "fmx-blue" : "abx-blue"} 
-                        link="../conference/conference-agenda"
-                        bonusClass="rounded">
+                        <Cta key="cta main agenda link"
+                            curved={false}
+                            color={show === "FMX" ? "fmx-blue" : "abx-blue"}
+                            link="../conference/conference-agenda"
+                            bonusClass="rounded">
                             CONFERENCE AGENDA
                         </Cta>
                     );
                 } else {
                     return (
                         <Cta key="cta innovation link"
-                         curved={false} 
-                         color="solutions-blue" 
-                         link="../conference/solutions-innovation-stage"
-                         bonusClass="rounded">
+                            curved={false}
+                            color="solutions-blue"
+                            link="../conference/solutions-innovation-stage"
+                            bonusClass="rounded">
                             SOLUTIONS INNOVATION STAGE
                         </Cta>
                     );
@@ -557,20 +624,20 @@ const FullAgenda = props => {
                     if (show === "FME") { color = "fme-orange" } else if (show === "ABE") { color = "abe-dark-blue" } else { color = "tee-blue" }
                     return (
                         <Cta key="cta main agenda link"
-                         curved={false}
-                          color={color} 
-                          link="../conference/conference-agenda"
-                          bonusClass="rounded">
+                            curved={false}
+                            color={color}
+                            link="../conference/conference-agenda"
+                            bonusClass="rounded">
                             CONFERENCE AGENDA
                         </Cta>
                     );
                 } else {
                     return (
                         <Cta key="cta innovation link"
-                         curved={false}
-                        color="solutions-blue-FME-ABE-TEE"
-                        link="../conference/solutions-innovation-stage"
-                        bonusClass="rounded">
+                            curved={false}
+                            color="solutions-blue-FME-ABE-TEE"
+                            link="../conference/solutions-innovation-stage"
+                            bonusClass="rounded">
                             SOLUTIONS INNOVATION STAGE
                         </Cta>
                     );
@@ -611,7 +678,7 @@ const FullAgenda = props => {
      *
      * @returns The tracks section (the bit with the checkboxes).
      */
-// console.log(state)
+    // console.log(state)
     const getTracksNav = () => {
         //Very annoying button for extra conference on some in this bit
         const cols = show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? [6, 6] : [9, 3];
@@ -651,7 +718,9 @@ const FullAgenda = props => {
                         {/* extra buttons for filtering ABE FME TEE*/}
                         {(show == "FME" ||
                             show == "TEE" ||
-                            show == "ABE")
+                            show == "ABE" ||
+                            show == "FMX" ||
+                            show == "ABX")
                             ?
                             <div className={`col-12 track-col border-top border-light`}>{getShowButtons(maxShows)}</div>
                             : null}
@@ -719,6 +788,7 @@ const FullAgenda = props => {
         const pipedSessions = runFilters(sessions); //Filter Sessions
         return (
             <section
+
                 className={`confman conference-agenda conference-agenda--${show} ${!!extraMode ? `conference-agenda--${getAltConferenceString(show, extraMode)}` : ""}`}>
 
                 <MainNav desktop={window.innerWidth > 992}>
@@ -818,6 +888,7 @@ const FullAgenda = props => {
                         </div>
                     )}
                 </Body>
+
             </section>
         );
     }

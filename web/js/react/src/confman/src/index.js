@@ -57,6 +57,7 @@ const options = {
             ? document.querySelector("#root").getAttribute("daynameoverride").split(" | ")
             : undefined, //Overrides for day names on the agenda nav menu, delimited by |
     parameters,
+    cocktailMaxTagSelection: document.querySelector("#root").getAttribute("cocktailMaxTagSelection"), //set the minimun number of selectable tags to more to next step
 };
 
 //Fix for test websites

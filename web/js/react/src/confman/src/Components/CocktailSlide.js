@@ -1,80 +1,102 @@
 
 import React, { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-
-import Spinner from "../../../common_components/Spinner";
-
 import { getSiteFromAcronym } from "../Utils/getSite";
 
 
 
 
 
-import {
-    fetchSpeakerList,
-    setLoading,
-    // setOpenSlides,
-    // setDay,
-    // setTrack,
-    setLetter,
-    // setDealtWithInitialParams,
-    setQuery,
-    // resetFiltersAction,
-    // setError,
-} from "../Actions";
-import getModal from "../Utils/getModal";
-import Letter from "./Letter";
-import MainNav from "./MainNav";
-//to re add 
-// import SearchInput from "../../../common_components/SearchInput";
-//to removed 
-import SearchInput from "../Components/SearchInput";
-import Cta from "../../../common_components/Cta";
-import Body from "../../../common_components/Body";
-import SpeakerSlide from "./SpeakerSlide";
-import DesignSpeakerSlide from "./DesignSpeakerSlide";
-import CocktailButton from "./CocktailsButton";
-// import logo from '../../../confman/public/capture.PNG'; // with import
+
+const CocktailSlide = (props) => {
+  const { sessions } = props;
+  const options = useSelector(state => state.options)
+  const { conf, show, mode, continent } = options;
+  const selectedTags = useSelector(state => state.cocktailReducer.selectedTags)
 
 
 
 
-const CocktailSlide = props => {
+  //button to link to the conference 
 
-    //COCTAIL
-    const [industry, setindustry] = useState([props.el])
+  const viewConfHandleClick = (id, day) => {
+   // Append  id and day to the URL
+    const url = getSiteFromAcronym(show) + "conference/conference-agenda#" + id.toLowerCase() + "-" + day
+     const newTab = window.open();
+   // Detach the new tab from the current window to prevent it from being considered a popup
+    newTab.opener = null; 
+   //Redirect to the new page in a new tab
+    newTab.location.href = url;
+ }
 
-    console.log(props.el, "what scoming ")
 
-    return (
-        <div className="col-12 col-md-6 pt-2" >
+  return (
 
-            <h3 className="text-dark">DAY 
-             - STAGE X - TIME X</h3>
-            <h3 className="text-dark">SESSION TITLE</h3>aa
-            <p>Session info here: Ut eos intiore ctusamusdae vel ipsapitiatia cus et quis
-                dicim eum adi berum alicipsum verumqui veruptam eum quiandit, od quae
-                cones as rest, atesequia cus imolorem. Nam, si tent estoriam, officae ipis
-                aspel iumquodis dendis cum faccabo. Nequatem fugiam as dit, in</p>
-                <div className="row" > 
-                {/* add those in the context as an option and get them from the root part*/}
-                <div className="col-12 col-md-auto pb-1 pd-md-0  " ><button type="button"  className="btn btn-dark w-100 w-md-auto"><b> VIEW FULL AGENDA</b></button></div>
-                <div className="col-12 col-md-auto  " > <button type="button" className="btn btn-dark w-100 w-md-auto" style={{backgroundColor:"#FF00FF"}}><b> REGISTER TO ENJOY </b></button></div>
-                
-                 
 
-            
+ 
+    < >
+
+      {sessions.map((session, index) => (
+
+
+
+
+        // <div key={index} className={`  card bg-light p-0 session${index}`} >
+        <div key={index} className={`col-12 col-md-12 pt-4  session${index}`}>
+
+          {/* //fix this for the mobile */}
+          <div style={{ borderTop: "2px solid black", borderBottom: "2px solid black" }} className="card border-0"  >
+
+            <div className="d-flex justify-content-around flex-column">
+
+              <div style={{ minHeight: "250px" }} className="row g-0">
+                <div style={{ backgroundImage: `URL(https://oda0cs26.modx.dev//assets/resources/shared/images/testcocktails/a-${index + 1}.png)`, backgroundSize: "cover" }} className="col-md-1 rounded">
+                  {/* <img src="https://oda0cs26.modx.dev/assets/resources/500px_5.png" className="img-fluid rounded-start" alt="..."/> */}
                 </div>
+                <div className="col-md-11">
+                  <div className="card-body pb-0">   
+                   <div className=" card-text text-muted pb-2"> DAY  <b>{session.Day__c}</b> - STAGE X - TIME <b>{session.Session_Duration_Time__c}</b> </div>
+                    <h5 className="card-title">{session.CKTLT_Title__c}</h5>
+               
+                    <p className="card-text" dangerouslySetInnerHTML={{ __html: session.CKTLD_Description__c }} />
+
+                    
+                    <div className="row pt-3 ">
+                      <div className="col-12 col-md-6  pd-md-0 ">
+                        <button onClick={() => viewConfHandleClick(session.Id, session.Day__c)} type="button" className="btn btn-dark w-100 w-md-auto pb-0 pt-0 border-0">
+                          <b> VIEW AGENDA </b>
+                        </button>
+                      </div>
+                      <div className="col-12 col-md-6 ">
+                        <button type="button" className="btn btn-dark w-100 w-md-auto pb-0 pt-0 border-0" style={{ backgroundColor: "#FF00FF" }}>
+                          <b> REGISTER  </b>
+                        </button>
+
+                      </div>
+                      <div className="pt-3 pb-3 d-flex flex-wrap justify-content-center rounded">
+                        {session.cocktailsTags.map((el, index) =>
+                        (selectedTags.includes(el) ?
+                          <div key={index} className="badge bg-success col-auto m-1">{el}</div> :
+                          <div key={index} className="badge bg-dark col-auto m-1">{el}</div>
+                        )
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        
-    )
 
+      ))}
+      <div>
 
+  </div>
 
-
-
-
-}
+    </>
+  );
+};
 
 
 export default CocktailSlide

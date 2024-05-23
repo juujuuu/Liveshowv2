@@ -30,7 +30,7 @@
 // export default MainNavButton;
 import React, { useEffect } from "react";
 import { connect,useSelector,useDispatch } from "react-redux";
-import { setDay} from "../Actions";
+import { setDay,setOpenSlides} from "../Actions";
 
 
 
@@ -40,6 +40,8 @@ import { setDay} from "../Actions";
 const MainNavButton =(props)=>{
    
     const dispatch=useDispatch()
+    const openSlides = useSelector(state => state.openSlides)
+
     MainNavButton.defaultProps = {
         children: "XXX",
         active: false,
@@ -52,6 +54,9 @@ const MainNavButton =(props)=>{
    const handleClick = event => {
         if (props.handler != false) {
             dispatch(setDay(props.value));
+         
+                                   
+            
         }
     };
    

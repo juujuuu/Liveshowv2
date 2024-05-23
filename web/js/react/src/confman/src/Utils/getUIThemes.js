@@ -17,13 +17,13 @@ const getUIThemes = (show, day, track = [], extraMode) => {
             } else {
                 switch (day) {
                     case 1:
-                        theme = [...theme, "Supply Chain and Workforce / Application Comfort Optimization", "Application Safety & Security"];
+                        theme = [...theme, "Industry & Technology", "Sustainability & Applications"];
                         break;
                     case 2:
-                        theme = [...theme, "Sustainability / Carbon Reduction", "Recycling"];
+                        theme = [...theme, "Applications", "Sustainability"];
                         break;
                     case 3:
-                        theme = [...theme, "Data and Industry 4.0", "Manufacturing and Production"];
+                        theme = [...theme, "Engineering & Solutions", "Talent & Thermal"];
                         break;
                 }
                 return (

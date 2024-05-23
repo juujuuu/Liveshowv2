@@ -5,6 +5,7 @@ const fetchSpeakerList = (site, conferenceId) => async dispatch => {
 	let response = await api.get(`/confman.php?call[]=presentation&confId=${conferenceId}`);
 	const { data } = response;
 	
+	// console.log(data)
 	dispatch({ type: "FETCH_SPEAKERLIST", payload: data });
 };
 

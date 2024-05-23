@@ -11,6 +11,7 @@ import maxTracksReducer from "./maxTracksReducer";
 import initialParamsReducer from "./initialParamsReducer";
 import lowestDayReducer from "./lowestDayReducer";
 import maxShowsReducer from "./maxShowsReducer";
+import cocktailReducer from "./cocktailReducer";
 
 /**
  * Our redux store.  (Sometimes it's erroneously called state).
@@ -27,5 +28,6 @@ export default combineReducers({
     maxTracks: maxTracksReducer,
     dealtWithInitialParams: initialParamsReducer,
     lowestDay: lowestDayReducer,
-    maxShows:maxShowsReducer
+    maxShows:maxShowsReducer,
+    cocktailReducer:cocktailReducer
 });

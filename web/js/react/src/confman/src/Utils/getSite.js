@@ -120,6 +120,7 @@ const getShowNameFromAcronym = acronym => {
             return "Acronym not found";
     }
 };
+//not used , just for testing can be deleteted
 const getShowNameFromAcronymMultyExpoSlide = acronym => {
     switch (acronym.toLowerCase()) {
         case "fme":

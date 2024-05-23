@@ -17,7 +17,12 @@ import resetFiltersAction from "./resetFilters";
 import setLowestDay from "./setLowestDay";
 import setInitialShows from "./setInitialShows";
 import setFirstLoad from "./setFistLoad";
-
+import setStep from "./setStep";
+import setTotalStepN from "./setTotalStepN";
+import setTags from "./setTags";
+import setCocktailSessions from "./setCocktailSessions";
+import setCocktailMaxTagSelection from "./setCocktailMaxTagSelection";
+import setCocktailMaxTagSelectionTracking from "./setCocktailMaxTagSelectionTracking";
 export {
     setLetter,
     setDay,
@@ -34,8 +39,16 @@ export {
     setDealtWithInitialParams,
     resetFiltersAction,
     setLowestDay,
+    //multyExpo
     setShow,
     setMaxShows,
     setInitialShows,
-    setFirstLoad
+    setFirstLoad,
+    //cocktail option
+    setStep,
+    setTotalStepN,
+    setTags,
+    setCocktailSessions,
+    setCocktailMaxTagSelection,
+    setCocktailMaxTagSelectionTracking
 };
