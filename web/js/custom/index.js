@@ -10,3 +10,4 @@ import "./search";
 import "./header-lock";
 import "./nav-highlight";
 import "./countdown";
+import "./footerHomeText"

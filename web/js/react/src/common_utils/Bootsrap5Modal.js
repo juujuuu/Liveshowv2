@@ -1,5 +1,5 @@
 import { getShowNameFromId } from "../exhibman_v2/src/Utils/GetShow";
-
+window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 /**
  * A utility function for making Bootstrap 5 modals in Web apps.
  * @param {Object} payload

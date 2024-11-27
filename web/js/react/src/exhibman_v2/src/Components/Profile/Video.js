@@ -6,7 +6,7 @@ function Video({ asset }) {
 
 	const getJsx = (asset) => {
 		const { Id, Name, Title__c,Link__c } = asset;
-		console.log(Link__c ,"videooooo")
+		
 		
 		
 const options=useSelector(state=>state.options)

@@ -15,6 +15,7 @@ import {
     setCocktailMaxTagSelection,
     setCocktailMaxTagSelectionTracking
 
+
 } from "../Actions";
 import getModal from "../Utils/getModal";
 import Letter from "./Letter";
@@ -66,7 +67,7 @@ const CocktailStep = props => {
             }
 
         }
-        console.log(limitTagSelection, "limitTagSelection")
+        // console.log(limitTagSelection, "limitTagSelection")
 
     });
 
@@ -74,6 +75,7 @@ const CocktailStep = props => {
     const handleClick = event => {
 
        setCheck(!check);
+       
         dispatch(setTags([el]))
 
         //**DISPATCHES THE ARRAY WITH THE NUMBER OF MAX TAGS SELECTABLE     
@@ -88,36 +90,35 @@ const CocktailStep = props => {
 
 
     return (
-        <div className="col-12 col-md-4 pb-2 pb-3 cocktail--conaine-step " >
+        <div className="col-12 col-md-4  pb-3  steps-container__tags__element" >
 
 
             {listcheckedElement.includes(el) ? (
-                <div onClick={() => handleClick()} style={{ cursor: "pointer", borderLeft: "2px solid  black" }} className="form-check p-4  rounded cocktails shadow-sms border-start-5">
-                    <div className="checkbox-filter__checkbox" >
+                <div onClick={() => handleClick()} style={{ cursor: "pointer", /*borderLeft: "2px solid  black"**/ }} id={el.toUpperCase()} className="steps-container__tags__element__form-check form-check ps-0 rounded cocktails shadow-sms border-start-5">
+                    <div className="checkbox-filter__checkbox steps-container__tags__element__form-check__checkbox-filter__checkbox" >
 
-                        <i className="bi bi-check-circle-fill pe-1" > <b>{el.toUpperCase()}</b></i>
+                        <i className="steps-container__tags__element__form-check__checkbox-filter__checkbox__i bi bi-check-circle-fill pe-1" style={{fontSize:"17px"}} > <span className="steps-container__tags__element__form-check__checkbox-filter__checkbox__b">{el.toUpperCase()}</span></i>
 
 
                     </div>
                 </div>
 
-            ) : (cocktailMaxTagS[stepNumber - 1] <= limitTagSelection ? (
+            ) : (cocktailMaxTagS[stepNumber - 1] <= limitTagSelection && selectedTags.length !== 0  ? (
 
-                <div onClick={() => handleClick()} style={{ opacity: 0.5, pointerEvents: "none", pointer: "none" }} className="form-check p-4  shadow-sms rounded">
-                    <div className="checkbox-filter__checkbox" >
+                <div onClick={() => handleClick()} style={{ opacity: 0.5, pointerEvents: "none", pointer: "none" }} id={el.toUpperCase()}  className="steps-container__tags__element__form-check form-check ps-0 ">
+                    <div className="checkbox-filter__checkbox steps-container__tags__element__form-check__checkbox-filter__checkbox" >
 
-
-                        <i className="bi bi-circle pe-1" style={{}}> <b>{el.toUpperCase()}</b></i>
+                        <i className="steps-container__tags__element__form-check__checkbox-filter__checkbox__i bi bi-circle pe-1" style={{fontSize:"17px"}}> <span className="steps-container__tags__element__form-check__checkbox-filter__checkbox__b">{el.toUpperCase()}</span></i>
 
 
                     </div>
                 </div>
 
             ) : (
-                <div onClick={() => handleClick()} style={{ cursor: "pointer", position: "relative", overflow: "hidden", borderLefts: "2px solid black", background: "#fcfcfc" }} className="form-check p-4  shadow-sms rounded ">
+                <div onClick={() => handleClick()} style={{ cursor: "pointer", position: "relative", borderLefts: "2px solid black", /*background: "#fcfcfc"**/ }} /*className="form-check p-4  shadow-sms rounded "**/ id={el.toUpperCase()} className="steps-container__tags__element__form-check form-check ps-0">
                     {/* <div className> <div class="loader"></div><b>{el.toUpperCase()}</b> </div>   */}
-                    <div className="checkbox-filter__checkbox  " >
-                        <i className="bi bi-circle pe-1" > <b>{el.toUpperCase()}</b></i>
+                    <div className="checkbox-filter__checkbox steps-container__tags__element__form-check__checkbox-filter__checkbox checkbox-filter__checkbox  " >
+                        <i  style={{fontSize:"17px"}}className="steps-container__tags__element__form-check__checkbox-filter__checkbox__i bi bi-circle pe-1" > <span className="steps-container__tags__element__form-check__checkbox-filter__checkbox__b">{el.toUpperCase()}</span></i>
 
 
                     </div>

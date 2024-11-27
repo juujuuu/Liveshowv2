@@ -23,6 +23,12 @@ import setTags from "./setTags";
 import setCocktailSessions from "./setCocktailSessions";
 import setCocktailMaxTagSelection from "./setCocktailMaxTagSelection";
 import setCocktailMaxTagSelectionTracking from "./setCocktailMaxTagSelectionTracking";
+import setCocktailMainStartYourMix from "./setCocktailMainStartYourMix"
+import setDefaultStateSlides from "./setDefaultStateSlides"
+import setStateSlidesAllOpen from "./setStateSlidesAllOpen"
+import setStateSlidesAllClosed from "./setStateSlidesAllClosed"
+import setStateSlideToggle from "./setStateSlideToggle"
+
 export {
     setLetter,
     setDay,
@@ -50,5 +56,10 @@ export {
     setTags,
     setCocktailSessions,
     setCocktailMaxTagSelection,
-    setCocktailMaxTagSelectionTracking
+    setCocktailMaxTagSelectionTracking,
+    setCocktailMainStartYourMix,
+    setDefaultStateSlides,
+    setStateSlidesAllOpen,
+    setStateSlidesAllClosed,
+    setStateSlideToggle
 };

@@ -428,7 +428,7 @@ const profileId= useSelector(state=>state.profileId)
                             </Cta>
                         </Link>
                     ) : null}
-                    <h1 className="profile-title">{pagetitle}</h1>
+                    <h1 translate="no" className="profile-title">{pagetitle}</h1>
                     {Exhibitor_Assets__r && enhanced && window.innerWidth > 992 ? (
                         <nav className="profile-quick-menu row">
                             <div className="profile-quick-menu__jump col-2">

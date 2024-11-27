@@ -57,21 +57,21 @@ const getSiteFromId = expo => {
     expo = expo.replaceAll("'", "");
    // console.log("get site: ", expo);
     switch (expo) {
-        case "a1x4V000001mqRx":
+        case "a1xUK000000lxB7":
             return "https://www.foam-expo.com/";
-        case "a1x4V000001mqS2":
+        case "a1xUK000000dwqX":
             return "https://www.adhesivesandbondingexpo.com/";
         case "a1x4V000001mqSH":
             return "https://www.foam-expo-europe.com/";
         case "a1x4V000001mqSM":
             return "https://www.adhesivesandbondingexpo-europe.com/";
-        case "a1x4V000001mqRm":
+        case "a1x4V0000026O9B":
             return "https://www.ceramicsexpousa.com/";
         case "a1xUK000000Y2aT":
             return "https://www.spacetechexpo.com/";
         case "a1x4V000001mqS7":
             return "https://www.spacetechexpo-europe.com/";
-        case "a1x4V000001mqRh":
+        case "a1xUK000000RaaT":
             return "https://www.thermalmanagementexpo.com/";
         case "chinaExhibitorList":
             return "https://www.foam-expo-china.com/";
@@ -84,21 +84,22 @@ const getSiteFromId = expo => {
 const getShowNameFromId = id => {
     id = id.replaceAll("'", "");
     switch (id) {
-        case "a1x4V000001mqRx":
-            return "Foam Expo North America";
-        case "a1x4V000001mqS2":
+        case "a1xUK000000lxB7":
+            // return "Foam Expo North America";
+           return "Foam Expo";
+        case "a1xUK000000dwqX":
             return "Adhesives & Bonding Expo";
         case "a1x4V000001mqSH":
             return "Foam Expo Europe";
         case "a1x4V000001mqSM":
             return "Adhesives & Bonding Expo Europe";
-        case "a1x4V000001mqRm":
+        case "a1x4V0000026O9B":
             return "Ceramics Expo";
         case "a1xUK000000Y2aT":
             return "Space Tech Expo";
         case "a1x4V000001mqS7":
             return "Space Tech Expo Europe";
-        case "a1x4V000001mqRh":
+        case "a1xUK000000RaaT":
             return "Thermal Management Expo";
         case "chinaExhibitorList":
             return "Foam Expo China";
@@ -112,21 +113,21 @@ const getAcronymFromId = id => {
     ///hereeeee
     id = id.replaceAll("'", "");
     switch (id) {
-        case "a1x4V000001mqRx":
+        case "a1xUK000000lxB7":
             return "FMX";
-        case "a1x4V000001mqS2":
+        case "a1xUK000000dwqX":
             return "ABX";
         case "a1x4V000001mqSH":
             return "FME";
         case "a1x4V000001mqSM":
             return "ABE";
-        case "a1x4V000001mqRm":
+        case "a1x4V0000026O9B":
             return "CEX";
         case "a1xUK000000Y2aT":
             return "SPC";
         case "a1x4V000001mqS7":
             return "BRE";
-        case "a1x4V000001mqRh":
+        case "a1xUK000000RaaT":
             return "TME";
         case "chinaExhibitorList":
             return "FMC";

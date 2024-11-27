@@ -10,7 +10,7 @@ const getConfPdfLink = (show, conf = false) => {
     switch (show) {
         case "FMX":
         case "ABX":
-            if (conf === "'a3i4V0000016NNJ'") {
+            if (conf === "'a3iUK0000007jy5'") {
                 return baseString + "Solutions Innovation" + ".pdf";
             } else {
                 return baseString + "FMX ABX" + ".pdf";

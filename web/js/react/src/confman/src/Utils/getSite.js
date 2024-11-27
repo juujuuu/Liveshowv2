@@ -44,11 +44,11 @@ const getSiteFromId = conferenceId => {
         case "a3i4V000001pJMf":
         case "a3i4V000001tXtn":
         case "a3i4V000001hXhE":
-        case "a3i4V0000016NNJ":
+        case "a3iUK0000007jy5":
             return "FMX";
         case "a3i4V000001pJMf":
         case "a3i4V000001hXhE":
-        case "a3i4V0000016NNJ":
+        case "a3iUK0000007jy5":
             return "ABX";
         case "a3i4V000001pPTc":
         case "What ever the sf id of the solutions innovation agenda ends up being":
@@ -65,6 +65,7 @@ const getSiteFromId = conferenceId => {
         case "a3i4V000000bqIh":
         case "a3i4V00000222PA":
         case "a3i4V000000nXcp":
+        case "a3iUK0000001a9V":
             return "BRE";
         case "a3i4V000001pOUg":
             return "OCS";
@@ -93,15 +94,18 @@ const getSiteFromId = conferenceId => {
  * @returns The full show name.
  */
 const getShowNameFromAcronym = acronym => {
+    console.log(acronym)
     switch (acronym.toLowerCase()) {
         case "fmx":
             return "Foam Expo North America";
         case "abx":
             return "Adhesives & Bonding Expo";
         case "fme":
-            return "Foam Expo Europe";
+            return "https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/fme-thin.png";
         case "abe":
-            return "Adhesives & Bonding Expo Europe";
+            return "https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/abe-thin.png";
+        case "tee":
+            return "https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/tee-thin.png";
         case "cex":
             return "Ceramics Expo";
         case "spc":
@@ -114,12 +118,44 @@ const getShowNameFromAcronym = acronym => {
             return "Onboard  Connectivity Summit";
         case "sat":
             return "Satellite Connectivity Summit";
-        case "tee":
-            return "Thermal Management Expo Europe ";
+        
         default:
             return "Acronym not found";
     }
 };
+
+const getShowNameFromAcronymOnlyText = acronym => {
+    switch (acronym.toLowerCase()) {
+        case "fmx":
+            return "Foam Expo North America";
+        case "abx":
+            return "Adhesives & Bonding Expo";
+        case "fme":
+            return "Foam Expo Europe";
+        case "abe":
+            return "Adhesives & Bonding Expo Europe";
+        case "tee":
+            return "Thermal Management Expo Europe";
+        case "cex":
+            return "Ceramics Expo";
+        case "spc":
+            return "Space Tech Expo";
+        case "bre":
+            return "Space Tech Expo Europe";
+        case "tme":
+            return "Thermal Management Expo";
+        case "ocs":
+            return "Onboard  Connectivity Summit";
+        case "sat":
+            return "Satellite Connectivity Summit";
+        
+        default:
+            return "Acronym not found";
+    }
+};
+
+
+
 //not used , just for testing can be deleteted
 const getShowNameFromAcronymMultyExpoSlide = acronym => {
     switch (acronym.toLowerCase()) {
@@ -137,11 +173,16 @@ const getShowNameFromAcronymMultyExpoSlide = acronym => {
             return "Adhesives & Bonding - Thermal Management";
         case "abe-fme-tee":
             return "Adhesives & Bonding - Foam - Thermal Management";
-            case null:
-                return "Adhesives & Bonding - Foam - Thermal Management";
+            // case null:
+            //     return "Adhesives & Bonding - Foam - Thermal Management";
         default:
             return "";
     }
 };
 
-export { getSiteFromId, getSiteFromAcronym, getShowNameFromAcronym, getShowNameFromAcronymMultyExpoSlide };
+
+
+
+
+
+export { getSiteFromId, getSiteFromAcronym, getShowNameFromAcronym, getShowNameFromAcronymMultyExpoSlide, getShowNameFromAcronymOnlyText};

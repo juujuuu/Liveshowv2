@@ -43,7 +43,7 @@ class Cta extends React.Component {
                 <button
                     className={`confman__cta curved-cta curved-cta--${this.props.size} ${!this.props.curved ? "curved-cta--hard" : ""} curved-cta--${
                         this.props.color
-                    } ${this.props.active ? "active" : ""} ${this.props.margin}`}
+                    } ${this.props.active ? "active" : ""} ${this.props.margin} rounded`}
                     onClick={this.handleClick}>
                     {this.props.link != false ? (
                         <a className="curved-cta__link" href={this.props.link} download={this.props.download} title={this.props.children}>
@@ -62,7 +62,7 @@ class Cta extends React.Component {
                 <button
                     className={`confman__cta curved-cta confman__cta--reg-pop curved-cta--${this.props.size} ${
                         !this.props.curved ? "curved-cta--hard" : ""
-                    } curved-cta--${this.props.color} ${this.props.active ? "active" : ""} ${this.props.margin}`}>
+                    } curved-cta--${this.props.color} ${this.props.active ? "active" : ""} ${this.props.margin} `}>
                     <a className="curved-cta__link" href={this.props.link} title={this.props.children}>
                         {this.props.children}
                     </a>

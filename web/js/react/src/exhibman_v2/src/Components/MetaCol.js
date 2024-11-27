@@ -232,7 +232,7 @@ const MetaCol = ({order}) => {
     const country=useSelector(state=>state.exhibitor.country)
     const Exhibitor_listing_type__c=useSelector(state=>state.exhibitor.Exhibitor_listing_type__c)
     const Company_Zip__c=useSelector(state=>state.exhibitor.Company_Zip__c)
-    const Youtube_channel__c=useSelector(state=>state.exhibitor.Youtube_channel__c,)
+    const Youtube_Channel__c=useSelector(state=>state.exhibitor.Youtube_Channel__c,)
     const Linkedin__c=useSelector(state=>state.exhibitor.Linkedin__c)
     const Facebook__c=useSelector(state=>state.exhibitor.Facebook__c)
     const Twitter__c=useSelector(state=>state.exhibitor.Twitter__c,)
@@ -245,7 +245,7 @@ const MetaCol = ({order}) => {
 
     const exhibitor2=useSelector(state=>state.exhibitor)
     
-
+    
     // const {
         // Expo__c,
         // url,
@@ -379,7 +379,8 @@ const MetaCol = ({order}) => {
                             {getSocial(Linkedin__c, "LINKEDIN")}
                             {getSocial(Facebook__c, "FACEBOOK")}
                             {getSocial(Twitter__c, "TWITTER")}
-                            {getSocial(Youtube_channel__c, "YOUTUBE")}
+                            {getSocial(Youtube_Channel__c, "YOUTUBE")}
+                            
                         </>
                     ) : null}
                 </div>

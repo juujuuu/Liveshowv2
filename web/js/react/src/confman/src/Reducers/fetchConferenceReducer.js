@@ -79,7 +79,9 @@ const fetchConferenceReducer = (state = [], action) => {
 					session.Synopsis__c == null ? "" : session.Synopsis__c;
 
 				session.Id = session.Id.substring(0, session.Id.length - 3);
+				
 				return session;
+				
 			});
 			return sessions;
 		default:

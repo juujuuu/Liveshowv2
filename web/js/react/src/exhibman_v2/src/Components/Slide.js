@@ -133,7 +133,7 @@ const mode=useSelector(state=>state.mode)
                 </div>
                 <div className="col-6 col-md-5 exhibitor-slide__body">
                     <div>
-                        <h4 className="exhibitor-name">
+                        <h4 translate="no"  className="exhibitor-name">
                             {/* <Link className="router-link" to={getProfilePath(debug, local, id)} onClick={() => this.handleSwitchMode("PROFILE", id)}> */}
                             {/* <Link className="router-link" to={getProfilePath(debug, local, id)} onClick={() =>handleSwitchMode("PROFILE", id)}> */}
                                 {pagetitle}
@@ -193,7 +193,7 @@ const mode=useSelector(state=>state.mode)
                 </div>
                 <div className="col-12 col-md-5 exhibitor-slide__body">
                     <div>
-                        <h4 className="exhibitor-name">
+                        <h4 translate="no" className="exhibitor-name">
                             {/* <Link className="router-link" to={getProfilePath(debug, local, id)} onClick={() => this.handleSwitchMode("PROFILE", id)}> */}
                             <Link className="router-link" to={getProfilePath(debug, local, id,postshow)} onClick={() =>handleSwitchMode("PROFILE", id)}>
                                 {pagetitle}

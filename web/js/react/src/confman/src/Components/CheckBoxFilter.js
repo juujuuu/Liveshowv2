@@ -40,6 +40,7 @@ import React,{useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setTrack } from "../Actions";
 import { setShow,setFirstLoad } from "../Actions";
+import ImageLoader from "./ImageLoader";
 
 
 /**
@@ -91,6 +92,7 @@ const [check, setcheck] = useState(false)
     };
 
        let exa
+       let orderShowButton
 
        //*****Removing this as we are using the multi expo on the innovation agenda too
 // if(extraMode === "innovation-agenda" && (show == "FME" || show == "TEE"|| show == "ABE" )){
@@ -99,11 +101,11 @@ const [check, setcheck] = useState(false)
      
 //     }
     // else{
-      if (show == "FME" || show == "TEE"|| show == "ABE"  ){
-      
+      if (show == "FME" || show == "TEE"|| show == "ABE"){
+   
         return (      
 
-            <div className={`checkbox-filter checkbox-filter--${inputClass}`}>
+            <div className={`checkbox-filter checkbox-filter--${inputClass} ${inputClass==show ? "order-0" : "order-1"}`}>
                 {exa}
                 <div className="checkbox-filter__checkbox">
                     {checked ? (
@@ -119,7 +121,9 @@ const [check, setcheck] = useState(false)
                     )}
                 </div>
                 <div className="checkbox-filter__name">
-                    <h3>{name}</h3>
+                    {/* <h3 >{name}</h3> */}
+                    {name.includes("http")?<ImageLoader alt="show logo" src={name}/> :<h3 >{name}</h3>}
+                    
                 </div>
             </div>
             

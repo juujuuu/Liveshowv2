@@ -12,6 +12,7 @@ import initialParamsReducer from "./initialParamsReducer";
 import lowestDayReducer from "./lowestDayReducer";
 import maxShowsReducer from "./maxShowsReducer";
 import cocktailReducer from "./cocktailReducer";
+import defaultStateSlidesReducer from "./defaultStateSlidesReducer"
 
 /**
  * Our redux store.  (Sometimes it's erroneously called state).
@@ -29,5 +30,6 @@ export default combineReducers({
     dealtWithInitialParams: initialParamsReducer,
     lowestDay: lowestDayReducer,
     maxShows:maxShowsReducer,
-    cocktailReducer:cocktailReducer
+    cocktailReducer:cocktailReducer,
+    defaultStateSlidesReducer:defaultStateSlidesReducer
 });

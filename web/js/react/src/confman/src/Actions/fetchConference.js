@@ -8,6 +8,7 @@ import setInitialShowsFilters from "./setInitialShows";
 import setLoading from "./setLoading";
 import setStep from "./setStep";
 import setTotalStepN from "./setTotalStepN";
+import setDefaultStateSlides from "./setDefaultStateSlides"
 
 import setTags from "./setTags";
 // import FullAgenda from "../Components/FullAgenda";
@@ -26,7 +27,7 @@ const fetchConference = (site, conferenceId) => async dispatch => {
   // let response = await api.get(`/confmanTest.php?call[]=presentation&call[]=session&confId=${conferenceId}`);
   const { data } = response;
   const { session, presentation, maxShows } = data;
-// console.log(data,"data")
+
 
 
   // //test add show name to session
@@ -88,7 +89,7 @@ const fetchConference = (site, conferenceId) => async dispatch => {
       return el.Categories__c = el.Categories__c.split("-").sort().join("-")
     }
   })
-  //  console.log(data)
+
   // **MULTY EXPOS OPTION**
   // **LOGIC TO CREATE THE BUTTONS BASED ON THE SHOWS
   // I create new array and i order it again (not sure if needed to be ordered again)
@@ -107,7 +108,6 @@ const fetchConference = (site, conferenceId) => async dispatch => {
     //**then split their values in an array**/
     const filteredCocktails = Object.fromEntries(
       Object.entries(session).filter(([key, value]) => key.startsWith('CKTL_')));
-    // console.log(filteredCocktails,"hereee");
     session.cocktails = filteredCocktails
 
     for (const [key, value] of Object.entries(filteredCocktails)) {
@@ -140,7 +140,7 @@ const fetchConference = (site, conferenceId) => async dispatch => {
   }).sort().filter(n => n)
 
 
-
+// console.log(data)
 
 
 
@@ -149,9 +149,10 @@ const fetchConference = (site, conferenceId) => async dispatch => {
   dispatch(setMaxDays(session));
   dispatch(setLowestDay(session));
   dispatch(setMaxTracks(session));
+  dispatch(setDefaultStateSlides(session))
 
 
-
+// console.log(data)
 
 
   dispatch(setMaxShows(session));

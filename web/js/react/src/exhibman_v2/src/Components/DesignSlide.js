@@ -212,7 +212,7 @@ const	handleCheckbox = (e,id, size) => {
 
 		const booth = payload["exhibitor-booth"];
 		
-		console.log("Payload ---->", props.payload);
+		// console.log("Payload ---->", props.payload);
 			
 
 		return (
@@ -230,7 +230,7 @@ const	handleCheckbox = (e,id, size) => {
 				</div>
 				<div className="col-9 exhibitor-slide__body">
 					<div style={{ width: "25%" }}>
-						<h4 className="exhibitor-name">{pagetitle}</h4>
+						<h4 translate="no" className="exhibitor-name">{pagetitle}</h4>
 						<p className="exhibitor-booth">Booth Number: {booth}</p>
 					</div>
 					<div

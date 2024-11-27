@@ -93,15 +93,18 @@ const Slide = props => {
             return (
                 <div key={`speaker-${index}`} className={`row speakers__speaker`} id={Id}>
                     {Title__c != null ? <h3 className="speaker__presentation-name">{Title__c}</h3> : null}
-                    {windowwidth > 992 ? (
+                    {/* {windowwidth > 992 ? (
                         <div className="col-3 speaker__headshot">
                             <img className="img-fluid" src={getHeadShot(Head_Shot_URL__c)} alt={`${First_Name__c} ${Last_Name__c}`} />
                         </div>
                     ) : (
                         ""
-                    )}
+                    )} */}
+                    <div className="col-3 speaker__headshot">
+                            <img className="img-fluid" src={getHeadShot(Head_Shot_URL__c)} alt={`${First_Name__c} ${Last_Name__c}`} />
+                        </div>
                     <div className={`col-${windowwidth > 992 ? "5" : "12"} speaker__info`}>
-                        <h4 className="speaker__info__name">{`${Prefix__c != null ? `${Prefix__c} ` : ""}${First_Name__c} ${Last_Name__c}`}</h4>
+                        <h4 className="speaker__info__name pt-1">{`${Prefix__c != null ? `${Prefix__c} ` : ""}${First_Name__c} ${Last_Name__c}`}</h4>
                         <h4 className="speaker__info__job-title">{`${Job_Title__c}`}</h4>
                         <h4 className="speaker__info__company">{`${Company__c}`}</h4>
                         {ondemand && Presentation_Slides_PDF_link__c ? (

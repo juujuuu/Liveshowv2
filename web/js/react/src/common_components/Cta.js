@@ -157,6 +157,8 @@ import {
 	resetFiltersAction,
 	setError,
 	setLowestDay,
+	setStateSlidesAllOpen,
+	setStateSlidesAllClosed
 } from "../confman/src/Actions";
 
 const Cta = ({
@@ -230,6 +232,7 @@ const Cta = ({
 				//CTA to clear filters 
 				dispatch(resetFiltersAction({ track: [], day: lowestDay, query: "", letter: -1 }));
 				dispatch(setOpenSlides(false));
+				
 				document.getElementById("confman__search").value = "";
 		
 				"clearSpeaker"
@@ -257,16 +260,20 @@ const Cta = ({
 			// }
 
 			else if (role == "exhib-assets") {
+				
 				handler();
 			} else if (role == "expand") {
 
 				// console.log("pass",handler)
 				// console.log(handlerTest)
 				dispatch(setOpenSlides(value))
-				// handler(value);
+				dispatch(handler)
+				//handler();
 			} else if (role == "collapse") {
 				dispatch(setOpenSlides(value))
-				// handler(value);
+				dispatch(handler)
+				console.log(handler)
+				//handler();
 			} else if (role == "pop-form") {
 				//handle by site jquery
 			} else if (role == "expo-query") {

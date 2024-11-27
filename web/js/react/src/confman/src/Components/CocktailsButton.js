@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from "react";
+import React, { useState, useEffect,forwardRef } from "react";
  import { connect, useDispatch, useSelector } from "react-redux";
  import {
     fetchSpeakerList,
@@ -11,11 +11,15 @@ import React, { useState, useEffect, } from "react";
     setQuery,
     setTags,
     setCocktailSessions,
-    resetFiltersAction
+    resetFiltersAction,
+    setCocktailMainStartYourMix
     
 } from "../Actions";
 
-const CocktailButton = (props) => {
+
+
+
+const CocktailButton = forwardRef((props, ref) => {
     let [buttonsStatus,setButtonStatus] =useState("")
     const stepNumberTitle = useSelector(state => state.cocktailReducer.totalStepN)
     let newCount = props.countStep
@@ -23,10 +27,12 @@ const CocktailButton = (props) => {
     const sessions=useSelector(state =>state.sessions)
     const state=useSelector(state=>state)
     const options=useSelector(state=>state.options)
+    const cocktailMainStartYourMix = useSelector(state => state.cocktailReducer.setCocktailMainStartYourMix)
     // const state
-    const { conf, show, mode ,continent,cocktailMinTagSelection} = options;
+    const { conf, show, mode ,continent,cocktailMinTagSelection,reglink} = options;
+  
   const dispatch=useDispatch()
-   
+  // const cocktailMainContainer= useRef(null);
     newCount++
     const onClickHandler = (el) => {
         if (newCount <= stepNumberTitle.length) {
@@ -66,34 +72,63 @@ const CocktailButton = (props) => {
         });
         dispatch(setCocktailSessions(newSession))
         
-        props.onClickHandlerMix("START THE MIX")  
+        props.onClickHandlerMix("SERVE UP!")  
         // props.onClickHandlerBack(newCount)
     }
     const onClickHandlerReset=()=>{
       //  dispatch(setTags("RESET"))
       dispatch(resetFiltersAction([]))
         props.onClickHandler(1)
-        props.onClickHandlerMix("")  
+        props.onClickHandlerMix("") 
+        //reset the top button 
+        dispatch(setCocktailMainStartYourMix(!cocktailMainStartYourMix))
+        ref.current.scrollIntoView({behavior:"smooth"})
 
+    }
+
+    const onClickHandlerAmend=()=>{
+      //  dispatch(setTags("RESET"))
+
+        props.onClickHandler(1)
+        props.onClickHandlerMix("")  
+        
+        const elementTop = ref.current.getBoundingClientRect().top + window.scrollY || window.pageYOffSet
+
+        // Scroll to the position 20 pixels above the element
+        window.scrollTo({
+            top: elementTop + 155,
+            behavior: 'smooth'
+        });
     }
 
 // console.log(props)
  
-if(props.buttonsStatus  == "START THE MIX"){
+if(props.buttonsStatus  == "SERVE UP!"){
     if(window.innerWidth > 992){
 //Desktop button Start-again
 
 
-
-    return  <div className="col-12 p-0 ">
+// onClickHandlerAmend removing this 
+    return  <div className="col-12 p-0  row">
  
-   {<button style={{ float: "right" }} type="button"  onClick={onClickHandlerReset} className="btn btn-dark pb-0 pt-0 border-0"><b>START AGAIN</b></button>}
+   {
+      <div>
+        {reglink? <a href={reglink} title="Registration Form" target="_blank" ><button style={{ backgroundColor:"#b62f25", float: "right" }} type="button"  className="cocktail-register-now btn btn-dark pb-0 pt-0 ms-2 border-0 float-lg-end"><b>REGISTER TODAY</b></button></a> : ""}
+        <button style={{ float: "right" }} type="button"  onClick={onClickHandlerReset} className="btn btn-dark pb-0 pt-0 border-0 ms-2"><b>START AGAIN <i class="bi bi-arrow-clockwise"></i></b></button>
+        <button style={{ float: "right" }} type="button"  onClick={onClickHandlerAmend} className="btn btn-secondary pb-0 pt-0 border-0 ms-2"><b>AMEND</b></button>
+      
+
+
+</div>
+   }
    </div>
    }else{
     //Mobile button Start-again  
-    return <div className="row">  <div className="col-12 "> 
-   {<button  type="button"  onClick={onClickHandlerReset} className="btn btn-dark w-100 pb-0 pt-0 border-0"><b>START AGAIN</b></button>}
-   </div>
+    return <div className="">  
+    {<button  type="button"  onClick={onClickHandlerAmend} className="btn btn-secondary w-100 pb-0 pt-0 border-0 mb-2"><b>AMEND</b></button>}
+   {<button  type="button"  onClick={onClickHandlerReset} className="btn btn-dark w-100 pb-0 pt-0 border-0 mb-2"><b>START AGAIN</b></button>}
+   {reglink?<a href={reglink} title="Registration Form" target="_blank" > <button style={{ backgroundColor:"#b62f25" }} type="button"   className="cocktail-register-now btn btn-dark pb-0 pt-0 border-0  w-100 mb-2"><b>REGISTER TODAY</b></button> </a>: ""}
+  
    
    </div>
    }
@@ -117,15 +152,15 @@ if(props.buttonsStatus  == "START THE MIX"){
               
   newCount <= stepNumberTitle.length ? (
     <button style={{ float: "right" }} onClick={onClickHandler} type="button" className="btn btn-dark pb-0 pt-0 border-0">
-      <b>STEP {props.countStep + 1}:</b> <span style={{color: "rgb(255, 0, 255)"}}>{props.countStepName.toUpperCase()}{" "}</span>
+      <b>STEP {props.countStep + 1}:</b> <span>{props.countStepName.toUpperCase()}{" "}</span>
       <i className="bi bi-caret-right-fill"></i>
     </button>
   ) : (selectedTags.length >= 1  ? (
-    <button style={{ float: "right", backgroundColor: "#FF00FF" }} type="button" onClick={onClickHandlerMix} className="btn btn-success pb-0 pt-0 border-0">
-      <b>START THE MIX</b>
+    <button style={{ float: "right" }} type="button" onClick={onClickHandlerMix} className="cocktailColoredButtons btn  pb-0 pt-0 border-0">
+      <b>SERVE UP!</b>
     </button>
-  ):(<button style={{ float: "right", backgroundColor: "#FF00FF" }} type="button" onClick={onClickHandlerMix} className="btn btn-success disabled pb-0 pt-0 border-0">
-    <b>START THE MIX</b>
+  ):(<button style={{ float: "right" }} type="button" onClick={onClickHandlerMix} className="cocktailColoredButtons btn  disabled pb-0 pt-0 border-0">
+    <b>SERVE UP!</b>
   </button>)
   
   )
@@ -152,20 +187,20 @@ if(props.buttonsStatus  == "START THE MIX"){
     return (
         <>
       
-        <div className="col-12 mb-2">
+        <div className="col-12 p-0 mb-2">
          {/* <button style={{ float: "right" }} onClick={onClickHandler} type="button" className="btn btn-dark">STEP {props.countStep}:SECTORS </button> */}
         
         {/* { props. props.buttonsStatus?}  */}
         
         {newCount<=stepNumberTitle.length 
          ?
-         <button style={{ float: "right" }} onClick={onClickHandler} type="button" className="btn btn-dark w-100 border-0 p-0">STEP {props.countStep}:<span style={{color: "rgb(255, 0, 255)"}}> {props.countStepName.toUpperCase()}</span> </button> 
+         <button style={{ float: "right" }} onClick={onClickHandler} type="button" className="btn btn-dark w-100 border-0 p-0">STEP {props.countStep}:<span> {props.countStepName.toUpperCase()}</span> </button> 
          :
          selectedTags.length >= 1
          ?
-         <button style={{backgroundColor:"#FF00FF" }} type="button"  onClick={onClickHandlerMix} className="btn btn-success pb-0 pt-0 border-0 w-100"><b>START THE MIX</b></button>
+         <button style={{backgroundColor:"#B62F25" }} type="button"  onClick={onClickHandlerMix} className="btn btn-success pb-0 pt-0 border-0 w-100"><b>SERVE UP!</b></button>
          :
-         <button style={{backgroundColor:"#FF00FF" }} type="button"  onClick={onClickHandlerMix} className="btn btn-success disabled pb-0 pt-0 border-0 w-100"><b>START THE MIX</b></button>  }
+         <button style={{backgroundColor:"#B62F25" }} type="button"  onClick={onClickHandlerMix} className="btn btn-success disabled pb-0 pt-0 border-0 w-100"><b>SERVE UP!</b></button>  }
        
 
 {/* (         selectedTags.length >= 1  ? (
@@ -189,7 +224,7 @@ if(props.buttonsStatus  == "START THE MIX"){
 
        
         </div>
-        <div className="col-12  ">
+        <div className="col-12 p-0 ">
             {newCount > 2 ? <button type="button" onClick={onClickHandlerBack} className="btn btn-dark w-100 pb-0 pt-0 border-0"><i className="bi bi-caret-left-fill"></i> BACK </button> : null}
 
         </div>
@@ -199,7 +234,7 @@ if(props.buttonsStatus  == "START THE MIX"){
     )
 }
 }
-}
+})
 
 
 export default CocktailButton

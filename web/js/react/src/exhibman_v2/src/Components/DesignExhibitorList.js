@@ -206,6 +206,7 @@ const queries=useSelector(state=>state.queries)
 const exhibs=useSelector(state=>state.exhibs)
 const loading=useSelector(state=>state.loading)
 const downloadList=useSelector(state=>state.downloadList)
+console.log(downloadList)
 	useEffect(() => {
 		if (exhibs.length > 0) {
 			dispatch(setLoading(false));
@@ -285,6 +286,8 @@ const downloadList=useSelector(state=>state.downloadList)
 	};
 
 	const downloadSelected = (downloads, exhibitors) => {
+		
+		console.log(downloads, exhibitors)
 		let output = [];
 		downloads.forEach(({ id, size }) => {
 			const exhibitor = exhibitors.find(exhibitor => exhibitor.id === id);
@@ -328,7 +331,8 @@ const downloadList=useSelector(state=>state.downloadList)
 								downloadSelected(downloadList, exhibs)
 							}
 							size="max"
-							color="black">
+							color="black"
+							role = "expo-query">
 							Download Selected
 						</Cta>
 					</StickyNav>

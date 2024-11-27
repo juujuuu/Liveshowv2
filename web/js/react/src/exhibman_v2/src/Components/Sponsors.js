@@ -5,7 +5,7 @@ export const Sponsors = ({show,href,src,alt,position,displayBanner}) => {
     let html
     let style,textAlignImage
   // if(show.show==="CEX" && window.innerWidth > 768){
-    if(show.show==="CEX"){
+    if(show.show==="enter show in case you need"){
        html="" 
        {   
 

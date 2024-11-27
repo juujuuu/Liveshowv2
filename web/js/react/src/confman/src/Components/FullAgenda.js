@@ -18,6 +18,7 @@ import CheckBoxFilter from "./CheckBoxFilter";
 import getConfPdfLink from "../Utils/getConfPdf";
 import { getSiteFromAcronym } from "../Utils/getSite";
 import { getShowNameFromAcronym } from "../Utils/getSite";
+import ImageLoader from "./ImageLoader";
 
 import {
     fetchConference,
@@ -32,7 +33,9 @@ import {
     setError,
     setLowestDay,
     setShow,
-    setFirstLoad
+    setFirstLoad,
+    setStateSlidesAllOpen,
+    setStateSlidesAllClosed
 } from "../Actions";
 import getModal from "../Utils/getModal";
 import { getOnDemandCode } from "../Utils/getOnDemand";
@@ -63,6 +66,11 @@ const FullAgenda = props => {
         // setError,
         // resetFiltersAction,
         // lowestDay,
+        src,
+        alt,
+        className,
+        style
+
     } = props;
 
 
@@ -170,26 +178,26 @@ const FullAgenda = props => {
                 if (hash) {
                     elementParent = document.getElementById(setId);
                     elementChild = document.querySelector(`#${setId} .accordion-button`)
-                }  
-                 // Scroll to the element and click if it exists
+                }
+                // Scroll to the element and click if it exists
                 if (elementParent && elementChild) {
                     elementChild.click()
                     elementChild.scrollIntoView({ behavior: "smooth" });
                 }
             };
 
-          scrollToElement();
+            scrollToElement();
 
- }
-
-
+        }
 
 
-        
+
+
+
         if (!dealtWithInitialParams && !loading) {
 
             //If we can find a session id param.
-            
+
             if (parameters.find(param => param[0] == "session-id")) {
                 const [name, sessionId] = parameters.find(param => param[0] == "session-id"); //destructure param name and value
 
@@ -277,7 +285,7 @@ const FullAgenda = props => {
         let index = 0;
         let otherIndex = 0;
         let dayButtons = [];
-        console.log(state)
+        //console.log(state)
         for (index = lowestDay; index <= numberOfDays; index++) {
             dayButtons.push(
                 <div key={index} className={` col-${colNum}`}>
@@ -309,6 +317,7 @@ const FullAgenda = props => {
             let buttons = [];
             for (i = 0; i < numberOfTracks; i++) {
                 let trackName = sessions.find(session => session.Track_Number__c == i + 1).Track_Long_Title__c;
+                //   sessions.forEach(session => console.log(session.Track_Number__c))
                 buttons.push(
                     <CheckBoxFilter
                         name={trackName}
@@ -350,6 +359,7 @@ const FullAgenda = props => {
                 //  let trackName = sessions.find(session => session.showName== i + 1);
                 //let showName = sessions[i].Categories__c;
 
+                //filters.show.forEach(el => console.log(el.split("-").includes(showVariants[i])))
                 buttons.push(
                     <CheckBoxFilter
                         name={getShowNameFromAcronym(showVariants[i])}
@@ -357,6 +367,7 @@ const FullAgenda = props => {
                         handler={setShow}
                         value={showVariants[i]}
                         key={`checkboxfilter ${i + 1}`}
+                        // checked={filters.show.includes(showVariants[i])}
                         checked={filters.show.includes(showVariants[i])}
 
                     />
@@ -390,6 +401,34 @@ const FullAgenda = props => {
             let slides = data.map((session, index) => <Slide session={session} windowwidth={window.innerWidth} key={`slide-${index + 1}`} />);
             return (
                 <div className="accordion accordion-flush conference-agenda__sessions" id="conference-agenda__sessions">
+                   {/*FOR ABE tee fme AND jeSUS CRHIST SINNER add the days overrride AGAIN IN THE BODY*/}
+                  {((show === "FME" || show === "ABE" || show === "TEE") && (extraMode!="innovation-agenda")) ? (
+                        <div className="d-flex flex-column flex-md-row align-items-center mb-4 " >  
+                        <b className="mr-1 mt-1" style={{ color: "#2e2b28", fontSize: "17px", paddingRight:"10px" }}>
+                            {daynameoverride[filters.day - 1]}
+                        </b>
+                        <div className="row mt-1" >
+                    
+                        <ImageLoader
+                        src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/stage-1.jpg"
+                        alt="Stage 1"
+                        classname="col-6"
+                        maxwidth="118px"
+                        width="118px"
+                        />
+                            <ImageLoader
+                        src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/stage-2.jpg"
+                        alt="Stage 2"
+                        classname="col-6"
+                        maxwidth="118px"
+                        width="118px"
+                        />
+                        {/* <img className="col-6" style={{maxWidth:"118px"}}  alt="Stage 1" src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/stage-1.jpg" />
+                        // <img  className="col-6" style={{maxWidth:"118px"}}  alt="Stage 2"src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/stage-2.jpg"/> */}
+                        </div>
+                        </div>
+                    ) : null} 
+                     {/*FOR ABE tee fme AND jeSUS CRHIST SINNER end*/}
                     {slides}
                 </div>
             );
@@ -584,7 +623,8 @@ const FullAgenda = props => {
         //**MULTY-EXPO OPTION - ONLY RUN IF THE SHOW IS ONE OF THOSE  */
 
         // if ((show == "ABE" || show == "FME" || show == "TEE") &&  extraMode!=="innovation-agenda" ) {
-        if (show == "ABE" || show == "FME" || show == "TEE" || show == "FMX" || show == "ABX") {
+        if ((
+            show == "ABE" || show == "FME" || show == "TEE" || show == "FMX" || show == "ABX") && extraMode !== "innovation-agenda") {
             inputSessions = filtershows(inputSessions)
         }
         return inputSessions;
@@ -600,7 +640,9 @@ const FullAgenda = props => {
                             curved={false}
                             color={show === "FMX" ? "fmx-blue" : "abx-blue"}
                             link="../conference/conference-agenda"
-                            bonusClass="rounded">
+                            bonusClass="rounded"
+                            role=""
+                            size="max">
                             CONFERENCE AGENDA
                         </Cta>
                     );
@@ -610,7 +652,8 @@ const FullAgenda = props => {
                             curved={false}
                             color="solutions-blue"
                             link="../conference/solutions-innovation-stage"
-                            bonusClass="rounded">
+                            bonusClass="rounded"
+                            size="max">
                             SOLUTIONS INNOVATION STAGE
                         </Cta>
                     );
@@ -627,7 +670,8 @@ const FullAgenda = props => {
                             curved={false}
                             color={color}
                             link="../conference/conference-agenda"
-                            bonusClass="rounded">
+                            bonusClass="rounded"
+                             size="max">
                             CONFERENCE AGENDA
                         </Cta>
                     );
@@ -637,7 +681,8 @@ const FullAgenda = props => {
                             curved={false}
                             color="solutions-blue-FME-ABE-TEE"
                             link="../conference/solutions-innovation-stage"
-                            bonusClass="rounded">
+                            bonusClass="rounded"
+                            size="max">
                             SOLUTIONS INNOVATION STAGE
                         </Cta>
                     );
@@ -680,17 +725,24 @@ const FullAgenda = props => {
      */
     // console.log(state)
     const getTracksNav = () => {
-        //Very annoying button for extra conference on some in this bit
-        const cols = show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? [6, 6] : [9, 3];
+        let cols,order
+        //Very annoying button for extra conference on some in this bit Stage 1 - stage 2 checkboxes
+        // const cols = show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? [6, 6] : [9, 3];
+        if((show === "FME" && extraMode !="innovation-agenda") || (show === "ABE" && extraMode !="innovation-agenda") || (show === "TEE" && extraMode !="innovation-agenda") || (show == "FMX" && extraMode !="innovation-agenda") || (show == "ABX" && extraMode !="innovation-agenda")){cols= [" d-none", 3, 9, 12];order=[0,1] }
+        //!REMOVING THIS AS I MOVED THE BUTTON CONFERENCE ON THE SIDE SO ALL THE COL CAN BE THE SAME 
+        // else if(show === "FMX" || show === "ABX"){ cols=[6, 6];  }
+        else{cols=[" d-none", 3, 9, 9]}
         //Desktop or mobile?
         if (window.innerWidth > 992) {
             return (
                 <div className="container">
                     <div className="row">
-                        <div className={`col-${cols[0]} track-col`}>{getTrackButtons(maxTracks)}</div>
+                        {/*checkboxes stages*/}
+                        <div className={`col-${cols[3]} track-col ${cols[3]==12 ?"border-light  border-bottom":""}`}>{getTrackButtons(maxTracks)}</div>
 
 
-                        <div className={`col-${cols[1]} control-col`}>
+                        <div className={`col-${cols[1]} control-col  ${order ? "order-" + order[1] : ""}`}>
+{/* {console.log(state.defaultStateSlidesReducer.slidesState)} */}
                             <Cta
                                 key="cta expand"
                                 curved={false}
@@ -698,6 +750,7 @@ const FullAgenda = props => {
                                 color="primary"
                                 bonusClass="confman-expand rounded"
                                 handler={setOpenSlides}
+                                //  handler={setStateSlidesAllOpen()}
                                 role="expand"
                                 value={true}>
                                 Expand all
@@ -709,20 +762,17 @@ const FullAgenda = props => {
                                 color="primary"
                                 bonusClass="confman-expand rounded"
                                 handler={setOpenSlides}
+                                // handler={setStateSlidesAllClosed()}
                                 role="collapse"
                                 value={false}>
                                 Collapse all
                             </Cta>
-                            {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? getAltConferenceButton(show, extraMode) : null}
+                            {/* {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? getAltConferenceButton(show, extraMode) : null} */}
                         </div>
                         {/* extra buttons for filtering ABE FME TEE*/}
-                        {(show == "FME" ||
-                            show == "TEE" ||
-                            show == "ABE" ||
-                            show == "FMX" ||
-                            show == "ABX")
+                        {((show == "FME" || show == "TEE" || show == "ABE" || show == "FMX" || show == "ABX") && extraMode !== "innovation-agenda")
                             ?
-                            <div className={`col-12 track-col border-top border-light`}>{getShowButtons(maxShows)}</div>
+                            <div className={`col-${cols[2]} ${order ? "order-" + order[0] : ""} track-col  align-items-center`}><b style={{ fontSize: "16px" }}>Focus by show:</b>{getShowButtons(maxShows)}</div>
                             : null}
                     </div>
                 </div>
@@ -745,6 +795,7 @@ const FullAgenda = props => {
                                     value={true}>
                                     Expand all
                                 </Cta>
+                                
                                 <Cta
                                     key="cta collapse"
                                     curved={false}
@@ -761,12 +812,15 @@ const FullAgenda = props => {
                     </div>
                     <div className="container-fluid tracks__mob-tracks">
                         <div className="row ">
-                            <div className="col-12 track-col  justify-content-between">
+                        <div className={`col-${show === "ABE" || show === "FME" || show === "TEE" ? cols[0] : "12"} track-col justify-content-between`}>
+
                                 {show === "FMX" || show === "ABX" || show === "ABE" || show === "FME" || show === "TEE" ? getAltConferenceButton(show, extraMode) : null}
                                 {getTrackButtons(maxTracks)}{" "}
                             </div>
                             {/*MULTYEXPO - extra buttons for filtering ABE FME TEE*/}
-                            {(show == "FME" || show == "TEE" || show == "ABE")
+                            {((
+                                // show == "FME" || show == "TEE" || show == "ABE" ||
+                                show == "FMX" || show == "ABX") && extraMode !== "innovation-agenda")
                                 ?
                                 <div className={`col-12 track-col justify-content-start`}>{getShowButtons(maxShows)}</div>
                                 : null
@@ -850,20 +904,23 @@ const FullAgenda = props => {
                                                         color="primary"
                                                         role="pop-form"
                                                         link={generalenquiry}
-                                                        download={true}>
+                                                        download={true}
+                                                        bonusClass="rounded">
+                                                            
                                                         DOWNLOAD PDF AGENDA
                                                     </Cta>
                                                 ) : (
-                                                    <Cta key="cta pdf agenda" size="max" color="primary" link={getConfPdfLink(show, conf)} download={true}>
+                                                    extraMode != "innovation-agenda"?
+                                                    <Cta key="cta pdf agenda" bonusClass="rounded" size="max" color="primary" link={getConfPdfLink(show, conf)} download={true}>
                                                         DOWNLOAD PDF AGENDA
-                                                    </Cta>
+                                                    </Cta>: ""
                                                 )}
                                             </>
                                         ) : (
                                             ""
                                         )}
                                         {reglink != undefined && reglink != "" ? (
-                                            <Cta key="cta reg button" size="max" link={reglink}>
+                                            <Cta key="cta reg button" bonusClass="rounded" size="max" link={reglink}>
                                                 REGISTER FOR FREE
                                             </Cta>
                                         ) : (
@@ -876,6 +933,7 @@ const FullAgenda = props => {
                                         ) : (
                                             ""
                                         )}
+                                        {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? getAltConferenceButton(show, extraMode) : null}
                                     </StickyNav>
                                 </div>
                             </div>

@@ -6,7 +6,7 @@ const fetchExhibTasksStatus = async booth => {
        baseURL: "/rest",
     });
     let response = await api.get(`../rest/getCompletedTasks.php?booth=${booth}`);
-    //console.log("Response from getCompletedTasks.php", response.data);
+    console.log("Response from getCompletedTasks.php", response.data);
     return response.data;
 };
 

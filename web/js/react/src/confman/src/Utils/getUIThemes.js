@@ -7,14 +7,21 @@ import React from "react";
  * @param {String} extraMode - stuff like the innovation agenda.
  * @returns Theme for that day to show.
  */
-const getUIThemes = (show, day, track = [], extraMode) => {
+const getUIThemes = (show, day, track = [], extraMode, mode, trackNumber) => {
     let theme = [];
+    let themeCocktail=[]
+
+
+// COCKTAILS UITHEMES
+
+    // GENERAL UITHEMES 
     switch (show) {
         case "FMX":
         case "ABX":
             if (extraMode === "innovation-agenda") {
                 return null;
             } else {
+
                 switch (day) {
                     case 1:
                         theme = [...theme, "Industry & Technology", "Sustainability & Applications"];
@@ -27,29 +34,41 @@ const getUIThemes = (show, day, track = [], extraMode) => {
                         break;
                 }
                 return (
-                    <div>
-                        <p style={{ fontSize: "16px" }}>
-                            <strong>
-                                <span style={{ color: "#d52c60" }}>Track 1 Theme</span> - {theme[0]}
-                            </strong>
-                        </p>
-                        <p style={{ fontSize: "16px" }}>
-                            <strong>
-                                <span style={{ color: "#5bb7ce" }}>Track 2 Theme</span> - {theme[1]}
-                            </strong>
-                        </p>
-                    </div>
+                    <>
+                        {mode === "cocktail-expo" 
+                        ? theme[trackNumber - 1] 
+                        :
+                         (
+                            <div>
+
+                                <p style={{ fontSize: "16px" }}>
+                                    <strong>
+                                        <span style={{ color: "#d52c60" }}>Track 1 Theme</span> - {theme[0]}
+                                    </strong>
+                                </p>
+                                <p style={{ fontSize: "16px" }}>
+                                    <strong>
+                                        <span style={{ color: "#5bb7ce" }}>Track 2 Theme</span> - {theme[1]}
+                                    </strong>
+                                </p>
+                            </div>
+                        )}
+                    </>
+
+
+
                 );
             }
-        case "FME":
-        case "ABE":
-        case "TEE":
-         
+
+        case "FME2":
+        case "ABE2":
+        case "TEE2":
+
             if (extraMode === "innovation-agenda") {
                 console.log(extraMode)
                 return null;
             } else {
-                
+
                 switch (day) {
                     case 1:
                         theme = ["Materials & Supply Chain Collaboration", "Automotive & Aerospace"];
@@ -62,80 +81,107 @@ const getUIThemes = (show, day, track = [], extraMode) => {
                         break;
                 }
                 return (
-                    <div>
-                        <p style={{ fontSize: "16px" }}>
-                            <strong style={{ color: "#934694" }}>Stage 1 Theme: </strong>
-                            <span>{theme[0]}</span>
-                        </p>
-                        {/* {day !== 3 ? ( */}
-                            <p style={{ fontSize: "16px" }}>
-                                <strong style={{ color: "#6fc5cb" }}>Stage 2 Theme: </strong>
-                                <span>{theme[1]}</span>
-                            </p>
-                        {/* ) : ( */}
-                            {/* <p>{""}</p>
+                    <>
+                        {mode === "cocktail-expo" ?
+                         theme[trackNumber - 1] :
+                          (
+                            <div>
+                                <p style={{ fontSize: "16px" }}>
+                                    <strong style={{ color: "#934694" }}>Stage 1 Theme: </strong>
+                                    <span>{theme[0]}</span>
+                                </p>
+                                {/* {day !== 3 ? ( */}
+                                <p style={{ fontSize: "16px" }}>
+                                    <strong style={{ color: "#6fc5cb" }}>Stage 2 Theme: </strong>
+                                    <span>{theme[1]}</span>
+                                </p>
+                                {/* ) : ( */}
+                                {/* <p>{""}</p>
                         )} */}
-                    </div>
+                            </div>
+                        )}
+                    </>
                 );
             }
         case "BRE":
+            themeCocktail=["Industry Conference","Smallsats Conference","Connectivity Conference","Exhibitor Technology Forum"]
             switch (day) {
+                
                 case 1:
                     theme = [
-                        "Europe’s Sovereignty in Space",
-                        "Scaling up Smallsats",
-                        "Secure and Autonomous SATCOM",
-                        "Products and Services Presentations",
+                        "Competitiveness, Legislation and Supply Chains",
+                        "Constellations and Ground Stations",
+                        "Small Satellite Production and the Micro-launch Services Market",
+                       null
+                        
+                        
                     ];
+                    
                     break;
                 case 2:
                     theme = [
-                        "Space Sustainability",
-                        "Space for Earth",
-                        "Ground Segments and Mega Trends",
-                        "Products and Services Presentations"
+                        "Access to Investment and Sustainability",
+                        "Always Connected",
+                        "The Role of Earth Observation and Evolving Requirements",
+                        null
                     ];
                     break;
                 case 3:
                     theme = [
-                        "Software, Digitisation and Security",
-                        "Security and Software Innovation",
-                        "Security and Software Innovation",
-                        "Products and Services Presentations"
+                        "Regional Sovereignty and The Future of Exploration",
+                        "Satellite Innovation",
+                        "Digitalisation and Sustainability",
+                        null
                     ];
                     break;
             }
             return (
-                <div>
-                    {!track.includes(1) ? (
-                        <p style={{ fontSize: "16px" }}>
-                            <strong>
-                                <span style={{ color: "#146259" }}>Industry Conference: </span>  {theme[0]}
-                            </strong>
-                        </p>
-                    ) : null}
-                    {!track.includes(2) ? (
-                        <p style={{ fontSize: "16px" }}>
-                            <strong>
-                                <span style={{ color: "#41b9eb" }}>Smallsats Conference: </span>  {theme[1]}
-                            </strong>
-                        </p>
-                    ) : null}
-                    {!track.includes(3) ? (
-                        <p style={{ fontSize: "16px" }}>
-                            <strong>
-                                <span style={{ color: "#426ab3" }}>Mobility Connectivity Conference: </span>  {theme[2]}
-                            </strong>
-                        </p>
-                    ) : null}
-                        {!track.includes(4) ? (
-                        <p style={{ fontSize: "16px" }}>
-                            <strong>
-                                <span style={{ color: "#f09d00" }}>Exhibitor Technology Forum: </span>  {theme[3]}
-                            </strong>
-                        </p>
-                    ) : null}
-                </div>
+                <>
+                    {mode === "cocktail-expo" ?
+                    
+                    themeCocktail[trackNumber - 1] 
+
+                    : (
+                        <div>
+                            {!track.includes(1) ? (
+                                <p style={{ fontSize: "16px" }}>
+                                    <strong>
+                                        <span style={{ color: "#146259" }}>Industry Conference: </span>  {theme[0]}
+                                    </strong>
+                                </p>
+                            ) : null}
+                              {!track.includes(2) ? (
+                                <p style={{ fontSize: "16px" }}>
+                                    <strong>
+                                        <span style={{ color: "#41b9eb" }}>Smallsats Conference: </span>  {theme[2]}
+                                    </strong>
+                                </p>
+                            ) : null}
+                            {!track.includes(3) ? (
+                                <p style={{ fontSize: "16px" }}>
+                                    <strong>
+                                        <span style={{ color: "#426ab3" }}>Connectivity Conference: </span>  {theme[1]}
+                                    </strong>
+                                </p>
+                            ) : null}
+                              {!track.includes(4) ? (
+                                <p style={{ fontSize: "16px" }}>
+                                    <strong>
+                                        <span style={{ color: "#7c51a1" }}>Exhibitor Technology Forum </span>  {theme[3]}
+                                    </strong>
+                                </p>
+                            ) : null}
+                          
+                            {/* {!track.includes(4) ? (
+                                <p style={{ fontSize: "16px" }}>
+                                    <strong>
+                                        <span style={{ color: "#f09d00" }}>Exhibitor Technology Forum: </span>  {theme[3]}
+                                    </strong>
+                                </p>
+                            ) : null} */}
+                        </div>
+                    )}
+                </>
             );
     }
 };

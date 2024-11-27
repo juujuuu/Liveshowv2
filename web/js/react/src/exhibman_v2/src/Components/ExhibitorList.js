@@ -526,8 +526,12 @@ const mode=useSelector(state=>state.mode)
         let jsx = []; //Just make a a jsx array of components to return.
         
         let message
+        let newJsx
         { if(show=="FME" || show=="ABE" || show=="BRE"){ message= "German"} else{message="Download Full List PDF " }}
-        let newJsx = (
+       
+        
+            
+         newJsx = (
             <Cta
                 size="max"
                 color="black"
@@ -539,15 +543,18 @@ const mode=useSelector(state=>state.mode)
               
             </Cta>
         );
+        
         jsx = [...jsx, newJsx];
+    
 
+     
         //For Ipek
-        if (show === "TME") {
+        if (show === "TME" || show === "CEX") {
             newJsx = (
                 <Cta
                     size="max"
                     color="black"
-                    link={"https://ceramicstmeexpo23.mapyourshow.com/8_0/exhview/index.cfm"}
+                    link={"https://ceramicstmeexpo25.mapyourshow.com/8_0/exhview/index.cfm"}
                     bonusClass="control-col__download-list"
                     target="_blank"
                     key={"floorplan"}>
@@ -558,23 +565,52 @@ const mode=useSelector(state=>state.mode)
         }
 
         if (regLink) {
-        if(show ==="SPC"){
+        if( show ==="ABX" || show ==="FMX"){
           
-            newJsx = (
-                <Cta size="max" color="cex-red" link={regLink} bonusClass="control-col__reg-link" key={"register to attend"}>
-                    Register To Attend
-                </Cta>
-            );
-            jsx = [...jsx, newJsx];
-        }else{
+          
             
+        } else if(show=="SPC"){
             newJsx = (
-                <Cta size="max" color="cex-red" link={regLink} bonusClass="control-col__reg-link" key={"register to attend"}>
-                 {dualLanguage(show,"Register To Attend","Register To Attend / Registrieren sie sich, um teilzunehmen")}  
+                <Cta size="max" color="cex-red" link={regLink} bonusClass="control-col__reg-link" key={"Register for free"}>
+                   Register For Free
                 </Cta>
             );
             jsx = [...jsx, newJsx];
         }
+        
+        else if(show ==="CEX" || show ==="TME"){
+          
+            newJsx = (
+                <Cta size="max" color="cex-red" link={show=="CEX"? "https://www.ceramicsexpousa.com/site/forms/exhibitor":"https://www.thermalmanagementexpo.com/site/forms/exhibit-enquiry"} bonusClass="control-col__reg-link" key={"Booth Enquiry"}>
+                 Booth Enquiry
+                </Cta>
+            );
+            jsx = [...jsx, newJsx];
+            
+        }else{
+            
+            newJsx = (
+                <Cta size="max" color="cex-red" link={regLink} bonusClass="control-col__reg-link" key={"register to attend"}>
+                 {dualLanguage(show,"Register Your Interest ","Register To Attend / Registrieren sie sich, um teilzunehmen")}  
+                </Cta>
+            );
+            jsx = [...jsx, newJsx];
+        }
+    }
+    if (show === "BRE") {
+        newJsx = (
+            null
+            // <Cta
+            //     size="max"
+            //     color="black"
+            //     link={"https://www.spacetechexpo-europe.com/whatson/b2b-matchmaking-service"}
+            //     bonusClass="control-col__download-list"
+            //     target="_blank"
+            //     key={"B2B matchmaking"}>
+            //     B2B Matchmaking
+            // </Cta>
+        );
+        jsx = [...jsx, newJsx];
     }
 
         //Sponsor
@@ -853,7 +889,7 @@ const mode=useSelector(state=>state.mode)
      
         setPageTitle(show, "Exhibitor List")
         return (
-            <section className={`exhibmanV2 exhibmanV2--${show} row`}>
+            <section className={`exhibmanV2 exhibmanV2--${show} row mb-5`}>
                
                 <nav className="col-12 col-md-4 control-col">
                     <StickyNav>

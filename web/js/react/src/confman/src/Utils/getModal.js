@@ -25,7 +25,7 @@ const getModal = ({ data = {}, options = {}, role = false, size = "lg", odcode =
             let link = `${fullagendalocation}?session-id=${id}&day=${day}`;
             // if (Conference__c === "a3i4V000001tXtnQAE") {
                 //it might need the 18 letters id instead of 15
-            if (Conference__c === "a3i4V0000016NNJ") {
+            if (Conference__c === "a3iUK0000007jy5") {
                 
                 link =
                     show === "FMX"
