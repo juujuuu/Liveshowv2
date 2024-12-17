@@ -565,11 +565,7 @@ const mode=useSelector(state=>state.mode)
         }
 
         if (regLink) {
-        if( show ==="ABX" || show ==="FMX"){
-          
-          
-            
-        } else if(show=="SPC"){
+          if(show=="SPC" || show =="FMX" || show =="ABX"){
             newJsx = (
                 <Cta size="max" color="cex-red" link={regLink} bonusClass="control-col__reg-link" key={"Register for free"}>
                    Register For Free
