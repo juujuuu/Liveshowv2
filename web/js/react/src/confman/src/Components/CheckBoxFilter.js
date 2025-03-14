@@ -41,6 +41,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setTrack } from "../Actions";
 import { setShow,setFirstLoad } from "../Actions";
 import ImageLoader from "./ImageLoader";
+import { getShowNameFromAcronym } from "../Utils/getSite";
 
 
 /**
@@ -128,7 +129,58 @@ const [check, setcheck] = useState(false)
             </div>
             
         );
-      }else{
+      } else if(show=="TME"){
+        
+        return (      
+
+            <div className={`checkbox-filter ${name === "Thermal Management" ? `checkbox-filter--${inputClass} order-1` : `checkbox-filter--${inputClass} order-2`}`}>
+                {exa}
+                <div className="checkbox-filter__checkbox">
+                    {checked ? (
+                        <>
+                            <i onClick={handleClick} className="bi bi-check-square-fill" style={{ cursor: "pointer" }}></i>
+                            {/* <input type="checkbox" name={inputClass} checked hidden /> */}
+                        </>
+                    ) : (
+                        <>
+                            <i onClick={handleClick} className="bi bi-square" style={{ cursor: "pointer" }}></i>
+                            {/* <input type="checkbox" name={inputClass} hidden /> */}
+                        </>
+                    )}
+                </div>
+                <div className="checkbox-filter__name">
+                {getShowNameFromAcronym(name).includes("http")?<ImageLoader alt="show logo" src={getShowNameFromAcronym(name)}/> :<h3 >{name}</h3>}
+                </div>
+            </div>
+            
+        );
+      }else if(show=="CEX"){
+        return (      
+
+            <div className={`checkbox-filter ${name === "Ceramics" ? `checkbox-filter--${inputClass} order-1` : `checkbox-filter--${inputClass} order-2`}`}>
+
+                {exa}
+                <div className="checkbox-filter__checkbox">
+                    {checked ? (
+                        <>
+                            <i onClick={handleClick} className="bi bi-check-square-fill" style={{ cursor: "pointer" }}></i>
+                            {/* <input type="checkbox" name={inputClass} checked hidden /> */}
+                        </>
+                    ) : (
+                        <>
+                            <i onClick={handleClick} className="bi bi-square" style={{ cursor: "pointer" }}></i>
+                            {/* <input type="checkbox" name={inputClass} hidden /> */}
+                        </>
+                    )}
+                </div>
+                <div className="checkbox-filter__name">
+                {getShowNameFromAcronym(name).includes("http")?<ImageLoader alt="show logo" src={getShowNameFromAcronym(name)}/> :<h3 >{name}</h3>}
+                </div>
+            </div>
+            
+        );
+      }
+      else{
         return (      
 
             <div className={`checkbox-filter checkbox-filter--${inputClass}`}>

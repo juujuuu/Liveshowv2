@@ -61,21 +61,21 @@ const getSiteFromId = expo => {
             return "https://www.foam-expo.com/";
         case "a1xUK000000dwqX":
             return "https://www.adhesivesandbondingexpo.com/";
-        case "a1x4V000001mqSH":
+        case "a1xUK000000iHI5":
             return "https://www.foam-expo-europe.com/";
-        case "a1x4V000001mqSM":
+        case "a1xUK000000iHJh":
             return "https://www.adhesivesandbondingexpo-europe.com/";
         case "a1x4V0000026O9B":
             return "https://www.ceramicsexpousa.com/";
         case "a1xUK000000Y2aT":
             return "https://www.spacetechexpo.com/";
-        case "a1x4V000001mqS7":
+        case "a1xUK0000019zen":
             return "https://www.spacetechexpo-europe.com/";
         case "a1xUK000000RaaT":
             return "https://www.thermalmanagementexpo.com/";
         case "chinaExhibitorList":
             return "https://www.foam-expo-china.com/";
-            case "a1x4V000001mqSR":
+            case "a1xUK000001MzNd":
             return "https://www.thermalmanagementexpo-europe.com/";
         default:
             return "ID not found";
@@ -89,21 +89,21 @@ const getShowNameFromId = id => {
            return "Foam Expo";
         case "a1xUK000000dwqX":
             return "Adhesives & Bonding Expo";
-        case "a1x4V000001mqSH":
+        case "a1xUK000000iHI5":
             return "Foam Expo Europe";
-        case "a1x4V000001mqSM":
+        case "a1xUK000000iHJh":
             return "Adhesives & Bonding Expo Europe";
         case "a1x4V0000026O9B":
             return "Ceramics Expo";
         case "a1xUK000000Y2aT":
             return "Space Tech Expo";
-        case "a1x4V000001mqS7":
+        case "a1xUK0000019zen":
             return "Space Tech Expo Europe";
         case "a1xUK000000RaaT":
             return "Thermal Management Expo";
         case "chinaExhibitorList":
             return "Foam Expo China";
-        case "a1x4V000001mqSR":
+        case "a1xUK000001MzNd":
             return "Thermal Management Expo Europe";
         default:
             return "ID not found";
@@ -117,21 +117,21 @@ const getAcronymFromId = id => {
             return "FMX";
         case "a1xUK000000dwqX":
             return "ABX";
-        case "a1x4V000001mqSH":
+        case "a1xUK000000iHI5":
             return "FME";
-        case "a1x4V000001mqSM":
+        case "a1xUK000000iHJh":
             return "ABE";
         case "a1x4V0000026O9B":
             return "CEX";
         case "a1xUK000000Y2aT":
             return "SPC";
-        case "a1x4V000001mqS7":
+        case "a1xUK0000019zen":
             return "BRE";
         case "a1xUK000000RaaT":
             return "TME";
         case "chinaExhibitorList":
             return "FMC";
-        case "a1x4V000001mqSR":
+        case "a1xUK000001MzNd":
             return "TEE";
             
         default:

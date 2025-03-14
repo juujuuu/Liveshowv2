@@ -135,6 +135,19 @@ const FullAgenda = props => {
                 getModal({ role: "on-demand-modal", odcode: getOnDemandCode(show) });
             }
         }
+       if(show=="TME"){
+        
+        dispatch(setTrack(2));
+
+       }
+       if(show=="CEX"){
+        
+        dispatch(setTrack(1));
+
+       }
+       if(show=="TME" && extraMode==="innovation-agenda" || show=="CEX" && extraMode==="innovation-agenda" ){
+        dispatch(setTrack([1,2]));
+       }
     }, []);
 
     //Run when loading changes.
@@ -402,7 +415,7 @@ const FullAgenda = props => {
             return (
                 <div className="accordion accordion-flush conference-agenda__sessions" id="conference-agenda__sessions">
                    {/*FOR ABE tee fme AND jeSUS CRHIST SINNER add the days overrride AGAIN IN THE BODY*/}
-                  {((show === "FME" || show === "ABE" || show === "TEE") && (extraMode!="innovation-agenda")) ? (
+                  {((show === "FME" || show === "ABE" || show === "TEE" ) && (extraMode!="innovation-agenda")) ? (
                         <div className="d-flex flex-column flex-md-row align-items-center mb-4 " >  
                         <b className="mr-1 mt-1" style={{ color: "#2e2b28", fontSize: "17px", paddingRight:"10px" }}>
                             {daynameoverride[filters.day - 1]}
@@ -624,7 +637,7 @@ const FullAgenda = props => {
 
         // if ((show == "ABE" || show == "FME" || show == "TEE") &&  extraMode!=="innovation-agenda" ) {
         if ((
-            show == "ABE" || show == "FME" || show == "TEE" || show == "FMX" || show == "ABX") && extraMode !== "innovation-agenda") {
+            show == "ABE" || show == "FME" || show == "TEE" || show == "FMX" || show == "ABX" ) && extraMode !== "innovation-agenda") {
             inputSessions = filtershows(inputSessions)
         }
         return inputSessions;
@@ -634,6 +647,8 @@ const FullAgenda = props => {
         switch (show) {
             case "FMX":
             case "ABX":
+            case "TME":
+            case "CEX":
                 if (extraMode === "innovation-agenda") {
                     return (
                         <Cta key="cta main agenda link"
@@ -661,6 +676,7 @@ const FullAgenda = props => {
             case "FME":
             case "ABE":
             case "TEE":
+            
                 if (extraMode === "innovation-agenda") {
                     let color
 
@@ -695,6 +711,8 @@ const FullAgenda = props => {
         switch (show) {
             case "FMX":
             case "ABX":
+          case  "TME":
+            case "CEX":
                 if (extraMode == "innovation-agenda") {
                     string = "innovation-stage";
 
@@ -862,7 +880,7 @@ const FullAgenda = props => {
                         <div className="container">
                             <div className="row">
                                 <div className="col-8">
-                                    {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "BRE" || show === "TEE"
+                                    {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "BRE" || show === "TEE"|| show === "CEX" || show === "TME"  
                                         ? getUIThemes(show, filters.day, filters.track, extraMode)
                                         : null}
                                     {getSlides(pipedSessions)}

@@ -106,14 +106,16 @@ const getShowNameFromAcronym = acronym => {
             return "https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/abe-thin.png";
         case "tee":
             return "https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/tee-thin.png";
-        case "cex":
-            return "Ceramics Expo";
+        case "ceramics":
+            return "https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/cex-thin.png";
         case "spc":
             return "Space Tech Expo";
         case "bre":
             return "Space Tech Expo Europe";
-        case "tme":
-            return "Thermal Management Expo";
+        case "thermal management":
+            return "https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/tme-thin.png";
+        case "solutions innovation stage":
+            return  "https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/sis-thin.png";
         case "ocs":
             return "Onboard  Connectivity Summit";
         case "sat":

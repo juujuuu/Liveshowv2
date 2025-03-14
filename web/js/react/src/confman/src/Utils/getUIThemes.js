@@ -103,6 +103,129 @@ const getUIThemes = (show, day, track = [], extraMode, mode, trackNumber) => {
                     </>
                 );
             }
+            case "CEX":
+                
+                
+        
+                    if (extraMode === "innovation-agenda") {
+                        console.log(extraMode)
+                        return null;
+                    } else {
+        
+                        switch (day) {
+                            case 1:
+                                theme = ["Explore breakthroughs in materials, system-level design, and sustainable solutions driving the future of thermal management.","Gain insights into market dynamics, advanced materials, manufacturing innovations, supply chain resilience, and emerging applications in technical ceramics.","Live product showcases and demonstrations from industry leaders, unveiling cutting-edge solutions to your toughest manufacturing challenges."];
+                                break;
+                            case 2:
+                                theme = ["Explore breakthroughs in materials, system-level design, and sustainable solutions driving the future of thermal management.","Gain insights into market dynamics, advanced materials, manufacturing innovations, supply chain resilience, and emerging applications in technical ceramics.","Live product showcases and demonstrations from industry leaders, unveiling cutting-edge solutions to your toughest manufacturing challenges."];
+                                break;
+                            case 3:
+                                theme = ["Explore breakthroughs in materials, system-level design, and sustainable solutions driving the future of thermal management.","Gain insights into market dynamics, advanced materials, manufacturing innovations, supply chain resilience, and emerging applications in technical ceramics.","Live product showcases and demonstrations from industry leaders, unveiling cutting-edge solutions to your toughest manufacturing challenges."];
+                                break;
+                        }
+                        return (
+                            <>
+                                {mode === "cocktail-expo" ?
+                                 theme[trackNumber - 1] :
+                                  (
+                                    <div>
+                                    {!track.includes(2) ? (
+                                        <p style={{ fontSize: "16px" }}>
+                                            <strong>
+                                            <span style={{ color: "#b18b2f" }}>CERAMICS STAGE: </span></strong>  {theme[1]}
+                                                
+                                            
+                                        </p>
+                                    ) : null}
+                                      {!track.includes(1) ? (
+                                        <p style={{ fontSize: "16px" }}>
+                                            <strong>
+                                            <span style={{ color: "#ad2d20" }}>THERMAL STAGE: </span></strong>  {theme[0]}
+                                            
+                                        </p>
+                                    ) : null}
+                                    {!track.includes(3) ? (
+                                        <p style={{ fontSize: "16px" }}>
+                                            <strong>
+                                                <span style={{ color: "#134f73" }}>SOLUTIONS INNOVATION STAGE: </span></strong>  {theme[2]}
+                                            
+                                        </p>
+                                    ) : null}
+                                      
+                                  
+                                    {/* {!track.includes(4) ? (
+                                        <p style={{ fontSize: "16px" }}>
+                                            <strong>
+                                                <span style={{ color: "#f09d00" }}>Exhibitor Technology Forum: </span>  {theme[3]}
+                                            </strong>
+                                        </p>
+                                    ) : null} */}
+                                </div>
+                                )}
+                            </>
+                        );
+                    }
+                
+                        case "TME":
+                        
+                
+                            if (extraMode === "innovation-agenda") {
+                                console.log(extraMode)
+                                return null;
+                            } else {
+                
+                                switch (day) {
+                                    case 1:
+                                        theme = ["Explore breakthroughs in materials, system-level design, and sustainable solutions driving the future of thermal management.","Gain insights into market dynamics, advanced materials, manufacturing innovations, supply chain resilience, and emerging applications in technical ceramics.","Live product showcases and demonstrations from industry leaders, unveiling cutting-edge solutions to your toughest manufacturing challenges."];
+                                        break;
+                                    case 2:
+                                        theme = ["Explore breakthroughs in materials, system-level design, and sustainable solutions driving the future of thermal management.","Gain insights into market dynamics, advanced materials, manufacturing innovations, supply chain resilience, and emerging applications in technical ceramics.","Live product showcases and demonstrations from industry leaders, unveiling cutting-edge solutions to your toughest manufacturing challenges."];
+                                        break;
+                                    case 3:
+                                        theme = ["Explore breakthroughs in materials, system-level design, and sustainable solutions driving the future of thermal management.","Gain insights into market dynamics, advanced materials, manufacturing innovations, supply chain resilience, and emerging applications in technical ceramics.","Live product showcases and demonstrations from industry leaders, unveiling cutting-edge solutions to your toughest manufacturing challenges."];
+                                        break;
+                                }
+                                return (
+                                    <>
+                                        {mode === "cocktail-expo" ?
+                                         theme[trackNumber - 1] :
+                                          (
+                                            <div>
+                                            {!track.includes(1) ? (
+                                                <p style={{ fontSize: "16px" }}>
+                                                    <strong>
+                                                        <span style={{ color: "#ad2d20" }}>THERMAL STAGE: </span></strong>  {theme[0]}
+                                                    
+                                                </p>
+                                            ) : null}
+                                              {!track.includes(2) ? (
+                                                <p style={{ fontSize: "16px" }}>
+                                                    <strong>
+                                                        <span style={{ color: "#c7910c" }}>CERAMICS STAGE: </span>  </strong>  {theme[1]}
+                                                  
+                                                </p>
+                                            ) : null}
+                                            {!track.includes(3) ? (
+                                                <p style={{ fontSize: "16px" }}>
+                                                    <strong>
+                                                        <span style={{ color: "#134f73" }}>SOLUTIONS INNOVATION STAGE: </span></strong>  {theme[2]}
+                                                    
+                                                </p>
+                                            ) : null}
+                                              
+                                          
+                                            {/* {!track.includes(4) ? (
+                                                <p style={{ fontSize: "16px" }}>
+                                                    <strong>
+                                                        <span style={{ color: "#f09d00" }}>Exhibitor Technology Forum: </span>  {theme[3]}
+                                                    </strong>
+                                                </p>
+                                            ) : null} */}
+                                        </div>
+                                        )}
+                                    </>
+                                );
+                            }
         case "BRE":
             themeCocktail=["Industry Conference","Smallsats Conference","Connectivity Conference","Exhibitor Technology Forum"]
             switch (day) {
