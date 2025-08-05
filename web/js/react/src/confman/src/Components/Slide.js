@@ -89,7 +89,8 @@ const Slide = props => {
             } = speaker;
 
             const { web_logo_url__c } = Speaker__r;
-
+            
+            
             return (
                 <div key={`speaker-${index}`} className={`row speakers__speaker`} id={Id}>
                     {Title__c != null ? <h3 className="speaker__presentation-name">{Title__c}</h3> : null}
@@ -122,6 +123,7 @@ const Slide = props => {
                     </div>
                     {windowwidth > 992 ? (
                         <div className="col-4 speaker__company">
+                            
                             <img className="img-fluid" src={getCompany(web_logo_url__c)} alt={`${Company__c}`} />
                         </div>
                     ) : (

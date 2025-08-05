@@ -162,8 +162,37 @@ $(document).ready(function () {
                     console.log(result);
                     parent.children().css("visibility", "hidden");
                     parent.children(".lead-capture__spinner").hide(); //Hide the spinner
-                    let thankyou = '<div class="lead-capture__thankyou d-flex justify-content-center"><p>Successfully submitted.  Thank you</p></div>';
-                    parent.append(thankyou); //Add the thank you message.
+                    let thankyou 
+                    
+ 
+                    
+
+switch (window.location.href) {
+  case "https://www.foam-expo.com/2026-register-your-interest":
+    thankyou  = '<div class="lead-capture__thankyou d-flex justify-content-center"><p>Successfully submitted.  Thank you</p> <p>While you wait for registration to open, <b>secure your hotel</b> now and lock in the best rates and availability. Don’t miss out—rooms go fast!Link to hotel page</p> <p><a href="">link</a> </p</div>';
+console.log("yes ")
+    break;
+  case "Tuesday":
+    console.log("Second day of the work week.");
+    break;
+  case "Wednesday":
+    console.log("Midweek already!");
+    break;
+  case "Thursday":
+    console.log("Almost there.");
+    break;
+  case "Friday":
+    console.log("Weekend is near!");
+    break;
+  case "Saturday":
+  case "Sunday":
+    console.log("It's the weekend!");
+    break;
+  default:
+    // thankyou  = '<div class="lead-capture__thankyou d-flex justify-content-center"><p>Successfully submitted.  Thank you</p></div>';
+    console.log("no ")
+}
+parent.append(thankyou); //Add the thank you message.
 
                     if (!redirect) {
                         //Get rid of any modals in case the form was a modal after 2 seconds.

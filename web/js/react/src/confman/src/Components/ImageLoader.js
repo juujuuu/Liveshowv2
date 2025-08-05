@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Spinner from '../../../common_components/Spinner';
 
-const ImageLoader = ({ src, alt, classname, style,width,maxwidth }) => {
+const ImageLoader = ({ src, alt, classname, style,width,maxwidth ,extraClass }) => {
   const [loading, setLoading] = useState(true);
 
   const handleImageLoad = () => {
@@ -29,7 +29,7 @@ const ImageLoader = ({ src, alt, classname, style,width,maxwidth }) => {
         onLoad={handleImageLoad}
         maxwidth={maxwidth}
         width={width}
-        className="rounded"
+        className={`rounded ${extraClass}`}
         style={{
           display: loading ? 'none' : 'block',
           maxWidth: loading ? undefined : 'auto', // Add maxWidth: 100px when image is loaded

@@ -66,12 +66,14 @@ const getSiteFromId = expo => {
         case "a1xUK000000iHJh":
             return "https://www.adhesivesandbondingexpo-europe.com/";
         case "a1x4V0000026O9B":
+        case "a1xUK000001TQpl":
             return "https://www.ceramicsexpousa.com/";
-        case "a1xUK000000Y2aT":
+        case "a1xUK000001UDGz":
             return "https://www.spacetechexpo.com/";
         case "a1xUK0000019zen":
             return "https://www.spacetechexpo-europe.com/";
         case "a1xUK000000RaaT":
+        case  "a1xUK000001TQo9":
             return "https://www.thermalmanagementexpo.com/";
         case "chinaExhibitorList":
             return "https://www.foam-expo-china.com/";
@@ -94,12 +96,14 @@ const getShowNameFromId = id => {
         case "a1xUK000000iHJh":
             return "Adhesives & Bonding Expo Europe";
         case "a1x4V0000026O9B":
+        case "a1xUK000001TQpl":
             return "Ceramics Expo";
-        case "a1xUK000000Y2aT":
+        case "a1xUK000001UDGz":
             return "Space Tech Expo";
         case "a1xUK0000019zen":
             return "Space Tech Expo Europe";
         case "a1xUK000000RaaT":
+        case "a1xUK000001TQo9":
             return "Thermal Management Expo";
         case "chinaExhibitorList":
             return "Foam Expo China";
@@ -122,12 +126,14 @@ const getAcronymFromId = id => {
         case "a1xUK000000iHJh":
             return "ABE";
         case "a1x4V0000026O9B":
+        case "a1xUK000001TQpl":
             return "CEX";
-        case "a1xUK000000Y2aT":
+        case "a1xUK000001UDGz":
             return "SPC";
         case "a1xUK0000019zen":
             return "BRE";
         case "a1xUK000000RaaT":
+         case  "a1xUK000001TQo9":
             return "TME";
         case "chinaExhibitorList":
             return "FMC";

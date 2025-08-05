@@ -60,9 +60,9 @@ const getUIThemes = (show, day, track = [], extraMode, mode, trackNumber) => {
                 );
             }
 
-        case "FME2":
-        case "ABE2":
-        case "TEE2":
+        
+       
+            case "TEE":
 
             if (extraMode === "innovation-agenda") {
                 console.log(extraMode)
@@ -71,13 +71,13 @@ const getUIThemes = (show, day, track = [], extraMode, mode, trackNumber) => {
 
                 switch (day) {
                     case 1:
-                        theme = ["Materials & Supply Chain Collaboration", "Automotive & Aerospace"];
+                        theme = ["Automotive & Aerospace "];
                         break;
                     case 2:
-                        theme = ["Sustainability", "Electronics"];
+                        theme = ["Data Centers, Semiconductors, Electronics "];
                         break;
                     case 3:
-                        theme = ["Product Development & Manufacturing", "Thermal Management & Adhesives"];
+                        theme = ["Manufacturing, Industrial Applications & AI"];
                         break;
                 }
                 return (
@@ -85,19 +85,83 @@ const getUIThemes = (show, day, track = [], extraMode, mode, trackNumber) => {
                         {mode === "cocktail-expo" ?
                          theme[trackNumber - 1] :
                           (
-                            <div>
-                                <p style={{ fontSize: "16px" }}>
-                                    <strong style={{ color: "#934694" }}>Stage 1 Theme: </strong>
-                                    <span>{theme[0]}</span>
+                            <div className="d-flex align-items-center">
+                                <p style={{ fontSize: "16px", marginBottom:"0px" }}>
+                                    <strong className="Ui-themes-text">Day {day}:  </strong>
+                                    <span >{theme[0]}</span>
+                                    
                                 </p>
-                                {/* {day !== 3 ? ( */}
-                                <p style={{ fontSize: "16px" }}>
-                                    <strong style={{ color: "#6fc5cb" }}>Stage 2 Theme: </strong>
-                                    <span>{theme[1]}</span>
+                    
+                            </div>
+                        )}
+                    </>
+                );
+            }
+            case "ABE":
+
+            if (extraMode === "innovation-agenda") {
+                console.log(extraMode)
+                return null;
+            } else {
+
+                switch (day) {
+                    case 1:
+                        theme = ["Construction Chemicals, Packaging & Medical Adhesives "];
+                        break;
+                    case 2:
+                        theme = ["Developing Sustainable Adhesives"];
+                        break;
+                    case 3:
+                        theme = ["Adhesives as Innovation Drivers"];
+                        break;
+                }
+                return (
+                    <>
+                        {mode === "cocktail-expo" ?
+                         theme[trackNumber - 1] :
+                          (
+                            <div className="d-flex align-items-center">
+                                <p style={{ fontSize: "16px", marginBottom:"0px" }}>
+                                    <strong className="Ui-themes-text">Day {day}:  </strong>
+                                    <span >{theme[0]}</span>
+                                    
                                 </p>
-                                {/* ) : ( */}
-                                {/* <p>{""}</p>
-                        )} */}
+                    
+                            </div>
+                        )}
+                    </>
+                );
+            }
+            case "FME":
+
+            if (extraMode === "innovation-agenda") {
+                console.log(extraMode)
+                return null;
+            } else {
+
+                switch (day) {
+                    case 1:
+                        theme = ["Product Development"];
+                        break;
+                    case 2:
+                        theme = ["Sustainability, Regulation & EU Competitiveness"];
+                        break;
+                    case 3:
+                        theme = ["Manufacturing, Digitalisation & AI"];
+                        break;
+                }
+                return (
+                    <>
+                        {mode === "cocktail-expo" ?
+                         theme[trackNumber - 1] :
+                          (
+                            <div className="d-flex align-items-center">
+                                <p style={{ fontSize: "16px", marginBottom:"0px" }}>
+                                    <strong className="Ui-themes-text">Day {day}:  </strong>
+                                    <span >{theme[0]}</span>
+                                    
+                                </p>
+                    
                             </div>
                         )}
                     </>

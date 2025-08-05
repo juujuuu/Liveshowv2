@@ -10,6 +10,7 @@ import queriesReducer from "./queriesReducer";
 import profileReducer from "./profileReducer";
 import setDownloadListReducer from "./setDownloadListReducer";
 
+
 export default combineReducers({
 	exhibs: exhibsReducer,
 	exhibitor: exhibReducer,
@@ -20,5 +21,6 @@ export default combineReducers({
 	loading: loadingReducer,
 	error: errorReducer,
 	profileId: profileReducer,
-	downloadList: setDownloadListReducer
+	downloadList: setDownloadListReducer,
+
 });

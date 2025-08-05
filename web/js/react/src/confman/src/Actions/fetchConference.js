@@ -127,7 +127,7 @@ const fetchConference = (site, conferenceId) => async dispatch => {
     dispatch(setTotalStepN(session.cocktails))
     
 
-
+    // console.log(data,"state")
 
   });
   //**MULTY EXPOS OPTION**/
@@ -156,6 +156,7 @@ const fetchConference = (site, conferenceId) => async dispatch => {
 
 
   dispatch(setMaxShows(session));
+  // console.log(session, "session")
   dispatch(setMaxShows(session));
   dispatch(setMaxShows(showsNumbersFiltered));
   //**MULTY EXPOS OPTION**/

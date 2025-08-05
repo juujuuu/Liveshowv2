@@ -455,6 +455,10 @@ const options=useSelector(state=>state.options)
 const exhibs=useSelector(state=>state.exhibs)
 const loading=useSelector(state=>state.loading)
 const mode=useSelector(state=>state.mode)
+const postshow=useSelector(state=>state.options.postshow)
+
+
+
 
 
     //Do this after inital component render
@@ -464,7 +468,7 @@ const mode=useSelector(state=>state.mode)
         } else {
             const siteURL = getSiteFromId(options.ids instanceof Array ? options.ids[0] : options.ids);
             const expos = sanitizeIds(options.ids);
-
+console.log(expos)
             dispatch(fetchExhibs(siteURL, expos)).then(response => {
                 dispatch(setLoading(false));
             });
@@ -560,9 +564,17 @@ const mode=useSelector(state=>state.mode)
                     key={"floorplan"}>
                     Floorplan
                 </Cta>
+
+                
+
+
+
+
             );
             jsx = [...jsx, newJsx];
         }
+
+        
 
         if (regLink) {
           if(show=="SPC" || show =="FMX" || show =="ABX"){
@@ -583,11 +595,23 @@ const mode=useSelector(state=>state.mode)
             );
             jsx = [...jsx, newJsx];
             
+           
+          if(postshow){
+                newJsx = (
+                    <Cta size="max" color="cex-red" link={show=="CEX"? "https://www.ceramicsexpousa.com/exhibitor-list/":"https://www.thermalmanagementexpo.com/exhibitor-list/"} bonusClass="control-col__reg-link" key={"Exhibitor List"}>
+                    Exhibitor List 2026
+                    </Cta>
+                );}else{
+                    newJsx = (   <Cta size="max" color="cex-red" link={show=="CEX"? "https://www.ceramicsexpousa.com/exhibitor-list-post-show/":"https://www.thermalmanagementexpo.com/exhibitor-list-post-show/"} bonusClass="control-col__reg-link" key={"Exhibitor List"}>
+                    Exhibitor List 2025
+                    </Cta>)
+                }
+                jsx = [...jsx, newJsx];
         }else{
             
             newJsx = (
                 <Cta size="max" color="cex-red" link={regLink} bonusClass="control-col__reg-link" key={"register to attend"}>
-                 {dualLanguage(show,"Register Your Interest ","Register To Attend / Registrieren sie sich, um teilzunehmen")}  
+                 {dualLanguage(show,"Register now ","Register To Attend / Registrieren sie sich, um teilzunehmen")}  
                 </Cta>
             );
             jsx = [...jsx, newJsx];
@@ -609,6 +633,10 @@ const mode=useSelector(state=>state.mode)
         jsx = [...jsx, newJsx];
     }
 
+
+
+
+    
         //Sponsor
         // if (show === "CEX" && window.innerWidth > 768) {
         //     newJsx = (
@@ -802,11 +830,12 @@ const mode=useSelector(state=>state.mode)
      */
     const getMultiExpo = (options, expos) => {
         const { ids, multiExpo } = options;
-
+        console.log(options)
         if (!multiExpo) {
             return null;
         } else {
             let jsx = [];
+            console.log(ids,"ids")
             ids.forEach(showId => {
                 let text;
                 let sanitisedShowId = showId.replaceAll("'", "");
@@ -898,6 +927,7 @@ const mode=useSelector(state=>state.mode)
                             <Cta dualLanguageStylesCTA={dualLanguageStyles.CTAStyle} bonusClass="control-col__reset" handler={handleReset} role="exhib-reset" size="micro" color="black" margin="vertical-margin--0">
                                 Clear Filters
                             </Cta>
+                            
                         </div>
                         <div className="control-col__search vertical-margin--10">
                             <SearchInput handler={handleSearch} value={queries.search} bonusClass="form-control" placeholder="Refine by Keyword" />

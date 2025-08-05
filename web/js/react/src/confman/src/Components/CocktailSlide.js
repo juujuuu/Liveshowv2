@@ -31,7 +31,7 @@ const CocktailSlide = (props) => {
 
   const viewConfHandleClick = (id, day) => {
    // Append  id and day to the URL
-    const url = getSiteFromAcronym(show) + "conference/conference-agenda#" + id.toLowerCase() + "-" + day
+    const url = getSiteFromAcronym(show) + "conference/conference-agenda#" + id.toLowerCase() + "-" + day 
      const newTab = window.open();
    // Detach the new tab from the current window to prevent it from being considered a popup
     newTab.opener = null; 
@@ -67,7 +67,8 @@ const CocktailSlide = (props) => {
                 <div className="col-md-8">
                   <div className=" pb-0">   
                   {/* <div className="card-body pb-0">    */}
-                   <div  style={{ color:"#323232"}} className="session-info card-text  pb-2 text-uppercase"> DAY  {session.Day__c} - {show == "BRE"? "": "STAGE" }  { getUIThemes(show, session.Day__c,session.Track_Name__c,null,mode,session.Track_Number__c)} - TIME {session.Session_Duration_Time__c}</div>
+                   {/* <div  style={{ color:"#323232"}} className="session-info card-text  pb-2 text-uppercase"> DAY  {session.Day__c} - {show == "BRE"? "": "STAGE" }  { getUIThemes(show, session.Day__c,session.Track_Name__c,null,mode,session.Track_Number__c)} - TIME {session.Session_Duration_Time__c}</div> */}
+                   <div  style={{ color:"#323232"}} className="session-info card-text  pb-2 text-uppercase"> DAY  {session.Day__c} - {session.Track_Name__c} - TIME {session.Session_Duration_Time__c}</div>
                     <h5  className="session-title card-title text-uppercase"><b>{session.CKTLT_Title__c}</b></h5>
                
                     <p  className="session-description card-text " dangerouslySetInnerHTML={{ __html: session.CKTLD_Description__c }} />

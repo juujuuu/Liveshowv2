@@ -15,12 +15,17 @@ let parameters = null;
 
 //Get url parameters
 if (window.location.href.includes("?")) {
+    const queryString = window.location.search
+ if (queryString==="?"){
     parameters = window.location.href.split("?")[1];
     parameters = parameters.split("&");
     parameters = parameters.map(param => param.split("="));
     if (parameters.find(([name, value]) => name === "track" && show === "BRE")) {
         hideTrackButtons = true;
     }
+}
+}else{
+    null
 }
 
 const speakerAgendaLinks = document.querySelector("#root").getAttribute("speakeragendalinks") === "true";

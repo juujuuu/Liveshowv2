@@ -152,7 +152,12 @@ if(props.buttonsStatus  == "SERVE UP!"){
               
   newCount <= stepNumberTitle.length ? (
     <button style={{ float: "right" }} onClick={onClickHandler} type="button" className="btn btn-dark pb-0 pt-0 border-0">
-      <b>STEP {props.countStep + 1}:</b> <span>{props.countStepName.toUpperCase()}{" "}</span>
+      <b>STEP {props.countStep + 1}:{" "}
+<span>
+  {props.countStepName === "Themes"
+    ? "TOPIC"
+    : props.countStepName.toUpperCase()}{" "}
+</span></b>
       <i className="bi bi-caret-right-fill"></i>
     </button>
   ) : (selectedTags.length >= 1  ? (

@@ -8,6 +8,7 @@ const cocktailReducer = (state = { totalStepN: [], tags: [],totaltagsOneArray:[]
   const { type, payload } = action;
   // console.log(payload ,"@action")
 
+
   switch (action.type) {
 
 
@@ -93,12 +94,16 @@ const show= document.querySelector("#root").getAttribute("show")
 
    //**RETURN TOTAL STEPS  */
    let finalSorted
+   //**FILTERING OUT THE STEPS NUMBER AND STEPS NAMES BASED ON THE SHOW*/ 
    if(show=="BRE" || show=="TEE" ||show=="ABE" ||show=="FME"){
     
     finalSort=finalSort.filter(el=>el!=="Event")
    }
+   else if(show=="SPC" || show=="FMX" || show=="ABX"){
+    finalSort=finalSort.filter(el=>el!=="Event" && el!=="Focus")
+   }
  
- 
+//  console.log(finalSort,"filnasort")
    
       return { ...state, totalStepN: [...finalSort] };
 

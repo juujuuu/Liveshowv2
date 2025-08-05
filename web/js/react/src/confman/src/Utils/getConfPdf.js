@@ -26,7 +26,10 @@ const getConfPdfLink = (show, conf = false) => {
             }
         case "OCS":
         case "SAT":
-            return baseString + "OCS SAT" + ".pdf";
+        return baseString + "OCS SAT" + ".pdf";
+            case "CEX":
+            case "TME":
+                    return baseString + "CEX TME" + ".pdf";
         default:
             return baseString + show + ".pdf";
     }

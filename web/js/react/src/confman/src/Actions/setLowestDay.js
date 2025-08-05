@@ -4,6 +4,7 @@ const setLowestDay = (sessions) => {
         const { Day__c: day2 } = b;
         return day1 - day2;
     });
+   
     const lowestNumber = sessions[0].Day__c;
     return {
         type: "SET_LOWEST_DAY",

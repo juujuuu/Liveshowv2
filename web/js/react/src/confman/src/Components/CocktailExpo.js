@@ -114,7 +114,7 @@ const CocktailExpo = props => {
     const [countSteps, setCountSteps] = useState(1)
 
     let [buttonsStatus, setButtonStatus] = useState("")
-  
+  console.log(state)
 // used to set the hight  if the step container to create a smooth resizing
     const heightContainer = useRef(null);
     // pushes the screen back up on reset
@@ -131,13 +131,13 @@ const CocktailExpo = props => {
             newHeader = "Industry"
         }
         else if (header == "Themes") {
-            newHeader = "Content Themes"
+            newHeader = "Topic"
         }
         else if (header == "Focus") {
             if(show=="BRE"){
                 newHeader = "Your focus area"
             }else{
-                newHeader = "Focus Areas"
+                newHeader = "Focus"
             }
             
         }
@@ -147,9 +147,12 @@ const CocktailExpo = props => {
                 newHeader = "Select your primary stage/s"
             }
             else{
-                newHeader = "Select your primary expo event/s"
+                newHeader = "Event"
             }
             
+        }
+        else{
+            newHeader=header
         }
         return newHeader.toUpperCase()
     }
@@ -468,7 +471,10 @@ const CocktailExpo = props => {
                             ?
                             <div style={{ backgroundImage: `URL(https://oda0cs26.modx.dev//assets/resources/shared/images/testcocktaisls/a-1.png)`, backgroundSize: "cover" }} className="steps-container__title rounded tertiary-color-background">
                                 {/* <h3 style={{backgrosund:"#285185"}} className="text-dark tertiary-color rounded ps-3  mb-0 ">STEP {countSteps}: <span style={{color: "rgb(255, 0, 255)"}} className="secondary-color">{ stepNumberTitle[countSteps - 1].toUpperCase()}</span> </h3>  temportaty changing this for the headers*/}
-                                <h3 style={{ color: "black" }} className="steps-container__title--bold rounded  mb-0 ">STEP {countSteps}: <span style={{/*color: "rgb(255, 0, 255)"**/ }} className="steps-container__title--thin secondary-color">{changeStepHeader(stepNumberTitle[countSteps - 1],show)}</span> </h3>
+                                <h3 style={{ color: "black" }} className="steps-container__title--bold rounded  mb-0 ">STEP {countSteps}: <span style={{/*color: "rgb(255, 0, 255)"**/ }} 
+                                // className="steps-container__title--thin secondary-color">{changeStepHeader(stepNumberTitle[countSteps - 1],show)}</span>
+                                className="">{changeStepHeader(stepNumberTitle[countSteps - 1],show)}</span>
+                                 </h3>
                                 <div className="loader"></div>
                             </div>
                             : <span><h3 style={{ fontSize: "32px", fontWeight: "900" }} className="text-dark">YOUR PERFECT MIX</h3>

@@ -240,7 +240,40 @@ $(document).ready(function () {
                     console.log(result);
                     parent.children().css("visibility", "hidden");
                     parent.children(".lead-capture__spinner").hide(); //Hide the spinner
-                    let thankyou = '<div class="lead-capture__thankyou d-flex justify-content-center"><p>Successfully submitted.  Thank you</p></div>';
+                    let thankyou
+                    
+                    
+switch (window.location.href) {
+    case "https://www.foam-expo.com/2026-register-your-interest":
+      thankyou  = '<div class="lead-capture__thankyou d-flex justify-content-center"><div class="row"><p class="col-12"><b>Successfully submitted. Thank you!</b></p><p>You’ve taken the first step—now take the next by booking your hotel room.<br>It’s quick, easy, and ensures you’re ready when registration opens.</p><p><a style="color:#4d8691;" href="https://www.foam-expo.com/hotels-2026" target="_blank"><b>Book Today</b></a></p></div></div>';
+    // thankyou  = '<div class="lead-capture__thankyou d-flex justify-content-center"><p>Successfully submitted.  Thank you</p></div>';
+  
+      break;
+    case "https://www.adhesivesandbondingexpo.com/2026-register-your-interest":
+        thankyou  = '<div class="lead-capture__thankyou d-flex justify-content-center"><div class="row"><p class="col-12"><b>Successfully submitted. Thank you!</b></p><p>You’ve taken the first step—now take the next by booking your hotel room.<br>It’s quick, easy, and ensures you’re ready when registration opens.</p><p><a style="color:#348ac0;" href="https://www.adhesivesandbondingexpo.com/hotels-2026" target="_blank"><b>Book Today</b></a></p></div></div>';
+      break;
+    case "Wednesday":
+      console.log("Midweek already!");
+      break;
+    case "Thursday":
+      console.log("Almost there.");
+      break;
+    case "Friday":
+      console.log("Weekend is near!");
+      break;
+    case "Saturday":
+    case "Sunday":
+      console.log("It's the weekend!");
+      break;
+    default:
+      thankyou  = '<div class="lead-capture__thankyou d-flex justify-content-center"><p>Successfully submitted.  Thank you</p></div>';
+      console.log("no ")
+  }
+ 
+                    
+                    
+                    
+                    
                     parent.append(thankyou); //Add the thank you message.
 
                     if (!redirect) {

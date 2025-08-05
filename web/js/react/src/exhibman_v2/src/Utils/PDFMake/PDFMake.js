@@ -106,7 +106,7 @@ class PDFMake {
                     var showName = "Thermal Management Expo";
                     break;
                   
-                case "a1xUK000000Y2aT":
+                case "a1xUK000001UDGz":
                     var showName = "Space Tech Expo";
                     break;
                 case "a1xUK0000019zen":

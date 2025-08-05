@@ -8,6 +8,8 @@ import setOptions from "./setOptions";
 import setQueries from "./setQueries";
 import setProfile from "./setProfile";
 import setDownloadList from "./setDownloadList";
+
+
 export {
 	fetchExhibs,
 	fetchExhib,
@@ -18,5 +20,6 @@ export {
 	setOptions,
 	setQueries,
 	setProfile,
-	setDownloadList
+	setDownloadList,
+	
 };

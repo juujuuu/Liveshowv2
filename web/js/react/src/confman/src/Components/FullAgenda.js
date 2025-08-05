@@ -135,19 +135,20 @@ const FullAgenda = props => {
                 getModal({ role: "on-demand-modal", odcode: getOnDemandCode(show) });
             }
         }
-       if(show=="TME"){
-        
-        dispatch(setTrack(2));
+        if (show == "TME") {
 
-       }
-       if(show=="CEX"){
-        
-        dispatch(setTrack(1));
+            dispatch(setTrack(2));
 
-       }
-       if(show=="TME" && extraMode==="innovation-agenda" || show=="CEX" && extraMode==="innovation-agenda" ){
-        dispatch(setTrack([1,2]));
-       }
+        }
+        if (show == "CEX") {
+
+            dispatch(setTrack(1));
+
+        }
+
+        if (show == "TME" && extraMode === "innovation-agenda" || show == "CEX" && extraMode === "innovation-agenda") {
+            dispatch(setTrack([1, 2]));
+        }
     }, []);
 
     //Run when loading changes.
@@ -212,6 +213,7 @@ const FullAgenda = props => {
             //If we can find a session id param.
 
             if (parameters.find(param => param[0] == "session-id")) {
+                
                 const [name, sessionId] = parameters.find(param => param[0] == "session-id"); //destructure param name and value
 
                 try {
@@ -262,13 +264,14 @@ const FullAgenda = props => {
                 }
             }
         } else {
-            /*No one can make their mind up about how logic on these should work so good luck lol !!! ngula a mammt!!!!
+            /*No one can make their mind up about how logic on these should work so good luck lol !!! ngul a mammt!!!!
  
              This logic will not set the lowest day , so those show undrneath won't have the active day on load and will show
              all the sessions. THEREFORE, THE TOP BAR WITH DAYS WILL not SHOW THE active FIRST DATE on load ,
              guessing, it s designed for one long list with just the check button (or filtering by tracks or by date), when this happens
              hide the tot date bar*/
-            if (show !== "SPC" && show !== "NZB") {
+             
+            if (show !== "NZB" ) {
 
                 //Default if there aren't any extra params.  Just set the day to the lowest one in the data
                 if (getDashPosition == -1 || !hash) {
@@ -298,16 +301,33 @@ const FullAgenda = props => {
         let index = 0;
         let otherIndex = 0;
         let dayButtons = [];
+        let date
+        let theme
         //console.log(state)
         for (index = lowestDay; index <= numberOfDays; index++) {
+            date=daynameoverride[otherIndex].split("~")
             dayButtons.push(
                 <div key={index} className={` col-${colNum}`}>
                     {/* { console.log(index,"index",filters.day)} */}
+                    
                     <MainNavButton options={options} key={`day-button-${index}`} active={filters.day === index} value={index} handler={setDay}>
+                        {/* {console.log(filters.day )}
+                        {console.log(index)} */}
                         {/* {daynameoverride == undefined || window.innerWidth < 992
 							? `Day ${index + 1}`
+                            
 							: `Day ${index + 1} - ${daynameoverride[index]}`} */}
-                        {daynameoverride[otherIndex]}
+                           {/* {  daynameoverride[otherIndex]} */}
+     {(show === "FME" || show === "ABE" || show === "TEE") && extraMode !== "innovation-agenda"
+  ? 
+ date
+
+ 
+  
+ 
+  : daynameoverride[otherIndex]}
+
+
                     </MainNavButton>
                 </div>
             );
@@ -411,37 +431,38 @@ const FullAgenda = props => {
                 </div>)
         }
         else if (data.length > 0) {
+            // {console.log(lowestDay,"lowest")}
             let slides = data.map((session, index) => <Slide session={session} windowwidth={window.innerWidth} key={`slide-${index + 1}`} />);
             return (
                 <div className="accordion accordion-flush conference-agenda__sessions" id="conference-agenda__sessions">
-                   {/*FOR ABE tee fme AND jeSUS CRHIST SINNER add the days overrride AGAIN IN THE BODY*/}
-                  {((show === "FME" || show === "ABE" || show === "TEE" ) && (extraMode!="innovation-agenda")) ? (
-                        <div className="d-flex flex-column flex-md-row align-items-center mb-4 " >  
-                        <b className="mr-1 mt-1" style={{ color: "#2e2b28", fontSize: "17px", paddingRight:"10px" }}>
-                            {daynameoverride[filters.day - 1]}
-                        </b>
-                        <div className="row mt-1" >
-                    
-                        <ImageLoader
-                        src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/stage-1.jpg"
-                        alt="Stage 1"
-                        classname="col-6"
-                        maxwidth="118px"
-                        width="118px"
-                        />
-                            <ImageLoader
-                        src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/stage-2.jpg"
-                        alt="Stage 2"
-                        classname="col-6"
-                        maxwidth="118px"
-                        width="118px"
-                        />
-                        {/* <img className="col-6" style={{maxWidth:"118px"}}  alt="Stage 1" src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/stage-1.jpg" />
+                    {/*FOR ABE tee fme AND jeSUS CRHIST SINNER add the days overrride AGAIN IN THE BODY*/}
+                    {((show === "FME4" || show === "ABE4" || show === "TEE4") && (extraMode != "innovation-agenda")) ? (
+                        <div className="d-flex flex-column flex-md-row align-items-center mb-4 " >
+                            <b className="mr-1 mt-1" style={{ color: "#2e2b28", fontSize: "17px", paddingRight: "10px" }}>
+                                {daynameoverride[filters.day - 1]}
+                            </b>
+                            <div className="row mt-1" >
+
+                                <ImageLoader
+                                    src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/stage-1.jpg"
+                                    alt="Stage 1"
+                                    classname="col-6"
+                                    maxwidth="118px"
+                                    width="118px"
+                                />
+                                <ImageLoader
+                                    src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/stage-2.jpg"
+                                    alt="Stage 2"
+                                    classname="col-6"
+                                    maxwidth="118px"
+                                    width="118px"
+                                />
+                                {/* <img className="col-6" style={{maxWidth:"118px"}}  alt="Stage 1" src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/stage-1.jpg" />
                         // <img  className="col-6" style={{maxWidth:"118px"}}  alt="Stage 2"src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/stage-2.jpg"/> */}
+                            </div>
                         </div>
-                        </div>
-                    ) : null} 
-                     {/*FOR ABE tee fme AND jeSUS CRHIST SINNER end*/}
+                    ) : null}
+                    {/*FOR ABE tee fme AND jeSUS CRHIST SINNER end*/}
                     {slides}
                 </div>
             );
@@ -637,7 +658,7 @@ const FullAgenda = props => {
 
         // if ((show == "ABE" || show == "FME" || show == "TEE") &&  extraMode!=="innovation-agenda" ) {
         if ((
-            show == "ABE" || show == "FME" || show == "TEE" || show == "FMX" || show == "ABX" ) && extraMode !== "innovation-agenda") {
+            show == "ABE4" || show == "FME4" || show == "TEE4" || show == "FMX" || show == "ABX") && extraMode !== "innovation-agenda") {
             inputSessions = filtershows(inputSessions)
         }
         return inputSessions;
@@ -673,94 +694,319 @@ const FullAgenda = props => {
                         </Cta>
                     );
                 }
-            case "FME":
-            case "ABE":
-            case "TEE":
-            
+            case "FME4":
+            case "ABE4":
+            case "TEE4":
+
                 if (extraMode === "innovation-agenda") {
                     let color
 
-                    if (show === "FME") { color = "fme-orange" } else if (show === "ABE") { color = "abe-dark-blue" } else { color = "tee-blue" }
+                    if (show === "FME4") { color = "fme-orange" } 
+                    else if (show === "ABE4") { color = "abe-dark-blue" } else { color = "tee-blue4" }
                     return (
                         <Cta key="cta main agenda link"
                             curved={false}
                             color={color}
                             link="../conference/conference-agenda"
                             bonusClass="rounded"
-                             size="max">
+                            size="max">
                             CONFERENCE AGENDA
                         </Cta>
                     );
-                } else {
+                }
+
+               
+                else {
+    return (
+        <Cta key="cta innovation link"
+            curved={false}
+            color="solutions-blue-FME-ABE-TEE"
+            link="../conference/solutions-innovation-stage"
+            bonusClass="rounded"
+            size="max">
+            SOLUTIONS INNOVATION STAGE
+        </Cta>
+    );
+}
+{/*FOR 2025 YEAR FME TEE ABE TO RENDER THE SHOW BOTTONS ON THE SIDE*/}
+
+ 
+
+        
+            let color,text
+
+            if (show === "FME") { color = "fme-orange"; text="The Foam Conference"} else if (show === "ABE") { color = "abe-dark-blue"; text="The Adhesives & Bonding Conference" } else { color = "tee-blue",text="The Thermal Conference" }
+            return (
+                <>
+                      
+
+                <Cta key="cta main agenda link"
+                    curved={false}
+                    color="abe-dark-blue"
+                    link="https://www.adhesivesandbondingexpo-europe.com/conference/conference-agenda-2025"
+                    bonusClass="rounded"
+                    size="max">
+                The Adhesives & Bonding Conference
+                </Cta>
+                  <Cta key="cta main agenda link"
+                  curved={false}
+                  color="tee-blue"
+                  link="https://www.thermalmanagementexpo-europe.com/conference/conference-agenda-2025"
+                  bonusClass="rounded"
+                  size="max">
+                The Thermal Conference
+              </Cta></>
+            );
+      
+            case "ABE":
+                return (
+                        
+
+                        <div className="d-flex justify-content-center flex-column align-items-center">
+                        <i> View Co-located conferences</i>
+
+                        { /* {FME logo} */}
+                        <a target="_blank" rel="noopener noreferrer" href="https://www.foam-expo-europe.com/conference/conference-agenda-2025">
+                        <ImageLoader
+                        extraClass="mt-4"
+                        alt="show logo"
+                        src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/foam-europe-conference.jpg"
+                        maxwidth="275px"
+                        width="250px"
+                    />
+                    </a> 
+
+                    { /* {TEE logo} */}
+                        <a target="_blank" rel="noopener noreferrer" href="https://www.thermalmanagementexpo-europe.com/conference/conference-agenda-2025">
+                        <ImageLoader
+                        extraClass="mt-4"
+                        alt="show logo"
+                        src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/tee-logo-europe-conference.jpg"
+                        maxwidth="250px"
+                        width="250px"
+                        />  
+                        </a>   
+                    
+                  
+                    {/* <Cta key="cta main agenda link"
+                        curved={false}
+                        color="fme-orange"
+                        link="https://www.foam-expo-europe.com/conference/conference-agenda-2025"
+                        bonusClass="rounded"
+                        size="max">
+                    The Foam Conference
+                    </Cta>
+                      <Cta key="cta main agenda link"
+                      curved={false}
+                      color="tee-blue"
+                      link="https://www.thermalmanagementexpo-europe.com/conference/conference-agenda-2025"
+                      bonusClass="rounded"
+                      size="max">
+                    The Thermal Conference
+                  </Cta> */}
+                  
+                  </div>
+                );
+                case "TEE":
                     return (
-                        <Cta key="cta innovation link"
+                        <div className="d-flex justify-content-center flex-column align-items-center">
+                        <i class> View Co-located conferences</i>
+                        { /* {ABE logo} */}
+                        <a target="_blank" rel="noopener noreferrer" href="https://www.adhesivesandbondingexpo-europe.com/conference/conference-agenda-2025">
+                        <ImageLoader
+                        extraClass="mt-4"
+                        alt="show logo"
+                        src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/adhesives-bonding-europe-conference.jpg"
+                        maxwidth="250px"
+                        width="250px"
+                        />  
+                        </a>   
+
+                        { /* {FME logo} */}
+                        <a target="_blank" rel="noopener noreferrer" href="https://www.foam-expo-europe.com/conference/conference-agenda-2025">
+                        <ImageLoader
+                        extraClass="mt-4"
+                        alt="show logo"
+                        src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/foam-europe-conference.jpg"
+                        maxwidth="275px"
+                        width="250px"
+                    />
+                    </a> 
+                        {/*
+                        normal buttons
+                        <Cta key="cta main agenda link"
                             curved={false}
-                            color="solutions-blue-FME-ABE-TEE"
-                            link="../conference/solutions-innovation-stage"
+                            color="abe-dark-blue"
+                            link="https://www.adhesivesandbondingexpo-europe.com/conference/conference-agenda-2025"
                             bonusClass="rounded"
                             size="max">
-                            SOLUTIONS INNOVATION STAGE
+                        The Adhesives & Bonding Conference
                         </Cta>
+                        <Cta key="cta main agenda link"
+                        curved={false}
+                        color="fme-orange"
+                        link="https://www.foam-expo-europe.com/conference/conference-agenda-2025"
+                        bonusClass="rounded"
+                        size="max">
+                    The Foam Conference
+                    </Cta> */}
+                    
+                    </div>
                     );
-                }
+
+
+                    case "FME":
+                        return (
+                            <div className="d-flex justify-content-center flex-column align-items-center">
+                            <i class> View Co-located conferences</i>
+                            { /* {ABE logo} */}
+                            <a target="_blank" rel="noopener noreferrer" href="https://www.adhesivesandbondingexpo-europe.com/conference/conference-agenda-2025">
+                        <ImageLoader
+                        extraClass="mt-4"
+                        alt="show logo"
+                        src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/adhesives-bonding-europe-conference.jpg"
+                        maxwidth="250px"
+                        width="250px"
+                        />  
+                        </a>     
+                        { /* {TEE logo} */}
+                        <a target="_blank" rel="noopener noreferrer" href="https://www.thermalmanagementexpo-europe.com/conference/conference-agenda-2025">
+                        <ImageLoader
+                        extraClass="mt-4"
+                        alt="show logo"
+                        src="https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/tee-logo-europe-conference.jpg"
+                        maxwidth="250px"
+                        width="250px"
+                        />  
+                        </a>  
+                            {/*
+                            normal buttons
+                            <Cta key="cta main agenda link"
+                                curved={false}
+                                color="abe-dark-blue"
+                                link="https://www.adhesivesandbondingexpo-europe.com/conference/conference-agenda-2025"
+                                bonusClass="rounded"
+                                size="max">
+                            The Adhesives & Bonding Conference
+                            </Cta>
+                            <Cta key="cta main agenda link"
+                            curved={false}
+                            color="fme-orange"
+                            link="https://www.foam-expo-europe.com/conference/conference-agenda-2025"
+                            bonusClass="rounded"
+                            size="max">
+                        The Foam Conference
+                        </Cta> */}
+                        
+                        </div>
+                        );
         }
+
+        
     };
 
-    const getAltConferenceString = (show, extraMode) => {
-        let string
-        switch (show) {
-            case "FMX":
-            case "ABX":
-          case  "TME":
-            case "CEX":
-                if (extraMode == "innovation-agenda") {
-                    string = "innovation-stage";
+const getAltConferenceString = (show, extraMode) => {
+    let string
+    switch (show) {
+        case "FMX":
+        case "ABX":
+        case "TME":
+        case "CEX":
+            if (extraMode == "innovation-agenda") {
+                string = "innovation-stage";
 
 
-                } else {
-                    string = "ooo";
+            } else {
+                string = "ooo";
 
 
 
-                }
-                return string;
+            }
+            return string;
 
-            case "FME":
-            case "ABE":
-            case "TEE":
-                if (extraMode === "innovation-agenda") {
-                    return "innovation-stage";
-                }
-                return false;
-            default:
-                throw ("getAltConferenceString error: ", extraMode, show);
-        }
-    };
+        case "FME":
+        case "ABE":
+        case "TEE":
+            if (extraMode === "innovation-agenda") {
+                return "innovation-stage";
+            }
+            return false;
+        default:
+            throw ("getAltConferenceString error: ", extraMode, show);
+    }
+};
 
-    /**
-     *
-     * @returns The tracks section (the bit with the checkboxes).
-     */
-    // console.log(state)
-    const getTracksNav = () => {
-        let cols,order
-        //Very annoying button for extra conference on some in this bit Stage 1 - stage 2 checkboxes
-        // const cols = show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? [6, 6] : [9, 3];
-        if((show === "FME" && extraMode !="innovation-agenda") || (show === "ABE" && extraMode !="innovation-agenda") || (show === "TEE" && extraMode !="innovation-agenda") || (show == "FMX" && extraMode !="innovation-agenda") || (show == "ABX" && extraMode !="innovation-agenda")){cols= [" d-none", 3, 9, 12];order=[0,1] }
-        //!REMOVING THIS AS I MOVED THE BUTTON CONFERENCE ON THE SIDE SO ALL THE COL CAN BE THE SAME 
-        // else if(show === "FMX" || show === "ABX"){ cols=[6, 6];  }
-        else{cols=[" d-none", 3, 9, 9]}
-        //Desktop or mobile?
-        if (window.innerWidth > 992) {
-            return (
-                <div className="container">
+/**
+ *
+ * @returns The tracks section (the bit with the checkboxes).
+ */
+// console.log(state)
+const getTracksNav = () => {
+    let cols, order
+    //Very annoying button for extra conference on some in this bit Stage 1 - stage 2 checkboxes
+    // const cols = show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? [6, 6] : [9, 3];
+    if ((show === "FME4" && extraMode != "innovation-agenda") || (show === "ABE4" && extraMode != "innovation-agenda") || (show === "TEE4" && extraMode != "innovation-agenda")) { cols = [" d-none", 3, 9, 12]; order = [0, 1] }
+    //!REMOVING THIS AS I MOVED THE BUTTON CONFERENCE ON THE SIDE SO ALL THE COL CAN BE THE SAME 
+    // else if(show === "FMX" || show === "ABX"){ cols=[6, 6];  }
+    else { cols = [" d-none", 3, 9, 9] }
+    //Desktop or mobile?
+    if (window.innerWidth > 992) {
+        return (
+            <div className="container">
+                <div className="row">
+                    {/*checkboxes stages*/}
+                    <div className={`col-${cols[3]} track-col ${cols[3] == 12 ? "border-light  border-bottom" : ""}`}>{getTrackButtons(maxTracks)}</div>
+
+                    {/*moving the themes up next to expand & collaps buttons   */}
+                    {(show === "TEE" || show === "ABE" || show === "FME") && (
+                        <div className={`col-${cols[3]} flex track-col ${cols[3] === 12 ? "border-light border-bottom" : ""}`}>
+                            {getUIThemes(show, filters.day, filters.track, extraMode)}
+                        </div>
+                    )}
+
+                    <div className={`col-${cols[1]} control-col  ${order ? "order-" + order[1] : ""}`}>
+                        {/* {console.log(state.defaultStateSlidesReducer.slidesState)} */}
+                        <Cta
+                            key="cta expand"
+                            curved={false}
+                            active={openSlides}
+                            color="primary"
+                            bonusClass="confman-expand rounded"
+                            handler={setOpenSlides}
+                            //  handler={setStateSlidesAllOpen()}
+                            role="expand"
+                            value={true}>
+                            Expand all
+                        </Cta>
+                        <Cta
+                            key="cta collapse"
+                            curved={false}
+                            active={!openSlides}
+                            color="primary"
+                            bonusClass="confman-expand rounded"
+                            handler={setOpenSlides}
+                            // handler={setStateSlidesAllClosed()}
+                            role="collapse"
+                            value={false}>
+                            Collapse all
+                        </Cta>
+                        {/* {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? getAltConferenceButton(show, extraMode) : null} */}
+                    </div>
+                    {/* extra buttons for filtering ABE FME TEE*/}
+                    {((show == "FME4" || show == "TEE4" || show == "ABE4") && extraMode !== "innovation-agenda")
+                        ?
+                        <div className={`col-${cols[2]} ${order ? "order-" + order[0] : ""} track-col  align-items-center`}><b style={{ fontSize: "16px" }}>Focus by show:</b>{getShowButtons(maxShows)}</div>
+                        : null}
+                </div>
+            </div>
+        );
+    } else {
+        return (
+            <>
+                <div className="container-fluid tracks__mob-control">
                     <div className="row">
-                        {/*checkboxes stages*/}
-                        <div className={`col-${cols[3]} track-col ${cols[3]==12 ?"border-light  border-bottom":""}`}>{getTrackButtons(maxTracks)}</div>
 
-
-                        <div className={`col-${cols[1]} control-col  ${order ? "order-" + order[1] : ""}`}>
-{/* {console.log(state.defaultStateSlidesReducer.slidesState)} */}
+                        <div className="col-12 control-col">
                             <Cta
                                 key="cta expand"
                                 curved={false}
@@ -768,11 +1014,11 @@ const FullAgenda = props => {
                                 color="primary"
                                 bonusClass="confman-expand rounded"
                                 handler={setOpenSlides}
-                                //  handler={setStateSlidesAllOpen()}
                                 role="expand"
                                 value={true}>
                                 Expand all
                             </Cta>
+
                             <Cta
                                 key="cta collapse"
                                 curved={false}
@@ -780,194 +1026,154 @@ const FullAgenda = props => {
                                 color="primary"
                                 bonusClass="confman-expand rounded"
                                 handler={setOpenSlides}
-                                // handler={setStateSlidesAllClosed()}
                                 role="collapse"
                                 value={false}>
                                 Collapse all
                             </Cta>
-                            {/* {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? getAltConferenceButton(show, extraMode) : null} */}
                         </div>
-                        {/* extra buttons for filtering ABE FME TEE*/}
-                        {((show == "FME" || show == "TEE" || show == "ABE" || show == "FMX" || show == "ABX") && extraMode !== "innovation-agenda")
-                            ?
-                            <div className={`col-${cols[2]} ${order ? "order-" + order[0] : ""} track-col  align-items-center`}><b style={{ fontSize: "16px" }}>Focus by show:</b>{getShowButtons(maxShows)}</div>
-                            : null}
                     </div>
                 </div>
-            );
-        } else {
-            return (
-                <>
-                    <div className="container-fluid tracks__mob-control">
-                        <div className="row">
-
-                            <div className="col-12 control-col">
-                                <Cta
-                                    key="cta expand"
-                                    curved={false}
-                                    active={openSlides}
-                                    color="primary"
-                                    bonusClass="confman-expand rounded"
-                                    handler={setOpenSlides}
-                                    role="expand"
-                                    value={true}>
-                                    Expand all
-                                </Cta>
-                                
-                                <Cta
-                                    key="cta collapse"
-                                    curved={false}
-                                    active={!openSlides}
-                                    color="primary"
-                                    bonusClass="confman-expand rounded"
-                                    handler={setOpenSlides}
-                                    role="collapse"
-                                    value={false}>
-                                    Collapse all
-                                </Cta>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="container-fluid tracks__mob-tracks">
-                        <div className="row ">
+                <div className="container-fluid tracks__mob-tracks">
+                    <div className="row ">
                         <div className={`col-${show === "ABE" || show === "FME" || show === "TEE" ? cols[0] : "12"} track-col justify-content-between`}>
 
-                                {show === "FMX" || show === "ABX" || show === "ABE" || show === "FME" || show === "TEE" ? getAltConferenceButton(show, extraMode) : null}
-                                {getTrackButtons(maxTracks)}{" "}
-                            </div>
-                            {/*MULTYEXPO - extra buttons for filtering ABE FME TEE*/}
-                            {((
+                            {show === "FMX" || show === "ABX" || show === "ABE" || show === "FME" || show === "TEE" ? getAltConferenceButton(show, extraMode) : null}
+                            {getTrackButtons(maxTracks)}{" "}
+                        </div>
+                        {/*MULTYEXPO - extra buttons for filtering * mobile/}
+                            
+                            {/* {((
                                 // show == "FME" || show == "TEE" || show == "ABE" ||
                                 show == "FMX" || show == "ABX") && extraMode !== "innovation-agenda")
                                 ?
                                 <div className={`col-12 track-col justify-content-start`}>{getShowButtons(maxShows)}</div>
                                 : null
-                            }
-                        </div>
+                            } */}
                     </div>
-                </>
-            );
-        }
-    };
-
-    if (loading) {
-        return (
-            <div className="confman conference-agenda conference-agenda--loading d-flex justify-content-center align-items-center">
-                <Spinner />
-            </div>
-        );
-    } else {
-        const pipedSessions = runFilters(sessions); //Filter Sessions
-        return (
-            <section
-
-                className={`confman conference-agenda conference-agenda--${show} ${!!extraMode ? `conference-agenda--${getAltConferenceString(show, extraMode)}` : ""}`}>
-
-                <MainNav desktop={window.innerWidth > 992}>
-                    {topNav ? (
-                        <div className="main-nav__days">
-                            <div className={`container${window.innerWidth < 992 ? "-fluid" : ""}`}>
-                                <div className="row">{getDayButtons(maxDays, lowestDay)}</div>
-                            </div>
-                        </div>
-                    ) : (
-                        ""
-                    )}
-                    <div className="main-nav__tracks">{getTracksNav()}</div>
-                </MainNav>
-                <Body>
-                    {window.innerWidth > 992 ? (
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-8">
-                                    {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "BRE" || show === "TEE"|| show === "CEX" || show === "TME"  
-                                        ? getUIThemes(show, filters.day, filters.track, extraMode)
-                                        : null}
-                                    {getSlides(pipedSessions)}
-                                </div>
-                                <div className="col-4">
-                                    <StickyNav role="conference-agenda-side-nav">
-                                        <div className="side-nav__search">
-                                            <h3>Search</h3>
-                                            <Cta key="cta reset"
-                                                size="micro" color="black"
-                                                role="clearFiltersConf"
-                                                curved={false}
-                                                margin="vertical-margin--0"
-                                                bonusClass="rounded"
-                                                handler={resetFilters}>
-
-                                                CLEAR FILTERS
-
-                                            </Cta>
-                                        </div>
-                                        <SearchInput handler={setQuery} role="conference-search" key={`search-conference`} />
-                                        {convincepdf != undefined && convincepdf != "" ? (
-                                            <Cta key="cta convince your boss"
-                                                size="max"
-                                                bonusClass="rounded"
-                                                color="primary">
-
-                                                CONVINCE YOUR BOSS
-
-                                            </Cta>
-                                        ) : (
-                                            ""
-                                        )}
-                                        {downloadagenda != undefined && hideDownloadLink === false ? (
-                                            <>
-                                                {show == "OCS" || show == "SAT" || show == "NZB" ? (
-                                                    <Cta key="cta pdf agenda"
-                                                        size="max"
-                                                        color="primary"
-                                                        role="pop-form"
-                                                        link={generalenquiry}
-                                                        download={true}
-                                                        bonusClass="rounded">
-                                                            
-                                                        DOWNLOAD PDF AGENDA
-                                                    </Cta>
-                                                ) : (
-                                                    extraMode != "innovation-agenda"?
-                                                    <Cta key="cta pdf agenda" bonusClass="rounded" size="max" color="primary" link={getConfPdfLink(show, conf)} download={true}>
-                                                        DOWNLOAD PDF AGENDA
-                                                    </Cta>: ""
-                                                )}
-                                            </>
-                                        ) : (
-                                            ""
-                                        )}
-                                        {reglink != undefined && reglink != "" ? (
-                                            <Cta key="cta reg button" bonusClass="rounded" size="max" link={reglink}>
-                                                REGISTER FOR FREE
-                                            </Cta>
-                                        ) : (
-                                            ""
-                                        )}
-                                        {reginterest != undefined && reginterest != "" ? (
-                                            <Cta key="cta reg interest" size="max" role="pop-form" link={reginterest} value={options}>
-                                                REGISTER INTEREST
-                                            </Cta>
-                                        ) : (
-                                            ""
-                                        )}
-                                        {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? getAltConferenceButton(show, extraMode) : null}
-                                    </StickyNav>
-                                </div>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="container-fluid">
-                            <div className="row">
-                                <div className="col-12">{getSlides(pipedSessions)}</div>
-                            </div>
-                        </div>
-                    )}
-                </Body>
-
-            </section>
+                </div>
+            </>
         );
     }
+};
+
+if (loading) {
+    return (
+        <div className="confman conference-agenda conference-agenda--loading d-flex justify-content-center align-items-center">
+            <Spinner />
+        </div>
+    );
+} else {
+    const pipedSessions = runFilters(sessions); //Filter Sessions
+    return (
+        <section
+
+            className={`confman conference-agenda conference-agenda--${show} ${!!extraMode ? `conference-agenda--${getAltConferenceString(show, extraMode)}` : ""}`}>
+
+            <MainNav desktop={window.innerWidth > 992}>
+                {topNav ? (
+                    <div className="main-nav__days">
+                        <div className={`container${window.innerWidth < 992 ? "-fluid" : ""}`}>
+                            <div className="row">{getDayButtons(maxDays, lowestDay)}</div>
+                        </div>
+                    </div>
+                ) : (
+                    ""
+                )}
+                <div className="main-nav__tracks">{(getTracksNav())}</div>
+            </MainNav>
+            <Body>
+                {window.innerWidth > 992 ? (
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-8">
+                                {show === "FME4" || show === "ABE4" || show === "BRE" || show === "TEE4" || show === "CEX" || show === "TME"
+                                    ? getUIThemes(show, filters.day, filters.track, extraMode)
+                                    : null}
+                                {getSlides(pipedSessions)}
+                            </div>
+                            <div className="col-4">
+                                <StickyNav role="conference-agenda-side-nav">
+                                    <div className="side-nav__search">
+                                        <h3>Search</h3>
+                                        <Cta key="cta reset"
+                                            size="micro" color="black"
+                                            role="clearFiltersConf"
+                                            curved={false}
+                                            margin="vertical-margin--0"
+                                            bonusClass="rounded"
+                                            handler={resetFilters}>
+
+                                            CLEAR FILTERS
+
+                                        </Cta>
+                                    </div>
+                                    <SearchInput handler={setQuery} role="conference-search" key={`search-conference`} />
+                                    {convincepdf != undefined && convincepdf != "" ? (
+                                        <Cta key="cta convince your boss"
+                                            size="max"
+                                            bonusClass="rounded"
+                                            color="primary">
+
+                                            CONVINCE YOUR BOSS
+
+                                        </Cta>
+                                    ) : (
+                                        ""
+                                    )}
+                                    {downloadagenda != undefined && hideDownloadLink === false ? (
+                                        <>
+                                            {show == "OCS" || show == "SAT" || show == "NZB" ? (
+                                                <Cta key="cta pdf agenda"
+                                                    size="max"
+                                                    color="primary"
+                                                    role="pop-form"
+                                                    link={generalenquiry}
+                                                    download={true}
+                                                    bonusClass="rounded">
+
+                                                    DOWNLOAD PDF AGENDA
+                                                </Cta>
+                                            ) : (
+                                                extraMode != "innovation-agenda" ?
+                                                    <Cta key="cta pdf agenda" bonusClass="rounded" size="max" color="primary" link={getConfPdfLink(show, conf)} download={true}>
+                                                        DOWNLOAD PDF AGENDA
+                                                    </Cta> : ""
+                                            )}
+                                        </>
+                                    ) : (
+                                        ""
+                                    )}
+                                    {reglink != undefined && reglink != "" ? (
+                                        <Cta key="cta reg button" bonusClass="rounded" size="max" link={reglink}>
+                                            REGISTER NOW
+                                        </Cta>
+                                    ) : (
+                                        ""
+                                    )}
+                                    {reginterest != undefined && reginterest != "" ? (
+                                        <Cta key="cta reg interest" size="max" role="pop-form" link={reginterest} value={options}>
+                                            REGISTER INTEREST
+                                        </Cta>
+                                    ) : (
+                                        ""
+                                    )}
+                                    {show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? getAltConferenceButton(show, extraMode) : null}
+                                </StickyNav>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-12">{getSlides(pipedSessions)}</div>
+                        </div>
+                    </div>
+                )}
+            </Body>
+            {/* {   console.log(state)} */}
+        </section>
+    );
+}
 };
 
 // const mapStateToProps = (store, ownProps) => {
