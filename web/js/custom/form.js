@@ -252,14 +252,14 @@ switch (window.location.href) {
     case "https://www.adhesivesandbondingexpo.com/2026-register-your-interest":
         thankyou  = '<div class="lead-capture__thankyou d-flex justify-content-center"><div class="row"><p class="col-12"><b>Successfully submitted. Thank you!</b></p><p>You’ve taken the first step—now take the next by booking your hotel room.<br>It’s quick, easy, and ensures you’re ready when registration opens.</p><p><a style="color:#348ac0;" href="https://www.adhesivesandbondingexpo.com/hotels-2026" target="_blank"><b>Book Today</b></a></p></div></div>';
       break;
-    case "Wednesday":
-      console.log("Midweek already!");
+    case "https://www.ceramicsexpousa.com/visit/register-your-interest-2026":
+        thankyou  = '<div class="lead-capture__thankyou d-flex justify-content-center"><div class="row"><p class="col-12"><b>Successfully submitted. Thank you!</b></p><p>You’ve taken the first step—now take the next by booking your hotel room.<br>It’s quick, easy, and ensures you’re ready when registration opens.</p><p><a style="color:#b88d17;" href="https://www.ceramicsexpousa.com/plan-your-visit/hotel-booking-2026" target="_blank"><b>Book Today</b></a></p></div></div>';
       break;
-    case "Thursday":
-      console.log("Almost there.");
+    case "https://www.thermalmanagementexpo.com/visit/register-your-interest-2026":
+       thankyou  = '<div class="lead-capture__thankyou d-flex justify-content-center"><div class="row"><p class="col-12"><b>Successfully submitted. Thank you!</b></p><p>You’ve taken the first step—now take the next by booking your hotel room.<br>It’s quick, easy, and ensures you’re ready when registration opens.</p><p><a style="color:#b88d17;" href="https://www.thermalmanagementexpo.com/plan-your-visit/hotel-booking-2026" target="_blank"><b>Book Today</b></a></p></div></div>';
       break;
-    case "Friday":
-      console.log("Weekend is near!");
+    case "https://www.spacetechexpo.com/plan-your-visit/register-your-interest":
+      thankyou  = '<div class="lead-capture__thankyou d-flex justify-content-center"><div class="row"><p class="col-12"><b>Successfully submitted. Thank you!</b></p><p>You’ve taken the first step—now take the next by booking your hotel room.<br>It’s quick, easy, and ensures you’re ready when registration opens.</p><p><a style="color:#b88d17;" href="https://www.spacetechexpo.com/plan-your-visit/hotels-2026" target="_blank"><b>Book Today</b></a></p></div></div>';
       break;
     case "Saturday":
     case "Sunday":

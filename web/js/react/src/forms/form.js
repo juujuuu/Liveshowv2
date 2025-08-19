@@ -170,7 +170,7 @@ $(document).ready(function () {
 switch (window.location.href) {
   case "https://www.foam-expo.com/2026-register-your-interest":
     thankyou  = '<div class="lead-capture__thankyou d-flex justify-content-center"><p>Successfully submitted.  Thank you</p> <p>While you wait for registration to open, <b>secure your hotel</b> now and lock in the best rates and availability. Don’t miss out—rooms go fast!Link to hotel page</p> <p><a href="">link</a> </p</div>';
-console.log("yes ")
+
     break;
   case "Tuesday":
     console.log("Second day of the work week.");

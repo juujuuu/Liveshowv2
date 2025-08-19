@@ -29,6 +29,8 @@ const getSiteFromAcronym = show => {
             return "https://www.thermalmanagementexpo.com/";
         case "tee":
             return "https://www.thermalmanagementexpo-europe.com/";
+        case "abm":
+            return "https://www.adhesivesandbondingexpo-mexico.com/";
         default:
             throw "Acrnym not found";
     }
