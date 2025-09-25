@@ -52,7 +52,9 @@ const getSiteFromId = conferenceId => {
         case "a3i4V000001hXhE":
         case "a3iUK0000007jy5":
             return "ABX";
-        case "a3i4V000001pPTc":
+              case "a1xUK000000qisz":
+            return "ABM";
+        case "a1xUK000000qisz":
         case "What ever the sf id of the solutions innovation agenda ends up being":
             return "FME";
         case "a3i4V000001pJWy":
@@ -122,6 +124,8 @@ const getShowNameFromAcronym = acronym => {
             return "Onboard  Connectivity Summit";
         case "sat":
             return "Satellite Connectivity Summit";
+             case "abm":
+            return "Adhesives & Bondingexpo Expo Mexico";
         
         default:
             return "Acronym not found";
@@ -152,6 +156,8 @@ const getShowNameFromAcronymOnlyText = acronym => {
             return "Onboard  Connectivity Summit";
         case "sat":
             return "Satellite Connectivity Summit";
+            case "abm":
+            return "Adhesives & Bondingexpo Expo Mexico";
         
         default:
             return "Acronym not found";

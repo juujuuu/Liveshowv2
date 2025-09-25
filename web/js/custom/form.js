@@ -268,12 +268,7 @@ switch (window.location.href) {
     default:
       thankyou  = '<div class="lead-capture__thankyou d-flex justify-content-center"><p>Successfully submitted.  Thank you</p></div>';
       console.log("no ")
-  }
- 
-                    
-                    
-                    
-                    
+  }     
                     parent.append(thankyou); //Add the thank you message.
 
                     if (!redirect) {

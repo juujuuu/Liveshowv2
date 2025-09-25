@@ -15,7 +15,7 @@ const Slide = props => {
     const state=useSelector(state=>state)
     const open=useSelector(state=>state.openSlides)
     // const session=useSelector(state=>state.session)
-    //console.log("state",state)
+    // console.log("state",state)
     const {  
         session,
         //  openSlides:open, 
@@ -26,6 +26,7 @@ const Slide = props => {
      * Crap for opening a slide.
      */
     const handleClick = event => {
+        
         // console.log("props",props)
         // console.log("open",open)
         // console.log("session",session)
@@ -89,7 +90,7 @@ const Slide = props => {
             } = speaker;
 
             const { web_logo_url__c } = Speaker__r;
-            
+           
             
             return (
                 <div key={`speaker-${index}`} className={`row speakers__speaker`} id={Id}>
@@ -165,8 +166,12 @@ const Slide = props => {
     };
 
     const { Track_Number__c, Day__c, Type__c, Id, Sponsor_URL__c, normalTime, Long_Name__c, Vimeo_Video_Link__c, Synopsis__c,Categories__c,Session_Duration_Time__c } = session;
+//    {console.log(Long_Name__c)}
+//    {console.log(state.sessions)}
     return (
+         
         <div
+       
             className={`body__session accordion-item session--track-${Track_Number__c} session--day-${Day__c} session--type-${Type__c} session--${
                 open ? "show" : "collapsed"
             }`}
@@ -190,6 +195,7 @@ const Slide = props => {
                 </div>
                 <div className={`rounded-end col-${windowwidth > 992 ? "10" : "9"} session__content `}>
                     {Type__c == "Break" ? (
+                        
                         <>
                             <div className="accordion-header session__title">
                                 <button className={`accordion-button`} type="button">
@@ -198,6 +204,8 @@ const Slide = props => {
                                         <div className="session__meta">
                                    
                                         {/* if (Long_Name__c.search("Adhesive")!== -1){<img src="https://www.adhesivesandbondingexpo-europe.com/assets/resources/shared/images/logos/adhesives-and-management-expo-europe.png" className="session__img img-fluid"/>} */}
+                                            
+                                            
                                             <h3 className="session__name">{Long_Name__c}</h3>
                                             
                                             {/*<p className="session__time">{this.getTime(session.normalTime)}</p>*/}

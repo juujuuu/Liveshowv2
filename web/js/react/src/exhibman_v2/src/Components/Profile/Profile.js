@@ -240,6 +240,7 @@ import Video from "./Video";
 import Downloadable from "./Downloadable";
 import ProfileProduct from "./ProfileProduct";
 import MetaCol from "../MetaCol";
+import { dualLanguage } from "../../Utils/dualLanguagefunction";
 
 const Profile = props => {
     const { 
@@ -256,7 +257,7 @@ const options = useSelector(state=>state.options)
 const profileId= useSelector(state=>state.profileId)
 
     const { show, ids, mode, debug,postshow } = options;
-    const { pagetitle, content, Company_Bio_Enhanced__c, logo, Expo__c, Exhibitor_Assets__r, id, Exhibitor_listing_type__c } = exhibitor;
+    const { pagetitle, content,Company_Bio_Spanish__c, Company_Bio_Enhanced__c, logo, Expo__c, Exhibitor_Assets__r, id, Exhibitor_listing_type__c } = exhibitor;
 
     const enhanced = Exhibitor_listing_type__c != "Standard";
     const cats = exhibitor["exhibitor-cat"];
@@ -306,6 +307,9 @@ const profileId= useSelector(state=>state.profileId)
                 break;
             case "BRE":
                var  showName = "Space Tech Expo Europe " + pageTitle;
+                break;
+                  case "ABM":
+               var  showName = "Adhesives Bonding Expo Mexico " + pageTitle;
                 break;
             case "SAT":
              var    showName = "Satellite Connectivity Expo " + pageTitle;
@@ -424,7 +428,7 @@ const profileId= useSelector(state=>state.profileId)
                     {window.innerWidth > 992 ? (
                         <Link className="router-link" to={getExhibListPath(options.debug, options.local,options.postshow)} onClick={async () => await handleListSwitch()}>
                             <Cta size="reg" curved={false} bonusClass={`profile-back-to-list left`} key={`Desk Back to Exhibitor List`} color="black">
-                                Back to Exhibitor List
+                               {dualLanguage(show,"Download Full List PDF","Volver a la lista de expositores / Back to Exhibitor List")}
                             </Cta>
                         </Link>
                     ) : null}
@@ -440,19 +444,33 @@ const profileId= useSelector(state=>state.profileId)
                         </nav>
                     ) : null}
                     <div className="profile-summary">
-                        <div className="profile-logo">
+                        <div style={{float:"none"}}className="profile-logo clearfix mb-3">
                             <img className="img-fluid" src={logo} alt="Logo" />
                         </div>
                         <div className="profile-bios">
+                            {show=="ABM"? 
+                            <span className="profile-bios__short-bio">
+                              <p>{Company_Bio_Spanish__c}</p>
+                              <br/>
+                              <p>
+                              {content}
+                              </p>
+                            </span>:
                             <p className="profile-bios__short-bio">
-                                <strong>{content}</strong>
-                            </p>
-                            {Company_Bio_Enhanced__c && enhanced ? (
+                                {content}
+                            </p>}
+
+
+
+  
+                       {Company_Bio_Enhanced__c && enhanced ? (
                                 <div
                                     className="profile-bios__long-bio"
                                     dangerouslySetInnerHTML={{
                                         __html: Company_Bio_Enhanced__c,
-                                    }}></div>
+                                   
+                                    }}>
+                                    </div>
                             ) : null}
                             <p className="profile-bios__cats">
                                 <i>

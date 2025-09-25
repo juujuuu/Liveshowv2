@@ -468,7 +468,7 @@ const postshow=useSelector(state=>state.options.postshow)
         } else {
             const siteURL = getSiteFromId(options.ids instanceof Array ? options.ids[0] : options.ids);
             const expos = sanitizeIds(options.ids);
-console.log(expos)
+console.log(exhibs)
             dispatch(fetchExhibs(siteURL, expos)).then(response => {
                 dispatch(setLoading(false));
             });
@@ -543,7 +543,7 @@ console.log(expos)
                 key={"download list"}
                 role="exhibDownloadPDF"
                 bonusClass="control-col__download-list">
-                {dualLanguage(show,"Download Full List PDF","Download Full List PDF / Gesamte Liste als PDF herunterladen")}
+                {dualLanguage(show,"Download Full List PDF","Descargar lista en PDF / Download Full List PDF")}
               
             </Cta>
         );
@@ -611,7 +611,7 @@ console.log(expos)
             
             newJsx = (
                 <Cta size="max" color="cex-red" link={regLink} bonusClass="control-col__reg-link" key={"register to attend"}>
-                 {dualLanguage(show,"Register now ","Register To Attend / Registrieren sie sich, um teilzunehmen")}  
+                 {dualLanguage(show,"Register now","registrarse para asistir / Register now")}  
                 </Cta>
             );
             jsx = [...jsx, newJsx];
@@ -922,7 +922,7 @@ console.log(expos)
                         {/* <div className="control-col__header" style={{dualLanguageDisplay}}> */}
                       <div className="control-col__header" style={dualLanguageStyles.display}> 
                             <h3 style={dualLanguageStyles.h3Style}>
-                                <strong>{dualLanguage(show,"Refine Results","Refine Results / Ergebnisse verfeinern")}</strong>
+                                <strong>{dualLanguage(show,"Refine Results","Refinar resultados / Refine Results")}</strong>
                             </h3>
                             <Cta dualLanguageStylesCTA={dualLanguageStyles.CTAStyle} bonusClass="control-col__reset" handler={handleReset} role="exhib-reset" size="micro" color="black" margin="vertical-margin--0">
                                 Clear Filters
@@ -962,8 +962,10 @@ console.log(expos)
                         displayBanner={""}
                         
                     /> : ""}
-                    <div className="alphabet-filter">
-                        <Alphabet activeLetter={queries.letter} handler={handleSetLetter} />
+                   
+                  <div className="alphabet-filter">
+                    {show!=="ABM" &&  ( <Alphabet activeLetter={queries.letter} handler={handleSetLetter} /> )}
+                       
                     </div>
                     <div className="row viewport__header">
                    

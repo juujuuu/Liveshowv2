@@ -22,7 +22,10 @@ const getShowNameFromAcronym = expo => {
         case "fmc":
             return "chinaExhibitorList";
         case "TEE":
-            return "Thermal Management Expo Europe";
+            return "Thermal Management Expo Europe"; 
+        case "ABM":
+            return "Adhesives & Bondingexpo Expo Mexico"; 
+          
         default:
             return "Acronym not found";
     }
@@ -49,6 +52,8 @@ const getSiteFromAcronym = expo => {
             return "https://www.foam-expo-china.com/";
         case "tee":
             return "https://www.thermalmanagementexpo-europe.com/";
+        case "abm":
+            return "https://www.adhesivesandbondingexpo-mexico.com/";
         default:
             return "Acronym not found";
     }
@@ -77,8 +82,10 @@ const getSiteFromId = expo => {
             return "https://www.thermalmanagementexpo.com/";
         case "chinaExhibitorList":
             return "https://www.foam-expo-china.com/";
-            case "a1xUK000001MzNd":
+        case "a1xUK000001MzNd":
             return "https://www.thermalmanagementexpo-europe.com/";
+        case "a1xUK000000qisz":
+            return "https://www.adhesivesandbondingexpo-mexico.com/";
         default:
             return "ID not found";
     }
@@ -109,6 +116,8 @@ const getShowNameFromId = id => {
             return "Foam Expo China";
         case "a1xUK000001MzNd":
             return "Thermal Management Expo Europe";
+            case "a1xUK000000qisz":
+            return "https://www.adhesivesandbondingexpo-mexico.com/";
         default:
             return "ID not found";
     }
@@ -139,6 +148,8 @@ const getAcronymFromId = id => {
             return "FMC";
         case "a1xUK000001MzNd":
             return "TEE";
+             case "a1xUK000000qisz":
+            return "ABM";
             
         default:
             return "ID not found";

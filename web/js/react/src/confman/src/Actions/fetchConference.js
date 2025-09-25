@@ -87,6 +87,7 @@ const fetchConference = (site, conferenceId) => async dispatch => {
   session.map(el => {
     if (el.Categories__c) {
       return el.Categories__c = el.Categories__c.split("-").sort().join("-")
+      //it is not cutting the opening note dash so can stay 
     }
   })
 

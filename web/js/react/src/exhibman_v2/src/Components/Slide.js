@@ -182,7 +182,7 @@ const mode=useSelector(state=>state.mode)
                         role="exhib-assets"
                         payload={payload}
                     >
-                         {enhanced ? dualLanguage(show,"Enhanced Listing","Enhanced Listing / Erweiterte auflistung") : dualLanguage(show,"View Profile","View Profile / Profil ansehen")}
+                         {enhanced ? dualLanguage(show,"Enhanced Listing","Enhanced Listing / Erweiterte auflistung") : dualLanguage(show,"View Profile","Ver perfil / View Profile")}
                     </Cta>
                 </Link>
                 <div className="col-12 col-md-3 exhibitor-slide__logo mb-2 mb-md-0 mt-5 mt-md-0">
@@ -200,7 +200,7 @@ const mode=useSelector(state=>state.mode)
                             </Link>
                         </h4>
 
-                        <p className="exhibitor-booth">{dualLanguage(show,"Booth Number","Booth Number / Standnummer")}: {booth}</p>
+                        <p className="exhibitor-booth">{dualLanguage(show,"Booth Number","Número de stand / Booth Number")}: {booth}</p>
                         {window.innerWidth < 768 ? (
                             <>
                                 {cats != false ? (

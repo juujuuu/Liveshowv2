@@ -88,7 +88,7 @@ delete el['boothNo'];
  
     // console.log(data,"china")
     // console.log(data,"normal")
-    
+    console.log(data,"dataa")
     dispatch({ type: "FETCH_EXHIBS", payload: data });
 };
 

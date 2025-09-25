@@ -303,7 +303,7 @@ const FullAgenda = props => {
         let dayButtons = [];
         let date
         let theme
-        //console.log(state)
+        // console.log(state)
         for (index = lowestDay; index <= numberOfDays; index++) {
             date=daynameoverride[otherIndex].split("~")
             dayButtons.push(
@@ -766,7 +766,7 @@ const FullAgenda = props => {
                         <i> View Co-located conferences</i>
 
                         { /* {FME logo} */}
-                        <a target="_blank" rel="noopener noreferrer" href="https://www.foam-expo-europe.com/conference/conference-agenda-2025">
+                        {/* <a target="_blank" rel="noopener noreferrer" href="https://www.foam-expo-europe.com/conference/conference-agenda-2025">
                         <ImageLoader
                         extraClass="mt-4"
                         alt="show logo"
@@ -774,7 +774,7 @@ const FullAgenda = props => {
                         maxwidth="275px"
                         width="250px"
                     />
-                    </a> 
+                    </a>  */}
 
                     { /* {TEE logo} */}
                         <a target="_blank" rel="noopener noreferrer" href="https://www.thermalmanagementexpo-europe.com/conference/conference-agenda-2025">
@@ -860,7 +860,7 @@ const FullAgenda = props => {
                             <div className="d-flex justify-content-center flex-column align-items-center">
                             <i class> View Co-located conferences</i>
                             { /* {ABE logo} */}
-                            <a target="_blank" rel="noopener noreferrer" href="https://www.adhesivesandbondingexpo-europe.com/conference/conference-agenda-2025">
+                            {/* <a target="_blank" rel="noopener noreferrer" href="https://www.adhesivesandbondingexpo-europe.com/conference/conference-agenda-2025">
                         <ImageLoader
                         extraClass="mt-4"
                         alt="show logo"
@@ -868,7 +868,7 @@ const FullAgenda = props => {
                         maxwidth="250px"
                         width="250px"
                         />  
-                        </a>     
+                        </a>      */}
                         { /* {TEE logo} */}
                         <a target="_blank" rel="noopener noreferrer" href="https://www.thermalmanagementexpo-europe.com/conference/conference-agenda-2025">
                         <ImageLoader
@@ -1089,6 +1089,38 @@ if (loading) {
                                 {show === "FME4" || show === "ABE4" || show === "BRE" || show === "TEE4" || show === "CEX" || show === "TME"
                                     ? getUIThemes(show, filters.day, filters.track, extraMode)
                                     : null}
+                                              {show === "FME" 
+                                    ?(
+                                   <div className="mb-4">  <div className="d-flex align-items-center mb-2">
+                                         <div style={{width: "30px", height: "30px", borderRadius:"50px", background:"#3554a2"}}></div> <h3 style={{fontSize:"20px", color:"#3554a2"}} className="ms-2 mb-0"> THE FOAM SESSIONS </h3>
+                                    
+                                    </div>
+                                <div className="d-flex align-items-center">
+                                         <div style={{width: "30px", height: "30px", borderRadius:"50px",  background:"#d18517"}}></div> <h3 style={{fontSize:"20px", color:"#d18517"}} className="ms-2 mb-0"> THE ADHESIVES & BONDING SESSIONS </h3>
+                                    
+                                    </div>    
+                                </div>
+                                )
+                                    : null}
+
+
+                                           { show === "ABE" 
+                                    ?(
+                                   <div className="mb-4">  <div className="d-flex align-items-center mb-2">
+
+                                         
+                                         <div style={{width: "30px", height: "30px", borderRadius:"50px",  background:"#d18517"}}></div> <h3 style={{fontSize:"20px", color:"#d18517"}} className="ms-2 mb-0"> THE ADHESIVES & BONDING SESSIONS </h3>
+                                    
+                                    </div>    
+                                    <div className="mb-4">  <div className="d-flex align-items-center mb-2">
+                                     
+                                         <div style={{width: "30px", height: "30px", borderRadius:"50px", background:"#3554a2"}}></div> <h3 style={{fontSize:"20px", color:"#3554a2"}} className="ms-2 mb-0"> THE FOAM SESSIONS </h3>
+                                      </div>
+                                   </div> </div>
+                           
+                              
+                                )
+                                    : null}
                                 {getSlides(pipedSessions)}
                             </div>
                             <div className="col-4">
@@ -1165,6 +1197,36 @@ if (loading) {
                 ) : (
                     <div className="container-fluid">
                         <div className="row">
+                                     {show === "FME" 
+                                    ?(
+                                   <div className="">  <div className="d-flex align-items-center mb-2">
+                                         <div style={{width: "30px", height: "30px", borderRadius:"50px", background:"#3554a2"}}></div> <h3 style={{fontSize:"20px", color:"#3554a2"}} className="ms-2 mb-0"> THE FOAM SESSIONS </h3>
+                                    
+                                    </div>
+                                <div className="d-flex align-items-center">
+                                         <div style={{width: "30px", height: "30px", borderRadius:"50px",  background:"#d18517"}}></div> <h3 style={{fontSize:"20px", color:"#d18517"}} className="ms-2 mb-0"> THE ADHESIVES & BONDING SESSIONS </h3>
+                                    
+                                    </div>    
+                                </div>
+                                )
+                                    : null}
+
+
+                                           { show === "ABE" 
+                                    ?(
+                                   <div className="">  <div className="d-flex align-items-center mb-2">
+
+                                         <div className="d-flex align-items-center">
+                                         <div style={{width: "30px", height: "30px", borderRadius:"50px",  background:"#d18517"}}></div> <h3 style={{fontSize:"20px", color:"#d18517"}} className="ms-2 mb-0"> THE ADHESIVES & BONDING SESSIONS </h3>
+                                    
+                                    </div>    
+                                         <div style={{width: "30px", height: "30px", borderRadius:"50px", background:"#3554a2"}}></div> <h3 style={{fontSize:"20px", color:"#3554a2"}} className="ms-2 mb-0"> THE FOAM SESSIONS </h3>
+                                    
+                                    </div>
+                           
+                                </div>
+                                )
+                                    : null}
                             <div className="col-12">{getSlides(pipedSessions)}</div>
                         </div>
                     </div>

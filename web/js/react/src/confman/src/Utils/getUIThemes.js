@@ -97,7 +97,7 @@ const getUIThemes = (show, day, track = [], extraMode, mode, trackNumber) => {
                     </>
                 );
             }
-            case "ABE":
+            case "ABE2":
 
             if (extraMode === "innovation-agenda") {
                 console.log(extraMode)
@@ -132,7 +132,7 @@ const getUIThemes = (show, day, track = [], extraMode, mode, trackNumber) => {
                     </>
                 );
             }
-            case "FME":
+            case "FME2":
 
             if (extraMode === "innovation-agenda") {
                 console.log(extraMode)
@@ -291,7 +291,7 @@ const getUIThemes = (show, day, track = [], extraMode, mode, trackNumber) => {
                                 );
                             }
         case "BRE":
-            themeCocktail=["Industry Conference","Smallsats Conference","Connectivity Conference","Exhibitor Technology Forum"]
+            themeCocktail=["Industry Conference","Smallsats Conference","Connectivity Conference","Technology Forum"]
             switch (day) {
                 
                 case 1:
@@ -299,7 +299,7 @@ const getUIThemes = (show, day, track = [], extraMode, mode, trackNumber) => {
                         "Competitiveness, Legislation and Supply Chains",
                         "Constellations and Ground Stations",
                         "Small Satellite Production and the Micro-launch Services Market",
-                       null
+                       "Innovations, Solutions, and Emerging Technologies"
                         
                         
                     ];
@@ -310,7 +310,7 @@ const getUIThemes = (show, day, track = [], extraMode, mode, trackNumber) => {
                         "Access to Investment and Sustainability",
                         "Always Connected",
                         "The Role of Earth Observation and Evolving Requirements",
-                        null
+                        "Innovations, Solutions, and Emerging Technologies"
                     ];
                     break;
                 case 3:
@@ -318,7 +318,7 @@ const getUIThemes = (show, day, track = [], extraMode, mode, trackNumber) => {
                         "Regional Sovereignty and The Future of Exploration",
                         "Satellite Innovation",
                         "Digitalisation and Sustainability",
-                        null
+                        "Innovations, Solutions, and Emerging Technologies"
                     ];
                     break;
             }
@@ -354,7 +354,7 @@ const getUIThemes = (show, day, track = [], extraMode, mode, trackNumber) => {
                               {!track.includes(4) ? (
                                 <p style={{ fontSize: "16px" }}>
                                     <strong>
-                                        <span style={{ color: "#7c51a1" }}>Exhibitor Technology Forum </span>  {theme[3]}
+                                        <span style={{ color: "#7c51a1" }}>Technology Forum: </span>  {theme[3]}
                                     </strong>
                                 </p>
                             ) : null}

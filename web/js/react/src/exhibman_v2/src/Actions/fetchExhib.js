@@ -16,7 +16,7 @@ const fetchExhib = (site, id, expos) => async dispatch => {
        var {data}=geObj
        let {exhibitors}=data
        data=exhibitors
-    
+   
  data.map(el=>{
         
 el['id']=el['exhibitorId'];
@@ -100,6 +100,7 @@ const test=   {
 
     }else{
     let { data } = await api.get(`/rest/exhib_drilldown.php?booth='${id}'`);
+     console.log(data)
     dispatch({ type: "FETCH_EXHIB", payload: data[0] });
    //  console.log(data)
 }};
