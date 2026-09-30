@@ -52,7 +52,9 @@ const fetchConferenceReducer = (state = [], action) => {
 				let minute = timestamp.substring(14, 16);
 				let ampm = hour > 11 ? "PM" : "AM";
 				session.normalTime = { day, hour, minute, ampm };
+				console.log(day)
 				return session;
+				
 			});
 			//Order sessions by time
 			sessions = sessions.sort((a, b) => {

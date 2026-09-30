@@ -7,8 +7,9 @@ import {getShowNameFromAcronymMultyExpoSlide}  from "../Utils/getSite"
  * @param {Object} props
  * @returns Full agenda slide.  One per session.
  */
+// Ref1 Slide/button always open
 const Slide = props => {
-    // let [show, setShow] = useState(false);
+    //  let [show, setShow] = useState(false);
     const bodyRef = useRef();
     const mainRef = useRef();
     const options=useSelector(state=>state.options)
@@ -27,13 +28,7 @@ const Slide = props => {
      */
     const handleClick = event => {
         
-        // console.log("props",props)
-        // console.log("open",open)
-        // console.log("session",session)
-        // console.log("session2",session2)
-       
-        // console.log("state",state)
-        //jquery solution (probably not ideal)
+   
         $(bodyRef.current).collapse("toggle");
         if ($(bodyRef.current).prev().find(".accordion-button").hasClass("collapsed")) {
             $(bodyRef.current).prev().find(".accordion-button").removeClass("collapsed");
@@ -89,9 +84,16 @@ const Slide = props => {
                 Speaker__r,
             } = speaker;
 
-            const { web_logo_url__c } = Speaker__r;
-           
-            
+       let web_logo_url__c; // declare it outside so it's accessible later
+
+if (Speaker__r?.web_logo_url__c) {
+  web_logo_url__c = Speaker__r.web_logo_url__c;
+  
+}else {
+     web_logo_url__c= "noooooo"
+}
+
+
             return (
                 <div key={`speaker-${index}`} className={`row speakers__speaker`} id={Id}>
                     {Title__c != null ? <h3 className="speaker__presentation-name">{Title__c}</h3> : null}
@@ -226,16 +228,21 @@ const Slide = props => {
                         </>
                     ) : (
                         <>
+                           {/* Ref1 -2 removed handle  */}
                             <div className="accordion-header session__title" onClick={handleClick}>
+                                 {/* <div className="accordion-header session__title" > */}
+                                     {/* Ref1 -3 removed pointer effect through class bootsrap  */}
                                 <button className={`accordion-button  ${!open ? "collapsed" : ""}`} type="button">
+                                {/* <button style={{cursor: "default"}} className={`accordion-button  ${!open ? "collapsed" : ""}`} type="button"> */}
 
                                     <div className={Sponsor_URL__c ? "session--sponsored" : ""}>
-                                        <div className="session__meta">
+                                        <div  className="session__meta">
                                         {/* {Categories__c ? <h3 className="text-dark">{getShowNameFromAcronymMultyExpoSlide( Categories__c)} </h3>: "" } */}
                                       
                                         {/* { Long_Name__c.search("Adhesive")  !== -1 ?( <img src="https://www.adhesivesandbondingexpo-europe.com/assets/resources/shared/images/logos/adhesives-and-management-expo-europe.png" className="session__img img-fluid"/>) :( "")} */}
                                         
-                                            <h3 className="session__name">{Long_Name__c}</h3>
+                                            <h3  className="session__name">{Long_Name__c}</h3>
+                                           
                                         </div>
                                         {Sponsor_URL__c ? (
                                             <div className="session__sponsor">
@@ -250,7 +257,9 @@ const Slide = props => {
                                     </div>
                                 </button>
                             </div>
+                            {/* Ref1 -1 starts open  */}
                             <div ref={bodyRef} className={`accordion-collapse collapse session__body ${open ? "show" : "collapsed"}`}>
+                            {/* <div ref={bodyRef} className={`accordion-collapse collapse session__body ${open ? "show" : "show"}`}> */}
                                 <div className="accordion-body">
                                 {/* <GetShowLogos text={Synopsis__c}/> */}
                                 {/* { Synopsis__c.search("PLENARY")  !== -1 ?( <img src="https://www.adhesivesandbondingexpo-europe.com/assets/resources/shared/images/logos/adhesives-and-management-expo-europe.png" className="session__img img-fluid"/>) :( "noooo")} */}

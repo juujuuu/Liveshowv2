@@ -64,6 +64,8 @@
         "serve:confman": "npx webpack serve --mode=development --node-env=development --config ./webpack_configs/webpack.config.serve.confman.js",
         "serve:checklist": "npx webpack serve --mode=development --node-env=development --config ./webpack_configs/webpack.config.serve.checklist.js"
     },
-    "author": "matt murphy",
+    
+    "author": "Juri Pisciella",
+    
     "license": "ISC"
 }

@@ -309,7 +309,7 @@ const profileId= useSelector(state=>state.profileId)
                var  showName = "Space Tech Expo Europe " + pageTitle;
                 break;
                   case "ABM":
-               var  showName = "Adhesives Bonding Expo Mexico " + pageTitle;
+               var  showName = "Adhesives & Bonding Expo Mexico " + pageTitle;
                 break;
             case "SAT":
              var    showName = "Satellite Connectivity Expo " + pageTitle;
@@ -426,9 +426,9 @@ const profileId= useSelector(state=>state.profileId)
             <section className={`exhibmanV2 exhibmanV2--${show} exhibman-profile exhibman-profile--${Exhibitor_listing_type__c} row`}>
                 <div className="col-12 col-md-9 order-2 order-md-1 profile">
                     {window.innerWidth > 992 ? (
-                        <Link className="router-link" to={getExhibListPath(options.debug, options.local,options.postshow)} onClick={async () => await handleListSwitch()}>
+                        <Link className="router-link" to={getExhibListPath(options.debug, options.local,options.postshow,options.espabm)} onClick={async () => await handleListSwitch()}>
                             <Cta size="reg" curved={false} bonusClass={`profile-back-to-list left`} key={`Desk Back to Exhibitor List`} color="black">
-                               {dualLanguage(show,"Download Full List PDF","Volver a la lista de expositores / Back to Exhibitor List")}
+                               {dualLanguage(show,"Back to Exhibitor List","Volver a la lista de expositores / Back to Exhibitor List")}
                             </Cta>
                         </Link>
                     ) : null}
@@ -449,6 +449,7 @@ const profileId= useSelector(state=>state.profileId)
                         </div>
                         <div className="profile-bios">
                             {show=="ABM"? 
+                            
                             <span className="profile-bios__short-bio">
                               <p>{Company_Bio_Spanish__c}</p>
                               <br/>

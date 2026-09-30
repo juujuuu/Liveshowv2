@@ -52,7 +52,7 @@ class VideoSanitizer {
                     id = id.split("&")[0];
                 }
             }
-            return `https://youtube.com/embed/${id}?enablejsapi=1`;
+            return `https://www.youtube.com/embed/${id}?enablejsapi=1`;
         };
 
         try {

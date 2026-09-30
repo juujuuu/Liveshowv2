@@ -63,7 +63,7 @@ const MainNavButton =(props)=>{
         return (
             <div className={`main-nav__nav-button day-${props.value} ${props.active ? "active" : ""}`} onClick={handleClick}>
                 {/* Option for displaying the themes and tracks name inside the date buttons */}
-                {(props.options.show == "TEE" ||props.options.show == "ABE2" || props.options.show == "FME2"?
+                {(props.options.show == "TEE" ||props.options.show == "ABE" || props.options.show == "FME"?
                
                 <span>  
                <h3> {props.children[0]}</h3>

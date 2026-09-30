@@ -97,12 +97,13 @@ const test=   {
 
 
     dispatch({ type: "FETCH_EXHIB", payload: data[0]  });
-
+     
     }else{
+
     let { data } = await api.get(`/rest/exhib_drilldown.php?booth='${id}'`);
-     console.log(data)
+     
     dispatch({ type: "FETCH_EXHIB", payload: data[0] });
-   //  console.log(data)
+   
 }};
 
 export default fetchExhib;

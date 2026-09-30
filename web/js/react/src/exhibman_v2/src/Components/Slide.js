@@ -72,8 +72,9 @@ const mode=useSelector(state=>state.mode)
     
         // } = this.props.payload;
     } = props.payload;
+ 
 
-        const { debug, local, show ,postshow} = options;
+        const { debug, local, show ,postshow,espabm} = options;
 
         const smallLogo = web_logo;
         const bigLogo = logo;
@@ -167,7 +168,10 @@ const mode=useSelector(state=>state.mode)
                     // className={`router-link router-link--profile-button rounded  ${window.innerWidth < 768 ? "position-relative w-100 border-top":""}` }
                     
                     //this one
-                    to={getProfilePath(debug, local, id, postshow)}
+                    
+                      to={getProfilePath( debug,local,id, postshow ? postshow : null,espabm ? espabm : null
+  )}
+
                     
                     // onClick={() => this.handleSwitchMode("PROFILE", id)}
                     onClick={() => handleSwitchMode("PROFILE", id)}
@@ -187,7 +191,7 @@ const mode=useSelector(state=>state.mode)
                 </Link>
                 <div className="col-12 col-md-3 exhibitor-slide__logo mb-2 mb-md-0 mt-5 mt-md-0">
                     {/* <Link className="router-link" to={getProfilePath(debug, local, id)} onClick={() => this.handleSwitchMode("PROFILE", id)}> */}
-                    <Link className="router-link" to={getProfilePath(debug, local, id,postshow)} onClick={() => handleSwitchMode("PROFILE", id)}>
+                    <Link className="router-link"                      to={getProfilePath(debug,local,id,postshow ? postshow : null,espabm ? espabm : null)} onClick={() => handleSwitchMode("PROFILE", id)}>
                         <img className="img-fluid" src={web_logo !== "" ? smallLogo : bigLogo} alt={pagetitle} />
                     </Link>
                 </div>
@@ -195,7 +199,7 @@ const mode=useSelector(state=>state.mode)
                     <div>
                         <h4 translate="no" className="exhibitor-name">
                             {/* <Link className="router-link" to={getProfilePath(debug, local, id)} onClick={() => this.handleSwitchMode("PROFILE", id)}> */}
-                            <Link className="router-link" to={getProfilePath(debug, local, id,postshow)} onClick={() =>handleSwitchMode("PROFILE", id)}>
+                            <Link className="router-link"                      to={getProfilePath(debug,local,id,postshow ? postshow : null,espabm ? espabm : null)} onClick={() =>handleSwitchMode("PROFILE", id)}>
                                 {pagetitle}
                             </Link>
                         </h4>

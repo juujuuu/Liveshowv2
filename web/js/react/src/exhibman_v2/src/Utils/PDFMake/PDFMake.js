@@ -82,24 +82,24 @@ class PDFMake {
           
             switch (element.Expo__c) {
                
-                case "a1xUK000000lxB7":
+                case "a1xUK000001V7Kn":
                     var showName = "Foam Expo";
                     break;
-                case "a1xUK000000iHJh":
+                case "a1xUK000001Tqtt":
                     var showName = "Adhesives Bonding Expo Europe";
                      console.log(showName)
                     break;
-                case "a1xUK000000iHI5":
+                case "a1xUK000001magX":
                     var showName = "Foam Expo Europe";
                     console.log(showName)
                     break;
-                case "a1xUK000000dwqX":
+                case "a1xUK000001TqsH":
                     var showName = "Adhesives Bonding Expo";
                     break;
                 case "a1x4V0000026O9B":
                     var showName = "Ceramics Expo";
                     break;
-                 case "a1xUK000001MzNd":
+                 case "a1xUK000001mabi":
                         var showName = "Thermal Management Expo Europe";
                         break;
                 case "a1xUK000000RaaT":
@@ -109,7 +109,7 @@ class PDFMake {
                 case "a1xUK000001UDGz":
                     var showName = "Space Tech Expo";
                     break;
-                case "a1xUK0000019zen":
+                case "a1xUK000001hXEf":
                     var showName = "Space Tech Expo Europe";
                     break;
                 case "SAT":
@@ -179,16 +179,16 @@ console.log(body,"body array")
 //         if (body != []) {
 //                     this.data.forEach(element => {
 //             switch (element.Expo__c) {
-//                 case "a1xUK000000lxB7":
+//                 case "a1xUK000001V7Kn":
 //                      pdfColour = "#4E8891";
 //                     break;
-//                 case "a1xUK000000iHJh ":
+//                 case "a1xUK000001magX ":
 //                      pdfColour = "#ed6839";
 //                     break;
-//                 case "a1xUK000000iHI5":
+//                 case "a1xUK000001magX":
 //                      pdfColour = "#ed6839";
 //                     break;
-//                 case "a1xUK000000dwqX":
+//                 case "a1xUK000001TqsH":
 //                      pdfColour = "#4E8891";
 //                     break;
 //                 case "a1x4V0000026O9B":
@@ -203,7 +203,7 @@ console.log(body,"body array")
 //                 case "a1xUK000000Y2aT":
 //                      pdfColour = "#0C3353";
 //                     break;
-//                 case "a1xUK0000019zen":
+//                 case "a1xUK000001hXEf":
 //                      pdfColour = "#0c3353";
 //                     break;
 //                 case "SAT":

@@ -7,7 +7,7 @@ import thunk from "redux-thunk";
 import reducers from "./Reducers";
 
 import App from "./Components/App";
-
+// ref-2 signle track for singlese pages
 let hideTrackButtons = document.querySelector("#root").getAttribute("hidetrackribbon") === "true";
 const show = document.querySelector("#root").getAttribute("show");
 
@@ -63,6 +63,8 @@ const options = {
             : undefined, //Overrides for day names on the agenda nav menu, delimited by |
     parameters,
     cocktailMaxTagSelection: document.querySelector("#root").getAttribute("cocktailMaxTagSelection"), //set the minimun number of selectable tags to more to next step
+// Ref2 createing a new option to trigger what we need ->checkbox
+    showsinglesetrack:document.querySelector("#root").getAttribute("showsinglesetrack"),
 };
 
 //Fix for test websites

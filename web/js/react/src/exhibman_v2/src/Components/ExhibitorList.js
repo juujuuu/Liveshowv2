@@ -132,20 +132,20 @@
 //         //         </div>
 //         //     );
 //         //     jsx = [...jsx, newJsx];
-          
+
 //         // }
 //         return jsx;
 //     };
 
-   
+
 //     const getExtra = options => {
 //         const { regLink, show } = options;
 //         let jsx = []; //Just make a a jsx array of components to return.
 
 
-    
-       
-      
+
+
+
 //     };
 
 //     const getSlides = exhibitors => {
@@ -346,7 +346,7 @@
 //                 <nav className="col-12 col-md-4 control-col">
 //                     <StickyNav>
 //                         <div className="control-col__header">
-                       
+
 //                             <h3>
 //                                 <strong>Refine Results</strong>
 //                             </h3>
@@ -359,7 +359,7 @@
 //                             {getMultiExpo(options, queries.expo)}
 //                         </div>
 //                         {getExtraNavButtons(options, exhibs)}
-            
+
 //                         <Sponsors
 //                         show={options}
 //                         href={"https://www.ice.it/en/"}
@@ -370,7 +370,7 @@
 //                         position={"-left"}
 //                         displayBanner={""}
 //                     />
-                        
+
 //                     </StickyNav>
 //                 </nav>
 //                 <div className="col-md-8 viewport-col">
@@ -383,13 +383,13 @@
 //                         alt={"Italy at space Tech Expo Europe"}
 //                         position={"-top"}
 //                         displayBanner={""}
-                        
+
 //                     />
 //                     <div className="alphabet-filter">
 //                         <Alphabet activeLetter={queries.letter} handler={handleSetLetter} />
 //                     </div>
 //                     <div className="row viewport__header">
-                   
+
 //                         <h3>
 //                             <strong>Exhibitors A-Z</strong>
 //                         </h3>
@@ -424,9 +424,9 @@ import Alphabet from "../../../common_components/Alphabet";
 import { fetchExhibs, setQueries, setLoading } from "../Actions";
 
 import PDFMake from "../Utils/PDFMake/PDFMake";
-import { connect,useDispatch, useSelector } from "react-redux";
-import { getSiteFromId, getShowNameFromId,getSiteFromAcronym } from "../Utils/GetShow";
-import {dualLanguage,dualLanguageStyle  }from "../Utils/dualLanguagefunction";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { getSiteFromId, getShowNameFromId, getSiteFromAcronym } from "../Utils/GetShow";
+import { dualLanguage, dualLanguageStyle } from "../Utils/dualLanguagefunction";
 //import  dualLanguageStyle from "../Utils/dualLanguagefunction";
 import sanitizeIds from "../Utils/SanitizeIds";
 
@@ -440,7 +440,7 @@ import { Sponsors } from "./Sponsors";
  * @returns Main Exhibitor List.
  */
 const ExhibitorList = props => {
-    const { 
+    const {
         // options,
         //  exhibs,
         //  queries,
@@ -448,14 +448,14 @@ const ExhibitorList = props => {
         //  setQueries,
         //   setLoading,
         //    fetchExhibs 
-        } = props;
-const dispatch=useDispatch() 
-const queries=useSelector(state=>state.queries)
-const options=useSelector(state=>state.options)
-const exhibs=useSelector(state=>state.exhibs)
-const loading=useSelector(state=>state.loading)
-const mode=useSelector(state=>state.mode)
-const postshow=useSelector(state=>state.options.postshow)
+    } = props;
+    const dispatch = useDispatch()
+    const queries = useSelector(state => state.queries)
+    const options = useSelector(state => state.options)
+    const exhibs = useSelector(state => state.exhibs)
+    const loading = useSelector(state => state.loading)
+    const mode = useSelector(state => state.mode)
+    const postshow = useSelector(state => state.options.postshow)
 
 
 
@@ -468,7 +468,7 @@ const postshow=useSelector(state=>state.options.postshow)
         } else {
             const siteURL = getSiteFromId(options.ids instanceof Array ? options.ids[0] : options.ids);
             const expos = sanitizeIds(options.ids);
-console.log(exhibs)
+            // console.log(exhibs)
             dispatch(fetchExhibs(siteURL, expos)).then(response => {
                 dispatch(setLoading(false));
             });
@@ -476,47 +476,50 @@ console.log(exhibs)
     }, []);
 
 
-    const setPageTitle=(show,pageTitle)=>{
-          
-           
+    const setPageTitle = (show, pageTitle) => {
+
+
         switch (show) {
-            
+
             case "FMX":
-                var showName = "Foam Expo " + pageTitle ;
+                var showName = "Foam Expo " + pageTitle;
                 break;
             case "FME":
                 var showName = "Foam Expo Europe " + pageTitle;
                 break;
             case "ABE":
-                var showName = "Adhesives Bonding Expo Europe "+ pageTitle;
+                var showName = "Adhesives Bonding Expo Europe " + pageTitle;
                 break;
             case "ABX":
-              var   showName = "Adhesives Bonding Expo " + pageTitle;
+                var showName = "Adhesives Bonding Expo " + pageTitle;
                 break;
             case "CEX":
-               var  showName = "Ceramics Expo " + pageTitle;
+                var showName = "Ceramics Expo " + pageTitle;
                 break;
             case "TME":
                 var showName = "Thermal Management Expo " + pageTitle;
                 break;
-                case "TEE":
-              var   showName = "Thermal Management Expo Europe " + pageTitle;
+            case "TEE":
+                var showName = "Thermal Management Expo Europe " + pageTitle;
                 break;
             case "SPC":
-              var   showName = "Space Tech Expo " + pageTitle;
+                var showName = "Space Tech Expo " + pageTitle;
                 break;
             case "BRE":
-               var  showName = "Space Tech Expo Europe " + pageTitle;
+                var showName = "Space Tech Expo Europe " + pageTitle;
                 break;
             case "SAT":
-             var    showName = "Satellite Connectivity Expo " + pageTitle;
+                var showName = "Satellite Connectivity Expo " + pageTitle;
                 break;
-                case "FMC":
-             var    showName = "Foam Expo China " + pageTitle;
+            case "FMC":
+                var showName = "Foam Expo China " + pageTitle;
+                break;
+            case "ABM":
+                var showName = "Adhesives & Bonding Expo Mexico " + pageTitle;
                 break;
         }
-        document.title= showName
-        
+        document.title = showName
+
     }
 
     /**
@@ -526,176 +529,219 @@ console.log(exhibs)
      */
     const getExtraNavButtons = options => {
         const { regLink, show } = options;
-        if(mode !== "LEAD-RETRIEVAL"){
-        let jsx = []; //Just make a a jsx array of components to return.
-        
-        let message
-        let newJsx
-        { if(show=="FME" || show=="ABE" || show=="BRE"){ message= "German"} else{message="Download Full List PDF " }}
-       
-        
-            
-         newJsx = (
-            <Cta
-                size="max"
-                color="black"
-                handler={() => setTimeout(new PDFMake(options, exhibs), 0)}
-                key={"download list"}
-                role="exhibDownloadPDF"
-                bonusClass="control-col__download-list">
-                {dualLanguage(show,"Download Full List PDF","Descargar lista en PDF / Download Full List PDF")}
-              
-            </Cta>
-        );
-        
-        jsx = [...jsx, newJsx];
-    
+        if (mode !== "LEAD-RETRIEVAL") {
+            let jsx = []; //Just make a a jsx array of components to return.
 
-     
-        //For Ipek
-        if (show === "TME" || show === "CEX") {
-            newJsx = (
-                <Cta
-                    size="max"
-                    color="black"
-                    link={"https://ceramicstmeexpo25.mapyourshow.com/8_0/exhview/index.cfm"}
-                    bonusClass="control-col__download-list"
-                    target="_blank"
-                    key={"floorplan"}>
-                    Floorplan
-                </Cta>
+            let message
+            let newJsx
+            {
+                if (show == "FME" || show == "ABE" || show == "FMX" || show == "ABX") 
 
-                
+//  message = "German" } else { message = "Download Full List PDF " 
 
-
-
-
-            );
-            jsx = [...jsx, newJsx];
-        }
-
-        
-
-        if (regLink) {
-          if(show=="SPC" || show =="FMX" || show =="ABX"){
-            newJsx = (
-                <Cta size="max" color="cex-red" link={regLink} bonusClass="control-col__reg-link" key={"Register for free"}>
-                   Register For Free
-                </Cta>
-            );
-            jsx = [...jsx, newJsx];
-        }
-        
-        else if(show ==="CEX" || show ==="TME"){
-          
-            newJsx = (
-                <Cta size="max" color="cex-red" link={show=="CEX"? "https://www.ceramicsexpousa.com/site/forms/exhibitor":"https://www.thermalmanagementexpo.com/site/forms/exhibit-enquiry"} bonusClass="control-col__reg-link" key={"Booth Enquiry"}>
-                 Booth Enquiry
-                </Cta>
-            );
-            jsx = [...jsx, newJsx];
-            
-           
-          if(postshow){
                 newJsx = (
-                    <Cta size="max" color="cex-red" link={show=="CEX"? "https://www.ceramicsexpousa.com/exhibitor-list/":"https://www.thermalmanagementexpo.com/exhibitor-list/"} bonusClass="control-col__reg-link" key={"Exhibitor List"}>
-                    Exhibitor List 2026
+                    <Cta
+                        size="max"
+                        color="black"
+                        handler={() => setTimeout(new PDFMake(options, exhibs), 0)}
+                        key={"download list"}
+                        role="exhibDownloadPDF"
+                        bonusClass="control-col__download-list">
+                        {dualLanguage(show, "Download Full List PDF", "Descargar lista en PDF / Download Full List PDF")}
+
                     </Cta>
-                );}else{
-                    newJsx = (   <Cta size="max" color="cex-red" link={show=="CEX"? "https://www.ceramicsexpousa.com/exhibitor-list-post-show/":"https://www.thermalmanagementexpo.com/exhibitor-list-post-show/"} bonusClass="control-col__reg-link" key={"Exhibitor List"}>
-                    Exhibitor List 2025
-                    </Cta>)
-                }
+                );
+
                 jsx = [...jsx, newJsx];
-        }else{
+            }
+
             
-            newJsx = (
-                <Cta size="max" color="cex-red" link={regLink} bonusClass="control-col__reg-link" key={"register to attend"}>
-                 {dualLanguage(show,"Register now","registrarse para asistir / Register now")}  
-                </Cta>
-            );
-            jsx = [...jsx, newJsx];
+            
+                if (show == "BRE") {
+                  
+                
+                newJsx = (
+                    <>
+                         <Cta
+                            size="max"
+                            color="black"
+
+                            key={"download list"}
+                            role="exhibDownloadPDF"
+                            bonusClass="control-col__download-list"
+                            target="_blank"
+                            link={"https://www.spacetechexpo-europe.com/assets/resources/abx/web/exhibitor-list.pdf"}>
+                            {dualLanguage(show, "Download Full List PDF ", "Descargar lista en PDF / Download Full List PDF")}
+                            
+
+                        </Cta>
+                    <Cta
+                        size="max"
+                        color="black"
+                        handler={() => setTimeout(new PDFMake(options, exhibs), 0)}
+                        key={"download list"}
+                        role="exhibDownloadPDF"
+                        bonusClass="control-col__download-list d-none">
+                        {dualLanguage(show, "Download Full List PDF Hidden ", "Descargar lista en PDF / Download Full List PDF ")}
+
+                    </Cta>
+                    </>
+                );
+
+                jsx = [...jsx, newJsx];
+
+
+}
+            
+
+
+
+
+            //For Ipek
+            if (show === "TME" || show === "CEX") {
+                newJsx = (
+                    <Cta
+                        size="max"
+                        color="black"
+                        link={"https://ceramicstmeexpo27.mapyourshow.com/8_0/exhview/index.cfm"}
+                        bonusClass="control-col__download-list"
+                        target="_blank"
+                        key={"floorplan"}>
+                        Floorplan
+                    </Cta>
+
+
+
+
+
+
+                );
+                jsx = [...jsx, newJsx];
+            }
+
+
+
+            if (regLink) {
+                if (show == "SPC" || show == "FMX" || show == "ABX") {
+                    newJsx = (
+                        <Cta size="max" color="cex-red" link={regLink} bonusClass="control-col__reg-link" key={"Register for free"}>
+                            Register For Free
+                        </Cta>
+                    );
+                    jsx = [...jsx, newJsx];
+                }
+
+                else if (show === "CEX" || show === "TME") {
+
+                    newJsx = (
+                        <Cta size="max" color="cex-red" link={show == "CEX" ? "https://www.ceramicsexpousa.com/site/forms/exhibitor" : "https://www.thermalmanagementexpo.com/site/forms/exhibit-enquiry"} bonusClass="control-col__reg-link" key={"Booth Enquiry"}>
+                            Booth Enquiry
+                        </Cta>
+                    );
+                    jsx = [...jsx, newJsx];
+
+
+                    if (postshow) {
+                        newJsx = (
+                            <Cta size="max" color="cex-red" link={show == "CEX" ? "https://www.ceramicsexpousa.com/exhibitor-list/" : "https://www.thermalmanagementexpo.com/exhibitor-list/"} bonusClass="control-col__reg-link" key={"Exhibitor List"}>
+                                Exhibitor List 2026
+                            </Cta>
+                        );
+                    } else {
+                        newJsx = (<Cta size="max" color="cex-red" link={show == "CEX" ? "https://www.ceramicsexpousa.com/exhibitor-list-post-show/" : "https://www.thermalmanagementexpo.com/exhibitor-list-post-show/"} bonusClass="control-col__reg-link" key={"Exhibitor List"}>
+                            Exhibitor List 2027
+                        </Cta>)
+                    }
+                    jsx = [...jsx, newJsx];
+                } else {
+
+                    newJsx = (
+                        <Cta size="max" color="cex-red" link={regLink} bonusClass="control-col__reg-link" key={"register to attend"}>
+                            {dualLanguage(show, "Register now", "registrarse para asistir / Register now")}
+                        </Cta>
+                    );
+                    jsx = [...jsx, newJsx];
+                }
+            }
+            // if (show === "BRE") {
+            //     newJsx = (
+            //         null
+            //         // <Cta
+            //         //     size="max"
+            //         //     color="black"
+            //         //     link={"https://www.spacetechexpo-europe.com/whatson/b2b-matchmaking-service"}
+            //         //     bonusClass="control-col__download-list"
+            //         //     target="_blank"
+            //         //     key={"B2B matchmaking"}>
+            //         //     B2B Matchmaking
+            //         // </Cta>
+            //     );
+            //     jsx = [...jsx, newJsx];
+            // }
+
+
+
+
+
+            //Sponsor
+            // if (show === "CEX" && window.innerWidth > 768) {
+            //     newJsx = (
+            //         <div className="control-col__sponsor vertical-margin--10">
+            //             <a
+            //                 href="https://linkprotect.cudasvc.com/url?a=https%3a%2f%2fcerionnano.com%2f%3futm_source%3devent%26utm_medium%3ddisplay-ad%26utm_campaign%3dts-ceramics-expo-2022%26utm_content%3dbanner-ad&c=E,1,BvpDEebN6SPBr9h0eHxEUNdPDpHP2KJKGTKfHthvDpm-U0hL0y67K2Mp9UCYeMeKnzhgwVBZPgdC0bJ3AlA9qdV8RCz2lJFKKHobJcitC9W6q-Vp&typo=1"
+            //                 title="Cerion"
+            //                 target="_blank">
+            //                 <img
+            //                     style={{ width: "100%" }}
+            //                     src="./assets/resources/cex/web/images/misc/sponsor/Cerion-360x80.png"
+            //                     className="img-fluid"
+            //                     alt="Cerion"
+            //                 />
+            //             </a>
+            //         </div>
+            //     );
+            //     jsx = [...jsx, newJsx];
+            // }
+
+            //moved this in Banner Component
+            //  if (show === "BRE" && window.innerWidth > 768) {
+            //     newJsx = (
+            //         <div className="control-col__sponsor vertical-margin--10">
+            //              <a
+            //                 href="https://www.ice.it/en/ "
+            //                 title="Italy at space Tech Expo Europe"
+            //                 target="_blank"> 
+            //                 <img
+            //                     style={{ width: "100%" }}
+            //                     // src="./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Side_Banner.jpg"
+            //                       //use an image in the same folder to najes it show otherwise it will error 
+            //                     src="./small.jpg"
+            //                     className="img-fluid"
+            //                     alt="Italy at space Tech Expo Europe"
+            //                 />
+            //              </a> 
+            //         </div>
+            //     );
+            //     jsx = [...jsx, newJsx];
+
+            // }
+            return jsx;
         }
-    }
-    if (show === "BRE") {
-        newJsx = (
-            null
-            // <Cta
-            //     size="max"
-            //     color="black"
-            //     link={"https://www.spacetechexpo-europe.com/whatson/b2b-matchmaking-service"}
-            //     bonusClass="control-col__download-list"
-            //     target="_blank"
-            //     key={"B2B matchmaking"}>
-            //     B2B Matchmaking
-            // </Cta>
-        );
-        jsx = [...jsx, newJsx];
-    }
+    };
 
 
-
-
-    
-        //Sponsor
-        // if (show === "CEX" && window.innerWidth > 768) {
-        //     newJsx = (
-        //         <div className="control-col__sponsor vertical-margin--10">
-        //             <a
-        //                 href="https://linkprotect.cudasvc.com/url?a=https%3a%2f%2fcerionnano.com%2f%3futm_source%3devent%26utm_medium%3ddisplay-ad%26utm_campaign%3dts-ceramics-expo-2022%26utm_content%3dbanner-ad&c=E,1,BvpDEebN6SPBr9h0eHxEUNdPDpHP2KJKGTKfHthvDpm-U0hL0y67K2Mp9UCYeMeKnzhgwVBZPgdC0bJ3AlA9qdV8RCz2lJFKKHobJcitC9W6q-Vp&typo=1"
-        //                 title="Cerion"
-        //                 target="_blank">
-        //                 <img
-        //                     style={{ width: "100%" }}
-        //                     src="./assets/resources/cex/web/images/misc/sponsor/Cerion-360x80.png"
-        //                     className="img-fluid"
-        //                     alt="Cerion"
-        //                 />
-        //             </a>
-        //         </div>
-        //     );
-        //     jsx = [...jsx, newJsx];
-        // }
-
-        //moved this in Banner Component
-        //  if (show === "BRE" && window.innerWidth > 768) {
-        //     newJsx = (
-        //         <div className="control-col__sponsor vertical-margin--10">
-        //              <a
-        //                 href="https://www.ice.it/en/ "
-        //                 title="Italy at space Tech Expo Europe"
-        //                 target="_blank"> 
-        //                 <img
-        //                     style={{ width: "100%" }}
-        //                     // src="./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Side_Banner.jpg"
-        //                       //use an image in the same folder to najes it show otherwise it will error 
-        //                     src="./small.jpg"
-        //                     className="img-fluid"
-        //                     alt="Italy at space Tech Expo Europe"
-        //                 />
-        //              </a> 
-        //         </div>
-        //     );
-        //     jsx = [...jsx, newJsx];
-          
-        // }
-        return jsx;
-    }
-};
-
-  
     const getExtra = options => {
         const { regLink, show } = options;
         let jsx = []; //Just make a a jsx array of components to return.
 
-       
-    
-       
-      
+
+
+
+
     };
 
     const getSlides = exhibitors => {
-        
+
         if (exhibitors.length < 1) {
             return <h2 className="no-exhibs-message d-flex justify-content-center align-items-center">No exhibitors found</h2>;
         }
@@ -715,7 +761,7 @@ console.log(exhibs)
     };
 
     const handleSearch = term => {
-        
+
         dispatch(setQueries({
             search: term,
             letter: queries.letter,
@@ -724,7 +770,7 @@ console.log(exhibs)
     };
 
     const handleSetLetter = letter => {
-        
+
         dispatch(setQueries({
             search: queries.search,
             letter: letter,
@@ -770,7 +816,7 @@ console.log(exhibs)
             return expo.includes(exhibitor.Expo__c);
         });
     };
-    
+
     /**
      *
      * @param {Array} exhibitors
@@ -785,7 +831,7 @@ console.log(exhibs)
         return exhibitors.filter(exhibitor => {
             const cats = exhibitor["exhibitor-cat"].toLowerCase();
             const pagetitle = exhibitor.pagetitle.toLowerCase();
-            
+
             const content = exhibitor.content.toLowerCase();
             if (cats.includes(search) || pagetitle.includes(search) || content.includes(search)) {
                 return true;
@@ -830,12 +876,12 @@ console.log(exhibs)
      */
     const getMultiExpo = (options, expos) => {
         const { ids, multiExpo } = options;
-        console.log(options)
+        // console.log(options)
         if (!multiExpo) {
             return null;
         } else {
             let jsx = [];
-            console.log(ids,"ids")
+            // console.log(ids,"ids")
             ids.forEach(showId => {
                 let text;
                 let sanitisedShowId = showId.replaceAll("'", "");
@@ -873,16 +919,16 @@ console.log(exhibs)
      */
     const filterExhibitors = (exhibitors, filters,
         //  queries,
-          multiExpo) => {
-           
-        
-            // console.log(filters,"filters")
-            // console.log(queries,"queries")
-            // console.log(multiExpo,"multyy")
-          
-           
+        multiExpo) => {
+
+
+        // console.log(filters,"filters")
+        // console.log(queries,"queries")
+        // console.log(multiExpo,"multyy")
+
+
         exhibitors = [...exhibitors]; //Chaning pointer in memory (probs not necessary here tbf).
-       
+
         filters.forEach(filter => {
             //hereeee
             if (filter == "SEARCH") {
@@ -895,7 +941,7 @@ console.log(exhibs)
             exhibitors = expoFilter(exhibitors);
             // console.log(multiExpo,"multyyyyy expo")
         }
-        
+
         return exhibitors;
     };
 
@@ -910,67 +956,79 @@ console.log(exhibs)
         // console.log(multiExpo,"multyy")
         // console.log(show,"show")
         // console.log(filteredExhibitors, "filtered")
-        const dualLanguageStyles=dualLanguageStyle(show)
-     
+        const dualLanguageStyles = dualLanguageStyle(show)
+
         setPageTitle(show, "Exhibitor List")
         return (
             <section className={`exhibmanV2 exhibmanV2--${show} row mb-5`}>
-               
+
                 <nav className="col-12 col-md-4 control-col">
                     <StickyNav>
-                    
+
                         {/* <div className="control-col__header" style={{dualLanguageDisplay}}> */}
-                      <div className="control-col__header" style={dualLanguageStyles.display}> 
+                        <div className="control-col__header" style={dualLanguageStyles.display}>
                             <h3 style={dualLanguageStyles.h3Style}>
-                                <strong>{dualLanguage(show,"Refine Results","Refinar resultados / Refine Results")}</strong>
+                                <strong>{dualLanguage(show, "Refine Results", "Refinar resultados / Refine Results")}</strong>
                             </h3>
                             <Cta dualLanguageStylesCTA={dualLanguageStyles.CTAStyle} bonusClass="control-col__reset" handler={handleReset} role="exhib-reset" size="micro" color="black" margin="vertical-margin--0">
                                 Clear Filters
                             </Cta>
-                            
+
                         </div>
                         <div className="control-col__search vertical-margin--10">
                             <SearchInput handler={handleSearch} value={queries.search} bonusClass="form-control" placeholder="Refine by Keyword" />
                             {getMultiExpo(options, queries.expo)}
                         </div>
                         {getExtraNavButtons(options, exhibs)}
-            
-                        <Sponsors
-                        show={options}
-                        // href={"https://www.ice.it/en/"}
-                        // title={"Italy at space Tech Expo Europe"}
-                        // src={"./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Side_Banner.jpg"}
-                        // src={"./small.jpg"}
-                        // alt={"Italy at space Tech Expo Europe"}
-                        position={"-left"}
-                        displayBanner={""}
-                    />
-                        
+
+{show==="ABE"?(
+<span>
+<div  style={{ borderRadius:"5px"}} className="mt-1 ">
+   <span className=" d-flex justify-content-center align-items-center flex-column">
+         <Sponsors
+                            show={options}
+                            // href={"https://www.ice.it/en/"}
+                            // title={"Italy at space Tech Expo Europe"}
+                            // src={"./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Side_Banner.jpg"}
+                            // src={"./small.jpg"}
+                            // alt={"Italy at space Tech Expo Europe"}
+                            position={"-left"}
+                            displayBanner={""}
+                        />
+    <a  href="https://www.adhesivesandbondingexpo-europe.com/exhibitor-list/exhibitor?boothid=a3RUK0000003HsL2AU" alt="Gergonne Industrie">
+    
+   <h4 className="mt-1 mb-2" style={{color:"#374641" }} >Booth Number: 819 </h4>
+  </a>
+    <a  href="https://www.adhesivesandbondingexpo-europe.com/exhibitor-list/exhibitor?boothid=a3RUK0000003HsL2AU" alt="Gergonne Industrie">
+    <p style={{fontSize:"15px",textAlign:"center"}}>Adhesives and Sealants | Bonding Solutions / Technology Provider | Manufacturing Services</p></a>
+</span></div>
+                 
+</span>): null }
                     </StickyNav>
                 </nav>
                 <div className="col-md-8 viewport-col ">
                     {/*HIDE THE SECOND BANNER ON MOBILE AND SHOW JUST ONE YO */}
-                {window.innerWidth > 768 ?
-                    <Sponsors
-                        show={options}
-                        // href={"https://www.ice.it/en/"}
-                        // title={"Italy at space Tech Expo Europe"}
-                        // src={"./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Top__Banner.jpg"}
-                        // src={"./large.jpg"}
-                        // alt={"Italy at space Tech Expo Europe"}
-                        position={"-top"}
-                        displayBanner={""}
-                        
-                    /> : ""}
-                   
-                  <div className="alphabet-filter">
-                    {show!=="ABM" &&  ( <Alphabet activeLetter={queries.letter} handler={handleSetLetter} /> )}
-                       
+                    {window.innerWidth > 768 ?
+                        <Sponsors
+                            show={options}
+                            // href={"https://www.ice.it/en/"}
+                            // title={"Italy at space Tech Expo Europe"}
+                            // src={"./assets/resources/sat/web/images/misc/sponsor/SpaceTech_Top__Banner.jpg"}
+                            // src={"./large.jpg"}
+                            // alt={"Italy at space Tech Expo Europe"}
+                            position={"-top"}
+                            displayBanner={""}
+
+                        /> : ""}
+
+                    <div className="alphabet-filter">
+                        {show !== "ABM" && (<Alphabet activeLetter={queries.letter} handler={handleSetLetter} />)}
+
                     </div>
                     <div className="row viewport__header">
-                   
+
                         <h3>
-                            <strong>{dualLanguage(show,"Exhibitors A-Z","Exhibitors A-Z / Aussteller von A bis Z")} </strong>
+                            <strong>{dualLanguage(show, "Exhibitors A-Z", "Exhibitors A-Z / Aussteller von A bis Z")} </strong>
                         </h3>
                     </div>
                     <div className="slide-list">{getSlides(filteredExhibitors)}</div>

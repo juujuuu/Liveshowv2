@@ -95,6 +95,7 @@ const options = {
     debug: document.querySelector("#root").getAttribute("debug") == "true" ? true : false,
     local: document.querySelector("#root").getAttribute("local") == "true" ? true : false,
     postshow: document.querySelector("#root").getAttribute("postshow") == "true" ? true : false,
+    espabm: document.querySelector("#root").getAttribute("espabm") == "true" ? true : false,
 };
 
 //console.log("OPTIONS: ", options);

@@ -67,7 +67,7 @@ const App =(props)=>{
         // const { setMode, setLoading, setQueries, setOptions, queries, initOptions, setProduct, setProfile } = props;
         const {   initOptions} = props;
             const { ids, profileId, articleId, mode,postshow } = initOptions;
-             console.log(postshow)
+            //  console.log(postshow)
            // console.log("initOptions")
            // console.log(initOptions.ids)
             dispatch(setOptions(initOptions));
@@ -140,9 +140,10 @@ const App =(props)=>{
                 return (
                     
                     <Routes>
-                        <Route path={getExhibListPath(options.debug,options.local,options.postshow)} element={<ExhibitorList />}></Route>
-                        <Route path={getProfilePath(options.debug, options.local,"",options.postshow)} element={<Profile />}></Route>
-                        <Route path={getProductPath(options.debug, options.local,"",options.postshow)} element={<Product />}></Route>
+                        <Route path={getExhibListPath(options.debug,options.local,options.postshow,options.espabm)} element={<ExhibitorList />}></Route>
+                        {/* {console.log(<Route path={getExhibListPath(options.debug,options.local,options.postshow,options.espabm)} element={<ExhibitorList />}></Route>)} */}
+                        <Route path={getProfilePath(options.debug, options.local,"",options.postshow,options.espabm)} element={<Profile />}></Route>
+                        <Route path={getProductPath(options.debug, options.local,"",options.postshow,options.espabm)} element={<Product />}></Route>
                     </Routes>
                 );}
 

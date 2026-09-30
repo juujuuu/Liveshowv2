@@ -62,7 +62,7 @@ const getUIThemes = (show, day, track = [], extraMode, mode, trackNumber) => {
 
         
        
-            case "TEE":
+            case "TEE2":
 
             if (extraMode === "innovation-agenda") {
                 console.log(extraMode)

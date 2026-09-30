@@ -85,6 +85,7 @@ const fetchConference = (site, conferenceId) => async dispatch => {
   //Split and order Categories__c aphabetically direclty on the session TEE-ABE ->ABE-TEE
   // NOT SURE IT S NEEDED AS THERE WILL BE SET IN OTDER ON SF
   session.map(el => {
+    // console.log(el)
     if (el.Categories__c) {
       return el.Categories__c = el.Categories__c.split("-").sort().join("-")
       //it is not cutting the opening note dash so can stay 

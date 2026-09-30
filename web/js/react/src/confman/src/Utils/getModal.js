@@ -22,7 +22,9 @@ const getModal = ({ data = {}, options = {}, role = false, size = "lg", odcode =
 
         //Make a list of sessions the speaker is on then add in to the modal html.
         data.sessions.forEach(({ id, day, Conference__c, name }) => {
-            let link = `${fullagendalocation}?session-id=${id}&day=${day}`;
+           //changing this to reflex the changed i made to link the sessions to the conference
+            //let link = `${fullagendalocation}?session-id=${id}&day=${day}`;
+            let link = `${fullagendalocation}#${id}-${day}`.toLowerCase();
             // if (Conference__c === "a3i4V000001tXtnQAE") {
                 //it might need the 18 letters id instead of 15
             if (Conference__c === "a3iUK0000007jy5") {

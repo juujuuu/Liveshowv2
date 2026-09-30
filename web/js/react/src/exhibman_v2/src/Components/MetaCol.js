@@ -160,7 +160,7 @@ const MetaCol = ({ order }) => {
         <nav className={`col-12 col-md-3 ${order} meta-info-col`}>
             <StickyNav endAffix={1800} disable={window.innerWidth < 992}>
                 {window.innerWidth < 992 ? (
-                    <Link className="router-link" to={getExhibListPath(options.debug, options.local, options.postshow)} onClick={() => handleListSwitch()}>
+                    <Link className="router-link" to={getExhibListPath(options.debug, options.local, options.postshow,options.espabm)} onClick={() => handleListSwitch()}>
                         <Cta size="reg" curved={false} bonusClass={`profile-back-to-list left`} key={`Mob back to Exhibitor List`} color="black">
                             {dualLanguage(show, "Booth number", "Número de stand / Booth number")}
                         </Cta>
@@ -182,9 +182,9 @@ const MetaCol = ({ order }) => {
                 <div className="meta-info-col__booth-num" style={enhanced ? { marginTop: "10px" } : null}>
                     <h4>{dualLanguage(show, "Booth number", "Número de stand / Booth number")}: {boothnum}</h4>
                 </div>
-                {show == "ABM" ? null : (
+                
                     <div className="meta-info-col__contact-list">
-                        <h4>Contact</h4>
+                        <h4>{show !== "ABM" && "Contact"}</h4>
                         {getUrl(url)}
                         {enhanced && (
                             <>
@@ -196,7 +196,7 @@ const MetaCol = ({ order }) => {
                             </>
                         )}
                     </div>
-                )}
+                
 
                 {Company_Address__c && (
                     (show == "ABM" ? null : <div className="meta-info-col__address">

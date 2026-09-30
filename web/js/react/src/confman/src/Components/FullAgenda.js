@@ -114,7 +114,8 @@ const FullAgenda = props => {
         hideTrackButtons,
         extraMode,
         hideDownloadLink,
-        mode
+        mode,
+        showsinglesetrack
     } = options;
 
     //Run after Component mount and first render
@@ -135,14 +136,68 @@ const FullAgenda = props => {
                 getModal({ role: "on-demand-modal", odcode: getOnDemandCode(show) });
             }
         }
-        if (show == "TME") {
-
+         //ref2 creating this to dispatche the right track that will create a unchecked or checked button this will use the number of the track to target the first the second of the third button
+       
+        
+         if (show == "TME") {
+ //ref2 order thermal ceramics solutions stage dispatching track 2 will uncheck ceramics
             dispatch(setTrack(2));
 
         }
         if (show == "CEX") {
 
             dispatch(setTrack(1));
+
+        }
+        //ref2 creating this to dispatche the right track that will create a unchecked or checked button
+        if(show=="SPC"){
+             
+           switch (showsinglesetrack) {
+            case "Industry":
+              dispatch(setTrack([2,3]));  
+                break;
+           case "Technology":
+              dispatch(setTrack([1,3]));  
+                break;
+                case "Skills Lab":
+                   
+              dispatch(setTrack([1,2]));  
+                break;
+            default:
+                null
+                break;
+           }
+
+        }
+        if(show==="TEE"){
+             dispatch(setTrack([2,3]));  
+        }
+          if(show==="FME"){
+             dispatch(setTrack([1,3]));  
+        }
+           if(show==="ABE"){
+             dispatch(setTrack([1,2]));  
+        }
+
+          if(show=="ABX" ||show=="FMX" ){
+             
+           switch (showsinglesetrack) {
+              case "Skills Lab":
+              dispatch(setTrack([2,3]));  
+                break;
+                case "Solutions Stage":
+           
+              dispatch(setTrack([1,3]));  
+                break;
+                case "Connection Hub":
+              
+                   
+              dispatch(setTrack([1,2]));  
+                break;
+            default:
+                null
+                break;
+           }
 
         }
 
@@ -157,6 +212,7 @@ const FullAgenda = props => {
 
 
         //!The code for zapping to a session if the id is a url param.
+        // EX https://www.foam-expo-europe.com/conference/conference-agenda#a4yuk0000002agd-3
         let setId, elementParent, elementChild, cleanedId, cleanedDayChunk, getDashPosition
 
         // Split the pathname by '/' to get an array of parts
@@ -307,7 +363,7 @@ const FullAgenda = props => {
         for (index = lowestDay; index <= numberOfDays; index++) {
             date=daynameoverride[otherIndex].split("~")
             dayButtons.push(
-                <div key={index} className={` col-${colNum}`}>
+                <div key={index} className={`col-sm-12 col-lg-${colNum}`}>
                     {/* { console.log(index,"index",filters.day)} */}
                     
                     <MainNavButton options={options} key={`day-button-${index}`} active={filters.day === index} value={index} handler={setDay}>
@@ -734,8 +790,8 @@ const FullAgenda = props => {
 
         
             let color,text
-
-            if (show === "FME") { color = "fme-orange"; text="The Foam Conference"} else if (show === "ABE") { color = "abe-dark-blue"; text="The Adhesives & Bonding Conference" } else { color = "tee-blue",text="The Thermal Conference" }
+           // !these are the conference logos bewlo register now on the right side - i am removing them now 
+            if (show === "FME2") { color = "fme-orange"; text="The Foam Conference"} else if (show === "ABE2") { color = "abe-dark-blue"; text="The Adhesives & Bonding Conference" } else { color = "tee-blue",text="The Thermal Conference" }
             return (
                 <>
                       
@@ -758,7 +814,7 @@ const FullAgenda = props => {
               </Cta></>
             );
       
-            case "ABE":
+            case "ABE2":
                 return (
                         
 
@@ -807,7 +863,7 @@ const FullAgenda = props => {
                   
                   </div>
                 );
-                case "TEE":
+                case "TEE2":
                     return (
                         <div className="d-flex justify-content-center flex-column align-items-center">
                         <i class> View Co-located conferences</i>
@@ -855,7 +911,7 @@ const FullAgenda = props => {
                     );
 
 
-                    case "FME":
+                    case "FME2":
                         return (
                             <div className="d-flex justify-content-center flex-column align-items-center">
                             <i class> View Co-located conferences</i>
@@ -945,7 +1001,7 @@ const getTracksNav = () => {
     let cols, order
     //Very annoying button for extra conference on some in this bit Stage 1 - stage 2 checkboxes
     // const cols = show === "FMX" || show === "ABX" || show === "FME" || show === "ABE" || show === "TEE" ? [6, 6] : [9, 3];
-    if ((show === "FME4" && extraMode != "innovation-agenda") || (show === "ABE4" && extraMode != "innovation-agenda") || (show === "TEE4" && extraMode != "innovation-agenda")) { cols = [" d-none", 3, 9, 12]; order = [0, 1] }
+    if ((show === "FME" && extraMode != "innovation-agenda") || (show === "ABE" && extraMode != "innovation-agenda") ||(show === "TEE" && extraMode != "innovation-agenda") || (show === "BRE" && extraMode != "innovation-agenda")) { cols = [" d-none", 3, 9, 12]; order = [0, 1] }
     //!REMOVING THIS AS I MOVED THE BUTTON CONFERENCE ON THE SIDE SO ALL THE COL CAN BE THE SAME 
     // else if(show === "FMX" || show === "ABX"){ cols=[6, 6];  }
     else { cols = [" d-none", 3, 9, 9] }
@@ -955,7 +1011,7 @@ const getTracksNav = () => {
             <div className="container">
                 <div className="row">
                     {/*checkboxes stages*/}
-                    <div className={`col-${cols[3]} track-col ${cols[3] == 12 ? "border-light  border-bottom" : ""}`}>{getTrackButtons(maxTracks)}</div>
+                    <div className={`col-${cols[3]} track-col ${cols[3] == 12 ? "justify-content-center border-light  border-bottom" : ""}`}>{getTrackButtons(maxTracks)}</div>
 
                     {/*moving the themes up next to expand & collaps buttons   */}
                     {(show === "TEE" || show === "ABE" || show === "FME") && (
@@ -964,8 +1020,8 @@ const getTracksNav = () => {
                         </div>
                     )}
 
-                    <div className={`col-${cols[1]} control-col  ${order ? "order-" + order[1] : ""}`}>
-                        {/* {console.log(state.defaultStateSlidesReducer.slidesState)} */}
+                    <div className={`col-${cols[1]} control-col  ${order ? " m-auto order-" + order[1] : ""}`}>
+                     {/* Ref1 -p5 removed expand buttons*/}
                         <Cta
                             key="cta expand"
                             curved={false}
@@ -1007,6 +1063,7 @@ const getTracksNav = () => {
                     <div className="row">
 
                         <div className="col-12 control-col">
+                            {/* Ref1 p-4 removed expand buttons*/}
                             <Cta
                                 key="cta expand"
                                 curved={false}
@@ -1033,9 +1090,9 @@ const getTracksNav = () => {
                         </div>
                     </div>
                 </div>
-                <div className="container-fluid tracks__mob-tracks">
+                <div className="container-fluid tracks__mob-tracks p-0">
                     <div className="row ">
-                        <div className={`col-${show === "ABE" || show === "FME" || show === "TEE" ? cols[0] : "12"} track-col justify-content-between`}>
+                        <div className={`col-${show === "ABE" || show === "FME" || show === "TEE" ? cols[0] : "12"} track-col justify-content-start p-0 d-block`}>
 
                             {show === "FMX" || show === "ABX" || show === "ABE" || show === "FME" || show === "TEE" ? getAltConferenceButton(show, extraMode) : null}
                             {getTrackButtons(maxTracks)}{" "}
@@ -1064,6 +1121,7 @@ if (loading) {
     );
 } else {
     const pipedSessions = runFilters(sessions); //Filter Sessions
+    
     return (
         <section
 
@@ -1086,10 +1144,10 @@ if (loading) {
                     <div className="container">
                         <div className="row">
                             <div className="col-8">
-                                {show === "FME4" || show === "ABE4" || show === "BRE" || show === "TEE4" || show === "CEX" || show === "TME"
+                                {show === "FME" || show === "ABE" || show === "BREw" || show === "TEE" || show === "CEX" || show === "TME"
                                     ? getUIThemes(show, filters.day, filters.track, extraMode)
                                     : null}
-                                              {show === "FME" 
+                                              {show === "FME2" 
                                     ?(
                                    <div className="mb-4">  <div className="d-flex align-items-center mb-2">
                                          <div style={{width: "30px", height: "30px", borderRadius:"50px", background:"#3554a2"}}></div> <h3 style={{fontSize:"20px", color:"#3554a2"}} className="ms-2 mb-0"> THE FOAM SESSIONS </h3>
@@ -1104,7 +1162,7 @@ if (loading) {
                                     : null}
 
 
-                                           { show === "ABE" 
+                                           { show === "ABE2" 
                                     ?(
                                    <div className="mb-4">  <div className="d-flex align-items-center mb-2">
 

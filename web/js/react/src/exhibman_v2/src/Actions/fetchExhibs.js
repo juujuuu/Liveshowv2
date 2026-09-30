@@ -75,6 +75,7 @@ delete el['boothNo'];
     }else{
       
         var { data } = await api.get(`/rest/exhibman.php?expos=${expos}`);
+          data.forEach(data=>console.log(data['exhibitor-booth'] +" " +data.pagetitle))
         data.sort((a, b) => {
             if (a.pagetitle.toLowerCase() < b.pagetitle.toLowerCase()) {
                 return -1;
@@ -85,10 +86,16 @@ delete el['boothNo'];
             return 0;
         });
     }
- 
+ const targetTitle= "Juri45"
+ const exhibitorToDuplicate=data.find(e=>e.pagetitle.toLowerCase()==targetTitle.toLowerCase())
+ if (exhibitorToDuplicate) {
+  // Create a deep copy (so it’s not just a reference)
+  const duplicate = JSON.parse(JSON.stringify(exhibitorToDuplicate));
+  data.unshift(duplicate)}
     // console.log(data,"china")
-    // console.log(data,"normal")
-    console.log(data,"dataa")
+   
+    // console.log(exhibitorToDuplicate,"yuppyyy")
+    //  console.log(data,"normal")
     dispatch({ type: "FETCH_EXHIBS", payload: data });
 };
 

@@ -62,27 +62,29 @@ const getSiteFromId = expo => {
     expo = expo.replaceAll("'", "");
    // console.log("get site: ", expo);
     switch (expo) {
-        case "a1xUK000000lxB7":
+        case "a1xUK000001V7Kn":
             return "https://www.foam-expo.com/";
-        case "a1xUK000000dwqX":
+        case "a1xUK000001TqsH":
             return "https://www.adhesivesandbondingexpo.com/";
-        case "a1xUK000000iHI5":
+        case "a1xUK000001magX":
             return "https://www.foam-expo-europe.com/";
-        case "a1xUK000000iHJh":
+        case "a1xUK000001Tqtt":
             return "https://www.adhesivesandbondingexpo-europe.com/";
         case "a1x4V0000026O9B":
+        case "a1xUK00000254mb":
         case "a1xUK000001TQpl":
             return "https://www.ceramicsexpousa.com/";
         case "a1xUK000001UDGz":
             return "https://www.spacetechexpo.com/";
-        case "a1xUK0000019zen":
+        case "a1xUK000001hXEf":
             return "https://www.spacetechexpo-europe.com/";
         case "a1xUK000000RaaT":
-        case  "a1xUK000001TQo9":
+        case "a1xUK00000254oD":
+        case "a1xUK000001TQo9":
             return "https://www.thermalmanagementexpo.com/";
         case "chinaExhibitorList":
             return "https://www.foam-expo-china.com/";
-        case "a1xUK000001MzNd":
+        case "a1xUK000001mabi":
             return "https://www.thermalmanagementexpo-europe.com/";
         case "a1xUK000000qisz":
             return "https://www.adhesivesandbondingexpo-mexico.com/";
@@ -93,28 +95,30 @@ const getSiteFromId = expo => {
 const getShowNameFromId = id => {
     id = id.replaceAll("'", "");
     switch (id) {
-        case "a1xUK000000lxB7":
+        case "a1xUK000001V7Kn":
             // return "Foam Expo North America";
            return "Foam Expo";
-        case "a1xUK000000dwqX":
+        case "a1xUK000001TqsH":
             return "Adhesives & Bonding Expo";
-        case "a1xUK000000iHI5":
+        case "a1xUK000001magX":
             return "Foam Expo Europe";
-        case "a1xUK000000iHJh":
+        case "a1xUK000001Tqtt":
             return "Adhesives & Bonding Expo Europe";
         case "a1x4V0000026O9B":
+        case "a1xUK00000254mb":
         case "a1xUK000001TQpl":
             return "Ceramics Expo";
         case "a1xUK000001UDGz":
             return "Space Tech Expo";
-        case "a1xUK0000019zen":
+        case "a1xUK000001hXEf":
             return "Space Tech Expo Europe";
         case "a1xUK000000RaaT":
+        case "a1xUK00000254oD":
         case "a1xUK000001TQo9":
             return "Thermal Management Expo";
         case "chinaExhibitorList":
             return "Foam Expo China";
-        case "a1xUK000001MzNd":
+        case "a1xUK000001mabi":
             return "Thermal Management Expo Europe";
             case "a1xUK000000qisz":
             return "https://www.adhesivesandbondingexpo-mexico.com/";
@@ -126,27 +130,28 @@ const getAcronymFromId = id => {
     ///hereeeee
     id = id.replaceAll("'", "");
     switch (id) {
-        case "a1xUK000000lxB7":
+        case "a1xUK000001V7Kn":
             return "FMX";
-        case "a1xUK000000dwqX":
+        case "a1xUK000001TqsH":
             return "ABX";
-        case "a1xUK000000iHI5":
+        case "a1xUK000001magX":
             return "FME";
-        case "a1xUK000000iHJh":
+        case "a1xUK000001Tqtt":
             return "ABE";
         case "a1x4V0000026O9B":
-        case "a1xUK000001TQpl":
+        case "a1xUK00000254mb":
+            case "a1xUK000001TQpl":
             return "CEX";
         case "a1xUK000001UDGz":
             return "SPC";
-        case "a1xUK0000019zen":
+        case "a1xUK000001hXEf":
             return "BRE";
         case "a1xUK000000RaaT":
-         case  "a1xUK000001TQo9":
+         case  "a1xUK00000254oD":
             return "TME";
         case "chinaExhibitorList":
             return "FMC";
-        case "a1xUK000001MzNd":
+        case "a1xUK000001mabi":
             return "TEE";
              case "a1xUK000000qisz":
             return "ABM";

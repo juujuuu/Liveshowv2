@@ -98,17 +98,17 @@ const getSiteFromId = conferenceId => {
  * @returns The full show name.
  */
 const getShowNameFromAcronym = acronym => {
-    console.log(acronym)
+  
     switch (acronym.toLowerCase()) {
         case "fmx":
             return "Foam Expo North America";
         case "abx":
             return "Adhesives & Bonding Expo";
-        case "fme":
+        case "foam":
             return "https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/fme-thin.png";
-        case "abe":
+        case "adhesives eu":
             return "https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/abe-thin.png";
-        case "tee":
+        case "thermal eu":
             return "https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/tee-thin.png";
         case "ceramics":
             return "https://oda0cs26.modx.dev/assets/resources/shared/web/apps/confman/showLogos/cex-thin.png";

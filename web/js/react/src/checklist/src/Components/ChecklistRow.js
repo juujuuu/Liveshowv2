@@ -88,16 +88,37 @@ const ChecklistRow = ({ payload, inputOptions, updateList }) => {
                 
         }
     };
+    
     const link = getLink(Link__c);
+    
+    
+   
+            
+      const   openInNewTabLinks = [
 
+  "/exhibitor-resources/listingform",
+  "https://spacetechhotels.bnetwork.com/",
+  "https://www.spacetechexpo.com/whatson/exhibitor-networking-reception",
+"https://www.spacetechexpo.com/plan-your-visit/hotels-2026"
+  
+];
+       
+
+
+const isBlank = openInNewTabLinks.includes(link);
     return (
         <tr id={Id} className={`potal-checklist__row portal-checklist__row--${status} portal-checklist__row--${Update_Method__c}`}>
             <td className={`portal-checklist__instruction`} colSpan="2">
                 <div>
                     <p>
-                        <a href={link} title={Instructions__c} target="_blank">
-                            <strong>{Instructions__c}</strong>
-                        </a>
+<a
+  href={link}
+  title={Instructions__c}
+  target={isBlank ? "_blank" : undefined }
+  rel={isBlank ? "noopener noreferrer" : undefined}
+><strong>{Instructions__c}</strong></a>
+{/* {isBlank? "true" :"false"}
+{link} */}
                     </p>
                 </div>
             </td>
