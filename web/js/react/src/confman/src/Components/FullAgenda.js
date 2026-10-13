@@ -1186,7 +1186,7 @@ if (loading) {
                                     <div className="side-nav__search">
                                         <h3>Search</h3>
                                         <Cta key="cta reset"
-                                            size="micro" color="black"
+                                            size="micro" color="indigo"
                                             role="clearFiltersConf"
                                             curved={false}
                                             margin="vertical-margin--0"

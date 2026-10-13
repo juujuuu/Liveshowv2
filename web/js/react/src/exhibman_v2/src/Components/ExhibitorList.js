@@ -970,7 +970,7 @@ const ExhibitorList = props => {
                             <h3 style={dualLanguageStyles.h3Style}>
                                 <strong>{dualLanguage(show, "Refine Results", "Refinar resultados / Refine Results")}</strong>
                             </h3>
-                            <Cta dualLanguageStylesCTA={dualLanguageStyles.CTAStyle} bonusClass="control-col__reset" handler={handleReset} role="exhib-reset" size="micro" color="black" margin="vertical-margin--0">
+                            <Cta dualLanguageStylesCTA={dualLanguageStyles.CTAStyle} bonusClass="control-col__reset" handler={handleReset} role="exhib-reset" size="micro" color="indigo" margin="vertical-margin--0">
                                 Clear Filters
                             </Cta>
 

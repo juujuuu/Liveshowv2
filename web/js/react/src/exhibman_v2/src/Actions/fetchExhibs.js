@@ -75,7 +75,8 @@ delete el['boothNo'];
     }else{
       
         var { data } = await api.get(`/rest/exhibman.php?expos=${expos}`);
-          data.forEach(data=>console.log(data['exhibitor-booth'] +" " +data.pagetitle))
+
+        //   data.forEach((data,index)=>console.log(data['exhibitor-booth'] +" " +data.pagetitle + index))
         data.sort((a, b) => {
             if (a.pagetitle.toLowerCase() < b.pagetitle.toLowerCase()) {
                 return -1;

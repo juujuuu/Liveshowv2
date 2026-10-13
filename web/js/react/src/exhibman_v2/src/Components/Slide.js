@@ -178,7 +178,7 @@ const mode=useSelector(state=>state.mode)
                 >
                   
                     <Cta
-                        color="black"
+                        color="indigo"
                         size="reg"
                         margin="vertical-margin--0"
                         curved={false}

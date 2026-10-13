@@ -161,7 +161,7 @@ const MetaCol = ({ order }) => {
             <StickyNav endAffix={1800} disable={window.innerWidth < 992}>
                 {window.innerWidth < 992 ? (
                     <Link className="router-link" to={getExhibListPath(options.debug, options.local, options.postshow,options.espabm)} onClick={() => handleListSwitch()}>
-                        <Cta size="reg" curved={false} bonusClass={`profile-back-to-list left`} key={`Mob back to Exhibitor List`} color="black">
+                        <Cta size="reg" curved={false} bonusClass={`profile-back-to-list left`} key={`Mob back to Exhibitor List`} color="indigo">
                             {dualLanguage(show, "Booth number", "Número de stand / Booth number")}
                         </Cta>
                     </Link>

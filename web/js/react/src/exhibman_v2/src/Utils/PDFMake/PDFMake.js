@@ -107,6 +107,7 @@ class PDFMake {
                     break;
                   
                 case "a1xUK000001UDGz":
+                case "a1xUK000002GrOz":
                     var showName = "Space Tech Expo";
                     break;
                 case "a1xUK000001hXEf":
