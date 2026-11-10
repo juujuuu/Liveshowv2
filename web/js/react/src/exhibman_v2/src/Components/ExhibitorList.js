@@ -1004,6 +1004,30 @@ const ExhibitorList = props => {
 </span></div>
                  
 </span>): null }
+
+{show==="BRE"?(
+<span>
+<div  style={{ borderRadius:"5px"}} className="mt-1 ">
+   <span className=" d-flex justify-content-center align-items-center flex-column">
+         <Sponsors
+                            show={options}
+                            href={"https://www.ice.it/en/"}
+                            title={"Italy at space Tech Expo Europe"}
+                            src={"https://www.spacetechexpo-europe.com/assets/resources/bre/ita-exhibitor-sponsor-banner.jpg"}
+                            // src={"./small.jpg"}
+                            alt={"Italy at space Tech Expo Europe"}
+                            position={"-left"}
+                            displayBanner={""}
+                        />
+    {/* <a  href="https://www.adhesivesandbondingexpo-europe.com/exhibitor-list/exhibitor?boothid=a3RUK0000003HsL2AU" alt="Gergonne Industrie">
+    
+   <h4 className="mt-1 mb-2" style={{color:"#374641" }} >Booth Number: 819 </h4>
+  </a>
+    <a  href="https://www.adhesivesandbondingexpo-europe.com/exhibitor-list/exhibitor?boothid=a3RUK0000003HsL2AU" alt="Gergonne Industrie">
+    <p style={{fontSize:"15px",textAlign:"center"}}>Adhesives and Sealants | Bonding Solutions / Technology Provider | Manufacturing Services</p></a> */}
+</span></div>
+                 
+</span>): null }
                     </StickyNav>
                 </nav>
                 <div className="col-md-8 viewport-col ">

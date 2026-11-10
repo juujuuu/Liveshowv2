@@ -22,10 +22,10 @@ const getConfPdfLink = (show, conf = false) => {
             if (conf === "'What ever the sf id of the solutions innovation agenda ends up being'") {
                 return baseString + "Solutions Innovation" + ".pdf";
             } else {
-                return baseString + "FME ABE" + ".pdf";
+                return baseString + "FME ABE TEE" + ".pdf";
             }
-        case "TEE":
-            return baseString + "TEE" + ".pdf";
+        // case "TEE":
+        //     return baseString + "TEE" + ".pdf";
         case "OCS":
         case "SAT":
         return baseString + "OCS SAT" + ".pdf";

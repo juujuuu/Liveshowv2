@@ -1092,7 +1092,7 @@ const getTracksNav = () => {
                 </div>
                 <div className="container-fluid tracks__mob-tracks p-0">
                     <div className="row ">
-                        <div className={`col-${show === "ABE" || show === "FME" || show === "TEE" ? cols[0] : "12"} track-col justify-content-start p-0 d-block`}>
+                        <div className={`col-${show === "ABE" || show === "FME" || show === "TEE"} track-col justify-content-center p-0 border-bottom`}>
 
                             {show === "FMX" || show === "ABX" || show === "ABE" || show === "FME" || show === "TEE" ? getAltConferenceButton(show, extraMode) : null}
                             {getTrackButtons(maxTracks)}{" "}
@@ -1103,7 +1103,6 @@ const getTracksNav = () => {
                                 // show == "FME" || show == "TEE" || show == "ABE" ||
                                 show == "FMX" || show == "ABX") && extraMode !== "innovation-agenda")
                                 ?
-                                <div className={`col-12 track-col justify-content-start`}>{getShowButtons(maxShows)}</div>
                                 : null
                             } */}
                     </div>
@@ -1154,7 +1153,7 @@ if (loading) {
                                     
                                     </div>
                                 <div className="d-flex align-items-center">
-                                         <div style={{width: "30px", height: "30px", borderRadius:"50px",  background:"#d18517"}}></div> <h3 style={{fontSize:"20px", color:"#d18517"}} className="ms-2 mb-0"> THE ADHESIVES & BONDING SESSIONS </h3>
+                                         <div style={{width: "30px", height: "30px", borderRadius:"50px",  background:"#d18517"}}></div> <h3 style={{fontSize:"20px", color:"#d18517"}} className="ms-2 mb-0"> THE ADHESIVES & BONDING SESSIONSS </h3>
                                     
                                     </div>    
                                 </div>
@@ -1167,7 +1166,7 @@ if (loading) {
                                    <div className="mb-4">  <div className="d-flex align-items-center mb-2">
 
                                          
-                                         <div style={{width: "30px", height: "30px", borderRadius:"50px",  background:"#d18517"}}></div> <h3 style={{fontSize:"20px", color:"#d18517"}} className="ms-2 mb-0"> THE ADHESIVES & BONDING SESSIONS </h3>
+                                         <div style={{width: "30px", height: "30px", borderRadius:"50px",  background:"#d18517"}}></div> <h3 style={{fontSize:"20px", color:"#d18517"}} className="ms-2 mb-0"> THE ADHESIVES & BONDING SESSIONSS </h3>
                                     
                                     </div>    
                                     <div className="mb-4">  <div className="d-flex align-items-center mb-2">
@@ -1183,14 +1182,14 @@ if (loading) {
                             </div>
                             <div className="col-4">
                                 <StickyNav role="conference-agenda-side-nav">
-                                    <div className="side-nav__search">
+                                    <div className="side-nav__search text-end">
                                         <h3>Search</h3>
                                         <Cta key="cta reset"
                                             size="micro" color="indigo"
                                             role="clearFiltersConf"
                                             curved={false}
                                             margin="vertical-margin--0"
-                                            bonusClass="rounded"
+                                            bonusClass="rounded me-0"
                                             handler={resetFilters}>
 
                                             CLEAR FILTERS
@@ -1255,7 +1254,7 @@ if (loading) {
                 ) : (
                     <div className="container-fluid">
                         <div className="row">
-                                     {show === "FME" 
+                                     {show === "FME2" 
                                     ?(
                                    <div className="">  <div className="d-flex align-items-center mb-2">
                                          <div style={{width: "30px", height: "30px", borderRadius:"50px", background:"#3554a2"}}></div> <h3 style={{fontSize:"20px", color:"#3554a2"}} className="ms-2 mb-0"> THE FOAM SESSIONS </h3>
@@ -1270,7 +1269,7 @@ if (loading) {
                                     : null}
 
 
-                                           { show === "ABE" 
+                                           { show === "ABE2" 
                                     ?(
                                    <div className="">  <div className="d-flex align-items-center mb-2">
 

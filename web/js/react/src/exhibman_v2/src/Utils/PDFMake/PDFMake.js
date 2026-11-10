@@ -83,6 +83,7 @@ class PDFMake {
             switch (element.Expo__c) {
                
                 case "a1xUK000001V7Kn":
+                    case "a1xUK000002XWhV":
                     var showName = "Foam Expo";
                     break;
                 case "a1xUK000001Tqtt":
@@ -94,6 +95,7 @@ class PDFMake {
                     console.log(showName)
                     break;
                 case "a1xUK000001TqsH":
+                case "a1xUK000002B649":
                     var showName = "Adhesives Bonding Expo";
                     break;
                 case "a1x4V0000026O9B":

@@ -63,8 +63,10 @@ const getSiteFromId = expo => {
    // console.log("get site: ", expo);
     switch (expo) {
         case "a1xUK000001V7Kn":
+            case "a1xUK000002XWhV":
             return "https://www.foam-expo.com/";
         case "a1xUK000001TqsH":
+            case "a1xUK000002B649":
             return "https://www.adhesivesandbondingexpo.com/";
         case "a1xUK000001magX":
             return "https://www.foam-expo-europe.com/";
@@ -97,9 +99,11 @@ const getShowNameFromId = id => {
     id = id.replaceAll("'", "");
     switch (id) {
         case "a1xUK000001V7Kn":
+            case "a1xUK000002XWhV":
             // return "Foam Expo North America";
            return "Foam Expo";
         case "a1xUK000001TqsH":
+            case "a1xUK000002B649":
             return "Adhesives & Bonding Expo";
         case "a1xUK000001magX":
             return "Foam Expo Europe";
@@ -133,8 +137,10 @@ const getAcronymFromId = id => {
     id = id.replaceAll("'", "");
     switch (id) {
         case "a1xUK000001V7Kn":
+        case "a1xUK000002XWhV":
             return "FMX";
         case "a1xUK000001TqsH":
+            case "a1xUK000002B649":
             return "ABX";
         case "a1xUK000001magX":
             return "FME";

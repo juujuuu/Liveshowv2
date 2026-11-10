@@ -5,7 +5,7 @@ export const Sponsors = ({show,href,src,alt,position,displayBanner}) => {
     let html
     let style,textAlignImage
   // if(show.show==="CEX" && window.innerWidth > 768){
-    if(show.show==="BRE-1"){
+    if(show.show==="BRE"){
        html="" 
        {   
 
@@ -14,7 +14,7 @@ export const Sponsors = ({show,href,src,alt,position,displayBanner}) => {
  (src="https://www.spacetechexpo-europe.com/assets/resources/bre/ita-exhibitor-sponsor-banner.jpg", style= "40%",textAlignImage="right" )
   
 :
-  (src="./assets/resources/bre/ita-exhibitor-sponsor-banner.jpg",style= " 100%" )
+  (src="https://www.spacetechexpo-europe.com/assets/resources/bre/ita-exhibitor-sponsor-banner.jpg",style= " 100%" )
   
   html= <div style= {{ textAlign:textAlignImage}} className={`control-col__sponsor${position} vertical-margin--10 ${displayBanner}`}>
 
